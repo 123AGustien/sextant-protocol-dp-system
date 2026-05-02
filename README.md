@@ -1,105 +1,117 @@
-
 # Sextant Protocol – DP Control System
 
-## Overview
+## Research Overview
 
-The Sextant Protocol DP Control System is a research prototype of a **parallel AI-based Dynamic Positioning architecture** designed for failure-resilient maritime operations.
+The Sextant Protocol DP Control System is a **multi-layer control and decision architecture** designed to improve resilience in Dynamic Positioning (DP) systems under nonlinear and extreme environmental conditions.
 
-It introduces a non-traditional control model using **two independent AI layers operating in parallel**, combined with **human-in-the-loop governance**, to reduce cascade failure risk under extreme environmental conditions.
+It is a **simulation-based research prototype** that explores the use of independent parallel AI systems for safety-critical maritime control.
 
 ---
 
 ## Problem Statement
 
-Conventional Dynamic Positioning (DP) systems rely on:
-- Redundant sensors
-- Redundant controllers
-- Redundant power systems
+Conventional Dynamic Positioning (DP) systems rely on redundancy at the hardware and sensor level while maintaining a **shared control logic model**.
 
-However, these redundancies typically share the same control logic, which can lead to **cascade failure under nonlinear environmental disturbances** such as:
-- sudden tidal surges
-- extreme current shifts
-- rapid wind variance
+This creates a systemic limitation:
+
+> When environmental conditions exceed model assumptions, failures can cascade across all redundant systems simultaneously.
 
 ---
 
-## Proposed System Architecture
+## Proposed Approach
 
-The Sextant Protocol introduces a **parallel cognitive control structure**:
+This system introduces **parallel independent decision logic layers**, each with distinct operational roles:
 
-### 1. Primary AI System
+### 1. Primary AI (Control Layer)
 - Executes standard DP control logic
-- Optimized for stability and efficiency
+- Optimized for efficiency and stability
 - Operates under normal environmental conditions
 
-### 2. Secondary AI System
+---
+
+### 2. Secondary AI (Safety Layer)
 - Runs independently in parallel
-- Uses conservative, safety-first control logic
-- Monitors system thresholds and environmental anomalies
-- Intervenes when primary system exceeds safe operational envelope
+- Uses conservative safety-first logic
+- Detects anomalies and environmental spikes
+- Activates protective override responses when required
 
-### 3. Human-in-the-Loop
-- Final authority in escalation scenarios
-- Reviews conflicts between Primary and Secondary AI
-- Executes override decisions when required
+---
 
-### 4. Stabilizer Layer
+### 3. Stabilizer (Arbitration Layer)
 - Prevents oscillation between control systems
-- Ensures smooth transition of authority
-- Maintains system stability during handover events
+- Blends outputs from Primary and Secondary AI
+- Ensures smooth transition between operational modes
+- Maintains system stability during conflict conditions
 
 ---
 
-## Core Innovation
-
-Unlike traditional redundancy systems, this architecture introduces:
-
-> **Parallel independent decision-making systems with different control philosophies rather than duplicated identical logic.**
-
-This reduces systemic blind spots and improves resilience under extreme or unexpected conditions.
+### 4. Human-in-the-Loop (Governance Layer)
+- Final authority in high-risk conditions
+- Intervenes during extreme environmental events
+- Provides manual override capability for safety assurance
 
 ---
 
-## Example Use Case
+## System Architecture
 
-### Scenario: Sudden Tidal Surge
+Decision flow is not strictly linear, but governed by conditional interaction:
 
-1. Primary AI attempts corrective thrust adjustments  
-2. Environmental conditions exceed safe prediction thresholds  
-3. Secondary AI detects instability risk  
-4. Secondary AI initiates conservative control mode  
-5. Stabilizer manages transition between control states  
-6. Human operator receives alert for validation or override  
-
-Result: System stabilizes before cascade failure occurs.
+Primary AI ↔ Stabilizer ↔ Secondary AI  
+          ↓  
+    Human-in-the-loop (override authority)
 
 ---
 
-## Applications
+## Key Innovation
+
+Unlike traditional DP systems, this architecture introduces:
+
+> **Independent parallel decision systems with different operational philosophies rather than duplicated redundancy.**
+
+This reduces risk of:
+- cascade failure
+- synchronized system blind spots
+- model-driven systemic bias under stress conditions
+
+---
+
+## Simulation Environment
+
+The system includes a simulation engine that models:
+- environmental spikes (tidal surges)
+- control instability scenarios
+- safety override activation
+- human intervention events
+
+---
+
+## Application Domains
 
 - Offshore oil and gas DP systems  
-- Maritime navigation safety systems  
-- Autonomous vessel control frameworks  
-- High-risk environmental control systems  
+- Maritime navigation and vessel control  
+- Autonomous marine systems  
+- High-risk operational infrastructure  
 
 ---
 
-## Relationship to Sextant Protocol
+## System Status
 
-This system is a domain-specific implementation of the broader **Sextant Protocol architecture**, focusing on:
-- operational continuity
-- system survivability
-- multi-layer decision governance
+This project is a:
+> Research prototype and simulation framework (non-production system)
 
 ---
 
 ## Authors
 
 - Don Herman Oswald Weerasekera (WNI)  
-- AI-assisted systems design (Lena)
+- AI-assisted system design (Lena)
 
 ---
 
-## Status
+## Relationship to Sextant Protocol
 
-Research prototype / conceptual simulation framework (non-deployed system)
+This system represents a **domain-specific implementation** of the broader Sextant Protocol framework, focusing on:
+
+- operational continuity  
+- failure resilience  
+- multi-agent decision governance
