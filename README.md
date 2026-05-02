@@ -1,103 +1,80 @@
 # Sextant Protocol – DP Control System
 
-## Research Overview
+## Executive Summary
 
-The Sextant Protocol DP Control System is a **multi-layer control and decision architecture** designed to improve resilience in Dynamic Positioning (DP) systems under nonlinear and extreme environmental conditions.
+The Sextant Protocol DP Control System is a **multi-layer control and decision architecture simulation** designed to improve resilience in Dynamic Positioning (DP) systems operating under extreme and nonlinear environmental conditions.
 
-It is a **simulation-based research prototype** that explores the use of independent parallel AI systems for safety-critical maritime control.
+It introduces a **parallel AI governance model** combining control, safety, stabilization, and human oversight layers.
 
 ---
 
 ## Problem Statement
 
-Conventional Dynamic Positioning (DP) systems rely on redundancy at the hardware and sensor level while maintaining a **shared control logic model**.
+Conventional DP systems rely on redundancy at hardware and sensor levels but often retain **shared control logic structures**.
 
-This creates a systemic limitation:
+This creates a systemic risk:
 
-> When environmental conditions exceed model assumptions, failures can cascade across all redundant systems simultaneously.
+> Failures can propagate across redundant systems when environmental conditions exceed model assumptions.
 
 ---
 
-## Proposed Approach
-
-This system introduces **parallel independent decision logic layers**, each with distinct operational roles:
+## Proposed Architecture
 
 ### 1. Primary AI (Control Layer)
-- Executes standard DP control logic
-- Optimized for efficiency and stability
-- Operates under normal environmental conditions
-
----
+Standard DP positioning logic optimized for efficiency and stability.
 
 ### 2. Secondary AI (Safety Layer)
-- Runs independently in parallel
-- Uses conservative safety-first logic
-- Detects anomalies and environmental spikes
-- Activates protective override responses when required
+Independent anomaly detection and conservative override logic.
 
----
+### 3. Stabilizer (Governance Layer)
+Prevents oscillation and ensures smooth transitions between control outputs.
 
-### 3. Stabilizer (Arbitration Layer)
-- Prevents oscillation between control systems
-- Blends outputs from Primary and Secondary AI
-- Ensures smooth transition between operational modes
-- Maintains system stability during conflict conditions
-
----
-
-### 4. Human-in-the-Loop (Governance Layer)
-- Final authority in high-risk conditions
-- Intervenes during extreme environmental events
-- Provides manual override capability for safety assurance
-
----
-
-## System Architecture
-
-Decision flow is not strictly linear, but governed by conditional interaction:
-
-Primary AI ↔ Stabilizer ↔ Secondary AI  
-          ↓  
-    Human-in-the-loop (override authority)
+### 4. Human-in-the-Loop (Authority Layer)
+Final decision authority during high-risk conditions.
 
 ---
 
 ## Key Innovation
 
-Unlike traditional DP systems, this architecture introduces:
+> Independent parallel decision systems with differentiated control logic instead of duplicated redundancy.
 
-> **Independent parallel decision systems with different operational philosophies rather than duplicated redundancy.**
-
-This reduces risk of:
-- cascade failure
-- synchronized system blind spots
-- model-driven systemic bias under stress conditions
+This reduces:
+- cascade failure risk  
+- synchronized system blind spots  
+- instability under extreme environmental events  
 
 ---
 
-## Simulation Environment
+## Simulation Capability
 
 The system includes a simulation engine that models:
-- environmental spikes (tidal surges)
-- control instability scenarios
-- safety override activation
-- human intervention events
+- tidal surge events  
+- environmental instability  
+- control system interaction  
+- human intervention scenarios  
 
 ---
 
 ## Application Domains
 
-- Offshore oil and gas DP systems  
-- Maritime navigation and vessel control  
-- Autonomous marine systems  
-- High-risk operational infrastructure  
+- offshore energy operations  
+- maritime DP systems  
+- autonomous marine platforms  
+- safety-critical navigation systems  
 
 ---
 
 ## System Status
 
-This project is a:
-> Research prototype and simulation framework (non-production system)
+Research prototype / simulation framework (non-deployed system)
+
+---
+
+## Documentation
+
+See `/docs` folder for:
+- architecture details  
+- offshore application layer  
 
 ---
 
@@ -105,13 +82,3 @@ This project is a:
 
 - Don Herman Oswald Weerasekera (WNI)  
 - AI-assisted system design (Lena)
-
----
-
-## Relationship to Sextant Protocol
-
-This system represents a **domain-specific implementation** of the broader Sextant Protocol framework, focusing on:
-
-- operational continuity  
-- failure resilience  
-- multi-agent decision governance
