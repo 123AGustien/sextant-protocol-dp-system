@@ -2,20 +2,20 @@
 
 ## Executive Summary
 
-The Sextant Protocol DP Control System is a **simulation-based research framework** designed to explore resilient control architectures for Dynamic Positioning (DP) systems operating under extreme and nonlinear marine environmental conditions.
+The Sextant Protocol DP Control System is a **simulation-based research framework** designed to study resilient control architectures for Dynamic Positioning (DP) systems operating under extreme and nonlinear marine environmental conditions.
 
-It models a **multi-layer supervisory control structure** combining autonomous decision-making, safety escalation logic, and human oversight.
+It implements a **conceptual multi-layer supervisory control architecture** combining autonomous decision-making, safety escalation logic, and human oversight.
 
 ---
 
 ## System Purpose
 
-The objective of this project is to study how **independent layered decision systems** can improve resilience in DP control scenarios where environmental disturbances exceed normal operating assumptions.
+The objective of this project is to evaluate how **independent layered decision systems** can improve resilience in DP control scenarios where environmental disturbances exceed normal operating assumptions.
 
 This system is intended for:
-- research simulation
-- control systems analysis
-- safety architecture exploration
+- research simulation  
+- control systems analysis  
+- safety architecture exploration  
 
 It is **not connected to or integrated with any industrial DP system**.
 
@@ -24,46 +24,46 @@ It is **not connected to or integrated with any industrial DP system**.
 ## Core Problem
 
 Conventional DP systems typically rely on:
-- redundant hardware
-- shared control logic
-- tightly coupled decision models
+- redundant hardware  
+- shared control logic  
+- tightly coupled decision models  
 
 This introduces a key limitation:
 
-> When environmental conditions exceed system assumptions, failures may propagate across redundant components due to shared logic structures.
+> Environmental conditions that exceed system assumptions may trigger correlated failure modes across redundant components due to shared logic structures.
 
 ---
 
 ## Proposed Architecture
 
-The system introduces a **multi-layer supervisory control model**:
+The system implements a conceptual multi-layer supervisory control architecture:
 
 ### 1. Primary AI Layer
-- Handles standard DP control logic
-- Optimized for efficiency and steady-state stability
-- First response to environmental changes
+- Handles standard DP control logic  
+- Optimized for efficiency and steady-state stability  
+- First response to environmental disturbances  
 
 ---
 
 ### 2. Secondary AI Layer
-- Independent safety monitoring system
-- Detects abnormal environmental conditions
-- Applies conservative fallback control logic
-- Acts when primary system thresholds are exceeded
+- Independent safety monitoring system  
+- Detects abnormal environmental conditions  
+- Applies conservative fallback control logic  
+- Activates when primary system thresholds are exceeded  
 
 ---
 
 ### 3. Stabilization Layer
-- Prevents oscillation between control layers
-- Coordinates transitions between primary and secondary responses
-- Ensures system stability under dynamic conditions
+- Prevents oscillation between control layers  
+- Coordinates transitions between primary and secondary responses  
+- Ensures system stability under dynamic conditions  
 
 ---
 
 ### 4. Human-in-the-Loop Layer
-- Final authority in escalation scenarios
-- Provides manual override capability
-- Ensures safety governance in critical conditions
+- Final authority in escalation scenarios  
+- Provides manual override capability  
+- Ensures safety governance in critical conditions  
 
 ---
 
@@ -79,7 +79,7 @@ Environmental Disturbance
 
 ## Key Conceptual Innovation
 
-> Instead of relying solely on redundant identical systems, this architecture introduces independent decision layers with differentiated control logic.
+Instead of relying solely on redundant identical systems, this architecture introduces **independent decision layers with differentiated control logic**.
 
 This reduces:
 - correlated failure risk  
@@ -96,7 +96,7 @@ The system includes a simulation environment that models:
 - control system interactions  
 - escalation scenarios  
 
-This allows controlled testing of layered decision behavior under stress conditions.
+This enables controlled evaluation of layered decision behavior under stress conditions.
 
 ---
 
@@ -115,9 +115,9 @@ This research framework is relevant to:
 This project is a **simulation and research prototype only**.
 
 It does not:
-- interface with industrial DP control systems
-- modify certified marine navigation software
-- operate in real-world vessel environments
+- interface with industrial DP control systems  
+- modify certified marine navigation software  
+- operate in real-world vessel environments  
 
 ---
 
