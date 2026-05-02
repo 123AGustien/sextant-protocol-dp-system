@@ -1,84 +1,144 @@
-# Sextant Protocol – DP Control System
+# Sextant Protocol – Dynamic Positioning (DP) Control System
 
 ## Executive Summary
 
-The Sextant Protocol DP Control System is a **multi-layer control and decision architecture simulation** designed to improve resilience in Dynamic Positioning (DP) systems operating under extreme and nonlinear environmental conditions.
+The Sextant Protocol DP Control System is a **simulation-based research framework** designed to explore resilient control architectures for Dynamic Positioning (DP) systems operating under extreme and nonlinear marine environmental conditions.
 
-It introduces a **parallel AI governance model** combining control, safety, stabilization, and human oversight layers.
+It models a **multi-layer supervisory control structure** combining autonomous decision-making, safety escalation logic, and human oversight.
 
 ---
 
-## Problem Statement
+## System Purpose
 
-Conventional DP systems rely on redundancy at hardware and sensor levels but often retain **shared control logic structures**.
+The objective of this project is to study how **independent layered decision systems** can improve resilience in DP control scenarios where environmental disturbances exceed normal operating assumptions.
 
-This creates a systemic risk:
+This system is intended for:
+- research simulation
+- control systems analysis
+- safety architecture exploration
 
-> Failures can propagate across redundant systems when environmental conditions exceed model assumptions.
+It is **not connected to or integrated with any industrial DP system**.
+
+---
+
+## Core Problem
+
+Conventional DP systems typically rely on:
+- redundant hardware
+- shared control logic
+- tightly coupled decision models
+
+This introduces a key limitation:
+
+> When environmental conditions exceed system assumptions, failures may propagate across redundant components due to shared logic structures.
 
 ---
 
 ## Proposed Architecture
 
-### 1. Primary AI (Control Layer)
-Standard DP positioning logic optimized for efficiency and stability.
+The system introduces a **multi-layer supervisory control model**:
 
-### 2. Secondary AI (Safety Layer)
-Independent anomaly detection and conservative override logic.
-
-### 3. Stabilizer (Governance Layer)
-Prevents oscillation and ensures smooth transitions between control outputs.
-
-### 4. Human-in-the-Loop (Authority Layer)
-Final decision authority during high-risk conditions.
+### 1. Primary AI Layer
+- Handles standard DP control logic
+- Optimized for efficiency and steady-state stability
+- First response to environmental changes
 
 ---
 
-## Key Innovation
+### 2. Secondary AI Layer
+- Independent safety monitoring system
+- Detects abnormal environmental conditions
+- Applies conservative fallback control logic
+- Acts when primary system thresholds are exceeded
 
-> Independent parallel decision systems with differentiated control logic instead of duplicated redundancy.
+---
+
+### 3. Stabilization Layer
+- Prevents oscillation between control layers
+- Coordinates transitions between primary and secondary responses
+- Ensures system stability under dynamic conditions
+
+---
+
+### 4. Human-in-the-Loop Layer
+- Final authority in escalation scenarios
+- Provides manual override capability
+- Ensures safety governance in critical conditions
+
+---
+
+## System Flow
+
+Environmental Disturbance  
+→ Primary AI Response  
+→ Secondary AI Evaluation  
+→ Stabilization Logic  
+→ Human-in-the-Loop (if required)
+
+---
+
+## Key Conceptual Innovation
+
+> Instead of relying solely on redundant identical systems, this architecture introduces independent decision layers with differentiated control logic.
 
 This reduces:
-- cascade failure risk  
-- synchronized system blind spots  
-- instability under extreme environmental events  
+- correlated failure risk  
+- systemic blind spots  
+- cascading instability under extreme conditions  
 
 ---
 
-## Simulation Capability
+## Simulation Engine
 
-The system includes a simulation engine that models:
+The system includes a simulation environment that models:
 - tidal surge events  
 - environmental instability  
-- control system interaction  
-- human intervention scenarios  
+- control system interactions  
+- escalation scenarios  
+
+This allows controlled testing of layered decision behavior under stress conditions.
 
 ---
 
 ## Application Domains
 
-- offshore energy operations  
-- maritime DP systems  
-- autonomous marine platforms  
-- safety-critical navigation systems  
+This research framework is relevant to:
+- offshore energy systems  
+- maritime vessel positioning studies  
+- autonomous marine system research  
+- safety-critical control system design  
 
 ---
 
-## System Status
+## System Boundary
 
-Research prototype / simulation framework (non-deployed system)
+This project is a **simulation and research prototype only**.
 
----
-
-## Documentation
-
-See `/docs` folder for:
-- architecture details  
-- offshore application layer  
+It does not:
+- interface with industrial DP control systems
+- modify certified marine navigation software
+- operate in real-world vessel environments
 
 ---
 
-## Authors
+## Repository Structure
 
-- Don Herman Oswald Weerasekera (WNI)  
-- AI-assisted system design (Lena)
+- `primary_ai.py` – primary control logic layer  
+- `secondary_ai.py` – safety monitoring layer  
+- `stabilizer.py` – control arbitration layer  
+- `human_in_loop.py` – manual override logic  
+- `simulation_engine.py` – system execution environment  
+- `docs/` – system architecture and domain documentation  
+
+---
+
+## CI Status
+
+Automated testing is implemented via GitHub Actions to validate simulation execution on each commit.
+
+---
+
+## Author
+
+Don Herman Oswald Weerasekera  
+AI-assisted system design (Lena)
