@@ -1,3 +1,25 @@
+# Branch & Contribution Guidance
+
+The `main` branch of this repository is maintained as a stable conceptual and reference baseline.
+
+Contributors, evaluators, researchers, and developers are strongly encouraged to:
+- create a separate branch for all exploratory or experimental work
+- avoid direct modification of the `main` branch
+- isolate prototype implementations, validation logic, and derivative concepts within independent branches
+
+Suggested workflow:
+
+1. Create a new branch from `main`
+2. Perform development or experimentation within that branch
+3. Open a Pull Request (PR) if review or merge consideration is required
+
+This repository follows a baseline-preservation model intended to maintain:
+- architectural traceability
+- conceptual stability
+- reproducibility of reference documentation
+- separation between archival concepts and experimental development
+
+The `main` branch should be treated as the canonical reference index unless otherwise stated.
 ## 🧊 System Freeze Note (v1.0 Baseline)
 
 > This repository operates under a frozen deterministic baseline (v1.0) of the Lena Vehicle Data Core system.
