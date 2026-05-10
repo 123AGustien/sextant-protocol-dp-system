@@ -1,6 +1,6 @@
 name: Sextant DP System CI
 
-    on:
+on:
   push:
     branches:
       - main
