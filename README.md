@@ -1,5 +1,60 @@
+## 🧊 System Freeze Note (v1.0 Baseline)
 
-# Sextant Protocol – Dynamic Positioning (DP) Control System
+> This repository operates under a frozen deterministic baseline (v1.0) of the Lena Vehicle Data Core system.
+
+---
+
+### ❄️ Freeze Definition
+
+Lena v1.0 is a stable, immutable reference state for deterministic vehicle event capture and system-state reconstruction.
+
+All behavior in this version is:
+
+- Deterministic (same input produces same output)
+- Fully reproducible across executions
+- Version-locked for baseline evaluation
+- Treated as read-only system logic
+
+---
+
+### 🔒 Freeze Guarantees
+
+- Event capture logic is fixed and deterministic  
+- System state reconstruction is reproducible  
+- Failure propagation tracing is stable  
+- Replay engine output is consistent  
+- No behavioral drift across runs  
+
+---
+
+### 📦 Frozen Components
+
+- Event ingestion and capture layer  
+- Deterministic logging engine  
+- System state reconstruction model  
+- Failure propagation tracing logic  
+- Replay / simulation execution pipeline  
+
+---
+
+### 🚫 Modification Rule
+
+No structural or behavioral changes are permitted in v1.0.
+
+All future development must follow versioning:
+
+- `develop` → experimental changes (non-frozen)  
+- `v1.1+` → validated and re-frozen releases  
+
+---
+
+### 🧠 System Meaning
+
+Lena v1.0 is a deterministic reference model for system behavior reconstruction, not an evolving runtime system.
+
+It guarantees:
+
+> “Every system state can be reconstructed exactly as recorded — without deviation.”
 
 # Sextant Protocol – Dynamic Positioning (DP) Control System
 
