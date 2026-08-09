@@ -15,44 +15,23 @@ branches:
 workflow_dispatch:
 
 jobs:
-
 validate-dp-system:
 name: Validate Sextant DP Simulation System
 runs-on: ubuntu-latest
 
 steps:
-
-  # -------------------------------------------------------
-  # CHECKOUT
-  # -------------------------------------------------------
-
   - name: Checkout code
     uses: actions/checkout@v4
-
-
-  # -------------------------------------------------------
-  # PYTHON ENVIRONMENT
-  # -------------------------------------------------------
 
   - name: Set up Python
     uses: actions/setup-python@v5
     with:
       python-version: "3.10"
 
-
-  # -------------------------------------------------------
-  # NODE.JS ENVIRONMENT
-  # -------------------------------------------------------
-
   - name: Set up Node.js
     uses: actions/setup-node@v4
     with:
       node-version: "20"
-
-
-  # -------------------------------------------------------
-  # REPOSITORY STRUCTURE
-  # -------------------------------------------------------
 
   - name: Verify DP prototype files
     run: |
@@ -65,36 +44,21 @@ steps:
       echo "PASS: dp_simulation_engine.js"
       echo "PASS: dp_scenarios.js"
 
-
-  # -------------------------------------------------------
-  # PYTHON VALIDATION
-  # -------------------------------------------------------
-
-  - name: Check Python simulation engine
+  - name: Validate Python simulation engine
     run: |
       if [ -f simulation_engine.py ]; then
         python -m py_compile simulation_engine.py
         echo "Python simulation engine syntax: PASS"
       else
-        echo "simulation_engine.py not present - browser engine is active."
+        echo "simulation_engine.py not present."
+        echo "Browser simulation engine is being validated."
       fi
-
-
-  # -------------------------------------------------------
-  # JAVASCRIPT SYNTAX VALIDATION
-  # -------------------------------------------------------
 
   - name: Validate JavaScript syntax
     run: |
       node --check dp_simulation_engine.js
       node --check dp_scenarios.js
-
       echo "JavaScript syntax validation: PASS"
-
-
-  # -------------------------------------------------------
-  # ENGINE LOAD TEST
-  # -------------------------------------------------------
 
   - name: Load DP simulation engine
     run: |
@@ -102,9 +66,7 @@ steps:
       const engine = require('./dp_simulation_engine.js');
 
       if (!engine) {
-        throw new Error(
-          'DP Simulation Engine failed to load.'
-        );
+        throw new Error('DP Simulation Engine failed to load.');
       }
 
       if (engine.version !== '1.0.0') {
@@ -118,140 +80,84 @@ steps:
       );
       NODE
 
-
-  # -------------------------------------------------------
-  # NORMAL SCENARIO
-  # -------------------------------------------------------
-
   - name: Validate normal scenario
     run: |
       node <<'NODE'
       const engine = require('./dp_simulation_engine.js');
 
-      const scenario =
-        engine.scenarios.normal();
-
-      const result =
-        engine.run(scenario);
+      const scenario = engine.scenarios.normal();
+      const result = engine.run(scenario);
 
       if (!result) {
-        throw new Error(
-          'Normal scenario failed.'
-        );
+        throw new Error('Normal scenario failed.');
       }
 
       if (!result.environment) {
-        throw new Error(
-          'Normal environment result missing.'
-        );
+        throw new Error('Environment result missing.');
       }
 
       if (!result.primary) {
-        throw new Error(
-          'Normal Primary AI result missing.'
-        );
+        throw new Error('Primary AI result missing.');
       }
 
       if (!result.secondary) {
-        throw new Error(
-          'Normal Secondary AI result missing.'
-        );
+        throw new Error('Secondary AI result missing.');
       }
 
       if (!result.stabilizer) {
-        throw new Error(
-          'Normal Stabilizer result missing.'
-        );
+        throw new Error('Stabilizer result missing.');
       }
 
       console.log(
-        `NORMAL: PASS | ` +
-        `Stress=${result.environment.environmentalStress.toFixed(2)} | ` +
-        `Risk=${result.risk}`
+        `NORMAL: PASS | Stress=${result.environment.environmentalStress.toFixed(2)} | Risk=${result.risk}`
       );
       NODE
-
-
-  # -------------------------------------------------------
-  # HEAVY WEATHER SCENARIO
-  # -------------------------------------------------------
 
   - name: Validate heavy weather scenario
     run: |
       node <<'NODE'
       const engine = require('./dp_simulation_engine.js');
 
-      const scenario =
-        engine.scenarios.heavyWeather();
-
-      const result =
-        engine.run(scenario);
+      const scenario = engine.scenarios.heavyWeather();
+      const result = engine.run(scenario);
 
       if (!result) {
-        throw new Error(
-          'Heavy weather scenario failed.'
-        );
+        throw new Error('Heavy weather scenario failed.');
       }
 
       if (!result.risk) {
-        throw new Error(
-          'Heavy weather risk classification missing.'
-        );
+        throw new Error('Risk classification missing.');
       }
 
       console.log(
-        `HEAVY WEATHER: PASS | ` +
-        `Stress=${result.environment.environmentalStress.toFixed(2)} | ` +
-        `Risk=${result.risk}`
+        `HEAVY WEATHER: PASS | Stress=${result.environment.environmentalStress.toFixed(2)} | Risk=${result.risk}`
       );
       NODE
-
-
-  # -------------------------------------------------------
-  # CRITICAL SCENARIO
-  # -------------------------------------------------------
 
   - name: Validate critical scenario
     run: |
       node <<'NODE'
       const engine = require('./dp_simulation_engine.js');
 
-      const scenario =
-        engine.scenarios.critical();
-
-      const result =
-        engine.run(scenario);
+      const scenario = engine.scenarios.critical();
+      const result = engine.run(scenario);
 
       if (!result) {
-        throw new Error(
-          'Critical scenario failed.'
-        );
+        throw new Error('Critical scenario failed.');
       }
 
       if (!result.human) {
-        throw new Error(
-          'Human-in-the-loop result missing.'
-        );
+        throw new Error('Human-in-the-loop result missing.');
       }
 
       if (!result.stabilizer) {
-        throw new Error(
-          'Critical stabilizer result missing.'
-        );
+        throw new Error('Stabilizer result missing.');
       }
 
       console.log(
-        `CRITICAL: PASS | ` +
-        `Stress=${result.environment.environmentalStress.toFixed(2)} | ` +
-        `Risk=${result.risk} | ` +
-        `HumanOverride=${result.human.override}`
+        `CRITICAL: PASS | Stress=${result.environment.environmentalStress.toFixed(2)} | Risk=${result.risk} | HumanOverride=${result.human.override}`
       );
       NODE
-
-
-  # -------------------------------------------------------
-  # DETERMINISTIC REPLAY TEST
-  # -------------------------------------------------------
 
   - name: Validate deterministic replay
     run: |
@@ -266,19 +172,13 @@ steps:
         tidal: 50
       };
 
-      const result1 =
-        engine.run(scenario);
+      const result1 = engine.run(scenario);
+      const result2 = engine.run(scenario);
 
-      const result2 =
-        engine.run(scenario);
-
-      const stress1 =
-        result1.environment.environmentalStress;
-
-      const stress2 =
-        result2.environment.environmentalStress;
-
-      if (stress1 !== stress2) {
+      if (
+        result1.environment.environmentalStress !==
+        result2.environment.environmentalStress
+      ) {
         throw new Error(
           'Deterministic replay failed: environmental stress differs.'
         );
@@ -308,15 +208,8 @@ steps:
         );
       }
 
-      console.log(
-        'Deterministic replay: PASS'
-      );
+      console.log('Deterministic replay: PASS');
       NODE
-
-
-  # -------------------------------------------------------
-  # COCKPIT STRUCTURE
-  # -------------------------------------------------------
 
   - name: Validate DP cockpit
     run: |
@@ -327,12 +220,7 @@ steps:
 
       echo "DP cockpit structure: PASS"
 
-
-  # -------------------------------------------------------
-  # SAFETY BOUNDARY
-  # -------------------------------------------------------
-
-  - name: Validate simulation safety boundary
+  - name: Validate safety boundary
     run: |
       grep -q "SIMULATION_ONLY" dp_simulation_engine.js
       grep -q "NOT certified marine control software" dp_simulation_engine.js
@@ -340,16 +228,11 @@ steps:
 
       echo "Safety boundary validation: PASS"
 
-
-  # -------------------------------------------------------
-  # FINAL VALIDATION SUMMARY
-  # -------------------------------------------------------
-
   - name: DP validation summary
     run: |
       echo ""
       echo "============================================================"
-      echo "        SEXTANT PROTOCOL – DP SYSTEM CI"
+      echo "        SEXTANT PROTOCOL - DP SYSTEM CI"
       echo "============================================================"
       echo ""
       echo "Repository Structure       : PASS"
@@ -366,8 +249,3 @@ steps:
       echo "============================================================"
       echo "        DP RESEARCH PROTOTYPE VALIDATION COMPLETE"
       echo "============================================================"
-      echo ""
-      echo "SIMULATION ONLY"
-      echo "NOT CERTIFIED MARINE CONTROL SOFTWARE"
-      echo "NO CONNECTION TO OPERATIONAL DP SYSTEMS"
-      echo ""
