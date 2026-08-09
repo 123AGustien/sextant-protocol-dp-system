@@ -636,3 +636,352 @@
 
     window.appendOperatorLog =
         appendOperatorLog;
+/* ========================================================
+       ENVIRONMENT DISPLAY
+    ======================================================== */
+
+    function updateEnvironment(result) {
+
+        const environment =
+            result.environment;
+
+        setText(
+            "windValue",
+            environment.wind
+        );
+
+        setText(
+            "currentValue",
+            environment.current
+        );
+
+        setText(
+            "waveValue",
+            environment.wave
+        );
+
+        setText(
+            "tidalValue",
+            environment.tidal
+        );
+
+        setText(
+            "environmentStress",
+            Number(
+                environment.environmentalStress
+            ).toFixed(2)
+        );
+
+    }
+
+
+    /* ========================================================
+       SYSTEM STATUS
+    ======================================================== */
+
+    function updateSystem(result) {
+
+        setText(
+            "systemStatus",
+            result.systemStatus
+        );
+
+        setText(
+            "riskLevel",
+            result.risk
+        );
+
+        setText(
+            "environmentStatus",
+            "ACTIVE / SIMULATED"
+        );
+
+        setText(
+            "primaryStatus",
+            result.primary.mode
+        );
+
+        setText(
+            "secondaryStatus",
+            result.secondary.mode
+        );
+
+        setText(
+            "stabilizerStatus",
+            result.stabilizer.mode
+        );
+
+        setText(
+            "humanAuthority",
+            result.human.status
+        );
+
+    }
+
+
+    /* ========================================================
+       RESILIENCE ALERT
+    ======================================================== */
+
+    function updateAlert(result) {
+
+        let level =
+            "NORMAL";
+
+        let change =
+            "STABLE";
+
+        let state =
+            "MONITORING";
+
+        let attention =
+            "NOT REQUIRED";
+
+
+        if (
+            result.risk ===
+            "MEDIUM"
+        ) {
+
+            level =
+                "ADVISORY";
+
+            change =
+                "ELEVATED";
+
+            state =
+                "PREVENTIVE MONITORING";
+
+            attention =
+                "OPERATOR ATTENTION";
+
+        }
+
+
+        if (
+            result.risk ===
+            "HIGH"
+        ) {
+
+            level =
+                "HIGH";
+
+            change =
+                "SIGNIFICANT";
+
+            state =
+                "HUMAN REVIEW";
+
+            attention =
+                "REVIEW REQUIRED";
+
+        }
+
+
+        if (
+            result.risk ===
+            "CRITICAL"
+        ) {
+
+            level =
+                "CRITICAL";
+
+            change =
+                "CRITICAL";
+
+            state =
+                "CRITICAL HUMAN REVIEW";
+
+            attention =
+                "IMMEDIATE HUMAN REVIEW";
+
+        }
+
+
+        setText(
+            "resilienceAlertLevel",
+            level
+        );
+
+        setText(
+            "environmentalChange",
+            change
+        );
+
+        setText(
+            "resilienceState",
+            state
+        );
+
+        setText(
+            "operatorAttention",
+            attention
+        );
+
+    }
+
+
+    /* ========================================================
+       STABILIZER DISPLAY
+    ======================================================== */
+
+    function updateStabilizer(result) {
+
+        const stabilizer =
+            result.stabilizer;
+
+        if (!stabilizer) {
+            return;
+        }
+
+
+        setText(
+            "stabilizerMode",
+            stabilizer.mode
+        );
+
+        setText(
+            "stabilizerSource",
+            stabilizer.source
+        );
+
+        setText(
+            "stabilizerOutput",
+            Number(
+                stabilizer.finalOutput
+            ).toFixed(2)
+        );
+
+        setText(
+            "stabilizerState",
+            stabilizer.status
+        );
+
+    }
+
+
+    /* ========================================================
+       OPERATOR DECISION-SUPPORT DISPLAY
+    ======================================================== */
+
+    function updateRecommendation(result) {
+
+        const action =
+            result.recommendedAction;
+
+        if (!action) {
+            return;
+        }
+
+
+        setText(
+            "recommendedAction",
+            action.primaryRecommendation
+        );
+
+        setText(
+            "actionUrgency",
+            action.urgency
+        );
+
+        setText(
+            "responseMode",
+            action.responseMode
+        );
+
+        setText(
+            "actionRationale",
+            action.rationale
+        );
+
+
+        const list =
+            el(
+                "recommendedActions"
+            );
+
+        if (!list) {
+            return;
+        }
+
+
+        list.innerHTML =
+            "";
+
+
+        const recommendations =
+            Array.isArray(
+                action.recommendedActions
+            )
+                ? action.recommendedActions
+                : [];
+
+
+        recommendations.forEach(
+            function (recommendation) {
+
+                const item =
+                    document.createElement(
+                        "li"
+                    );
+
+                item.textContent =
+                    recommendation;
+
+                list.appendChild(
+                    item
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       DP SIMULATION RESULT
+    ======================================================== */
+
+    function updateSimulation(result) {
+
+        const state =
+            result.updatedState;
+
+        if (!state) {
+            return;
+        }
+
+
+        setText(
+            "dpSimulationStatus",
+            "SIMULATION COMPLETE"
+        );
+
+        setText(
+            "positionError",
+            Number(
+                state.positionError
+            ).toFixed(3)
+        );
+
+        setText(
+            "simulatedCommand",
+            Number(
+                state.simulatedCommand
+            ).toFixed(2)
+        );
+
+        setText(
+            "stabilityIndex",
+            Number(
+                state.stabilityIndex
+            ).toFixed(2)
+        );
+
+
+        setText(
+            "dpSimulationAssessment",
+            "Simulation processed through Environmental → Primary AI → Secondary AI → Stabilizer → Human-in-the-Loop decision-support layers."
+        );
+
+    }
