@@ -1,26 +1,607 @@
-<script>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Sextant Protocol – DP Resilience Cockpit</title><style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #08111f;
+    color: #e8f0f7;
+}
+
+.header {
+    padding: 18px;
+    text-align: center;
+    background: #0d1b2a;
+    border-bottom: 2px solid #29445f;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header p {
+    margin: 8px 0 0;
+    color: #9fb3c8;
+    font-size: 13px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.panel {
+    background: #0e1c2c;
+    border: 1px solid #29445f;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 1px solid #29445f;
+    padding-bottom: 8px;
+}
+
+.vessel-data {
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    gap: 10px;
+    align-items: center;
+    margin: 10px 0;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #46627d;
+    background: #07111d;
+    color: white;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.run {
+    background: #1f8f5f;
+    color: white;
+}
+
+.reset {
+    background: #46586d;
+    color: white;
+}
+
+.scenario {
+    background: #315a7d;
+    color: white;
+}
+
+.controls {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.architecture {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.node {
+    padding: 10px;
+    border: 1px solid #587590;
+    border-radius: 6px;
+    background: #13283b;
+    text-align: center;
+    min-width: 125px;
+    font-size: 12px;
+}
+
+.arrow {
+    color: #8faac0;
+    font-size: 20px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.status-card {
+    padding: 12px;
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+}
+
+.status-title {
+    font-size: 11px;
+    color: #91a8bd;
+}
+
+.status-value {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.output {
+    white-space: pre-wrap;
+    background: #050c14;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    padding: 15px;
+    min-height: 320px;
+    font-family: monospace;
+    font-size: 13px;
+    overflow-x: auto;
+}
+
+.footer {
+    text-align: center;
+    padding: 18px;
+    color: #8799aa;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.engine-status {
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    background: #091827;
+    border: 1px solid #29445f;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+@media (max-width: 600px) {
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .architecture {
+        flex-direction: column;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+    }
+
+    button {
+        width: 90%;
+    }
+
+}
+
+</style></head><body><div class="header"><h1>
+    SEXTANT PROTOCOL – DP RESILIENCE COCKPIT
+</h1>
+
+<p>
+    SIMULATION RESEARCH PROTOTYPE •
+    PRIMARY AI →
+    SECONDARY AI →
+    STABILIZER →
+    HUMAN-IN-THE-LOOP
+</p>
+
+</div><div class="container"><!-- ======================================================
+     ENGINE STATUS
+======================================================= --><div class="engine-status">ENGINE:
+<span id="engineStatus">
+    INITIALISING...
+</span>
+
+</div><!-- ======================================================
+     ARCHITECTURE
+======================================================= --><div class="panel"><h2>Principal Architecture</h2>
+
+<div class="architecture">
+
+    <div class="node">
+        ENVIRONMENT
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="node">
+        PRIMARY AI<br>
+        Normal Control
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="node">
+        SECONDARY AI<br>
+        Safety Layer
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="node">
+        STABILIZER<br>
+        Arbitration
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="node">
+        HUMAN-IN-THE-LOOP<br>
+        Final Authority
+    </div>
+
+    <div class="arrow">→</div>
+
+    <div class="node">
+        SIMULATED DP ACTION
+    </div>
+
+</div>
+
+</div><!-- ======================================================
+     VESSEL + ENVIRONMENT
+======================================================= --><div class="grid"><div class="panel"><h2>Simulated Vessel Profile</h2>
+
+<div class="vessel-data">
+
+    <strong>Name:</strong>
+    SEXTANT-MPSV-01
+    <br>
+
+    <strong>Type:</strong>
+    Multi-Purpose Support Vessel
+    <br>
+
+    <strong>DP Class:</strong>
+    DP2-SIMULATED
+    <br>
+
+    <strong>Length:</strong>
+    85 m
+    <br>
+
+    <strong>Beam:</strong>
+    20 m
+    <br>
+
+    <strong>Draft:</strong>
+    6 m
+    <br>
+
+    <strong>Main Thrusters:</strong>
+    2
+    <br>
+
+    <strong>Tunnel Thrusters:</strong>
+    2
+    <br>
+
+    <strong>Total Thrusters:</strong>
+    4
+    <br>
+
+    <strong>Nominal Simulated Thrust:</strong>
+    100 units
+
+</div>
+
+</div><div class="panel"><h2>
+    Environmental Simulation Inputs
+</h2>
+
+<div class="input-row">
+
+    <label for="wind">
+        Wind Stress (0–100)
+    </label>
+
+    <input
+        id="wind"
+        type="number"
+        min="0"
+        max="100"
+        value="30"
+    >
+
+</div>
+
+
+<div class="input-row">
+
+    <label for="current">
+        Current Stress (0–100)
+    </label>
+
+    <input
+        id="current"
+        type="number"
+        min="0"
+        max="100"
+        value="25"
+    >
+
+</div>
+
+
+<div class="input-row">
+
+    <label for="wave">
+        Wave Stress (0–100)
+    </label>
+
+    <input
+        id="wave"
+        type="number"
+        min="0"
+        max="100"
+        value="30"
+    >
+
+</div>
+
+
+<div class="input-row">
+
+    <label for="tidal">
+        Tidal Stress (0–100)
+    </label>
+
+    <input
+        id="tidal"
+        type="number"
+        min="0"
+        max="100"
+        value="20"
+    >
+
+</div>
+
+</div></div><!-- ======================================================
+     SCENARIO CONTROLS
+======================================================= --><div class="panel"><h2>Scenario Controls</h2>
+
+<div class="controls">
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('NORMAL')">
+        NORMAL
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('MODERATE_WEATHER')">
+        MODERATE
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('HEAVY_WEATHER')">
+        HEAVY WEATHER
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('CRITICAL_WEATHER')">
+        CRITICAL
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('CURRENT_SURGE')">
+        CURRENT SURGE
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('HEAVY_SEA_STATE')">
+        HEAVY SEA
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('WIND_GUST_EVENT')">
+        WIND GUST
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('COMBINED_DISTURBANCE')">
+        COMBINED
+    </button>
+
+    <button class="scenario"
+            onclick="executeRandomDPCockpitScenario()">
+        RANDOM
+    </button>
+
+</div>
+
+</div><!-- ======================================================
+     MAIN CONTROL
+======================================================= --><div class="controls"><button class="run"
+        onclick="runSimulation()">
+    ▶ RUN DP SIMULATION
+</button>
+
+<button class="reset"
+        onclick="resetSimulation()">
+    RESET
+</button>
+
+</div><!-- ======================================================
+     LIVE STATUS
+======================================================= --><div class="panel"><h2>Live System Status</h2>
+
+<div class="status-grid">
+
+    <div class="status-card">
+
+        <div class="status-title">
+            ENVIRONMENT
+        </div>
+
+        <div id="environmentStatus"
+             class="status-value">
+            STANDBY
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            PRIMARY AI
+        </div>
+
+        <div id="primaryStatus"
+             class="status-value">
+            STANDBY
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            SECONDARY AI
+        </div>
+
+        <div id="secondaryStatus"
+             class="status-value">
+            STANDBY
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            STABILIZER
+        </div>
+
+        <div id="stabilizerStatus"
+             class="status-value">
+            STANDBY
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            HUMAN AUTHORITY
+        </div>
+
+        <div id="humanStatus"
+             class="status-value">
+            AVAILABLE
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            SYSTEM
+        </div>
+
+        <div id="systemStatus"
+             class="status-value">
+            READY
+        </div>
+
+    </div>
+
+</div>
+
+</div><!-- ======================================================
+     RESULTS
+======================================================= --><div class="panel"><h2>DP Simulation Assessment</h2>
+
+<div id="output"
+     class="output">
+
+System ready.
+
+Select environmental conditions or a scenario,
+then press RUN DP SIMULATION.
+</div>
+
+</div></div><!-- ======================================================
+     FOOTER
+======================================================= --><div class="footer">SEXTANT PROTOCOL – RESEARCH / SIMULATION ONLY
+<br>
+
+NOT CERTIFIED MARINE CONTROL SOFTWARE
+<br>
+
+NOT FOR CONNECTION TO OPERATIONAL DP,
+PROPULSION, NAVIGATION OR SAFETY SYSTEMS
+
+</div><!-- ======================================================
+     MODULE LOAD ORDER
+=======================================================
+
+1. DP simulation engine
+2. DP scenario library
+3. Cockpit wiring
+
+======================================================= --><script src="./dp_simulation_engine.js"></script><script src="./dp_scenarios.js"></script><script>
 
 /* =========================================================
    SEXTANT PROTOCOL
-   DP RESILIENCE COCKPIT WIRING
-   ========================================================= */
+   DP COCKPIT INTEGRATION / WIRING LAYER
+========================================================= */
 
 
-/* =========================================================
-   ENGINE VALIDATION
-   ========================================================= */
+/* ---------------------------------------------------------
+   ENGINE VERIFICATION
+--------------------------------------------------------- */
 
 function verifyDPEngine() {
 
     const status =
-        document.getElementById(
-            "engineStatus"
-        );
-
+        document.getElementById("engineStatus");
 
     if (
-        typeof DPSimulationEngine ===
-        "undefined"
+        typeof DPSimulationEngine === "undefined"
     ) {
 
         status.textContent =
@@ -45,70 +626,90 @@ function verifyDPEngine() {
 }
 
 
-/* =========================================================
-   SCENARIO LIBRARY VALIDATION
-   ========================================================= */
+/* ---------------------------------------------------------
+   ENGINE SELF-VALIDATION
+--------------------------------------------------------- */
 
-function verifyDPScenarioLibrary() {
+function validateDPEngine() {
 
     if (
-        typeof DP_SCENARIOS ===
-        "undefined"
+        !verifyDPEngine()
     ) {
-
-        console.warn(
-            "DP scenario library not loaded."
-        );
-
         return false;
     }
 
 
-    console.log(
-        "DP scenario library connected:",
-        Object.keys(
-            DP_SCENARIOS
-        ).length,
-        "scenarios"
-    );
+    try {
+
+        const validation =
+            DPSimulationEngine.validate();
 
 
-    return true;
+        if (
+            validation.status === "PASS"
+        ) {
+
+            document.getElementById(
+                "engineStatus"
+            ).textContent =
+
+                "DP SIMULATION ENGINE " +
+                DPSimulationEngine.version +
+                " CONNECTED • VALIDATION PASS";
+
+            return true;
+        }
+
+
+        document.getElementById(
+            "engineStatus"
+        ).textContent =
+
+            "ENGINE CONNECTED • VALIDATION FAIL";
+
+        document.getElementById(
+            "engineStatus"
+        ).style.color =
+            "#ffb347";
+
+        console.warn(
+            "DP engine validation:",
+            validation
+        );
+
+        return false;
+
+    } catch (error) {
+
+        console.error(
+            "DP engine validation error:",
+            error
+        );
+
+        return false;
+    }
 }
 
 
-/* =========================================================
+/* ---------------------------------------------------------
    INPUT READER
-   ========================================================= */
+--------------------------------------------------------- */
 
-function getDPInput(
-    id
-) {
+function getDPInput(id) {
 
     const element =
-        document.getElementById(
-            id
-        );
-
+        document.getElementById(id);
 
     if (!element) {
-
         return 0;
     }
 
 
     const value =
-        Number(
-            element.value
-        );
+        Number(element.value);
 
 
-    if (
-        !Number.isFinite(
-            value
-        )
-    ) {
-
+    if (!Number.isFinite(value)) {
         return 0;
     }
 
@@ -123,9 +724,128 @@ function getDPInput(
 }
 
 
-/* =========================================================
+/* ---------------------------------------------------------
+   SCENARIO EXECUTOR
+   ---------------------------------------------------------
+   Deliberately named differently from the engine's
+   runDPScenario() and the scenario library's function.
+--------------------------------------------------------- */
+
+function executeDPCockpitScenario(
+    scenarioName
+) {
+
+    if (
+        typeof DP_SCENARIOS === "undefined"
+    ) {
+
+        document.getElementById(
+            "output"
+        ).textContent =
+
+`DP SCENARIO LIBRARY ERROR
+
+Required file:
+dp_scenarios.js
+
+Scenario execution stopped.`;
+
+        return;
+    }
+
+
+    const scenario =
+        DP_SCENARIOS[scenarioName];
+
+
+    if (!scenario) {
+
+        document.getElementById(
+            "output"
+        ).textContent =
+
+`UNKNOWN DP SCENARIO
+
+Scenario:
+${scenarioName}`;
+
+        return;
+    }
+
+
+    document.getElementById(
+        "wind"
+    ).value =
+        scenario.wind;
+
+
+    document.getElementById(
+        "current"
+    ).value =
+        scenario.current;
+
+
+    document.getElementById(
+        "wave"
+    ).value =
+        scenario.wave;
+
+
+    document.getElementById(
+        "tidal"
+    ).value =
+        scenario.tidal;
+
+
+    runSimulation();
+}
+
+
+/* ---------------------------------------------------------
+   RANDOM SCENARIO
+--------------------------------------------------------- */
+
+function executeRandomDPCockpitScenario() {
+
+    document.getElementById(
+        "wind"
+    ).value =
+        Math.floor(
+            Math.random() * 101
+        );
+
+
+    document.getElementById(
+        "current"
+    ).value =
+        Math.floor(
+            Math.random() * 101
+        );
+
+
+    document.getElementById(
+        "wave"
+    ).value =
+        Math.floor(
+            Math.random() * 101
+        );
+
+
+    document.getElementById(
+        "tidal"
+    ).value =
+        Math.floor(
+            Math.random() * 101
+        );
+
+
+    runSimulation();
+}
+
+
+/* ---------------------------------------------------------
    SIMULATION EXECUTION
-   ========================================================= */
+--------------------------------------------------------- */
 
 function runSimulation() {
 
@@ -153,24 +873,17 @@ Simulation not executed.`;
     const inputs = {
 
         wind:
-            getDPInput(
-                "wind"
-            ),
+            getDPInput("wind"),
 
         current:
-            getDPInput(
-                "current"
-            ),
+            getDPInput("current"),
 
         wave:
-            getDPInput(
-                "wave"
-            ),
+            getDPInput("wave"),
 
         tidal:
-            getDPInput(
-                "tidal"
-            )
+            getDPInput("tidal")
+
     };
 
 
@@ -184,11 +897,7 @@ Simulation not executed.`;
                 inputs
             );
 
-    }
-
-    catch (
-        error
-    ) {
+    } catch (error) {
 
         console.error(
             "DP Simulation Error:",
@@ -222,9 +931,9 @@ No simulated action was executed.`;
 }
 
 
-/* =========================================================
+/* ---------------------------------------------------------
    UPDATE LIVE STATUS
-   ========================================================= */
+--------------------------------------------------------- */
 
 function updateDPCockpit(
     result
@@ -250,8 +959,7 @@ function updateDPCockpit(
         "environmentStatus"
     ).textContent =
 
-        environment.environmentalStress
-            .toFixed(2)
+        environment.environmentalStress.toFixed(2)
         +
         " / "
         +
@@ -262,8 +970,7 @@ function updateDPCockpit(
         "primaryStatus"
     ).textContent =
 
-        primary.thrustOutput
-            .toFixed(2)
+        primary.thrustOutput.toFixed(2)
         +
         " / "
         +
@@ -275,9 +982,7 @@ function updateDPCockpit(
     ).textContent =
 
         secondary.safetyMode
-
             ? "SAFETY ACTIVE"
-
             : "MONITORING";
 
 
@@ -293,9 +998,7 @@ function updateDPCockpit(
     ).textContent =
 
         human.override
-
             ? "OVERRIDE REQUIRED"
-
             : "AVAILABLE";
 
 
@@ -307,9 +1010,9 @@ function updateDPCockpit(
 }
 
 
-/* =========================================================
+/* ---------------------------------------------------------
    RESULT REPORT
-   ========================================================= */
+--------------------------------------------------------- */
 
 function renderDPReport(
     result,
@@ -355,21 +1058,10 @@ Name              : ${result.vessel.name}
 Type              : ${result.vessel.type}
 DP Classification : ${result.vessel.dpClass}
 
-Dimensions        : ${
-    result.vessel.dimensions.length
-}m × ${
-    result.vessel.dimensions.beam
-}m × ${
-    result.vessel.dimensions.draft
-}m
+Dimensions        : ${result.vessel.dimensions.length}m × ${result.vessel.dimensions.beam}m × ${result.vessel.dimensions.draft}m
 
-Thrusters         : ${
-    result.vessel.propulsion.totalThrusters
-}
-
-Nominal Thrust    : ${
-    result.vessel.propulsion.nominalThrust
-} simulation units
+Thrusters         : ${result.vessel.propulsion.totalThrusters}
+Nominal Thrust    : ${result.vessel.propulsion.nominalThrust} simulation units
 
 
 ENVIRONMENT
@@ -380,9 +1072,7 @@ Wave Stress       : ${inputs.wave.toFixed(2)}
 Tidal Stress      : ${inputs.tidal.toFixed(2)}
 
 Environmental
-Stress            : ${
-    environment.environmentalStress.toFixed(2)
-}
+Stress            : ${environment.environmentalStress.toFixed(2)}
 
 Risk Classification:
 ${result.risk}
@@ -424,22 +1114,11 @@ Status            : ${stabilizer.status}
 
 UPDATED SIMULATED STATE
 ------------------------------------------------------------
-Position Error    : ${
-    updatedState.positionError.toFixed(4)
-}
-
-Simulated Command : ${
-    updatedState.simulatedCommand.toFixed(2)
-}
-
+Position Error    : ${updatedState.positionError.toFixed(4)}
+Simulated Command : ${updatedState.simulatedCommand.toFixed(2)}
 Environmental
-Stress            : ${
-    updatedState.environmentalStress.toFixed(2)
-}
-
-Stability Index   : ${
-    updatedState.stabilityIndex.toFixed(2)
-}
+Stress            : ${updatedState.environmentalStress.toFixed(2)}
+Stability Index   : ${updatedState.stabilityIndex.toFixed(2)}
 
 
 GOVERNANCE
@@ -476,13 +1155,9 @@ UPDATE
 
 AUDIT
 ------------------------------------------------------------
-Timestamp         : ${
-    result.audit.timestamp
-}
-
-Engine Version    : ${
-    result.audit.engineVersion
-}
+Timestamp         : ${result.audit.timestamp}
+Engine Version    : ${result.audit.engineVersion}
+Mode              : ${result.audit.mode}
 
 
 ============================================================
@@ -511,9 +1186,9 @@ decisions and outputs are simulated.
 }
 
 
-/* =========================================================
+/* ---------------------------------------------------------
    RESET
-   ========================================================= */
+--------------------------------------------------------- */
 
 function resetSimulation() {
 
@@ -521,16 +1196,13 @@ function resetSimulation() {
         "wind"
     ).value = 30;
 
-
     document.getElementById(
         "current"
     ).value = 25;
 
-
     document.getElementById(
         "wave"
     ).value = 30;
-
 
     document.getElementById(
         "tidal"
@@ -584,21 +1256,19 @@ then press RUN DP SIMULATION.`;
 }
 
 
-/* =========================================================
+/* ---------------------------------------------------------
    STARTUP
-   ========================================================= */
+--------------------------------------------------------- */
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
 
-        verifyDPEngine();
-
-        verifyDPScenarioLibrary();
-
         resetSimulation();
+
+        validateDPEngine();
 
     }
 );
 
-</script>
+</script></body></html>
