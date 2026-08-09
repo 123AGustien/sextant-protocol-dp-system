@@ -486,3 +486,678 @@ NEXT:
 PART 2 — BODY / OPERATOR ALERT INTERFACE
 ============================================================
 -->
+<body><!-- ======================================================
+     HEADER
+======================================================= --><div class="header"><h1>
+    SEXTANT PROTOCOL – DP RESILIENCE COCKPIT
+</h1>
+
+<p>
+    SIMULATION RESEARCH PROTOTYPE •
+    PRIMARY AI →
+    SECONDARY AI →
+    STABILIZER →
+    HUMAN-IN-THE-LOOP
+</p>
+
+</div><div class="container"><!-- ======================================================
+     ENGINE STATUS
+======================================================= --><div class="engine-status">ENGINE:
+<span id="engineStatus">
+    INITIALISING...
+</span>
+
+</div><!-- ======================================================
+     OPERATOR ALERT
+======================================================= --><div id="operatorAlert"
+     class="operator-alert alert-normal"><div id="operatorAlertTitle"
+     class="operator-alert-title">
+
+    🟢 NORMAL
+
+</div>
+
+<div id="operatorAlertMessage"
+     class="operator-alert-message">
+
+    System operating normally.
+    Continue monitoring.
+
+</div>
+
+<div id="operatorAlertInstruction"
+     class="operator-alert-instruction">
+
+    NO IMMEDIATE ACTION REQUIRED
+
+</div>
+
+<div class="operator-alert-meta">
+
+    <div class="alert-meta-card">
+
+        <span class="alert-meta-label">
+            ALERT LEVEL
+        </span>
+
+        <span id="alertLevel"
+              class="alert-meta-value">
+            NORMAL
+        </span>
+
+    </div>
+
+
+    <div class="alert-meta-card">
+
+        <span class="alert-meta-label">
+            EVENT PRIORITY
+        </span>
+
+        <span id="eventPriority"
+              class="alert-meta-value">
+            LOW
+        </span>
+
+    </div>
+
+
+    <div class="alert-meta-card">
+
+        <span class="alert-meta-label">
+            OPERATOR RESPONSE
+        </span>
+
+        <span id="operatorResponse"
+              class="alert-meta-value">
+            MONITOR
+        </span>
+
+    </div>
+
+
+    <div class="alert-meta-card">
+
+        <span class="alert-meta-label">
+            HUMAN AUTHORITY
+        </span>
+
+        <span id="humanAuthority"
+              class="alert-meta-value">
+            AVAILABLE
+        </span>
+
+    </div>
+
+</div>
+
+
+<div id="operatorCountdown"
+     class="countdown"
+     style="display:none;">
+
+    RESPONSE WINDOW:
+    <span id="countdownValue">
+        --:--
+
+    </span>
+
+</div>
+
+</div><!-- ======================================================
+     PRINCIPAL ARCHITECTURE
+======================================================= --><div class="panel"><h2>
+    Principal Architecture
+</h2>
+
+<div class="architecture">
+
+    <div class="node">
+        ENVIRONMENT
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="node">
+        PRIMARY AI<br>
+        Normal Control
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="node">
+        SECONDARY AI<br>
+        Independent Safety Layer
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="node">
+        STABILIZER<br>
+        Arbitration
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="node">
+        HUMAN-IN-THE-LOOP<br>
+        Final Authority
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="node">
+        SIMULATED DP ACTION
+    </div>
+
+</div>
+
+</div><!-- ======================================================
+     VESSEL + ENVIRONMENT
+======================================================= --><div class="grid"><!-- VESSEL -->
+
+<div class="panel">
+
+    <h2>
+        Simulated Vessel Profile
+    </h2>
+
+    <div class="vessel-data">
+
+        <strong>Name:</strong>
+        SEXTANT-MPSV-01
+        <br>
+
+        <strong>Type:</strong>
+        Multi-Purpose Support Vessel
+        <br>
+
+        <strong>DP Class:</strong>
+        DP2-SIMULATED
+        <br>
+
+        <strong>Length:</strong>
+        85 m
+        <br>
+
+        <strong>Beam:</strong>
+        20 m
+        <br>
+
+        <strong>Draft:</strong>
+        6 m
+        <br>
+
+        <strong>Main Thrusters:</strong>
+        2
+        <br>
+
+        <strong>Tunnel Thrusters:</strong>
+        2
+        <br>
+
+        <strong>Total Thrusters:</strong>
+        4
+        <br>
+
+        <strong>
+            Nominal Simulated Thrust:
+        </strong>
+
+        100 units
+
+    </div>
+
+</div>
+
+
+<!-- ENVIRONMENT -->
+
+<div class="panel">
+
+    <h2>
+        Environmental Simulation Inputs
+    </h2>
+
+
+    <div class="input-row">
+
+        <label for="wind">
+            Wind Stress (0–100)
+        </label>
+
+        <input
+            id="wind"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+
+    <div class="input-row">
+
+        <label for="current">
+            Current Stress (0–100)
+        </label>
+
+        <input
+            id="current"
+            type="number"
+            min="0"
+            max="100"
+            value="25"
+        >
+
+    </div>
+
+
+    <div class="input-row">
+
+        <label for="wave">
+            Wave Stress (0–100)
+        </label>
+
+        <input
+            id="wave"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+
+    <div class="input-row">
+
+        <label for="tidal">
+            Tidal Stress (0–100)
+        </label>
+
+        <input
+            id="tidal"
+            type="number"
+            min="0"
+            max="100"
+            value="20"
+        >
+
+    </div>
+
+</div>
+
+</div><!-- ======================================================
+     SCENARIO CONTROLS
+======================================================= --><div class="panel"><h2>
+    Scenario Controls
+</h2>
+
+<div class="controls">
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('NORMAL')">
+        NORMAL
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('MODERATE_WEATHER')">
+        MODERATE
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('HEAVY_WEATHER')">
+        HEAVY WEATHER
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('CRITICAL_WEATHER')">
+        CRITICAL
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('CURRENT_SURGE')">
+        CURRENT SURGE
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('HEAVY_SEA_STATE')">
+        HEAVY SEA
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('WIND_GUST_EVENT')">
+        WIND GUST
+    </button>
+
+    <button class="scenario"
+            onclick="executeDPCockpitScenario('COMBINED_DISTURBANCE')">
+        COMBINED
+    </button>
+
+    <button class="scenario"
+            onclick="executeRandomDPCockpitScenario()">
+        RANDOM
+    </button>
+
+</div>
+
+</div><!-- ======================================================
+     MAIN CONTROL
+======================================================= --><div class="controls"><button class="run"
+        onclick="runSimulation()">
+
+    ▶ RUN DP SIMULATION
+
+</button>
+
+
+<button class="reset"
+        onclick="resetSimulation()">
+
+    RESET
+
+</button>
+
+</div><!-- ======================================================
+     LIVE SYSTEM STATUS
+======================================================= --><div class="panel"><h2>
+    Live System Status
+</h2>
+
+<div class="status-grid">
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            ENVIRONMENT
+        </div>
+
+        <div id="environmentStatus"
+             class="status-value">
+            STANDBY
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            PRIMARY AI
+        </div>
+
+        <div id="primaryStatus"
+             class="status-value">
+            STANDBY
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            SECONDARY AI
+        </div>
+
+        <div id="secondaryStatus"
+             class="status-value">
+            STANDBY
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            STABILIZER
+        </div>
+
+        <div id="stabilizerStatus"
+             class="status-value">
+            STANDBY
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            HUMAN AUTHORITY
+        </div>
+
+        <div id="humanStatus"
+             class="status-value">
+            AVAILABLE
+        </div>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <div class="status-title">
+            SYSTEM
+        </div>
+
+        <div id="systemStatus"
+             class="status-value">
+            READY
+        </div>
+
+    </div>
+
+</div>
+
+</div><!-- ======================================================
+     STABILIZER DECISION SUPPORT
+======================================================= --><div class="panel stabilizer-panel"><h2>
+    Stabilizer – Resilience Arbitration
+</h2>
+
+<div id="stabilizerState"
+     class="stabilizer-state">
+
+    STANDBY
+
+</div>
+
+<div id="stabilizerMessage"
+     class="stabilizer-message">
+
+    The stabilizer is awaiting simulated
+    environmental assessment.
+
+</div>
+
+</div><!-- ======================================================
+     HUMAN DECISION AUTHORITY
+======================================================= --><div class="panel human-decision"><div class="human-decision-title">
+
+    HUMAN-IN-THE-LOOP — FINAL AUTHORITY
+
+</div>
+
+<div id="humanDecisionMessage"
+     class="human-decision-message">
+
+    No operator intervention currently required.
+    Human authority remains available.
+
+</div>
+
+</div><!-- ======================================================
+     RESPONSE INDICATORS
+======================================================= --><div class="panel"><h2>
+    Operator Response Indicators
+</h2>
+
+<div class="response-indicator">
+
+
+    <div class="response-card">
+
+        <div class="response-icon">
+            🔔
+        </div>
+
+        <div class="response-label">
+            AUDIBLE ALERT
+        </div>
+
+        <div id="audibleIndicator"
+             class="response-value">
+
+            STANDBY
+
+        </div>
+
+    </div>
+
+
+    <div class="response-card">
+
+        <div class="response-icon">
+            📳
+        </div>
+
+        <div class="response-label">
+            ATTENTION INDICATOR
+        </div>
+
+        <div id="attentionIndicator"
+             class="response-value">
+
+            STANDBY
+
+        </div>
+
+    </div>
+
+
+    <div class="response-card">
+
+        <div class="response-icon">
+            ⏱️
+        </div>
+
+        <div class="response-label">
+            RESPONSE WINDOW
+        </div>
+
+        <div id="responseWindowIndicator"
+             class="response-value">
+
+            NOT ACTIVE
+
+        </div>
+
+    </div>
+
+
+    <div class="response-card">
+
+        <div class="response-icon">
+            👨‍✈️
+        </div>
+
+        <div class="response-label">
+            HUMAN DECISION
+        </div>
+
+        <div id="humanDecisionIndicator"
+             class="response-value">
+
+            AVAILABLE
+
+        </div>
+
+    </div>
+
+</div>
+
+</div><!-- ======================================================
+     EVENT LOG
+======================================================= --><div class="panel"><h2>
+    Operator Event Log
+</h2>
+
+<div id="eventLog"
+     class="event-log">
+
+    <div class="event-entry">
+        [SYSTEM]
+        DP resilience cockpit initialised.
+    </div>
+
+</div>
+
+</div><!-- ======================================================
+     RESULTS
+======================================================= --><div class="panel"><h2>
+    DP Simulation Assessment
+</h2>
+
+<div id="output"
+     class="output">
+
+System ready.
+
+Select environmental conditions or a scenario,
+then press RUN DP SIMULATION.
+
+</div>
+
+</div><!-- ======================================================
+     FOOTER
+======================================================= --><div class="footer">SEXTANT PROTOCOL – RESEARCH / SIMULATION ONLY
+<br>
+
+NOT CERTIFIED MARINE CONTROL SOFTWARE
+<br>
+
+NOT FOR CONNECTION TO OPERATIONAL DP,
+PROPULSION, NAVIGATION OR SAFETY SYSTEMS
+
+<br><br>
+
+Operator alerts, stabilizer outputs and all
+recommended responses shown by this prototype
+are simulated decision-support information only.
+
+</div><!-- ======================================================
+     MODULE LOAD ORDER
+
+     1. DP simulation engine
+     2. DP scenario library
+     3. DP alert manager (Part 3)
+     4. DP cockpit wiring
+======================================================= --><script src="./dp_simulation_engine.js"></script><script src="./dp_scenarios.js"></script><!--
+<script src="./dp_alert_manager.js"></script>
+--><!-- ======================================================
+     PART 2 COMPLETE
+
+     PART 3 WILL ADD:
+     • Alert Manager
+     • Operator alert logic
+     • Event logging
+     • Audible/attention simulation
+     • Response-window handling
+     • Stabilizer presentation
+======================================================= -->
