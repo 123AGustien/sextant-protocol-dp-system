@@ -1,1 +1,56 @@
-g
+name: Sextant DP System CI
+
+on:
+push:
+branches:
+- main
+workflow_dispatch:
+
+jobs:
+test:
+runs-on: ubuntu-latest
+
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
+
+  - name: Setup Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: "20"
+
+  - name: Check DP files
+    run: |
+      test -f dp_cockpit.html
+      test -f dp_simulation_engine.js
+      test -f dp_scenarios.js
+      echo "DP files OK"
+
+  - name: Check JavaScript
+    run: |
+      node --check dp_simulation_engine.js
+      node --check dp_scenarios.js
+      echo "JavaScript syntax OK"
+
+  - name: Test DP engine
+    run: |
+      node <<'NODE'
+      const engine = require('./dp_simulation_engine.js');
+
+      const normal = engine.scenarios.normal();
+      const heavy = engine.scenarios.heavyWeather();
+      const critical = engine.scenarios.critical();
+
+      const r1 = engine.run(normal);
+      const r2 = engine.run(heavy);
+      const r3 = engine.run(critical);
+
+      if (!r1 || !r2 || !r3) {
+        throw new Error("DP simulation failed");
+      }
+
+      console.log("NORMAL:", r1.risk);
+      console.log("HEAVY WEATHER:", r2.risk);
+      console.log("CRITICAL:", r3.risk);
+      console.log("DP ENGINE TEST PASSED");
+      NODE
