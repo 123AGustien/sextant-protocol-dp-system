@@ -1,1 +1,488 @@
-g
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Sextant Protocol – DP Resilience Cockpit</title><style>
+
+/* =========================================================
+   SEXTANT PROTOCOL
+   DP RESILIENCE COCKPIT
+   PART 1 — CORE STYLE + OPERATOR ALERT FRAMEWORK
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #08111f;
+    color: #e8f0f7;
+}
+
+.header {
+    padding: 18px;
+    text-align: center;
+    background: #0d1b2a;
+    border-bottom: 2px solid #29445f;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header p {
+    margin: 8px 0 0;
+    color: #9fb3c8;
+    font-size: 13px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.panel {
+    background: #0e1c2c;
+    border: 1px solid #29445f;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 1px solid #29445f;
+    padding-bottom: 8px;
+}
+
+.vessel-data {
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    gap: 10px;
+    align-items: center;
+    margin: 10px 0;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #46627d;
+    background: #07111d;
+    color: white;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.run {
+    background: #1f8f5f;
+    color: white;
+}
+
+.reset {
+    background: #46586d;
+    color: white;
+}
+
+.scenario {
+    background: #315a7d;
+    color: white;
+}
+
+.controls {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.architecture {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.node {
+    padding: 10px;
+    border: 1px solid #587590;
+    border-radius: 6px;
+    background: #13283b;
+    text-align: center;
+    min-width: 125px;
+    font-size: 12px;
+}
+
+.arrow {
+    color: #8faac0;
+    font-size: 20px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.status-card {
+    padding: 12px;
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+}
+
+.status-title {
+    font-size: 11px;
+    color: #91a8bd;
+}
+
+.status-value {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.output {
+    white-space: pre-wrap;
+    background: #050c14;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    padding: 15px;
+    min-height: 320px;
+    font-family: monospace;
+    font-size: 13px;
+    overflow-x: auto;
+}
+
+.footer {
+    text-align: center;
+    padding: 18px;
+    color: #8799aa;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.engine-status {
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    background: #091827;
+    border: 1px solid #29445f;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   OPERATOR ALERT SYSTEM
+========================================================= */
+
+.operator-alert {
+    display: none;
+    position: relative;
+    padding: 16px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 2px solid #46627d;
+    background: #091827;
+    text-align: center;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.operator-alert.active {
+    display: block;
+}
+
+.operator-alert-title {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.operator-alert-message {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.operator-alert-instruction {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.25);
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.operator-alert-meta {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+}
+
+.alert-meta-card {
+    padding: 8px;
+    border-radius: 5px;
+    background: rgba(0,0,0,0.25);
+}
+
+.alert-meta-label {
+    display: block;
+    font-size: 10px;
+    opacity: 0.75;
+}
+
+.alert-meta-value {
+    display: block;
+    margin-top: 3px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ALERT STATES
+========================================================= */
+
+.alert-normal {
+    display: none;
+}
+
+.alert-advisory {
+    display: block;
+    border-color: #5c9dcc;
+    background: #10283d;
+}
+
+.alert-warning {
+    display: block;
+    border-color: #d9a441;
+    background: #352b12;
+}
+
+.alert-critical {
+    display: block;
+    border-color: #d94a4a;
+    background: #3b1116;
+    animation: criticalPulse 0.9s infinite;
+}
+
+@keyframes criticalPulse {
+
+    0% {
+        box-shadow:
+            0 0 0 rgba(217,74,74,0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 18px rgba(217,74,74,0.45);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 rgba(217,74,74,0);
+    }
+}
+
+
+/* =========================================================
+   STABILIZER RECOMMENDATION
+========================================================= */
+
+.stabilizer-panel {
+    border: 1px solid #587590;
+    background: #0b1b2b;
+}
+
+.stabilizer-state {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.stabilizer-message {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #b8c9d8;
+}
+
+
+/* =========================================================
+   HUMAN DECISION PANEL
+========================================================= */
+
+.human-decision {
+    border: 2px solid #587590;
+    background: #0b1825;
+}
+
+.human-decision-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.human-decision-message {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ALERT / RESPONSE INDICATORS
+========================================================= */
+
+.response-indicator {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.response-card {
+    padding: 12px;
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.response-icon {
+    font-size: 22px;
+}
+
+.response-label {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #91a8bd;
+}
+
+.response-value {
+    margin-top: 4px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
+.countdown {
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 6px;
+    background: #050c14;
+    border: 1px solid #29445f;
+    font-family: monospace;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.countdown.warning {
+    border-color: #d9a441;
+}
+
+.countdown.critical {
+    border-color: #d94a4a;
+}
+
+
+/* =========================================================
+   EVENT TIMELINE
+========================================================= */
+
+.event-log {
+    max-height: 220px;
+    overflow-y: auto;
+    background: #050c14;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+.event-entry {
+    padding: 6px 0;
+    border-bottom: 1px solid #172b3d;
+}
+
+.event-entry:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .architecture {
+        flex-direction: column;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+    }
+
+    button {
+        width: 90%;
+    }
+
+    .operator-alert-title {
+        font-size: 17px;
+    }
+
+}
+
+</style></head><body><!--
+============================================================
+END OF FILE 1 — PART 1
+
+NEXT:
+PART 2 — BODY / OPERATOR ALERT INTERFACE
+============================================================
+-->
