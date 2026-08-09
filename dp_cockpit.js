@@ -1605,3 +1605,652 @@
         }
 
     }
+    /* ========================================================
+       OPERATOR CONTINGENCY DISPLAY
+    ======================================================== */
+
+    function updateContingency(result) {
+
+        if (
+            !result ||
+            !result.recommendedAction
+        ) {
+            return;
+        }
+
+
+        const action =
+            result.recommendedAction;
+
+
+        /*
+         * Default state.
+         */
+
+        let offDPStatus =
+            "NOT INDICATED";
+
+        let anchorStatus =
+            "NOT INDICATED";
+
+
+        /*
+         * Determine simulated contingency
+         * recommendations from the risk level.
+         *
+         * IMPORTANT:
+         *
+         * These are decision-support indications only.
+         *
+         * The simulator does NOT:
+         *
+         * - switch off DP;
+         * - control propulsion;
+         * - steer the vessel;
+         * - deploy an anchor;
+         * - command deck machinery.
+         */
+
+
+        if (
+            result.risk ===
+            "MEDIUM"
+        ) {
+
+            offDPStatus =
+                "CONTINGENCY PREPARATION";
+
+            anchorStatus =
+                "NOT CURRENTLY INDICATED";
+
+        }
+
+
+        if (
+            result.risk ===
+            "HIGH"
+        ) {
+
+            offDPStatus =
+                "HUMAN REVIEW — PREPARE APPROVED DEGRADED MODE";
+
+            anchorStatus =
+                "CONSIDER ONLY AFTER OPERATIONAL ASSESSMENT";
+
+        }
+
+
+        if (
+            result.risk ===
+            "CRITICAL"
+        ) {
+
+            offDPStatus =
+                "IMMEDIATE HUMAN REVIEW — ASSESS WHETHER OFF-DP IS APPROPRIATE";
+
+            anchorStatus =
+                "ANCHORING MAY BE CONSIDERED SUBJECT TO HUMAN CONFIRMATION AND SUITABILITY";
+
+        }
+
+
+        /*
+         * Render OFF-DP decision-support state.
+         */
+
+        setText(
+            "offDPRecommendation",
+            offDPStatus
+        );
+
+
+        /*
+         * Render anchoring decision-support state.
+         */
+
+        setText(
+            "anchorRecommendation",
+            anchorStatus
+        );
+
+
+        /*
+         * Render surveyed-seabed status.
+         *
+         * This is intentionally conservative.
+         *
+         * The simulator does not assume that the
+         * seabed is surveyed merely because anchoring
+         * has been considered.
+         */
+
+        const surveyedSeabed =
+            el(
+                "surveyedSeabed"
+            );
+
+
+        if (
+            surveyedSeabed
+        ) {
+
+            if (
+                surveyedSeabed.checked
+            ) {
+
+                setText(
+                    "surveyedSeabedStatus",
+                    "SURVEYED SEABED — HUMAN VERIFICATION REQUIRED"
+                );
+
+            } else {
+
+                setText(
+                    "surveyedSeabedStatus",
+                    "SURVEYED SEABED NOT CONFIRMED"
+                );
+
+            }
+
+        }
+
+
+        /*
+         * Explicit safety boundary.
+         */
+
+        setText(
+            "contingencyAuthority",
+            "HUMAN AUTHORITY — FINAL"
+        );
+
+    }
+
+
+    /* ========================================================
+       SIMULATED DP ACTION DISPLAY
+    ======================================================== */
+
+    function updateSimulatedAction(result) {
+
+        if (
+            !result ||
+            !result.simulatedAction
+        ) {
+            return;
+        }
+
+
+        const action =
+            result.simulatedAction;
+
+
+        setText(
+            "simulatedDPMode",
+            action.mode ||
+            "SIMULATED DP RESPONSE"
+        );
+
+
+        setText(
+            "simulatedDPCommand",
+            typeof action.simulatedCommand ===
+            "number"
+                ? action.simulatedCommand.toFixed(2)
+                : "0.00"
+        );
+
+
+        setText(
+            "simulatedStabilizerOutput",
+            typeof action.stabilizerOutput ===
+            "number"
+                ? action.stabilizerOutput.toFixed(2)
+                : "0.00"
+        );
+
+
+        setText(
+            "operationalCommandStatus",
+            action.operationalCommand ===
+            true
+                ? "UNEXPECTED STATE"
+                : "SIMULATION ONLY"
+        );
+
+
+        setText(
+            "realVesselConnection",
+            action.realVesselConnection ===
+            true
+                ? "UNEXPECTED CONNECTION"
+                : "NOT CONNECTED"
+        );
+
+    }
+
+
+    /* ========================================================
+       SIMULATED VESSEL STATE DISPLAY
+    ======================================================== */
+
+    function updateSimulatedState(result) {
+
+        if (
+            !result ||
+            !result.updatedState
+        ) {
+            return;
+        }
+
+
+        const state =
+            result.updatedState;
+
+
+        setText(
+            "positionError",
+            typeof state.positionError ===
+            "number"
+                ? state.positionError.toFixed(2)
+                : "0.00"
+        );
+
+
+        setText(
+            "stabilityIndex",
+            typeof state.stabilityIndex ===
+            "number"
+                ? state.stabilityIndex.toFixed(2)
+                : "0.00"
+        );
+
+
+        setText(
+            "simulatedStateRisk",
+            state.risk ||
+            "UNKNOWN"
+        );
+
+
+        setText(
+            "simulatedStateStatus",
+            state.status ||
+            "SIMULATED"
+        );
+
+    }
+
+
+    /* ========================================================
+       OPERATOR NOTIFICATION
+    ======================================================== */
+
+    function updateOperatorNotification(
+        result
+    ) {
+
+        if (!result) {
+            return;
+        }
+
+
+        let message =
+            "SYSTEM READY. CONTINUOUS SIMULATED MONITORING ACTIVE. NO OPERATOR INTERVENTION REQUESTED.";
+
+
+        if (
+            result.risk ===
+            "MEDIUM"
+        ) {
+
+            message =
+                "ADVISORY: ENVIRONMENTAL LOADING ELEVATED. INCREASED OPERATOR ATTENTION RECOMMENDED.";
+
+        }
+
+
+        if (
+            result.risk ===
+            "HIGH"
+        ) {
+
+            message =
+                "HIGH ALERT: HUMAN REVIEW REQUIRED. PREPARE APPROVED DEGRADED DP CONTINGENCY PROCEDURES.";
+
+        }
+
+
+        if (
+            result.risk ===
+            "CRITICAL"
+        ) {
+
+            message =
+                "CRITICAL ALERT: IMMEDIATE HUMAN REVIEW REQUIRED. ASSESS CONTINUED DP OPERATION AND APPROVED CONTINGENCY OPTIONS.";
+
+        }
+
+
+        setText(
+            "operatorNotification",
+            message
+        );
+
+
+        /*
+         * Also write the event to the
+         * operator event log.
+         */
+
+        appendOperatorLog(
+            message
+        );
+
+    }
+
+
+    /* ========================================================
+       RESPONSE INDICATORS
+    ======================================================== */
+
+    function updateResponseIndicators(
+        result
+    ) {
+
+        if (!result) {
+            return;
+        }
+
+
+        let audible =
+            "STANDBY";
+
+        let attention =
+            "STANDBY";
+
+        let responseWindow =
+            "NOT ACTIVE";
+
+        let humanDecision =
+            "AVAILABLE";
+
+
+        if (
+            result.risk ===
+            "MEDIUM"
+        ) {
+
+            audible =
+                "ADVISORY";
+
+            attention =
+                "ATTENTION";
+
+            responseWindow =
+                "ACTIVE";
+
+        }
+
+
+        if (
+            result.risk ===
+            "HIGH"
+        ) {
+
+            audible =
+                "HIGH ALERT";
+
+            attention =
+                "REQUIRED";
+
+            responseWindow =
+                "ACTIVE";
+
+        }
+
+
+        if (
+            result.risk ===
+            "CRITICAL"
+        ) {
+
+            audible =
+                "CRITICAL ALERT";
+
+            attention =
+                "IMMEDIATE";
+
+            responseWindow =
+                "ACTIVE";
+
+        }
+
+
+        setText(
+            "audibleAlert",
+            audible
+        );
+
+
+        setText(
+            "attentionIndicator",
+            attention
+        );
+
+
+        setText(
+            "responseWindow",
+            responseWindow
+        );
+
+
+        setText(
+            "humanDecision",
+            humanDecision
+        );
+
+    }
+
+
+    /* ========================================================
+       RESILIENCE AUDIT DISPLAY
+    ======================================================== */
+
+    function updateAudit(result) {
+
+        if (
+            !result ||
+            !result.audit
+        ) {
+            return;
+        }
+
+
+        const audit =
+            result.audit;
+
+
+        const auditLog =
+            el(
+                "resilienceAuditLog"
+            );
+
+
+        if (!auditLog) {
+            return;
+        }
+
+
+        const lines = [
+
+            "SYSTEM EVENT LOG",
+
+            "----------------------------------------",
+
+            "TIMESTAMP: " +
+                audit.timestamp,
+
+            "ENGINE: " +
+                audit.engine,
+
+            "VERSION: " +
+                audit.version,
+
+            "MODE: " +
+                audit.mode,
+
+            "ENVIRONMENTAL STRESS: " +
+                audit.environmentalStress,
+
+            "RISK: " +
+                audit.risk,
+
+            "PRIMARY: " +
+                audit.primary,
+
+            "SECONDARY: " +
+                audit.secondary,
+
+            "STABILIZER: " +
+                audit.stabilizer,
+
+            "RECOMMENDATION: " +
+                audit.recommendation,
+
+            "HUMAN AUTHORITY: FINAL",
+
+            "AUTONOMOUS COMMAND: FALSE",
+
+            "OPERATIONAL AUTHORITY: FALSE",
+
+            "----------------------------------------"
+
+        ];
+
+
+        const text =
+            lines.join("\n");
+
+
+        if (
+            auditLog.tagName ===
+            "TEXTAREA"
+        ) {
+
+            auditLog.value =
+                text;
+
+        } else {
+
+            auditLog.textContent =
+                text;
+
+        }
+
+    }
+
+
+    /* ========================================================
+       DP SIMULATION ASSESSMENT
+    ======================================================== */
+
+    function updateAssessment(result) {
+
+        if (!result) {
+            return;
+        }
+
+
+        let assessment =
+            "System ready. Select environmental conditions and run the simulated DP assessment.";
+
+
+        if (
+            result.risk ===
+            "LOW"
+        ) {
+
+            assessment =
+                "SIMULATED ASSESSMENT: Environmental loading remains within the normal resilience monitoring range. Continue simulated DP monitoring.";
+
+        }
+
+
+        if (
+            result.risk ===
+            "MEDIUM"
+        ) {
+
+            assessment =
+                "SIMULATED ASSESSMENT: Environmental loading is elevated. Maintain simulated DP operations with increased operator attention and contingency preparation.";
+
+        }
+
+
+        if (
+            result.risk ===
+            "HIGH"
+        ) {
+
+            assessment =
+                "SIMULATED ASSESSMENT: High environmental loading detected. Human review is required and approved degraded-operation contingencies should be prepared.";
+
+        }
+
+
+        if (
+            result.risk ===
+            "CRITICAL"
+        ) {
+
+            assessment =
+                "SIMULATED ASSESSMENT: Critical environmental loading detected. Immediate human review is required. Continued DP operation and approved contingency options must be assessed by the authorised operator.";
+
+        }
+
+
+        setText(
+            "dpSimulationAssessment",
+            assessment
+        );
+
+    }
+
+
+    /* ========================================================
+       PART 5 STATUS
+    ======================================================== */
+
+    /*
+     * OPERATOR DECISION-SUPPORT PATH:
+     *
+     * ENVIRONMENT
+     *      ↓
+     * RISK
+     *      ↓
+     * PRIMARY AI
+     *      ↓
+     * SECONDARY AI
+     *      ↓
+     * STABILIZER
+     *      ↓
+     * OPERATOR RECOMMENDATION
+     *      ↓
+     * OFF-DP / ANCHOR CONTINGENCY REVIEW
+     *      ↓
+     * HUMAN AUTHORITY
+     *
+     * IMPORTANT:
+     *
+     * OFF-DP is never executed automatically.
+     *
+     * ANCHOR is never deployed automatically.
+     *
+     * The simulator only presents decision-support
+     * recommendations for the DP operator / Master.
+     *
+     * Anchoring consideration requires confirmation
+     * that the seabed has been appropriately surveyed
+     * and that anchoring is operationally suitable.
+     */
