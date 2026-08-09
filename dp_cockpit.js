@@ -4830,4 +4830,122 @@ function testDPEngineConnection() {
 
     return false;
 }
+/* ============================================================
+   BROWSER EXPORT
+   ============================================================ */
+
+window.testDPEngineConnection =
+    testDPEngineConnection;
+
+
+/* ============================================================
+   MOBILE ENGINE CONNECTION DIAGNOSTIC
+   ============================================================ */
+
+function runMobileEngineDiagnostic() {
+
+    const engineStatus =
+        document.getElementById(
+            "engineStatus"
+        );
+
+    if (
+        typeof window.DPSimulationEngine ===
+        "undefined"
+    ) {
+
+        if (engineStatus) {
+
+            engineStatus.textContent =
+                "ENGINE OFFLINE — SCRIPT NOT LOADED";
+
+        }
+
+        console.error(
+            "DP Simulation Engine not loaded."
+        );
+
+        return false;
+    }
+
+
+    if (
+        typeof window.DPSimulationEngine.run !==
+        "function"
+    ) {
+
+        if (engineStatus) {
+
+            engineStatus.textContent =
+                "ENGINE ERROR — RUN FUNCTION MISSING";
+
+        }
+
+        console.error(
+            "DP Simulation Engine run() function missing."
+        );
+
+        return false;
+    }
+
+
+    if (engineStatus) {
+
+        engineStatus.textContent =
+            "ENGINE ONLINE — SIMULATION READY";
+
+    }
+
+
+    if (
+        typeof window.appendOperatorLog ===
+        "function"
+    ) {
+
+        window.appendOperatorLog(
+            "[SYSTEM] DP Simulation Engine connected — SIMULATION ONLY."
+        );
+
+    }
+
+
+    console.log(
+        "DP ENGINE CONNECTION: PASS"
+    );
+
+    return true;
+}
+
+
+/* ============================================================
+   MOBILE DIAGNOSTIC EXPORT
+   ============================================================ */
+
+window.runMobileEngineDiagnostic =
+    runMobileEngineDiagnostic;
+
+
+/* ============================================================
+   START MOBILE DIAGNOSTIC
+   ============================================================ */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            runMobileEngineDiagnostic();
+
+        }
+    );
+
+} else {
+
+    runMobileEngineDiagnostic();
+
+}
 
