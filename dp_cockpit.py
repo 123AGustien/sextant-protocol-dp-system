@@ -1,3 +1,5 @@
+File: "dp_cockpit.py"
+
 """
 Sextant Protocol – DP Simulation Cockpit
 ----------------------------------------
@@ -50,6 +52,7 @@ def display_vessel(vessel):
     print(f"DP Class:      {summary['dp_class']}")
 
     dimensions = summary["dimensions_m"]
+
     print(
         f"Dimensions:    "
         f"{dimensions['length']}m × "
@@ -125,9 +128,6 @@ def run_cockpit():
     # -------------------------------------------------
 
     thrust = vessel.nominal_thrust_kn
-
-    # The principal AI architecture receives the
-    # simulated environmental stress.
     environment = environmental_stress
 
     # -------------------------------------------------
