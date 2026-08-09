@@ -1352,3 +1352,475 @@ No resilience alert generated.
     </div>
 
 </div>
+/* =========================================================
+   OPERATOR ALERT SYSTEM
+========================================================= */
+
+function updateOperatorAlert(result) {
+
+    const alertBox =
+        document.getElementById("operatorAlert");
+
+    const alertTitle =
+        document.getElementById("operatorAlertTitle");
+
+    const alertMessage =
+        document.getElementById("operatorAlertMessage");
+
+    const alertLevel =
+        document.getElementById("operatorAlertLevel");
+
+    if (!alertBox) {
+        return;
+    }
+
+    const risk =
+        String(result.risk || "").toUpperCase();
+
+    const human =
+        result.human || {};
+
+    const stabilizer =
+        result.stabilizer || {};
+
+    const environment =
+        result.environment || {};
+
+    const stress =
+        Number(
+            environment.environmentalStress || 0
+        );
+
+    let level = "NORMAL";
+    let title = "SYSTEM MONITORING";
+    let message =
+        "Environmental conditions within simulated monitoring range.";
+
+    if (
+        human.override === true ||
+        risk === "CRITICAL" ||
+        risk === "HIGH"
+    ) {
+
+        level = "HIGH PRIORITY";
+
+        title =
+            "⚠ OPERATOR ATTENTION REQUIRED";
+
+        message =
+            "Rapidly developing or high simulated environmental stress detected. " +
+            "Secondary safety assessment and stabilizer arbitration are active. " +
+            "Human operator review is required.";
+
+    } else if (
+        risk === "MEDIUM" ||
+        stress >= 40
+    ) {
+
+        level = "CAUTION";
+
+        title =
+            "⚠ EARLY WARNING";
+
+        message =
+            "Increasing environmental stress detected. " +
+            "Secondary safety monitoring and stabilizer logic are evaluating " +
+            "the developing condition.";
+
+    }
+
+    alertLevel.textContent =
+        level;
+
+    alertTitle.textContent =
+        title;
+
+    alertMessage.textContent =
+        message;
+
+    alertBox.className =
+        "operator-alert " +
+        (
+            level === "HIGH PRIORITY"
+                ? "alert-high"
+                : level === "CAUTION"
+                    ? "alert-caution"
+                    : "alert-normal"
+        );
+
+    /*
+       Stabilizer information is deliberately shown
+       as decision-support information only.
+    */
+
+    const stabilizerInfo =
+        document.getElementById(
+            "stabilizerAlertInfo"
+        );
+
+    if (stabilizerInfo) {
+
+        stabilizerInfo.textContent =
+            "STABILIZER: " +
+            (
+                stabilizer.source ||
+                "MONITORING"
+            ) +
+            " • " +
+            (
+                stabilizer.status ||
+                "ACTIVE"
+            );
+    }
+}
+
+
+/* =========================================================
+   OPERATOR ALERT RESET
+========================================================= */
+
+function resetOperatorAlert() {
+
+    const alertBox =
+        document.getElementById("operatorAlert");
+
+    const alertTitle =
+        document.getElementById("operatorAlertTitle");
+
+    const alertMessage =
+        document.getElementById("operatorAlertMessage");
+
+    const alertLevel =
+        document.getElementById("operatorAlertLevel");
+
+    const stabilizerInfo =
+        document.getElementById(
+            "stabilizerAlertInfo"
+        );
+
+    if (alertBox) {
+
+        alertBox.className =
+            "operator-alert alert-normal";
+    }
+
+    if (alertLevel) {
+
+        alertLevel.textContent =
+            "STANDBY";
+    }
+
+    if (alertTitle) {
+
+        alertTitle.textContent =
+            "OPERATOR ALERT SYSTEM";
+    }
+
+    if (alertMessage) {
+
+        alertMessage.textContent =
+            "System monitoring ready.";
+    }
+
+    if (stabilizerInfo) {
+
+        stabilizerInfo.textContent =
+            "STABILIZER: STANDBY";
+    }
+}
+
+
+/* =========================================================
+   ENHANCED COCKPIT STATUS
+========================================================= */
+
+function updateDPCockpitEnhanced(result) {
+
+    updateDPCockpit(result);
+
+    updateOperatorAlert(result);
+
+    const stabilizer =
+        result.stabilizer || {};
+
+    const secondary =
+        result.secondary || {};
+
+    const human =
+        result.human || {};
+
+    const systemStatus =
+        document.getElementById(
+            "systemStatus"
+        );
+
+    if (systemStatus) {
+
+        if (
+            human.override === true
+        ) {
+
+            systemStatus.textContent =
+                "HUMAN REVIEW REQUIRED";
+
+        } else if (
+            secondary.safetyMode === true
+        ) {
+
+            systemStatus.textContent =
+                "SAFETY LAYER ACTIVE";
+
+        } else {
+
+            systemStatus.textContent =
+                result.systemStatus ||
+                "READY";
+        }
+    }
+
+    const stabilizerStatus =
+        document.getElementById(
+            "stabilizerStatus"
+        );
+
+    if (stabilizerStatus) {
+
+        stabilizerStatus.textContent =
+            (
+                stabilizer.source ||
+                "MONITORING"
+            ) +
+            " / " +
+            (
+                stabilizer.status ||
+                "ACTIVE"
+            );
+    }
+}
+
+
+/* =========================================================
+   ENHANCED SIMULATION EXECUTION
+========================================================= */
+
+function runSimulation() {
+
+    if (
+        !verifyDPEngine()
+    ) {
+
+        document.getElementById(
+            "output"
+        ).textContent =
+
+`DP SIMULATION ENGINE ERROR
+
+The external engine could not be loaded.
+
+Required file:
+dp_simulation_engine.js
+
+Simulation not executed.`;
+
+        return;
+    }
+
+
+    const inputs = {
+
+        wind:
+            getDPInput("wind"),
+
+        current:
+            getDPInput("current"),
+
+        wave:
+            getDPInput("wave"),
+
+        tidal:
+            getDPInput("tidal")
+
+    };
+
+
+    let result;
+
+
+    try {
+
+        result =
+            DPSimulationEngine.run(
+                inputs
+            );
+
+    } catch (error) {
+
+        console.error(
+            "DP Simulation Error:",
+            error
+        );
+
+        document.getElementById(
+            "output"
+        ).textContent =
+
+`DP SIMULATION ERROR
+
+${error.message}
+
+No simulated action was executed.`;
+
+        return;
+    }
+
+
+    /*
+       Existing cockpit status remains active.
+       Enhanced operator alert is added on top.
+    */
+
+    updateDPCockpitEnhanced(
+        result
+    );
+
+
+    renderDPReport(
+        result,
+        inputs
+    );
+}
+
+
+/* =========================================================
+   ENHANCED RESULT REPORT
+========================================================= */
+
+function renderDPReport(
+    result,
+    inputs
+) {
+
+    const environment =
+        result.environment;
+
+    const primary =
+        result.primary;
+
+    const secondary =
+        result.secondary;
+
+    const human =
+        result.human;
+
+    const stabilizer =
+        result.stabilizer;
+
+    const updatedState =
+        result.updatedState;
+
+
+    const report =
+
+`
+============================================================
+             SEXTANT DP RESILIENCE RESULT
+============================================================
+
+SYSTEM
+------------------------------------------------------------
+Engine            : ${result.engineName}
+Version           : ${result.version}
+Mode              : ${result.mode}
+System Status     : ${result.systemStatus}
+
+
+VESSEL
+------------------------------------------------------------
+Name              : ${result.vessel.name}
+Type              : ${result.vessel.type}
+DP Classification : ${result.vessel.dpClass}
+
+Dimensions        : ${result.vessel.dimensions.length}m × ${result.vessel.dimensions.beam}m × ${result.vessel.dimensions.draft}m
+
+Thrusters         : ${result.vessel.propulsion.totalThrusters}
+Nominal Thrust    : ${result.vessel.propulsion.nominalThrust} simulation units
+
+
+ENVIRONMENT
+------------------------------------------------------------
+Wind Stress       : ${inputs.wind.toFixed(2)}
+Current Stress    : ${inputs.current.toFixed(2)}
+Wave Stress       : ${inputs.wave.toFixed(2)}
+Tidal Stress      : ${inputs.tidal.toFixed(2)}
+
+Environmental
+Stress            : ${environment.environmentalStress.toFixed(2)}
+
+Risk Classification
+------------------------------------------------------------
+${result.risk}
+
+
+PRIMARY SUPERVISORY LAYER
+------------------------------------------------------------
+Layer             : ${primary.layer}
+Mode              : ${primary.mode}
+Thrust Output     : ${primary.thrustOutput.toFixed(2)}
+Status            : ${primary.status}
+
+
+SECONDARY SAFETY LAYER
+------------------------------------------------------------
+Layer             : ${secondary.layer}
+Mode              : ${secondary.mode}
+Thrust Output     : ${secondary.thrustOutput.toFixed(2)}
+Status            : ${secondary.status}
+Safety Mode       : ${secondary.safetyMode}
+
+
+STABILIZER / ARBITRATION
+------------------------------------------------------------
+Layer             : ${stabilizer.layer}
+Mode              : ${stabilizer.mode}
+Final Output      : ${stabilizer.finalOutput.toFixed(2)}
+Source            : ${stabilizer.source}
+Status            : ${stabilizer.status}
+
+
+OPERATOR ALERT
+------------------------------------------------------------
+Alert Level       : ${
+    human.override
+        ? "HIGH PRIORITY"
+        : result.risk
+}
+
+Human Authority   : ${
+    human.override
+        ? "REVIEW REQUIRED"
+        : "AVAILABLE"
+}
+
+Operator Role     : FINAL HUMAN AUTHORITY
+
+
+UPDATED SIMULATED STATE
+------------------------------------------------------------
+Position Error    : ${updatedState.positionError.toFixed(4)}
+Simulated Command : ${updatedState.simulatedCommand.toFixed(2)}
+Environmental
+Stress            : ${updatedState.environmentalStress.toFixed(2)}
+Stability Index   : ${updatedState.stabilityIndex.toFixed(2)}
+
+
+RESILIENCE PATHWAY
+------------------------------------------------------------
+ENVIRONMENT
+     ↓
+OBSERVE
+     ↓
+VERIFY
+     ↓
+PRIMARY SUPERVISORY ASSESSMENT
+     ↓
+SECONDARY
