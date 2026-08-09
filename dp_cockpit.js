@@ -4768,3 +4768,73 @@ function updateEngineStatus(status) {
 
     return false;
 }
+/* ============================================================
+   FINAL DP ENGINE CONNECTION TEST
+   ============================================================ */
+
+function testDPEngineConnection() {
+
+    console.log(
+        "SEXTANT PROTOCOL — DP ENGINE CONNECTION TEST"
+    );
+
+    if (
+        typeof window.DPSimulationEngine ===
+        "undefined"
+    ) {
+
+        console.error(
+            "DP SIMULATION ENGINE NOT FOUND."
+        );
+
+        return false;
+    }
+
+    if (
+        typeof window.DPSimulationEngine.run !==
+        "function"
+    ) {
+
+        console.error(
+            "DP SIMULATION ENGINE FOUND BUT RUN() IS MISSING."
+        );
+
+        return false;
+    }
+
+    const testResult =
+        window.DPSimulationEngine.run({
+            wind: 20,
+            current: 15,
+            wave: 20,
+            tidal: 15
+        });
+
+    console.log(
+        "DP ENGINE TEST RESULT:",
+        testResult
+    );
+
+    if (testResult) {
+
+        console.log(
+            "DP SIMULATION ENGINE CONNECTION: PASS"
+        );
+
+        return true;
+    }
+
+    console.error(
+        "DP SIMULATION ENGINE CONNECTION: FAIL"
+    );
+
+    return false;
+}
+
+
+/* ============================================================
+   BROWSER EXPORT
+   ============================================================ */
+
+window.testDPEngineConnection =
+    testDPEngineConnection;
