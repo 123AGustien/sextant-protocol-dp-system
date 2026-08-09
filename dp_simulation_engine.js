@@ -313,3 +313,378 @@
      * This establishes the deterministic environmental
      * assessment foundation.
      */
+/* ========================================================
+       PRIMARY AI — NORMAL CONTROL ASSESSMENT
+    ======================================================== */
+
+    function evaluatePrimary(
+        environment,
+        stress
+    ) {
+
+        let mode =
+            "NORMAL CONTROL";
+
+        let response =
+            "CONTINUE SIMULATED DP MONITORING";
+
+
+        if (
+            stress >=
+            RISK_THRESHOLDS.MEDIUM
+        ) {
+
+            mode =
+                "ELEVATED CONTROL";
+
+            response =
+                "INCREASED SIMULATED DP MONITORING";
+
+        }
+
+
+        if (
+            stress >=
+            RISK_THRESHOLDS.HIGH
+        ) {
+
+            mode =
+                "HIGH LOAD CONTROL";
+
+            response =
+                "SIMULATED HIGH-LOAD RESPONSE";
+
+        }
+
+
+        if (
+            stress >=
+            RISK_THRESHOLDS.CRITICAL
+        ) {
+
+            mode =
+                "CRITICAL CONTROL";
+
+            response =
+                "SIMULATED CRITICAL RESPONSE";
+
+        }
+
+
+        return {
+
+            mode:
+                mode,
+
+            response:
+                response,
+
+            stress:
+                Number(stress).toFixed(2),
+
+            environment:
+                environment
+
+        };
+
+    }
+
+
+    /* ========================================================
+       SECONDARY AI — INDEPENDENT SAFETY ASSESSMENT
+    ======================================================== */
+
+    function evaluateSecondary(
+        environment,
+        stress
+    ) {
+
+        let mode =
+            "INDEPENDENT MONITORING";
+
+        let assessment =
+            "NO SECONDARY INTERVENTION INDICATED";
+
+
+        /*
+         * The secondary layer deliberately performs
+         * its own deterministic assessment rather than
+         * simply copying the Primary AI state.
+         */
+
+        const currentWaveFactor =
+            (
+                environment.current +
+                environment.wave
+            ) / 2;
+
+
+        if (
+            stress >=
+            RISK_THRESHOLDS.MEDIUM
+            ||
+            currentWaveFactor >= 60
+        ) {
+
+            mode =
+                "INDEPENDENT SAFETY ADVISORY";
+
+            assessment =
+                "SECONDARY REVIEW RECOMMENDED";
+
+        }
+
+
+        if (
+            stress >=
+            RISK_THRESHOLDS.HIGH
+            ||
+            currentWaveFactor >= 75
+        ) {
+
+            mode =
+                "INDEPENDENT SAFETY ESCALATION";
+
+            assessment =
+                "SECONDARY SAFETY REVIEW REQUIRED";
+
+        }
+
+
+        if (
+            stress >=
+            RISK_THRESHOLDS.CRITICAL
+        ) {
+
+            mode =
+                "INDEPENDENT CRITICAL SAFETY REVIEW";
+
+            assessment =
+                "IMMEDIATE HUMAN REVIEW RECOMMENDED";
+
+        }
+
+
+        return {
+
+            mode:
+                mode,
+
+            assessment:
+                assessment,
+
+            independentStress:
+                Number(stress).toFixed(2)
+
+        };
+
+    }
+
+
+    /* ========================================================
+       STABILIZER — ARBITRATION LAYER
+    ======================================================== */
+
+    function evaluateStabilizer(
+        primary,
+        secondary,
+        risk
+    ) {
+
+        let mode =
+            "NORMAL ARBITRATION";
+
+        let source =
+            "PRIMARY AI";
+
+        let status =
+            "STABLE";
+
+        let finalOutput =
+            0;
+
+
+        /*
+         * LOW RISK
+         */
+
+        if (
+            risk ===
+            "LOW"
+        ) {
+
+            mode =
+                "NORMAL ARBITRATION";
+
+            source =
+                "PRIMARY AI";
+
+            status =
+                "STABLE";
+
+            finalOutput =
+                20;
+
+        }
+
+
+        /*
+         * MEDIUM RISK
+         */
+
+        if (
+            risk ===
+            "MEDIUM"
+        ) {
+
+            mode =
+                "PREVENTIVE ARBITRATION";
+
+            source =
+                "PRIMARY + SECONDARY";
+
+            status =
+                "ELEVATED MONITORING";
+
+            finalOutput =
+                45;
+
+        }
+
+
+        /*
+         * HIGH RISK
+         */
+
+        if (
+            risk ===
+            "HIGH"
+        ) {
+
+            mode =
+                "RESILIENCE ARBITRATION";
+
+            source =
+                "SECONDARY SAFETY LAYER";
+
+            status =
+                "HUMAN REVIEW REQUIRED";
+
+            finalOutput =
+                70;
+
+        }
+
+
+        /*
+         * CRITICAL RISK
+         */
+
+        if (
+            risk ===
+            "CRITICAL"
+        ) {
+
+            mode =
+                "CRITICAL STABILIZATION";
+
+            source =
+                "SECONDARY + HUMAN AUTHORITY";
+
+            status =
+                "IMMEDIATE HUMAN REVIEW";
+
+            finalOutput =
+                90;
+
+        }
+
+
+        return {
+
+            mode:
+                mode,
+
+            source:
+                source,
+
+            status:
+                status,
+
+            finalOutput:
+                finalOutput,
+
+            primaryState:
+                primary.mode,
+
+            secondaryState:
+                secondary.mode
+
+        };
+
+    }
+
+
+    /* ========================================================
+       SYSTEM STATUS
+    ======================================================== */
+
+    function determineSystemStatus(
+        risk
+    ) {
+
+        if (
+            risk ===
+            "CRITICAL"
+        ) {
+
+            return "CRITICAL — HUMAN REVIEW";
+
+        }
+
+
+        if (
+            risk ===
+            "HIGH"
+        ) {
+
+            return "HIGH LOAD — HUMAN REVIEW";
+
+        }
+
+
+        if (
+            risk ===
+            "MEDIUM"
+        ) {
+
+            return "ELEVATED — MONITORING";
+
+        }
+
+
+        return "SYSTEM STABLE";
+
+    }
+
+
+    /* ========================================================
+       PART 2 STATUS
+    ======================================================== */
+
+    /*
+     * CONTROL PATH:
+     *
+     * ENVIRONMENT
+     *      ↓
+     * PRIMARY AI
+     *      ↓
+     * SECONDARY AI
+     *      ↓
+     * STABILIZER
+     *      ↓
+     * HUMAN AUTHORITY
+     *
+     * No layer in this section sends commands to
+     * real marine equipment.
+     */
