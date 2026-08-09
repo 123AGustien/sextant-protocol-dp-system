@@ -590,3 +590,318 @@
      * actually change the simulated environmental
      * values before the engine is executed.
      */
+/* ========================================================
+       DOM HELPER
+    ======================================================== */
+
+    function el(id) {
+
+        return document.getElementById(id);
+
+    }
+
+
+    /* ========================================================
+       TEXT DISPLAY HELPER
+    ======================================================== */
+
+    function setText(
+        id,
+        value
+    ) {
+
+        const node =
+            el(id);
+
+        if (!node) {
+            return;
+        }
+
+        node.textContent =
+            value === undefined ||
+            value === null
+                ? ""
+                : String(value);
+
+    }
+
+
+    /* ========================================================
+       INPUT HELPER
+    ======================================================== */
+
+    function getInput(id) {
+
+        const input =
+            el(id);
+
+        if (!input) {
+
+            console.warn(
+                "DP cockpit input not found:",
+                id
+            );
+
+            return null;
+
+        }
+
+        return input;
+
+    }
+
+
+    /* ========================================================
+       SET ENVIRONMENTAL INPUT
+    ======================================================== */
+
+    function setInputValue(
+        id,
+        value
+    ) {
+
+        const input =
+            getInput(id);
+
+        if (!input) {
+            return false;
+        }
+
+
+        input.value =
+            value;
+
+
+        /*
+         * Notify any HTML range-slider
+         * display handlers.
+         */
+
+        try {
+
+            input.dispatchEvent(
+                new Event(
+                    "input",
+                    {
+                        bubbles: true
+                    }
+                )
+            );
+
+
+            input.dispatchEvent(
+                new Event(
+                    "change",
+                    {
+                        bubbles: true
+                    }
+                )
+            );
+
+        } catch (error) {
+
+            /*
+             * Compatibility fallback.
+             */
+
+            if (
+                typeof document.createEvent ===
+                "function"
+            ) {
+
+                const inputEvent =
+                    document.createEvent(
+                        "Event"
+                    );
+
+                inputEvent.initEvent(
+                    "input",
+                    true,
+                    true
+                );
+
+                input.dispatchEvent(
+                    inputEvent
+                );
+
+            }
+
+        }
+
+
+        return true;
+
+    }
+
+
+    /* ========================================================
+       READ ENVIRONMENTAL INPUTS
+    ======================================================== */
+
+    function readDPInputs() {
+
+        const wind =
+            getInput("wind");
+
+        const current =
+            getInput("current");
+
+        const wave =
+            getInput("wave");
+
+        const tidal =
+            getInput("tidal");
+
+
+        return {
+
+            wind:
+                wind
+                    ? Number(wind.value)
+                    : 0,
+
+            current:
+                current
+                    ? Number(current.value)
+                    : 0,
+
+            wave:
+                wave
+                    ? Number(wave.value)
+                    : 0,
+
+            tidal:
+                tidal
+                    ? Number(tidal.value)
+                    : 0
+
+        };
+
+    }
+
+
+    /* ========================================================
+       UPDATE ENVIRONMENTAL VALUE DISPLAYS
+    ======================================================== */
+
+    function updateInputDisplays(
+        values
+    ) {
+
+        if (!values) {
+            return;
+        }
+
+
+        setText(
+            "windValue",
+            values.wind
+        );
+
+
+        setText(
+            "currentValue",
+            values.current
+        );
+
+
+        setText(
+            "waveValue",
+            values.wave
+        );
+
+
+        setText(
+            "tidalValue",
+            values.tidal
+        );
+
+    }
+
+
+    /* ========================================================
+       APPLY INPUT VALUES
+    ======================================================== */
+
+    function applyInputValues(
+        values
+    ) {
+
+        if (!values) {
+            return false;
+        }
+
+
+        const wind =
+            setInputValue(
+                "wind",
+                values.wind
+            );
+
+
+        const current =
+            setInputValue(
+                "current",
+                values.current
+            );
+
+
+        const wave =
+            setInputValue(
+                "wave",
+                values.wave
+            );
+
+
+        const tidal =
+            setInputValue(
+                "tidal",
+                values.tidal
+            );
+
+
+        const success =
+            wind &&
+            current &&
+            wave &&
+            tidal;
+
+
+        if (success) {
+
+            updateInputDisplays(
+                values
+            );
+
+        }
+
+
+        return success;
+
+    }
+
+
+    /* ========================================================
+       PART 2 STATUS
+    ======================================================== */
+
+    /*
+     * Environmental input wiring established.
+     *
+     * Scenario buttons will use these functions
+     * to change the ACTUAL cockpit controls.
+     *
+     * This is important:
+     *
+     * Scenario
+     *      ↓
+     * HTML input
+     *      ↓
+     * readDPInputs()
+     *      ↓
+     * DP Simulation Engine
+     *
+     * Therefore pressing CRITICAL WEATHER will
+     * actually change the simulated environmental
+     * values before the engine is executed.
+     */
