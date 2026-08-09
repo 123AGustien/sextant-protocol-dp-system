@@ -688,3 +688,523 @@
      * No layer in this section sends commands to
      * real marine equipment.
      */
+/* ========================================================
+       OPERATOR ACTION / DECISION-SUPPORT ENGINE
+    ======================================================== */
+
+    function determineRecommendedAction(
+        environment,
+        risk,
+        stress
+    ) {
+
+        /*
+         * HUMAN AUTHORITY REMAINS FINAL.
+         *
+         * These outputs are recommendations for the
+         * simulated DP operator only.
+         *
+         * No automatic transition from DP is performed.
+         */
+
+        let primaryRecommendation =
+            "CONTINUE DP OPERATIONS — MONITOR";
+
+        let urgency =
+            "LOW";
+
+        let responseMode =
+            "MONITOR";
+
+        let rationale =
+            "Environmental loading remains within the simulated normal monitoring range.";
+
+        let recommendedActions = [];
+
+
+        /* ====================================================
+           LOW RISK
+        ==================================================== */
+
+        if (
+            risk ===
+            "LOW"
+        ) {
+
+            primaryRecommendation =
+                "CONTINUE DP OPERATIONS — MONITOR";
+
+            urgency =
+                "LOW";
+
+            responseMode =
+                "NORMAL DP MONITORING";
+
+            rationale =
+                "Simulated environmental loading remains within the normal resilience monitoring range.";
+
+            recommendedActions = [
+
+                "Continue simulated DP operations.",
+
+                "Maintain normal environmental monitoring.",
+
+                "Maintain operator awareness of changing conditions.",
+
+                "Verify simulated position and stability indicators."
+
+            ];
+
+        }
+
+
+        /* ====================================================
+           MEDIUM RISK
+        ==================================================== */
+
+        if (
+            risk ===
+            "MEDIUM"
+        ) {
+
+            primaryRecommendation =
+                "MAINTAIN DP WITH INCREASED OPERATOR ATTENTION";
+
+            urgency =
+                "MEDIUM";
+
+            responseMode =
+                "PREVENTIVE DP MONITORING";
+
+            rationale =
+                "Environmental loading has increased and requires enhanced simulated monitoring before further escalation.";
+
+            recommendedActions = [
+
+                "Maintain simulated DP operations.",
+
+                "Increase operator monitoring of environmental trends.",
+
+                "Review simulated thruster and power demand.",
+
+                "Verify sensor consistency and environmental inputs.",
+
+                "Prepare contingency procedures if conditions continue to deteriorate."
+
+            ];
+
+        }
+
+
+        /* ====================================================
+           HIGH RISK
+        ==================================================== */
+
+        if (
+            risk ===
+            "HIGH"
+        ) {
+
+            primaryRecommendation =
+                "HUMAN REVIEW — PREPARE DEGRADED DP CONTINGENCY";
+
+            urgency =
+                "HIGH";
+
+            responseMode =
+                "ENHANCED DP RESILIENCE RESPONSE";
+
+            rationale =
+                "Simulated environmental loading is high. The operator should assess whether continued DP operation remains appropriate and prepare the vessel's approved contingency procedures.";
+
+            recommendedActions = [
+
+                "Immediate human review of simulated DP condition.",
+
+                "Assess available propulsion and power-generation margin.",
+
+                "Review environmental trend and rate of change.",
+
+                "Verify sensor validity and redundancy.",
+
+                "Review vessel-specific DP emergency and degraded-operation procedures.",
+
+                "Prepare for possible transition to an approved degraded or alternative operating mode if conditions deteriorate."
+
+            ];
+
+        }
+
+
+        /* ====================================================
+           CRITICAL RISK
+        ==================================================== */
+
+        if (
+            risk ===
+            "CRITICAL"
+        ) {
+
+            primaryRecommendation =
+                "IMMEDIATE HUMAN REVIEW — PREPARE EMERGENCY CONTINGENCY";
+
+            urgency =
+                "CRITICAL";
+
+            responseMode =
+                "CRITICAL DP RESILIENCE RESPONSE";
+
+            rationale =
+                "The simulated environmental condition has reached the critical threshold. Human authority must assess the vessel condition and determine the appropriate operational response.";
+
+            recommendedActions = [
+
+                "Immediate human assessment required.",
+
+                "Assess whether continued DP operation remains safe and appropriate.",
+
+                "Review vessel-specific emergency and degraded-operation procedures.",
+
+                "Assess propulsion, power and available control margin.",
+
+                "Verify environmental and sensor information.",
+
+                "Prepare for an approved transition away from normal DP operation if required.",
+
+                "If anchoring is being considered, confirm that the seabed has been appropriately surveyed and that anchoring is operationally suitable before proceeding.",
+
+                "No automatic off-DP, propulsion, steering or anchoring command is issued by this simulation."
+
+            ];
+
+        }
+
+
+        /* ====================================================
+           SIMULATED ANCHORING DECISION SUPPORT
+        ==================================================== */
+
+        let anchoringConsideration =
+            "NOT INDICATED";
+
+
+        /*
+         * Anchoring is deliberately NOT treated as an
+         * automatic consequence of environmental stress.
+         *
+         * It requires human assessment of:
+         *
+         * - surveyed seabed;
+         * - water depth;
+         * - holding ground;
+         * - weather and sea state;
+         * - traffic;
+         * - under-keel clearance;
+         * - anchor equipment;
+         * - mooring/anchoring plan;
+         * - vessel condition;
+         * - local restrictions;
+         * - company procedures;
+         * - Master / authorised operator decision.
+         */
+
+
+        if (
+            risk ===
+            "HIGH"
+            ||
+            risk ===
+            "CRITICAL"
+        ) {
+
+            anchoringConsideration =
+                "CONSIDER ONLY AFTER HUMAN ASSESSMENT AND CONFIRMATION OF SUITABLE SURVEYED SEABED";
+
+        }
+
+
+        /*
+         * Add the anchoring consideration to the
+         * operator recommendation without turning
+         * it into an automatic command.
+         */
+
+        if (
+            anchoringConsideration !==
+            "NOT INDICATED"
+        ) {
+
+            recommendedActions.push(
+
+                "ANCHORING CONTINGENCY: " +
+                anchoringConsideration +
+                "."
+
+            );
+
+        }
+
+
+        /* ====================================================
+           RETURN OPERATOR RECOMMENDATION
+        ==================================================== */
+
+        return {
+
+            primaryRecommendation:
+                primaryRecommendation,
+
+            urgency:
+                urgency,
+
+            responseMode:
+                responseMode,
+
+            rationale:
+                rationale,
+
+            recommendedActions:
+                recommendedActions,
+
+            anchoringConsideration:
+                anchoringConsideration,
+
+            humanAuthority:
+                "FINAL",
+
+            autonomousCommand:
+                false,
+
+            operationalAuthority:
+                false,
+
+            environmentalStress:
+                Number(stress).toFixed(2),
+
+            simulatedEnvironment:
+                environment
+
+        };
+
+    }
+
+
+    /* ========================================================
+       HUMAN AUTHORITY STATE
+    ======================================================== */
+
+    function determineHumanAuthority() {
+
+        return {
+
+            status:
+                "AVAILABLE / FINAL",
+
+            authority:
+                "HUMAN",
+
+            autonomousCommand:
+                false,
+
+            operationalAuthority:
+                false
+
+        };
+
+    }
+
+
+    /* ========================================================
+       SIMULATED DP ACTION
+    ======================================================== */
+
+    function generateSimulatedDPAction(
+        environment,
+        risk,
+        stabilizer
+    ) {
+
+        /*
+         * This function represents a simulated action
+         * only. It does NOT command a vessel.
+         */
+
+        let simulatedCommand =
+            20;
+
+
+        if (
+            risk ===
+            "MEDIUM"
+        ) {
+
+            simulatedCommand =
+                45;
+
+        }
+
+
+        if (
+            risk ===
+            "HIGH"
+        ) {
+
+            simulatedCommand =
+                70;
+
+        }
+
+
+        if (
+            risk ===
+            "CRITICAL"
+        ) {
+
+            simulatedCommand =
+                90;
+
+        }
+
+
+        /*
+         * Keep simulated command bounded.
+         */
+
+        simulatedCommand =
+            Math.min(
+                NOMINAL_THRUST,
+                Math.max(
+                    0,
+                    simulatedCommand
+                )
+            );
+
+
+        return {
+
+            mode:
+                "SIMULATED DP RESPONSE",
+
+            simulatedCommand:
+                simulatedCommand,
+
+            stabilizerOutput:
+                stabilizer.finalOutput,
+
+            operationalCommand:
+                false,
+
+            realVesselConnection:
+                false,
+
+            status:
+                "SIMULATION ONLY"
+
+        };
+
+    }
+
+
+    /* ========================================================
+       SIMULATED POSITION / STABILITY MODEL
+    ======================================================== */
+
+    function calculateSimulatedState(
+        environment,
+        risk,
+        simulatedCommand
+    ) {
+
+        /*
+         * Simple deterministic demonstrator model.
+         *
+         * This is NOT a physical DP vessel model.
+         */
+
+        const environmentalLoad =
+            (
+                environment.wind +
+                environment.current +
+                environment.wave +
+                environment.tidal
+            ) / 4;
+
+
+        const controlMargin =
+            Math.max(
+                0,
+                100 -
+                environmentalLoad
+            );
+
+
+        const positionError =
+            Math.max(
+                0,
+                (
+                    environmentalLoad -
+                    simulatedCommand * 0.45
+                ) / 10
+            );
+
+
+        const stabilityIndex =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    controlMargin +
+                    simulatedCommand * 0.20
+                )
+            );
+
+
+        return {
+
+            positionError:
+                positionError,
+
+            simulatedCommand:
+                simulatedCommand,
+
+            stabilityIndex:
+                stabilityIndex,
+
+            risk:
+                risk,
+
+            status:
+                "SIMULATED"
+
+        };
+
+    }
+
+
+    /* ========================================================
+       PART 3 STATUS
+    ======================================================== */
+
+    /*
+     * OPERATOR DECISION PATH:
+     *
+     * ENVIRONMENT
+     *      ↓
+     * RISK ASSESSMENT
+     *      ↓
+     * OPERATOR RECOMMENDATION
+     *      ↓
+     * HUMAN REVIEW
+     *      ↓
+     * SIMULATED RESPONSE
+     *
+     * IMPORTANT:
+     *
+     * "OFF DP" and "ANCHOR" are never executed
+     * automatically by this software.
+     *
+     * The simulator can identify the condition in
+     * which those contingencies should be reviewed,
+     * while the Master / authorised operator remains
+     * the final decision authority.
+     */
