@@ -1,467 +1,802 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Sextant Protocol – DP Resilience Cockpit</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
 
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #08111f;
-        color: #e8f0f7;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    .header {
-        padding: 18px;
-        text-align: center;
-        background: #0d1b2a;
-        border-bottom: 2px solid #29445f;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #08111f;
+    color: #e8f0f7;
+}
+
+.header {
+    padding: 18px;
+    text-align: center;
+    background: #0d1b2a;
+    border-bottom: 2px solid #29445f;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header p {
+    margin: 8px 0 0;
+    color: #9fb3c8;
+    font-size: 13px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.panel {
+    background: #0e1c2c;
+    border: 1px solid #29445f;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 1px solid #29445f;
+    padding-bottom: 8px;
+}
+
+.vessel-data {
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    gap: 10px;
+    align-items: center;
+    margin: 10px 0;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #46627d;
+    background: #07111d;
+    color: white;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.run {
+    background: #1f8f5f;
+    color: white;
+}
+
+.reset {
+    background: #46586d;
+    color: white;
+}
+
+.scenario {
+    background: #315a7d;
+    color: white;
+}
+
+.controls {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.architecture {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.node {
+    padding: 10px;
+    border: 1px solid #587590;
+    border-radius: 6px;
+    background: #13283b;
+    text-align: center;
+    min-width: 125px;
+    font-size: 12px;
+}
+
+.arrow {
+    color: #8faac0;
+    font-size: 20px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.status-card {
+    padding: 12px;
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+}
+
+.status-title {
+    font-size: 11px;
+    color: #91a8bd;
+}
+
+.status-value {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.output {
+    white-space: pre-wrap;
+    background: #050c14;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    padding: 15px;
+    min-height: 320px;
+    font-family: monospace;
+    font-size: 13px;
+    overflow-x: auto;
+}
+
+.footer {
+    text-align: center;
+    padding: 18px;
+    color: #8799aa;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.engine-status {
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    background: #091827;
+    border: 1px solid #29445f;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+@media (max-width: 600px) {
 
     .header h1 {
-        margin: 0;
-        font-size: 24px;
-    }
-
-    .header p {
-        margin: 8px 0 0;
-        color: #9fb3c8;
-        font-size: 13px;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: auto;
-        padding: 15px;
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 15px;
-    }
-
-    .panel {
-        background: #0e1c2c;
-        border: 1px solid #29445f;
-        border-radius: 8px;
-        padding: 15px;
-    }
-
-    .panel h2 {
-        margin-top: 0;
-        font-size: 16px;
-        border-bottom: 1px solid #29445f;
-        padding-bottom: 8px;
-    }
-
-    .vessel-data {
-        line-height: 1.8;
-        font-size: 14px;
-    }
-
-    .input-row {
-        display: grid;
-        grid-template-columns: 1fr 90px;
-        gap: 10px;
-        align-items: center;
-        margin: 10px 0;
-    }
-
-    input[type="number"] {
-        width: 100%;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #46627d;
-        background: #07111d;
-        color: white;
-        font-size: 15px;
-    }
-
-    button {
-        border: none;
-        border-radius: 6px;
-        padding: 12px 18px;
-        margin: 5px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .run {
-        background: #1f8f5f;
-        color: white;
-    }
-
-    .reset {
-        background: #46586d;
-        color: white;
-    }
-
-    .scenario {
-        background: #315a7d;
-        color: white;
-    }
-
-    button:active {
-        transform: scale(0.98);
-    }
-
-    .controls {
-        text-align: center;
-        margin: 15px 0;
+        font-size: 18px;
     }
 
     .architecture {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        margin-top: 10px;
-    }
-
-    .node {
-        padding: 10px;
-        border: 1px solid #587590;
-        border-radius: 6px;
-        background: #13283b;
-        text-align: center;
-        min-width: 125px;
-        font-size: 12px;
+        flex-direction: column;
     }
 
     .arrow {
-        color: #8faac0;
-        font-size: 20px;
+        transform: rotate(90deg);
     }
 
-    .status-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
+    button {
+        width: 90%;
     }
 
-    .status-card {
-        padding: 12px;
-        background: #091827;
-        border: 1px solid #29445f;
-        border-radius: 6px;
-    }
+}
 
-    .status-title {
-        font-size: 11px;
-        color: #91a8bd;
-    }
-
-    .status-value {
-        margin-top: 5px;
-        font-weight: bold;
-        font-size: 14px;
-    }
-
-    .output {
-        white-space: pre-wrap;
-        background: #050c14;
-        border: 1px solid #29445f;
-        border-radius: 6px;
-        padding: 15px;
-        min-height: 300px;
-        font-family: monospace;
-        font-size: 13px;
-        overflow-x: auto;
-    }
-
-    .good {
-        color: #54d38b;
-    }
-
-    .warning {
-        color: #f0c674;
-    }
-
-    .critical {
-        color: #ff6b6b;
-    }
-
-    .footer {
-        text-align: center;
-        padding: 18px;
-        color: #8799aa;
-        font-size: 11px;
-    }
-
-    @media (max-width: 600px) {
-        .header h1 {
-            font-size: 18px;
-        }
-
-        .architecture {
-            flex-direction: column;
-        }
-
-        .arrow {
-            transform: rotate(90deg);
-        }
-    }
 </style>
+
 </head>
 
 <body>
 
 <div class="header">
 
-    <h1>SEXTANT PROTOCOL – DP RESILIENCE COCKPIT</h1>
+    <h1>
+        SEXTANT PROTOCOL – DP RESILIENCE COCKPIT
+    </h1>
 
     <p>
-        MPSV SIMULATION • PRIMARY AI → SECONDARY AI →
-        STABILIZER → HUMAN-IN-THE-LOOP
+        MPSV SIMULATION • PRIMARY AI →
+        SECONDARY AI → STABILIZER →
+        HUMAN-IN-THE-LOOP
     </p>
 
 </div>
 
+
 <div class="container">
 
-    <!-- ARCHITECTURE -->
 
-    <div class="panel">
+<!-- ======================================================
+     ENGINE STATUS
+======================================================= -->
 
-        <h2>Principal Architecture</h2>
+<div class="engine-status">
 
-        <div class="architecture">
+    ENGINE:
+    <span id="engineStatus">
+        INITIALISING...
+    </span>
 
-            <div class="node">
-                PRIMARY AI<br>
-                Normal Control
-            </div>
+</div>
 
-            <div class="arrow">→</div>
 
-            <div class="node">
-                SECONDARY AI<br>
-                Safety Layer
-            </div>
+<!-- ======================================================
+     ARCHITECTURE
+======================================================= -->
 
-            <div class="arrow">→</div>
+<div class="panel">
 
-            <div class="node">
-                STABILIZER<br>
-                Arbitration
-            </div>
+    <h2>Principal Architecture</h2>
 
-            <div class="arrow">→</div>
+    <div class="architecture">
 
-            <div class="node">
-                HUMAN-IN-THE-LOOP<br>
-                Final Authority
-            </div>
+        <div class="node">
+            ENVIRONMENT
+        </div>
 
+        <div class="arrow">→</div>
+
+        <div class="node">
+            PRIMARY AI<br>
+            Normal Control
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            SECONDARY AI<br>
+            Safety Layer
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            STABILIZER<br>
+            Arbitration
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            HUMAN-IN-THE-LOOP<br>
+            Final Authority
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            SIMULATED DP ACTION
         </div>
 
     </div>
 
-    <div class="grid">
+</div>
 
-        <!-- VESSEL -->
 
-        <div class="panel">
+<!-- ======================================================
+     VESSEL + ENVIRONMENT
+======================================================= -->
 
-            <h2>Simulated Vessel Profile</h2>
+<div class="grid">
 
-            <div class="vessel-data">
 
-                <strong>Name:</strong> SEXTANT-MPSV-01<br>
-                <strong>Type:</strong> Multi-Purpose Support Vessel<br>
-                <strong>DP Class:</strong> DP2-SIMULATED<br>
-                <strong>Length:</strong> 85 m<br>
-                <strong>Beam:</strong> 20 m<br>
-                <strong>Draft:</strong> 6 m<br>
-                <strong>Main Thrusters:</strong> 2<br>
-                <strong>Tunnel Thrusters:</strong> 2<br>
-                <strong>Total Thrusters:</strong> 4<br>
-                <strong>Nominal Simulated Thrust:</strong> 100 units
+<div class="panel">
 
-            </div>
+    <h2>Simulated Vessel Profile</h2>
 
-        </div>
+    <div class="vessel-data">
 
-        <!-- ENVIRONMENT -->
+        <strong>Name:</strong>
+        SEXTANT-MPSV-01
+        <br>
 
-        <div class="panel">
+        <strong>Type:</strong>
+        Multi-Purpose Support Vessel
+        <br>
 
-            <h2>Environmental Simulation Inputs</h2>
+        <strong>DP Class:</strong>
+        DP2-SIMULATED
+        <br>
 
-            <div class="input-row">
-                <label>Wind Stress (0–100)</label>
-                <input id="wind" type="number" min="0" max="100" value="30">
-            </div>
+        <strong>Length:</strong>
+        85 m
+        <br>
 
-            <div class="input-row">
-                <label>Current Stress (0–100)</label>
-                <input id="current" type="number" min="0" max="100" value="25">
-            </div>
+        <strong>Beam:</strong>
+        20 m
+        <br>
 
-            <div class="input-row">
-                <label>Wave Stress (0–100)</label>
-                <input id="wave" type="number" min="0" max="100" value="30">
-            </div>
+        <strong>Draft:</strong>
+        6 m
+        <br>
 
-            <div class="input-row">
-                <label>Tidal Stress (0–100)</label>
-                <input id="tidal" type="number" min="0" max="100" value="20">
-            </div>
+        <strong>Main Thrusters:</strong>
+        2
+        <br>
 
-        </div>
+        <strong>Tunnel Thrusters:</strong>
+        2
+        <br>
 
-    </div>
+        <strong>Total Thrusters:</strong>
+        4
+        <br>
 
-    <!-- SCENARIOS -->
-
-    <div class="panel">
-
-        <h2>Scenario Controls</h2>
-
-        <div class="controls">
-
-            <button class="scenario" onclick="normalScenario()">
-                NORMAL
-            </button>
-
-            <button class="scenario" onclick="heavyWeatherScenario()">
-                HEAVY WEATHER
-            </button>
-
-            <button class="scenario" onclick="criticalScenario()">
-                CRITICAL
-            </button>
-
-            <button class="scenario" onclick="randomScenario()">
-                RANDOM DISTURBANCE
-            </button>
-
-        </div>
+        <strong>Nominal Simulated Thrust:</strong>
+        100 units
 
     </div>
 
-    <!-- CONTROL -->
+</div>
+
+
+<div class="panel">
+
+    <h2>
+        Environmental Simulation Inputs
+    </h2>
+
+    <div class="input-row">
+
+        <label>
+            Wind Stress (0–100)
+        </label>
+
+        <input
+            id="wind"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+
+    <div class="input-row">
+
+        <label>
+            Current Stress (0–100)
+        </label>
+
+        <input
+            id="current"
+            type="number"
+            min="0"
+            max="100"
+            value="25"
+        >
+
+    </div>
+
+
+    <div class="input-row">
+
+        <label>
+            Wave Stress (0–100)
+        </label>
+
+        <input
+            id="wave"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+
+    <div class="input-row">
+
+        <label>
+            Tidal Stress (0–100)
+        </label>
+
+        <input
+            id="tidal"
+            type="number"
+            min="0"
+            max="100"
+            value="20"
+        >
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     SCENARIO CONTROLS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Scenario Controls
+    </h2>
 
     <div class="controls">
 
-        <button class="run" onclick="runSimulation()">
-            ▶ RUN DP SIMULATION
+        <button
+            class="scenario"
+            onclick="normalScenario()"
+        >
+            NORMAL
         </button>
 
-        <button class="reset" onclick="resetSimulation()">
-            RESET
+
+        <button
+            class="scenario"
+            onclick="moderateWeatherScenario()"
+        >
+            MODERATE
+        </button>
+
+
+        <button
+            class="scenario"
+            onclick="heavyWeatherScenario()"
+        >
+            HEAVY WEATHER
+        </button>
+
+
+        <button
+            class="scenario"
+            onclick="criticalScenario()"
+        >
+            CRITICAL
+        </button>
+
+
+        <button
+            class="scenario"
+            onclick="currentSurgeScenario()"
+        >
+            CURRENT SURGE
+        </button>
+
+
+        <button
+            class="scenario"
+            onclick="heavySeaStateScenario()"
+        >
+            HEAVY SEA
+        </button>
+
+
+        <button
+            class="scenario"
+            onclick="windGustScenario()"
+        >
+            WIND GUST
+        </button>
+
+
+        <button
+            class="scenario"
+            onclick="combinedDisturbanceScenario()"
+        >
+            COMBINED
+        </button>
+
+
+        <button
+            class="scenario"
+            onclick="randomScenario()"
+        >
+            RANDOM
         </button>
 
     </div>
 
-    <!-- LIVE STATUS -->
+</div>
 
-    <div class="panel">
 
-        <h2>Live System Status</h2>
+<!-- ======================================================
+     MAIN CONTROL
+======================================================= -->
 
-        <div class="status-grid">
+<div class="controls">
 
-            <div class="status-card">
-                <div class="status-title">ENVIRONMENT</div>
-                <div id="environmentStatus" class="status-value">
-                    STANDBY
-                </div>
+    <button
+        class="run"
+        onclick="runSimulation()"
+    >
+        ▶ RUN DP SIMULATION
+    </button>
+
+
+    <button
+        class="reset"
+        onclick="resetSimulation()"
+    >
+        RESET
+    </button>
+
+</div>
+
+
+<!-- ======================================================
+     LIVE STATUS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Live System Status
+    </h2>
+
+    <div class="status-grid">
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                ENVIRONMENT
             </div>
 
-            <div class="status-card">
-                <div class="status-title">PRIMARY AI</div>
-                <div id="primaryStatus" class="status-value">
-                    STANDBY
-                </div>
-            </div>
-
-            <div class="status-card">
-                <div class="status-title">SECONDARY AI</div>
-                <div id="secondaryStatus" class="status-value">
-                    STANDBY
-                </div>
-            </div>
-
-            <div class="status-card">
-                <div class="status-title">STABILIZER</div>
-                <div id="stabilizerStatus" class="status-value">
-                    STANDBY
-                </div>
-            </div>
-
-            <div class="status-card">
-                <div class="status-title">HUMAN AUTHORITY</div>
-                <div id="humanStatus" class="status-value">
-                    AVAILABLE
-                </div>
-            </div>
-
-            <div class="status-card">
-                <div class="status-title">SYSTEM</div>
-                <div id="systemStatus" class="status-value">
-                    READY
-                </div>
+            <div
+                id="environmentStatus"
+                class="status-value"
+            >
+                STANDBY
             </div>
 
         </div>
 
+
+        <div class="status-card">
+
+            <div class="status-title">
+                PRIMARY AI
+            </div>
+
+            <div
+                id="primaryStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                SECONDARY AI
+            </div>
+
+            <div
+                id="secondaryStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                STABILIZER
+            </div>
+
+            <div
+                id="stabilizerStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                HUMAN AUTHORITY
+            </div>
+
+            <div
+                id="humanStatus"
+                class="status-value"
+            >
+                AVAILABLE
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                SYSTEM
+            </div>
+
+            <div
+                id="systemStatus"
+                class="status-value"
+            >
+                READY
+            </div>
+
+        </div>
+
+
     </div>
 
-    <!-- RESULTS -->
+</div>
 
-    <div class="panel">
 
-        <h2>DP Simulation Assessment</h2>
+<!-- ======================================================
+     RESULTS
+======================================================= -->
 
-        <div id="output" class="output">
+<div class="panel">
+
+    <h2>
+        DP Simulation Assessment
+    </h2>
+
+    <div
+        id="output"
+        class="output"
+    >
 System ready.
 
 Select environmental conditions or a scenario,
 then press RUN DP SIMULATION.
-        </div>
-
     </div>
 
 </div>
 
-<div class="footer">
-
-    SEXTANT PROTOCOL – RESEARCH / SIMULATION ONLY<br>
-    NOT CERTIFIED MARINE CONTROL SOFTWARE<br>
-    NOT FOR CONNECTION TO OPERATIONAL DP, PROPULSION,
-    NAVIGATION OR SAFETY SYSTEMS
 
 </div>
 
 
+<!-- ======================================================
+     FOOTER
+======================================================= -->
+
+<div class="footer">
+
+    SEXTANT PROTOCOL – RESEARCH / SIMULATION ONLY
+    <br>
+
+    NOT CERTIFIED MARINE CONTROL SOFTWARE
+    <br>
+
+    NOT FOR CONNECTION TO OPERATIONAL DP,
+    PROPULSION, NAVIGATION OR SAFETY SYSTEMS
+
+</div>
+
+
+<!-- ======================================================
+     EXTERNAL MODULES
+=======================================================
+
+IMPORTANT LOAD ORDER:
+
+1. dp_simulation_engine.js
+2. dp_scenarios.js
+3. cockpit wiring below
+
+======================================================= -->
+
+<script src="dp_simulation_engine.js"></script>
+
+<script src="dp_scenarios.js"></script>
+
+
 <script>
 
-/*
-============================================================
-SEXTANT PROTOCOL – DP SIMULATION ENGINE
-Browser Demonstrator
-============================================================
-*/
+/* =========================================================
+   SEXTANT PROTOCOL
+   DP COCKPIT WIRING LAYER
+========================================================= */
+
 
 /* ---------------------------------------------------------
-   INPUT UTILITIES
+   ENGINE VALIDATION
 --------------------------------------------------------- */
 
-function getInput(id) {
+function verifyDPEngine() {
 
-    const value = Number(
-        document.getElementById(id).value
-    );
+    const status =
+        document.getElementById(
+            "engineStatus"
+        );
+
+    if (
+        typeof DPSimulationEngine ===
+        "undefined"
+    ) {
+
+        status.textContent =
+            "ENGINE NOT LOADED";
+
+        status.style.color =
+            "#ff6b6b";
+
+        return false;
+    }
+
+
+    status.textContent =
+        "DP SIMULATION ENGINE " +
+        DPSimulationEngine.version +
+        " CONNECTED";
+
+    status.style.color =
+        "#54d38b";
+
+    return true;
+}
+
+
+/* ---------------------------------------------------------
+   INPUT READER
+--------------------------------------------------------- */
+
+function getDPInput(id) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element) {
+        return 0;
+    }
+
+    const value =
+        Number(element.value);
 
     if (!Number.isFinite(value)) {
         return 0;
@@ -475,349 +810,194 @@ function getInput(id) {
 
 
 /* ---------------------------------------------------------
-   ENVIRONMENT MODEL
---------------------------------------------------------- */
-
-function calculateEnvironment(
-    wind,
-    current,
-    wave,
-    tidal
-) {
-
-    return (
-        wind * 0.30 +
-        current * 0.25 +
-        wave * 0.30 +
-        tidal * 0.15
-    );
-}
-
-
-/* ---------------------------------------------------------
-   PRIMARY AI
---------------------------------------------------------- */
-
-function primaryAI(
-    thrust,
-    environment
-) {
-
-    const windFactor =
-        environment * 0.60;
-
-    const currentFactor =
-        environment * 0.40;
-
-    const disturbance =
-        windFactor + currentFactor;
-
-    const output =
-        thrust - disturbance;
-
-    return {
-
-        mode: "PRIMARY_AI",
-
-        thrustOutput:
-            Math.max(0, output),
-
-        status:
-            "NORMAL_CONTROL"
-
-    };
-}
-
-
-/* ---------------------------------------------------------
-   SECONDARY AI
---------------------------------------------------------- */
-
-function secondaryAI(environment) {
-
-    const threshold = 70;
-
-    const safetyMode =
-        environment > threshold;
-
-    let output;
-    let status;
-
-    if (safetyMode) {
-
-        output =
-            Math.max(
-                0,
-                40 - environment
-            );
-
-        status =
-            "SAFETY_OVERRIDE_ACTIVE";
-
-    } else {
-
-        output = 50;
-
-        status =
-            "MONITORING";
-    }
-
-    return {
-
-        mode: "SECONDARY_AI",
-
-        thrustOutput:
-            output,
-
-        status:
-            status,
-
-        safetyMode:
-            safetyMode
-
-    };
-}
-
-
-/* ---------------------------------------------------------
-   HUMAN-IN-THE-LOOP
---------------------------------------------------------- */
-
-function humanDecision(
-    environment,
-    riskLevel
-) {
-
-    const criticalThreshold = 85;
-
-    const override =
-        environment > criticalThreshold ||
-        riskLevel > criticalThreshold;
-
-    return {
-
-        mode:
-            "HUMAN_IN_LOOP",
-
-        override:
-            override,
-
-        status:
-            override
-                ? "HUMAN_OVERRIDE_REQUIRED"
-                : "MONITORING / AVAILABLE"
-
-    };
-}
-
-
-/* ---------------------------------------------------------
-   STABILIZER
---------------------------------------------------------- */
-
-function stabilizer(
-    primary,
-    secondary,
-    override
-) {
-
-    if (override) {
-
-        return {
-
-            mode:
-                "STABILIZED",
-
-            finalOutput:
-                secondary.thrustOutput,
-
-            source:
-                "SECONDARY_AI_OVERRIDE",
-
-            status:
-                "SAFE_STATE_LOCK"
-
-        };
-
-    }
-
-    const blended =
-        primary.thrustOutput * 0.70 +
-        secondary.thrustOutput * 0.30;
-
-    return {
-
-        mode:
-            "STABILIZED",
-
-        finalOutput:
-            blended,
-
-        source:
-            "BLENDED_CONTROL",
-
-        status:
-            "NORMAL_STABILITY"
-
-    };
-}
-
-
-/* ---------------------------------------------------------
-   RUN SIMULATION
+   SIMULATION EXECUTION
 --------------------------------------------------------- */
 
 function runSimulation() {
 
-    const wind =
-        getInput("wind");
+    if (!verifyDPEngine()) {
 
-    const current =
-        getInput("current");
+        document.getElementById(
+            "output"
+        ).textContent =
 
-    const wave =
-        getInput("wave");
+`DP SIMULATION ENGINE ERROR
 
-    const tidal =
-        getInput("tidal");
+The external engine could not be loaded.
+
+Required file:
+dp_simulation_engine.js
+
+Simulation not executed.`;
+
+        return;
+    }
 
 
-    /* ENVIRONMENT */
+    const inputs = {
+
+        wind:
+            getDPInput("wind"),
+
+        current:
+            getDPInput("current"),
+
+        wave:
+            getDPInput("wave"),
+
+        tidal:
+            getDPInput("tidal")
+
+    };
+
+
+    let result;
+
+    try {
+
+        result =
+            DPSimulationEngine.run(
+                inputs
+            );
+
+    } catch (error) {
+
+        console.error(
+            "DP Simulation Error:",
+            error
+        );
+
+        document.getElementById(
+            "output"
+        ).textContent =
+
+`DP SIMULATION ERROR
+
+${error.message}
+
+No simulated action was executed.`;
+
+        return;
+    }
+
+
+    updateDPCockpit(result);
+
+    renderDPReport(
+        result,
+        inputs
+    );
+
+}
+
+
+/* ---------------------------------------------------------
+   UPDATE LIVE STATUS
+--------------------------------------------------------- */
+
+function updateDPCockpit(result) {
 
     const environment =
-        calculateEnvironment(
-            wind,
-            current,
-            wave,
-            tidal
-        );
-
-
-    /* PRINCIPAL THRUST */
-
-    const nominalThrust = 100;
-
-
-    /* PRIMARY */
+        result.environment;
 
     const primary =
-        primaryAI(
-            nominalThrust,
-            environment
-        );
-
-
-    /* SECONDARY */
+        result.primary;
 
     const secondary =
-        secondaryAI(
-            environment
-        );
-
-
-    /* HUMAN */
+        result.secondary;
 
     const human =
-        humanDecision(
-            environment,
-            environment
-        );
+        result.human;
 
+    const stabilizer =
+        result.stabilizer;
 
-    /* STABILIZER */
-
-    const final =
-        stabilizer(
-            primary,
-            secondary,
-            human.override
-        );
-
-
-    /* RISK */
-
-    let risk;
-
-    if (environment < 40) {
-
-        risk = "LOW";
-
-    } else if (environment < 70) {
-
-        risk = "MEDIUM";
-
-    } else if (environment < 85) {
-
-        risk = "HIGH";
-
-    } else {
-
-        risk = "CRITICAL";
-
-    }
-
-
-    /* STATUS */
-
-    let systemStatus;
-
-    if (human.override) {
-
-        systemStatus =
-            "HUMAN OVERRIDE REQUIRED";
-
-    } else if (risk === "HIGH") {
-
-        systemStatus =
-            "DEGRADED / HIGH RISK";
-
-    } else {
-
-        systemStatus =
-            "SIMULATION STABLE";
-    }
-
-
-    /* UPDATE STATUS CARDS */
 
     document.getElementById(
         "environmentStatus"
     ).textContent =
-        environment.toFixed(2) +
-        " / " +
-        risk;
+
+        environment.environmentalStress
+            .toFixed(2)
+        +
+        " / "
+        +
+        result.risk;
+
 
     document.getElementById(
         "primaryStatus"
     ).textContent =
-        primary.thrustOutput.toFixed(2);
+
+        primary.thrustOutput
+            .toFixed(2)
+        +
+        " / "
+        +
+        primary.status;
+
 
     document.getElementById(
         "secondaryStatus"
     ).textContent =
+
         secondary.safetyMode
             ? "SAFETY ACTIVE"
             : "MONITORING";
 
+
     document.getElementById(
         "stabilizerStatus"
     ).textContent =
-        final.source;
+
+        stabilizer.source;
+
 
     document.getElementById(
         "humanStatus"
     ).textContent =
+
         human.override
             ? "OVERRIDE REQUIRED"
             : "AVAILABLE";
 
+
     document.getElementById(
         "systemStatus"
     ).textContent =
-        systemStatus;
+
+        result.systemStatus;
+
+}
 
 
-    /* RESULT REPORT */
+/* ---------------------------------------------------------
+   RESULT REPORT
+--------------------------------------------------------- */
+
+function renderDPReport(
+    result,
+    inputs
+) {
+
+    const environment =
+        result.environment;
+
+    const primary =
+        result.primary;
+
+    const secondary =
+        result.secondary;
+
+    const human =
+        result.human;
+
+    const stabilizer =
+        result.stabilizer;
+
+    const updatedState =
+        result.updatedState;
+
 
     const report =
 
@@ -825,6 +1005,13 @@ function runSimulation() {
 ============================================================
              SEXTANT DP SIMULATION RESULT
 ============================================================
+
+ENGINE
+------------------------------------------------------------
+Engine            : ${result.engine}
+Version           : ${result.version}
+Mode              : ${result.mode}
+
 
 VESSEL
 ------------------------------------------------------------
@@ -839,20 +1026,21 @@ Nominal Thrust    : 100 simulation units
 
 ENVIRONMENT
 ------------------------------------------------------------
-Wind Stress       : ${wind.toFixed(2)}
-Current Stress    : ${current.toFixed(2)}
-Wave Stress       : ${wave.toFixed(2)}
-Tidal Stress      : ${tidal.toFixed(2)}
+Wind Stress       : ${inputs.wind.toFixed(2)}
+Current Stress    : ${inputs.current.toFixed(2)}
+Wave Stress       : ${inputs.wave.toFixed(2)}
+Tidal Stress      : ${inputs.tidal.toFixed(2)}
 
 Environmental
-Stress            : ${environment.toFixed(2)}
+Stress            : ${environment.environmentalStress.toFixed(2)}
 
 Risk Classification:
-${risk}
+${result.risk}
 
 
 PRIMARY AI
 ------------------------------------------------------------
+Layer             : ${primary.layer}
 Mode              : ${primary.mode}
 Thrust Output     : ${primary.thrustOutput.toFixed(2)}
 Status            : ${primary.status}
@@ -860,6 +1048,7 @@ Status            : ${primary.status}
 
 SECONDARY AI
 ------------------------------------------------------------
+Layer             : ${secondary.layer}
 Mode              : ${secondary.mode}
 Thrust Output     : ${secondary.thrustOutput.toFixed(2)}
 Status            : ${secondary.status}
@@ -868,6 +1057,7 @@ Safety Mode       : ${secondary.safetyMode}
 
 HUMAN-IN-THE-LOOP
 ------------------------------------------------------------
+Layer             : ${human.layer}
 Mode              : ${human.mode}
 Override          : ${human.override}
 Status            : ${human.status}
@@ -875,13 +1065,22 @@ Status            : ${human.status}
 
 STABILIZER
 ------------------------------------------------------------
-Mode              : ${final.mode}
-Final Output      : ${final.finalOutput.toFixed(2)}
-Source            : ${final.source}
-Status            : ${final.status}
+Layer             : ${stabilizer.layer}
+Mode              : ${stabilizer.mode}
+Final Output      : ${stabilizer.finalOutput.toFixed(2)}
+Source            : ${stabilizer.source}
+Status            : ${stabilizer.status}
 
 
-PRINCIPAL GOVERNANCE
+UPDATED SIMULATED STATE
+------------------------------------------------------------
+Position Error    : ${updatedState.positionError.toFixed(4)}
+Simulated Command : ${updatedState.simulatedCommand.toFixed(2)}
+Environmental
+Stress            : ${updatedState.environmentalStress.toFixed(2)}
+
+
+GOVERNANCE
 ------------------------------------------------------------
 Primary AI        : ACTIVE
 Secondary AI      : ACTIVE
@@ -893,19 +1092,12 @@ Human Authority   : ${
 }
 
 
-FINAL SIMULATED STATE
+FINAL SYSTEM STATUS
 ------------------------------------------------------------
-Environmental
-Stress            : ${environment.toFixed(2)}
-
-Simulated Command : ${final.finalOutput.toFixed(2)}
-
-Decision Source   : ${final.source}
-
-System Status     : ${systemStatus}
+${result.systemStatus}
 
 
-SIMULATION CYCLE
+SIMULATION PIPELINE
 ------------------------------------------------------------
 OBSERVE
    ↓
@@ -920,16 +1112,27 @@ ACT
 UPDATE
 
 
+AUDIT
+------------------------------------------------------------
+Timestamp         : ${result.audit.timestamp}
+Engine Version    : ${result.audit.engineVersion}
+
+
 ============================================================
 SIMULATION COMPLETE
 ============================================================
 
 SAFETY BOUNDARY:
+
 This is a research and simulation demonstrator only.
 
 It is NOT certified marine control software and must
 NOT be connected to operational DP, propulsion,
 navigation or safety systems.
+
+All vessel behaviour, environmental conditions,
+decisions and outputs are simulated.
+
 ============================================================
 `;
 
@@ -938,83 +1141,7 @@ navigation or safety systems.
         "output"
     ).textContent =
         report;
-}
 
-
-/* ---------------------------------------------------------
-   SCENARIOS
---------------------------------------------------------- */
-
-function setValues(
-    wind,
-    current,
-    wave,
-    tidal
-) {
-
-    document.getElementById("wind").value =
-        wind;
-
-    document.getElementById("current").value =
-        current;
-
-    document.getElementById("wave").value =
-        wave;
-
-    document.getElementById("tidal").value =
-        tidal;
-}
-
-
-function normalScenario() {
-
-    setValues(
-        20,
-        15,
-        20,
-        15
-    );
-
-    runSimulation();
-}
-
-
-function heavyWeatherScenario() {
-
-    setValues(
-        70,
-        65,
-        75,
-        60
-    );
-
-    runSimulation();
-}
-
-
-function criticalScenario() {
-
-    setValues(
-        95,
-        90,
-        95,
-        85
-    );
-
-    runSimulation();
-}
-
-
-function randomScenario() {
-
-    setValues(
-        Math.floor(Math.random() * 101),
-        Math.floor(Math.random() * 101),
-        Math.floor(Math.random() * 101),
-        Math.floor(Math.random() * 101)
-    );
-
-    runSimulation();
 }
 
 
@@ -1024,42 +1151,58 @@ function randomScenario() {
 
 function resetSimulation() {
 
-    setValues(
-        30,
-        25,
-        30,
-        20
-    );
+    document.getElementById(
+        "wind"
+    ).value = 30;
+
+    document.getElementById(
+        "current"
+    ).value = 25;
+
+    document.getElementById(
+        "wave"
+    ).value = 30;
+
+    document.getElementById(
+        "tidal"
+    ).value = 20;
+
 
     document.getElementById(
         "environmentStatus"
     ).textContent =
         "STANDBY";
 
+
     document.getElementById(
         "primaryStatus"
     ).textContent =
         "STANDBY";
+
 
     document.getElementById(
         "secondaryStatus"
     ).textContent =
         "STANDBY";
 
+
     document.getElementById(
         "stabilizerStatus"
     ).textContent =
         "STANDBY";
+
 
     document.getElementById(
         "humanStatus"
     ).textContent =
         "AVAILABLE";
 
+
     document.getElementById(
         "systemStatus"
     ).textContent =
         "READY";
+
 
     document.getElementById(
         "output"
@@ -1069,14 +1212,24 @@ function resetSimulation() {
 
 Select environmental conditions or a scenario,
 then press RUN DP SIMULATION.`;
+
 }
 
 
 /* ---------------------------------------------------------
-   INITIAL STATE
+   STARTUP
 --------------------------------------------------------- */
 
-resetSimulation();
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        verifyDPEngine();
+
+        resetSimulation();
+
+    }
+);
 
 </script>
 
