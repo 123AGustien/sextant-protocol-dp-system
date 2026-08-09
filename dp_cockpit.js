@@ -2254,3 +2254,1296 @@
      * that the seabed has been appropriately surveyed
      * and that anchoring is operationally suitable.
      */
+    /* ========================================================
+       OFF-DP / ANCHORING DECISION-SUPPORT DISPLAY
+    ======================================================== */
+
+    function updateContingency(result) {
+
+        if (
+            !result ||
+            !result.recommendedAction
+        ) {
+            return;
+        }
+
+
+        const action =
+            result.recommendedAction;
+
+
+        /*
+         * Default state.
+         */
+
+        setText(
+            "offDpRecommendation",
+            "NOT INDICATED"
+        );
+
+
+        setText(
+            "anchoringRecommendation",
+            "NOT INDICATED"
+        );
+
+
+        setText(
+            "surveyedSeabedStatus",
+            "NOT VERIFIED"
+        );
+
+
+        /*
+         * OFF-DP recommendation.
+         *
+         * This is decision-support only.
+         */
+
+        if (
+            result.risk === "HIGH" ||
+            result.risk === "CRITICAL"
+        ) {
+
+            setText(
+                "offDpRecommendation",
+                "HUMAN REVIEW — CONSIDER APPROVED DEGRADED / OFF-DP CONTINGENCY"
+            );
+
+        }
+
+
+        /*
+         * Anchoring recommendation.
+         */
+
+        if (
+            action.anchoringConsideration
+        ) {
+
+            setText(
+                "anchoringRecommendation",
+                action.anchoringConsideration
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       SURVEYED SEABED STATE
+    ======================================================== */
+
+    let surveyedSeabedConfirmed =
+        false;
+
+
+    function setSurveyedSeabed(
+        confirmed
+    ) {
+
+        surveyedSeabedConfirmed =
+            Boolean(
+                confirmed
+            );
+
+
+        setText(
+            "surveyedSeabedStatus",
+            surveyedSeabedConfirmed
+                ? "CONFIRMED — SIMULATION CONDITION"
+                : "NOT VERIFIED"
+        );
+
+
+        appendOperatorLog(
+            surveyedSeabedConfirmed
+                ? "Simulated surveyed-seabed condition confirmed for decision-support."
+                : "Simulated surveyed-seabed condition cleared."
+        );
+
+
+        return surveyedSeabedConfirmed;
+
+    }
+
+
+    function getSurveyedSeabedState() {
+
+        return surveyedSeabedConfirmed;
+
+    }
+
+
+    /* ========================================================
+       ANCHORING DECISION LOGIC
+    ======================================================== */
+
+    function evaluateAnchoringContingency(
+        result
+    ) {
+
+        if (!result) {
+
+            return {
+
+                indicated:
+                    false,
+
+                permittedBySimulation:
+                    false,
+
+                reason:
+                    "No simulation result available."
+
+            };
+
+        }
+
+
+        if (
+            result.risk !== "HIGH" &&
+            result.risk !== "CRITICAL"
+        ) {
+
+            return {
+
+                indicated:
+                    false,
+
+                permittedBySimulation:
+                    false,
+
+                reason:
+                    "Environmental risk does not currently indicate anchoring contingency review."
+
+            };
+
+        }
+
+
+        if (
+            !surveyedSeabedConfirmed
+        ) {
+
+            return {
+
+                indicated:
+                    true,
+
+                permittedBySimulation:
+                    false,
+
+                reason:
+                    "Anchoring contingency may be reviewed, but surveyed seabed condition has not been confirmed."
+
+            };
+
+        }
+
+
+        return {
+
+            indicated:
+                true,
+
+            permittedBySimulation:
+                true,
+
+            reason:
+                "Simulated surveyed-seabed condition confirmed. Human assessment of vessel, water depth, holding ground, weather, traffic, equipment, local restrictions and approved procedures remains mandatory."
+
+        };
+
+    }
+
+
+    /* ========================================================
+       SIMULATION RESULT DISPLAY
+    ======================================================== */
+
+    function updateSimulationAssessment(
+        result
+    ) {
+
+        if (!result) {
+            return;
+        }
+
+
+        const state =
+            result.updatedState ||
+            {};
+
+
+        setText(
+            "simulationAssessment",
+            result.systemStatus ||
+            "SIMULATION COMPLETE"
+        );
+
+
+        setText(
+            "positionError",
+            Number(
+                state.positionError || 0
+            ).toFixed(2)
+        );
+
+
+        setText(
+            "stabilityIndex",
+            Number(
+                state.stabilityIndex || 0
+            ).toFixed(2)
+        );
+
+
+        if (
+            result.simulatedAction
+        ) {
+
+            setText(
+                "simulatedDPAction",
+                result.simulatedAction.mode ||
+                "SIMULATED DP RESPONSE"
+            );
+
+
+            setText(
+                "simulatedCommand",
+                result.simulatedAction
+                    .simulatedCommand
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       AUDIT DISPLAY
+    ======================================================== */
+
+    function updateAudit(
+        result
+    ) {
+
+        if (
+            !result ||
+            !result.audit
+        ) {
+
+            return;
+
+        }
+
+
+        const audit =
+            result.audit;
+
+
+        const auditLog =
+            el(
+                "resilienceAuditLog"
+            );
+
+
+        if (!auditLog) {
+            return;
+        }
+
+
+        const lines = [
+
+            "------------------------------------------------------------",
+
+            "DP RESILIENCE SIMULATION AUDIT",
+
+            "TIMESTAMP: " +
+                audit.timestamp,
+
+            "ENGINE: " +
+                audit.engine,
+
+            "VERSION: " +
+                audit.version,
+
+            "MODE: " +
+                audit.mode,
+
+            "ENVIRONMENTAL STRESS: " +
+                audit.environmentalStress,
+
+            "RISK: " +
+                audit.risk,
+
+            "PRIMARY: " +
+                audit.primary,
+
+            "SECONDARY: " +
+                audit.secondary,
+
+            "STABILIZER: " +
+                audit.stabilizer,
+
+            "RECOMMENDATION: " +
+                audit.recommendation,
+
+            "HUMAN AUTHORITY: FINAL",
+
+            "AUTONOMOUS COMMAND: FALSE",
+
+            "OPERATIONAL AUTHORITY: FALSE",
+
+            "------------------------------------------------------------"
+
+        ];
+
+
+        if (
+            auditLog.tagName ===
+            "TEXTAREA"
+        ) {
+
+            auditLog.value =
+                lines.join("\n");
+
+        } else {
+
+            auditLog.textContent =
+                lines.join("\n");
+
+        }
+
+    }
+
+
+    /* ========================================================
+       COMPLETE RESULT DISPLAY
+    ======================================================== */
+
+    function renderSimulationResult(
+        result
+    ) {
+
+        if (!result) {
+            return;
+        }
+
+
+        updateEnvironment(
+            result
+        );
+
+
+        updateSystem(
+            result
+        );
+
+
+        updateAlert(
+            result
+        );
+
+
+        updateStabilizer(
+            result
+        );
+
+
+        updateRecommendation(
+            result
+        );
+
+
+        updateContingency(
+            result
+        );
+
+
+        updateSimulationAssessment(
+            result
+        );
+
+
+        updateAudit(
+            result
+        );
+
+
+        const anchoring =
+            evaluateAnchoringContingency(
+                result
+            );
+
+
+        setText(
+            "anchoringDecisionState",
+            anchoring.reason
+        );
+
+
+        appendOperatorLog(
+            "Simulation completed — Risk: " +
+            result.risk +
+            " | Stress: " +
+            Number(
+                result.environment
+                    .environmentalStress
+            ).toFixed(2)
+        );
+
+    }
+
+
+    /* ========================================================
+       RUN DP SIMULATION
+    ======================================================== */
+
+    function runDPSimulation() {
+
+        /*
+         * Confirm the deterministic simulation
+         * engine is available.
+         */
+
+        if (
+            !window.DPSimulationEngine ||
+            typeof window.DPSimulationEngine.run !==
+            "function"
+        ) {
+
+            console.error(
+                "DPSimulationEngine is not available."
+            );
+
+
+            appendOperatorLog(
+                "ERROR — DP Simulation Engine unavailable."
+            );
+
+
+            return null;
+
+        }
+
+
+        /*
+         * Read the ACTUAL cockpit controls.
+         */
+
+        const inputs =
+            readDPInputs();
+
+
+        /*
+         * Execute deterministic simulation.
+         */
+
+        const result =
+            window.DPSimulationEngine.run(
+                inputs
+            );
+
+
+        /*
+         * Store result locally.
+         */
+
+        window.lastDPSimulation =
+            result;
+
+
+        /*
+         * Render complete result.
+         */
+
+        renderSimulationResult(
+            result
+        );
+
+
+        return result;
+
+    }
+
+
+    /* ========================================================
+       SCENARIO APPLICATION
+    ======================================================== */
+
+    function applyScenario(
+        scenarioName
+    ) {
+
+        const scenario =
+            SCENARIOS[
+                scenarioName
+            ];
+
+
+        if (!scenario) {
+
+            console.error(
+                "Unknown DP scenario:",
+                scenarioName
+            );
+
+
+            appendOperatorLog(
+                "ERROR — Unknown DP scenario: " +
+                scenarioName
+            );
+
+
+            return false;
+
+        }
+
+
+        const values = {
+
+            wind:
+                scenario.wind,
+
+            current:
+                scenario.current,
+
+            wave:
+                scenario.wave,
+
+            tidal:
+                scenario.tidal
+
+        };
+
+
+        const applied =
+            applyInputValues(
+                values
+            );
+
+
+        if (!applied) {
+
+            return false;
+
+        }
+
+
+        window.currentDPScenario =
+            scenarioName;
+
+
+        setText(
+            "scenarioName",
+            scenario.name
+        );
+
+
+        setText(
+            "scenarioDescription",
+            scenario.description
+        );
+
+
+        appendOperatorLog(
+            "Scenario selected: " +
+            scenario.name
+        );
+
+
+        return true;
+
+    }
+
+
+    /* ========================================================
+       RUN SCENARIO
+    ======================================================== */
+
+    function runDPScenario(
+        scenarioName
+    ) {
+
+        const applied =
+            applyScenario(
+                scenarioName
+            );
+
+
+        if (!applied) {
+            return null;
+        }
+
+
+        return runDPSimulation();
+
+    }
+
+
+    /* ========================================================
+       RANDOM ENVIRONMENT
+    ======================================================== */
+
+    function randomDPScenario() {
+
+        const values = {
+
+            wind:
+                Math.floor(
+                    Math.random() * 101
+                ),
+
+            current:
+                Math.floor(
+                    Math.random() * 101
+                ),
+
+            wave:
+                Math.floor(
+                    Math.random() * 101
+                ),
+
+            tidal:
+                Math.floor(
+                    Math.random() * 101
+                )
+
+        };
+
+
+        const applied =
+            applyInputValues(
+                values
+            );
+
+
+        if (!applied) {
+            return null;
+        }
+
+
+        window.currentDPScenario =
+            "RANDOM";
+
+
+        setText(
+            "scenarioName",
+            "RANDOM"
+        );
+
+
+        setText(
+            "scenarioDescription",
+            "Randomly generated simulated environmental condition."
+        );
+
+
+        appendOperatorLog(
+            "Random simulated environmental condition generated."
+        );
+
+
+        return runDPSimulation();
+
+    }
+
+
+    /* ========================================================
+       RESET COCKPIT
+    ======================================================== */
+
+    function resetDPCockpit() {
+
+        applyInputValues(
+            DEFAULT_INPUTS
+        );
+
+
+        window.currentDPScenario =
+            "NORMAL";
+
+
+        surveyedSeabedConfirmed =
+            false;
+
+
+        setText(
+            "scenarioName",
+            "NORMAL"
+        );
+
+
+        setText(
+            "scenarioDescription",
+            SCENARIOS.NORMAL.description
+        );
+
+
+        setText(
+            "systemStatus",
+            "SYSTEM READY"
+        );
+
+
+        setText(
+            "riskLevel",
+            "NORMAL"
+        );
+
+
+        setText(
+            "environmentStatus",
+            "STANDBY"
+        );
+
+
+        setText(
+            "primaryStatus",
+            "STANDBY"
+        );
+
+
+        setText(
+            "secondaryStatus",
+            "STANDBY"
+        );
+
+
+        setText(
+            "stabilizerStatus",
+            "STANDBY"
+        );
+
+
+        setText(
+            "humanAuthority",
+            "AVAILABLE / FINAL"
+        );
+
+
+        setText(
+            "resilienceAlertLevel",
+            "NORMAL"
+        );
+
+
+        setText(
+            "environmentalChange",
+            "STABLE"
+        );
+
+
+        setText(
+            "resilienceState",
+            "MONITORING"
+        );
+
+
+        setText(
+            "operatorAttention",
+            "NOT REQUIRED"
+        );
+
+
+        setText(
+            "stabilizerMode",
+            "STANDBY"
+        );
+
+
+        setText(
+            "stabilizerSource",
+            "AWAITING SIMULATION"
+        );
+
+
+        setText(
+            "stabilizerOutput",
+            "0"
+        );
+
+
+        setText(
+            "stabilizerState",
+            "STANDBY"
+        );
+
+
+        setText(
+            "recommendedAction",
+            "SYSTEM READY"
+        );
+
+
+        setText(
+            "actionUrgency",
+            "LOW"
+        );
+
+
+        setText(
+            "responseMode",
+            "STANDBY"
+        );
+
+
+        setText(
+            "actionRationale",
+            "Select environmental conditions and run the simulation."
+        );
+
+
+        setText(
+            "offDpRecommendation",
+            "NOT INDICATED"
+        );
+
+
+        setText(
+            "anchoringRecommendation",
+            "NOT INDICATED"
+        );
+
+
+        setText(
+            "surveyedSeabedStatus",
+            "NOT VERIFIED"
+        );
+
+
+        setText(
+            "anchoringDecisionState",
+            "No simulation result available."
+        );
+
+
+        setText(
+            "simulationAssessment",
+            "System ready. Select environmental conditions or a scenario, then press RUN DP SIMULATION."
+        );
+
+
+        setText(
+            "positionError",
+            "0.00"
+        );
+
+
+        setText(
+            "stabilityIndex",
+            "0.00"
+        );
+
+
+        setText(
+            "simulatedDPAction",
+            "STANDBY"
+        );
+
+
+        setText(
+            "simulatedCommand",
+            "0"
+        );
+
+
+        const recommendations =
+            el(
+                "recommendedActions"
+            );
+
+
+        if (recommendations) {
+
+            recommendations.innerHTML =
+                "";
+
+        }
+
+
+        appendOperatorLog(
+            "DP resilience cockpit reset."
+        );
+
+
+        return true;
+
+    }
+
+
+    /* ========================================================
+       CONVENIENCE SCENARIO FUNCTIONS
+    ======================================================== */
+
+    function normalScenario() {
+
+        return runDPScenario(
+            "NORMAL"
+        );
+
+    }
+
+
+    function moderateWeatherScenario() {
+
+        return runDPScenario(
+            "MODERATE_WEATHER"
+        );
+
+    }
+
+
+    function heavyWeatherScenario() {
+
+        return runDPScenario(
+            "HEAVY_WEATHER"
+        );
+
+    }
+
+
+    function criticalScenario() {
+
+        return runDPScenario(
+            "CRITICAL_WEATHER"
+        );
+
+    }
+
+
+    function currentSurgeScenario() {
+
+        return runDPScenario(
+            "CURRENT_SURGE"
+        );
+
+    }
+
+
+    function heavySeaStateScenario() {
+
+        return runDPScenario(
+            "HEAVY_SEA_STATE"
+        );
+
+    }
+
+
+    function windGustScenario() {
+
+        return runDPScenario(
+            "WIND_GUST_EVENT"
+        );
+
+    }
+
+
+    function combinedDisturbanceScenario() {
+
+        return runDPScenario(
+            "COMBINED_DISTURBANCE"
+        );
+
+    }
+
+
+    function sensorNoiseScenario() {
+
+        return runDPScenario(
+            "SENSOR_NOISE"
+        );
+
+    }
+
+
+    function partialSensorLossScenario() {
+
+        return runDPScenario(
+            "PARTIAL_SENSOR_LOSS"
+        );
+
+    }
+
+
+    function rapidTransitionScenario() {
+
+        return runDPScenario(
+            "RAPID_TRANSITION"
+        );
+
+    }
+
+
+    /* ========================================================
+       BROWSER API
+    ======================================================== */
+
+    window.runDPSimulation =
+        runDPSimulation;
+
+
+    window.applyDPScenario =
+        applyScenario;
+
+
+    window.runDPScenario =
+        runDPScenario;
+
+
+    window.randomDPScenario =
+        randomDPScenario;
+
+
+    window.resetDPCockpit =
+        resetDPCockpit;
+
+
+    window.setSurveyedSeabed =
+        setSurveyedSeabed;
+
+
+    window.getSurveyedSeabedState =
+        getSurveyedSeabedState;
+
+
+    window.evaluateAnchoringContingency =
+        evaluateAnchoringContingency;
+
+
+    window.normalScenario =
+        normalScenario;
+
+
+    window.moderateWeatherScenario =
+        moderateWeatherScenario;
+
+
+    window.heavyWeatherScenario =
+        heavyWeatherScenario;
+
+
+    window.criticalScenario =
+        criticalScenario;
+
+
+    window.currentSurgeScenario =
+        currentSurgeScenario;
+
+
+    window.heavySeaStateScenario =
+        heavySeaStateScenario;
+
+
+    window.windGustScenario =
+        windGustScenario;
+
+
+    window.combinedDisturbanceScenario =
+        combinedDisturbanceScenario;
+
+
+    window.sensorNoiseScenario =
+        sensorNoiseScenario;
+
+
+    window.partialSensorLossScenario =
+        partialSensorLossScenario;
+
+
+    window.rapidTransitionScenario =
+        rapidTransitionScenario;
+
+
+    /* ========================================================
+       INPUT EVENT WIRING
+    ======================================================== */
+
+    function wireEnvironmentalInputs() {
+
+        const inputIds = [
+
+            "wind",
+            "current",
+            "wave",
+            "tidal"
+
+        ];
+
+
+        inputIds.forEach(
+            function (id) {
+
+                const input =
+                    el(id);
+
+
+                if (!input) {
+                    return;
+                }
+
+
+                input.addEventListener(
+                    "input",
+                    function () {
+
+                        setText(
+                            id + "Value",
+                            input.value
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       INITIALISE COCKPIT
+    ======================================================== */
+
+    function initialiseDPCockpit() {
+
+        wireEnvironmentalInputs();
+
+
+        applyInputValues(
+            DEFAULT_INPUTS
+        );
+
+
+        setText(
+            "scenarioName",
+            "NORMAL"
+        );
+
+
+        setText(
+            "scenarioDescription",
+            SCENARIOS.NORMAL.description
+        );
+
+
+        appendOperatorLog(
+            "DP cockpit browser wiring initialised."
+        );
+
+
+        /*
+         * Validate the simulation engine.
+         */
+
+        if (
+            window.DPSimulationEngine &&
+            typeof window.DPSimulationEngine.validate ===
+            "function"
+        ) {
+
+            const valid =
+                window.DPSimulationEngine
+                    .validate();
+
+
+            appendOperatorLog(
+                valid
+                    ? "DP Simulation Engine validation: PASS."
+                    : "DP Simulation Engine validation: FAIL."
+            );
+
+        } else {
+
+            appendOperatorLog(
+                "DP Simulation Engine not yet available."
+            );
+
+        }
+
+
+        setText(
+            "systemStatus",
+            "SYSTEM READY"
+        );
+
+    }
+
+
+    /* ========================================================
+       DOM READY
+    ======================================================== */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initialiseDPCockpit
+        );
+
+    } else {
+
+        initialiseDPCockpit();
+
+    }
+
+
+    /* ========================================================
+       VERSION / STATUS
+    ======================================================== */
+
+    window.DPCockpit = {
+
+        version:
+            VERSION,
+
+        mode:
+            "SIMULATION ONLY",
+
+        run:
+            runDPSimulation,
+
+        reset:
+            resetDPCockpit,
+
+        applyScenario:
+            applyScenario,
+
+        runScenario:
+            runDPScenario,
+
+        random:
+            randomDPScenario,
+
+        setSurveyedSeabed:
+            setSurveyedSeabed,
+
+        getSurveyedSeabed:
+            getSurveyedSeabedState
+
+    };
+
+
+    console.log(
+        "SEXTANT PROTOCOL DP COCKPIT — READY"
+    );
+
+
+    console.log(
+        "VERSION:",
+        VERSION
+    );
+
+
+    console.log(
+        "MODE: SIMULATION ONLY"
+    );
+
+
+})();
