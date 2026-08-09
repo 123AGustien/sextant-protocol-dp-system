@@ -1235,3 +1235,373 @@
      *
      * The cockpit will NOT issue a real command.
      */
+    /* ========================================================
+       ENVIRONMENT DISPLAY
+    ======================================================== */
+
+    function updateEnvironment(result) {
+
+        if (!result || !result.environment) {
+            return;
+        }
+
+        const environment =
+            result.environment;
+
+
+        setText(
+            "windValue",
+            environment.wind
+        );
+
+        setText(
+            "currentValue",
+            environment.current
+        );
+
+        setText(
+            "waveValue",
+            environment.wave
+        );
+
+        setText(
+            "tidalValue",
+            environment.tidal
+        );
+
+
+        if (
+            typeof environment.environmentalStress ===
+            "number"
+        ) {
+
+            setText(
+                "environmentStress",
+                environment.environmentalStress.toFixed(2)
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       SYSTEM STATUS
+    ======================================================== */
+
+    function updateSystem(result) {
+
+        if (!result) {
+            return;
+        }
+
+
+        setText(
+            "systemStatus",
+            result.systemStatus ||
+            "SYSTEM STABLE"
+        );
+
+
+        setText(
+            "riskLevel",
+            result.risk ||
+            "NORMAL"
+        );
+
+
+        setText(
+            "environmentStatus",
+            "ACTIVE / SIMULATED"
+        );
+
+
+        if (result.primary) {
+
+            setText(
+                "primaryStatus",
+                result.primary.mode
+            );
+
+        }
+
+
+        if (result.secondary) {
+
+            setText(
+                "secondaryStatus",
+                result.secondary.mode
+            );
+
+        }
+
+
+        if (result.stabilizer) {
+
+            setText(
+                "stabilizerStatus",
+                result.stabilizer.mode
+            );
+
+        }
+
+
+        if (result.human) {
+
+            setText(
+                "humanAuthority",
+                result.human.status ||
+                "AVAILABLE"
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       RESILIENCE ALERT
+    ======================================================== */
+
+    function updateAlert(result) {
+
+        if (!result) {
+            return;
+        }
+
+
+        let level =
+            "NORMAL";
+
+        let change =
+            "STABLE";
+
+        let state =
+            "MONITORING";
+
+        let attention =
+            "NOT REQUIRED";
+
+
+        if (
+            result.risk ===
+            "MEDIUM"
+        ) {
+
+            level =
+                "ADVISORY";
+
+            change =
+                "ELEVATED";
+
+            state =
+                "PREVENTIVE MONITORING";
+
+            attention =
+                "OPERATOR ATTENTION";
+
+        }
+
+
+        if (
+            result.risk ===
+            "HIGH"
+        ) {
+
+            level =
+                "HIGH";
+
+            change =
+                "SIGNIFICANT";
+
+            state =
+                "HUMAN REVIEW";
+
+            attention =
+                "REVIEW REQUIRED";
+
+        }
+
+
+        if (
+            result.risk ===
+            "CRITICAL"
+        ) {
+
+            level =
+                "CRITICAL";
+
+            change =
+                "CRITICAL";
+
+            state =
+                "CRITICAL HUMAN REVIEW";
+
+            attention =
+                "IMMEDIATE HUMAN REVIEW";
+
+        }
+
+
+        setText(
+            "resilienceAlertLevel",
+            level
+        );
+
+        setText(
+            "environmentalChange",
+            change
+        );
+
+        setText(
+            "resilienceState",
+            state
+        );
+
+        setText(
+            "operatorAttention",
+            attention
+        );
+
+    }
+
+
+    /* ========================================================
+       STABILIZER DISPLAY
+    ======================================================== */
+
+    function updateStabilizer(result) {
+
+        if (
+            !result ||
+            !result.stabilizer
+        ) {
+            return;
+        }
+
+
+        const stabilizer =
+            result.stabilizer;
+
+
+        setText(
+            "stabilizerMode",
+            stabilizer.mode
+        );
+
+
+        setText(
+            "stabilizerSource",
+            stabilizer.source
+        );
+
+
+        if (
+            typeof stabilizer.finalOutput ===
+            "number"
+        ) {
+
+            setText(
+                "stabilizerOutput",
+                stabilizer.finalOutput.toFixed(2)
+            );
+
+        }
+
+
+        setText(
+            "stabilizerState",
+            stabilizer.status
+        );
+
+    }
+
+
+    /* ========================================================
+       OPERATOR DECISION-SUPPORT DISPLAY
+    ======================================================== */
+
+    function updateRecommendation(result) {
+
+        if (
+            !result ||
+            !result.recommendedAction
+        ) {
+            return;
+        }
+
+
+        const action =
+            result.recommendedAction;
+
+
+        setText(
+            "recommendedAction",
+            action.primaryRecommendation
+        );
+
+
+        setText(
+            "actionUrgency",
+            action.urgency
+        );
+
+
+        setText(
+            "responseMode",
+            action.responseMode
+        );
+
+
+        setText(
+            "actionRationale",
+            action.rationale
+        );
+
+
+        const list =
+            el(
+                "recommendedActions"
+            );
+
+
+        if (!list) {
+            return;
+        }
+
+
+        list.innerHTML =
+            "";
+
+
+        if (
+            Array.isArray(
+                action.recommendedActions
+            )
+        ) {
+
+            action.recommendedActions.forEach(
+                function (
+                    recommendation
+                ) {
+
+                    const item =
+                        document.createElement(
+                            "li"
+                        );
+
+
+                    item.textContent =
+                        recommendation;
+
+
+                    list.appendChild(
+                        item
+                    );
+
+                }
+            );
+
+        }
+
+    }
