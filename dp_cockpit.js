@@ -1347,3 +1347,613 @@
             }
 
         };
+/* ========================================================
+       RESET COCKPIT
+    ======================================================== */
+
+    window.resetDPCockpit =
+        function () {
+
+            const defaults = {
+
+                wind:
+                    DEFAULT_INPUTS.wind,
+
+                current:
+                    DEFAULT_INPUTS.current,
+
+                wave:
+                    DEFAULT_INPUTS.wave,
+
+                tidal:
+                    DEFAULT_INPUTS.tidal
+
+            };
+
+
+            /*
+             * Restore the actual environmental controls.
+             */
+
+            Object.keys(
+                defaults
+            ).forEach(
+                function (key) {
+
+                    setInputValue(
+                        key,
+                        defaults[key]
+                    );
+
+                }
+            );
+
+
+            window.currentDPScenario =
+                "RESET";
+
+
+            /*
+             * Restore visible cockpit state.
+             */
+
+            setText(
+                "scenarioName",
+                "RESET / STANDBY"
+            );
+
+            setText(
+                "scenarioDescription",
+                "Cockpit returned to standby baseline."
+            );
+
+            setText(
+                "dpSimulationStatus",
+                "SYSTEM READY"
+            );
+
+            setText(
+                "systemStatus",
+                "SYSTEM READY"
+            );
+
+            setText(
+                "riskLevel",
+                "NORMAL"
+            );
+
+            setText(
+                "environmentStatus",
+                "STANDBY"
+            );
+
+            setText(
+                "primaryStatus",
+                "STANDBY"
+            );
+
+            setText(
+                "secondaryStatus",
+                "STANDBY"
+            );
+
+            setText(
+                "stabilizerStatus",
+                "STANDBY"
+            );
+
+            setText(
+                "humanAuthority",
+                "AVAILABLE"
+            );
+
+
+            /*
+             * Restore resilience alert.
+             */
+
+            setText(
+                "resilienceAlertLevel",
+                "NORMAL"
+            );
+
+            setText(
+                "environmentalChange",
+                "STABLE"
+            );
+
+            setText(
+                "resilienceState",
+                "MONITORING"
+            );
+
+            setText(
+                "operatorAttention",
+                "NOT REQUIRED"
+            );
+
+
+            /*
+             * Restore stabilizer display.
+             */
+
+            setText(
+                "stabilizerMode",
+                "STANDBY"
+            );
+
+            setText(
+                "stabilizerSource",
+                "STANDBY"
+            );
+
+            setText(
+                "stabilizerOutput",
+                "0"
+            );
+
+            setText(
+                "stabilizerState",
+                "STANDBY"
+            );
+
+
+            /*
+             * Restore operator decision-support display.
+             */
+
+            setText(
+                "recommendedAction",
+                "NO SIMULATION RUN"
+            );
+
+            setText(
+                "actionUrgency",
+                "LOW"
+            );
+
+            setText(
+                "responseMode",
+                "MONITOR"
+            );
+
+            setText(
+                "actionRationale",
+                "Waiting for simulated environmental input."
+            );
+
+
+            /*
+             * Restore simulation indicators.
+             */
+
+            setText(
+                "positionError",
+                "0"
+            );
+
+            setText(
+                "simulatedCommand",
+                "0"
+            );
+
+            setText(
+                "stabilityIndex",
+                "100"
+            );
+
+
+            const actions =
+                el(
+                    "recommendedActions"
+                );
+
+            if (actions) {
+
+                actions.innerHTML =
+                    "";
+
+            }
+
+
+            /*
+             * Update visible environmental values.
+             */
+
+            setText(
+                "windValue",
+                DEFAULT_INPUTS.wind
+            );
+
+            setText(
+                "currentValue",
+                DEFAULT_INPUTS.current
+            );
+
+            setText(
+                "waveValue",
+                DEFAULT_INPUTS.wave
+            );
+
+            setText(
+                "tidalValue",
+                DEFAULT_INPUTS.tidal
+            );
+
+            setText(
+                "environmentStress",
+                "0.00"
+            );
+
+
+            appendOperatorLog(
+                "SYSTEM RESET — returned to standby baseline."
+            );
+
+        };
+
+
+    /* ========================================================
+       SCENARIO BUTTON CONNECTION
+    ======================================================== */
+
+    function connectScenarioButtons() {
+
+        const scenarios = {
+
+            normalScenario:
+                "NORMAL",
+
+            moderateWeatherScenario:
+                "MODERATE_WEATHER",
+
+            heavyWeatherScenario:
+                "HEAVY_WEATHER",
+
+            criticalScenario:
+                "CRITICAL_WEATHER",
+
+            currentSurgeScenario:
+                "CURRENT_SURGE",
+
+            heavySeaStateScenario:
+                "HEAVY_SEA_STATE",
+
+            windGustScenario:
+                "WIND_GUST_EVENT",
+
+            combinedDisturbanceScenario:
+                "COMBINED_DISTURBANCE"
+
+        };
+
+
+        Object.keys(
+            scenarios
+        ).forEach(
+            function (
+                functionName
+            ) {
+
+                window[
+                    functionName
+                ] =
+                    function () {
+
+                        const scenarioName =
+                            scenarios[
+                                functionName
+                            ];
+
+
+                        const applied =
+                            applyDPScenario(
+                                scenarioName
+                            );
+
+
+                        if (!applied) {
+
+                            appendOperatorLog(
+
+                                "ERROR — Scenario could not be applied: " +
+
+                                scenarioName
+
+                            );
+
+                            return null;
+
+                        }
+
+
+                        /*
+                         * Read the controls again.
+                         *
+                         * This provides a direct verification
+                         * that the scenario actually changed
+                         * the environmental input fields.
+                         */
+
+                        const inputs =
+                            readDPInputs();
+
+
+                        appendOperatorLog(
+
+                            "SCENARIO APPLIED — " +
+
+                            scenarioName +
+
+                            " | Wind=" +
+
+                            inputs.wind +
+
+                            " Current=" +
+
+                            inputs.current +
+
+                            " Wave=" +
+
+                            inputs.wave +
+
+                            " Tidal=" +
+
+                            inputs.tidal
+
+                        );
+
+
+                        /*
+                         * Execute the simulation using the
+                         * newly applied environmental values.
+                         */
+
+                        return window.runSimulation();
+
+                    };
+
+            }
+        );
+
+
+        /*
+         * Random scenario remains available.
+         */
+
+        window.randomScenario =
+            randomScenario;
+
+    }
+
+
+    /* ========================================================
+       BUTTON CONNECTION
+    ======================================================== */
+
+    function connectControls() {
+
+        const runButton =
+            el(
+                "runSimulation"
+            );
+
+
+        if (runButton) {
+
+            runButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    window.runSimulation();
+
+                }
+            );
+
+        }
+
+
+        const resetButton =
+            el(
+                "resetSimulation"
+            );
+
+
+        if (resetButton) {
+
+            resetButton.addEventListener(
+                "click",
+                function (event) {
+
+                    event.preventDefault();
+
+                    window.resetDPCockpit();
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       ENGINE CONNECTION VALIDATION
+    ======================================================== */
+
+    function validateConnection() {
+
+        if (
+            !window.DPSimulationEngine ||
+            typeof
+            window.DPSimulationEngine.validate !==
+            "function"
+        ) {
+
+            setText(
+                "engineStatus",
+                "ENGINE NOT CONNECTED"
+            );
+
+            appendOperatorLog(
+                "DP ENGINE NOT CONNECTED."
+            );
+
+            return false;
+
+        }
+
+
+        const valid =
+            window.DPSimulationEngine
+                .validate();
+
+
+        setText(
+            "engineStatus",
+            valid
+                ? "ONLINE / VALIDATED"
+                : "VALIDATION FAILED"
+        );
+
+
+        appendOperatorLog(
+
+            valid
+
+                ? "DP ENGINE CONNECTED — ONLINE / VALIDATED."
+
+                : "DP ENGINE VALIDATION FAILED."
+
+        );
+
+
+        return valid;
+
+    }
+
+
+    /* ========================================================
+       STARTUP
+    ======================================================== */
+
+    function initialiseCockpit() {
+
+        connectScenarioButtons();
+
+        connectControls();
+
+        validateConnection();
+
+
+        /*
+         * Display initial environmental values.
+         */
+
+        setText(
+            "windValue",
+            DEFAULT_INPUTS.wind
+        );
+
+        setText(
+            "currentValue",
+            DEFAULT_INPUTS.current
+        );
+
+        setText(
+            "waveValue",
+            DEFAULT_INPUTS.wave
+        );
+
+        setText(
+            "tidalValue",
+            DEFAULT_INPUTS.tidal
+        );
+
+
+        setText(
+            "environmentStatus",
+            "STANDBY"
+        );
+
+
+        appendOperatorLog(
+            "DP RESILIENCE COCKPIT — WIRING INITIALISED."
+        );
+
+    }
+
+
+    /* ========================================================
+       DOM READY
+    ======================================================== */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initialiseCockpit
+        );
+
+    } else {
+
+        initialiseCockpit();
+
+    }
+
+
+    /* ========================================================
+       PUBLIC COCKPIT API
+    ======================================================== */
+
+    window.DPCockpit =
+        {
+
+            version:
+                VERSION,
+
+            scenarios:
+                SCENARIOS,
+
+            applyScenario:
+                applyDPScenario,
+
+            runScenario:
+                runDPScenario,
+
+            readInputs:
+                readDPInputs,
+
+            reset:
+                window.resetDPCockpit,
+
+            run:
+                window.runSimulation
+
+        };
+
+
+    /* ========================================================
+       FILE READY
+    ======================================================== */
+
+    console.log(
+        "SEXTANT PROTOCOL DP COCKPIT — READY"
+    );
+
+    console.log(
+        "VERSION:",
+        VERSION
+    );
+
+    console.log(
+        "MODE: SIMULATION ONLY"
+    );
+
+
+})();
