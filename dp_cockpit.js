@@ -4716,3 +4716,55 @@ console.log(
 console.log(
     "AUTONOMOUS OPERATIONAL COMMAND: FALSE"
 );
+/* ============================================================
+   ENGINE STATUS DISPLAY
+   ============================================================ */
+
+function updateEngineStatus(status) {
+
+    const candidates = [
+        "engineStatus",
+        "engine-status",
+        "engineState"
+    ];
+
+    for (const id of candidates) {
+
+        const node = document.getElementById(id);
+
+        if (node) {
+
+            node.textContent =
+                status;
+
+            return true;
+        }
+    }
+
+    /*
+     * If the HTML does not yet have an ID,
+     * locate the visible ENGINE heading.
+     */
+
+    const elements =
+        document.querySelectorAll("h1, h2, h3, p, div, span");
+
+    for (const node of elements) {
+
+        const text =
+            (node.textContent || "").trim();
+
+        if (
+            text === "ENGINE: INITIALISING..." ||
+            text === "ENGINE: INITIALISING"
+        ) {
+
+            node.textContent =
+                "ENGINE: " + status;
+
+            return true;
+        }
+    }
+
+    return false;
+}
