@@ -1,412 +1,547 @@
 /*
+ * ============================================================
+ * SEXTANT PROTOCOL
+ * DP SIMULATION SCENARIO LIBRARY
+ * ============================================================
+ *
+ * File:
+ *     dp_scenarios.js
+ *
+ * Purpose:
+ *     Browser-based environmental scenario library for the
+ *     Sextant DP Resilience Simulation Demonstrator.
+ *
+ * SAFETY:
+ *     Research / simulation use only.
+ *     NOT certified marine control software.
+ *     Does not command operational DP, propulsion,
+ *     navigation or safety systems.
+ *
+ * ============================================================
+ */
 
-* ============================================================
-* SEXTANT PROTOCOL
-* DP SIMULATION SCENARIO LIBRARY
-* ============================================================
-* 
-* File:
-* dp_scenarios.js
-* 
-* Purpose:
-* Scenario library for the browser-based DP
-* resilience simulation demonstrator.
-* 
-* Research / simulation use only.
-* NOT certified marine control software.
-* 
-* SAFETY BOUNDARY:
-* These scenarios generate simulated environmental
-* conditions only. They do not command real vessel
-* propulsion, thrusters, navigation or DP equipment.
-* 
-* ============================================================
-  */
+
+/* ============================================================
+   SCENARIO LIBRARY
+   ============================================================ */
 
 const DP_SCENARIOS = {
 
-NORMAL: {
-    name: "NORMAL",
-    description:
-        "Normal operating environmental conditions.",
-    wind: 20,
-    current: 15,
-    wave: 20,
-    tidal: 15
-},
+    NORMAL: {
 
-MODERATE_WEATHER: {
-    name: "MODERATE WEATHER",
-    description:
-        "Moderate environmental disturbance.",
-    wind: 45,
-    current: 40,
-    wave: 50,
-    tidal: 35
-},
+        name:
+            "NORMAL",
 
-HEAVY_WEATHER: {
-    name: "HEAVY WEATHER",
-    description:
-        "High environmental loading.",
-    wind: 70,
-    current: 65,
-    wave: 75,
-    tidal: 60
-},
+        description:
+            "Normal operating environmental conditions.",
 
-CRITICAL_WEATHER: {
-    name: "CRITICAL WEATHER",
-    description:
-        "Extreme environmental disturbance.",
-    wind: 95,
-    current: 90,
-    wave: 95,
-    tidal: 85
-},
+        wind:
+            20,
 
-CURRENT_SURGE: {
-    name: "CURRENT SURGE",
-    description:
-        "High current loading with moderate other forces.",
-    wind: 40,
-    current: 90,
-    wave: 45,
-    tidal: 70
-},
+        current:
+            15,
 
-HEAVY_SEA_STATE: {
-    name: "HEAVY SEA STATE",
-    description:
-        "High wave loading.",
-    wind: 65,
-    current: 45,
-    wave: 90,
-    tidal: 50
-},
+        wave:
+            20,
 
-WIND_GUST_EVENT: {
-    name: "WIND GUST EVENT",
-    description:
-        "High wind disturbance.",
-    wind: 90,
-    current: 40,
-    wave: 50,
-    tidal: 35
-},
+        tidal:
+            15
+    },
 
-COMBINED_DISTURBANCE: {
-    name: "COMBINED DISTURBANCE",
-    description:
-        "Multiple simultaneous environmental disturbances.",
-    wind: 80,
-    current: 75,
-    wave: 80,
-    tidal: 70
-}
+
+    MODERATE_WEATHER: {
+
+        name:
+            "MODERATE WEATHER",
+
+        description:
+            "Moderate environmental disturbance.",
+
+        wind:
+            45,
+
+        current:
+            40,
+
+        wave:
+            50,
+
+        tidal:
+            35
+    },
+
+
+    HEAVY_WEATHER: {
+
+        name:
+            "HEAVY WEATHER",
+
+        description:
+            "High environmental loading.",
+
+        wind:
+            70,
+
+        current:
+            65,
+
+        wave:
+            75,
+
+        tidal:
+            60
+    },
+
+
+    CRITICAL_WEATHER: {
+
+        name:
+            "CRITICAL WEATHER",
+
+        description:
+            "Extreme environmental disturbance.",
+
+        wind:
+            95,
+
+        current:
+            90,
+
+        wave:
+            95,
+
+        tidal:
+            85
+    },
+
+
+    CURRENT_SURGE: {
+
+        name:
+            "CURRENT SURGE",
+
+        description:
+            "High current loading with moderate other forces.",
+
+        wind:
+            40,
+
+        current:
+            90,
+
+        wave:
+            45,
+
+        tidal:
+            70
+    },
+
+
+    HEAVY_SEA_STATE: {
+
+        name:
+            "HEAVY SEA STATE",
+
+        description:
+            "High wave loading.",
+
+        wind:
+            65,
+
+        current:
+            45,
+
+        wave:
+            90,
+
+        tidal:
+            50
+    },
+
+
+    WIND_GUST_EVENT: {
+
+        name:
+            "WIND GUST EVENT",
+
+        description:
+            "High wind disturbance.",
+
+        wind:
+            90,
+
+        current:
+            40,
+
+        wave:
+            50,
+
+        tidal:
+            35
+    },
+
+
+    COMBINED_DISTURBANCE: {
+
+        name:
+            "COMBINED DISTURBANCE",
+
+        description:
+            "Multiple simultaneous environmental disturbances.",
+
+        wind:
+            80,
+
+        current:
+            75,
+
+        wave:
+            80,
+
+        tidal:
+            70
+    }
 
 };
 
+
 /* ============================================================
-APPLY SCENARIO
-============================================================ */
+   APPLY SCENARIO
+   ============================================================ */
 
-function applyDPScenario(scenarioName) {
-
-const scenario =
-    DP_SCENARIOS[scenarioName];
-
-if (!scenario) {
-
-    console.error(
-        "Unknown DP scenario:",
-        scenarioName
-    );
-
-    return false;
-}
-
-const wind =
-    document.getElementById("wind");
-
-const current =
-    document.getElementById("current");
-
-const wave =
-    document.getElementById("wave");
-
-const tidal =
-    document.getElementById("tidal");
-
-if (
-    !wind ||
-    !current ||
-    !wave ||
-    !tidal
+function applyDPScenario(
+    scenarioName
 ) {
 
-    console.error(
-        "DP scenario input fields not found."
-    );
+    const scenario =
+        DP_SCENARIOS[
+            scenarioName
+        ];
 
-    return false;
+
+    if (!scenario) {
+
+        console.error(
+            "Unknown DP scenario:",
+            scenarioName
+        );
+
+        return false;
+    }
+
+
+    const wind =
+        document.getElementById(
+            "wind"
+        );
+
+    const current =
+        document.getElementById(
+            "current"
+        );
+
+    const wave =
+        document.getElementById(
+            "wave"
+        );
+
+    const tidal =
+        document.getElementById(
+            "tidal"
+        );
+
+
+    if (
+        !wind ||
+        !current ||
+        !wave ||
+        !tidal
+    ) {
+
+        console.error(
+            "DP scenario input elements not found."
+        );
+
+        return false;
+    }
+
+
+    wind.value =
+        scenario.wind;
+
+    current.value =
+        scenario.current;
+
+    wave.value =
+        scenario.wave;
+
+    tidal.value =
+        scenario.tidal;
+
+
+    return true;
 }
 
-wind.value =
-    scenario.wind;
-
-current.value =
-    scenario.current;
-
-wave.value =
-    scenario.wave;
-
-tidal.value =
-    scenario.tidal;
-
-return true;
-
-}
 
 /* ============================================================
-RUN SCENARIO
-============================================================ */
+   COCKPIT SCENARIO EXECUTION
+   ============================================================ */
 
-function runDPScenario(scenarioName) {
+/*
+ * IMPORTANT:
+ *
+ * This function is deliberately named
+ * executeDPCockpitScenario()
+ * so that it does NOT overwrite the engine's
+ * runDPScenario() function.
+ */
 
-const applied =
-    applyDPScenario(
-        scenarioName
-    );
-
-if (!applied) {
-    return;
-}
-
-if (
-    typeof runSimulation !==
-    "function"
+function executeDPCockpitScenario(
+    scenarioName
 ) {
 
-    console.error(
-        "runSimulation() is not available."
-    );
+    const applied =
+        applyDPScenario(
+            scenarioName
+        );
 
-    return;
+
+    if (!applied) {
+
+        return;
+    }
+
+
+    if (
+        typeof runSimulation ===
+        "function"
+    ) {
+
+        runSimulation();
+
+    } else {
+
+        console.error(
+            "runSimulation() is not available."
+        );
+    }
 }
 
-runSimulation();
-
-}
 
 /* ============================================================
-CONVENIENCE BUTTON FUNCTIONS
-============================================================ */
+   CONVENIENCE BUTTON FUNCTIONS
+   ============================================================ */
 
 function normalScenario() {
 
-runDPScenario(
-    "NORMAL"
-);
-
+    executeDPCockpitScenario(
+        "NORMAL"
+    );
 }
+
 
 function moderateWeatherScenario() {
 
-runDPScenario(
-    "MODERATE_WEATHER"
-);
-
+    executeDPCockpitScenario(
+        "MODERATE_WEATHER"
+    );
 }
+
 
 function heavyWeatherScenario() {
 
-runDPScenario(
-    "HEAVY_WEATHER"
-);
-
+    executeDPCockpitScenario(
+        "HEAVY_WEATHER"
+    );
 }
+
 
 function criticalScenario() {
 
-runDPScenario(
-    "CRITICAL_WEATHER"
-);
-
+    executeDPCockpitScenario(
+        "CRITICAL_WEATHER"
+    );
 }
+
 
 function currentSurgeScenario() {
 
-runDPScenario(
-    "CURRENT_SURGE"
-);
-
+    executeDPCockpitScenario(
+        "CURRENT_SURGE"
+    );
 }
+
 
 function heavySeaStateScenario() {
 
-runDPScenario(
-    "HEAVY_SEA_STATE"
-);
-
+    executeDPCockpitScenario(
+        "HEAVY_SEA_STATE"
+    );
 }
+
 
 function windGustScenario() {
 
-runDPScenario(
-    "WIND_GUST_EVENT"
-);
-
+    executeDPCockpitScenario(
+        "WIND_GUST_EVENT"
+    );
 }
+
 
 function combinedDisturbanceScenario() {
 
-runDPScenario(
-    "COMBINED_DISTURBANCE"
-);
-
+    executeDPCockpitScenario(
+        "COMBINED_DISTURBANCE"
+    );
 }
 
+
 /* ============================================================
-RANDOM DISTURBANCE
-============================================================ */
+   RANDOM DISTURBANCE
+   ============================================================ */
 
 function randomScenario() {
 
-const wind =
-    document.getElementById("wind");
+    const wind =
+        document.getElementById(
+            "wind"
+        );
 
-const current =
-    document.getElementById("current");
+    const current =
+        document.getElementById(
+            "current"
+        );
 
-const wave =
-    document.getElementById("wave");
+    const wave =
+        document.getElementById(
+            "wave"
+        );
 
-const tidal =
-    document.getElementById("tidal");
+    const tidal =
+        document.getElementById(
+            "tidal"
+        );
 
-if (
-    !wind ||
-    !current ||
-    !wave ||
-    !tidal
-) {
 
-    console.error(
-        "DP scenario input fields not found."
-    );
+    if (
+        !wind ||
+        !current ||
+        !wave ||
+        !tidal
+    ) {
 
-    return;
+        console.error(
+            "DP random scenario input elements not found."
+        );
+
+        return;
+    }
+
+
+    wind.value =
+        Math.floor(
+            Math.random() * 101
+        );
+
+    current.value =
+        Math.floor(
+            Math.random() * 101
+        );
+
+    wave.value =
+        Math.floor(
+            Math.random() * 101
+        );
+
+    tidal.value =
+        Math.floor(
+            Math.random() * 101
+        );
+
+
+    if (
+        typeof runSimulation ===
+        "function"
+    ) {
+
+        runSimulation();
+
+    } else {
+
+        console.error(
+            "runSimulation() is not available."
+        );
+    }
 }
 
-wind.value =
-    Math.floor(
-        Math.random() * 101
-    );
-
-current.value =
-    Math.floor(
-        Math.random() * 101
-    );
-
-wave.value =
-    Math.floor(
-        Math.random() * 101
-    );
-
-tidal.value =
-    Math.floor(
-        Math.random() * 101
-    );
-
-runSimulation();
-
-}
 
 /* ============================================================
-SCENARIO LOOKUP
-============================================================ */
+   SCENARIO LOOKUP
+   ============================================================ */
 
 function getDPScenario(
-scenarioName
+    scenarioName
 ) {
 
-return (
-    DP_SCENARIOS[scenarioName] ||
-    null
-);
-
+    return (
+        DP_SCENARIOS[
+            scenarioName
+        ] || null
+    );
 }
+
 
 /* ============================================================
-BROWSER EXPORT
-============================================================ */
+   BROWSER EXPORT
+   ============================================================ */
 
 if (
-typeof window !== "undefined"
+    typeof window !==
+    "undefined"
 ) {
 
-window.DP_SCENARIOS =
-    DP_SCENARIOS;
+    window.DP_SCENARIOS =
+        DP_SCENARIOS;
 
-window.applyDPScenario =
-    applyDPScenario;
+    window.applyDPScenario =
+        applyDPScenario;
 
-window.runDPScenario =
-    runDPScenario;
+    window.executeDPCockpitScenario =
+        executeDPCockpitScenario;
 
-window.getDPScenario =
-    getDPScenario;
-
+    window.getDPScenario =
+        getDPScenario;
 }
+
 
 /* ============================================================
-NODE.JS EXPORT
-============================================================ */
+   READY MESSAGE
+   ============================================================ */
 
 if (
-typeof module !== "undefined" &&
-module.exports
+    typeof console !==
+    "undefined"
 ) {
 
-module.exports = {
+    console.log(
+        "SEXTANT PROTOCOL DP SCENARIO LIBRARY — READY"
+    );
 
-    DP_SCENARIOS:
-        DP_SCENARIOS,
-
-    applyDPScenario:
-        applyDPScenario,
-
-    runDPScenario:
-        runDPScenario,
-
-    getDPScenario:
-        getDPScenario
-};
-
+    console.log(
+        "Scenarios loaded:",
+        Object.keys(
+            DP_SCENARIOS
+        ).length
+    );
 }
 
-/* ============================================================
-READY
-============================================================ */
 
-if (
-typeof console !== "undefined"
-) {
-
-console.log(
-    "SEXTANT PROTOCOL DP SCENARIO LIBRARY — READY"
-);
-
-console.log(
-    "SCENARIOS:",
-    Object.keys(
-        DP_SCENARIOS
-    ).length
-);
-
-console.log(
-    "MODE: SIMULATION ONLY"
-);
-
-}
+/*
+ * SAFETY BOUNDARY:
+ *
+ * These scenarios generate simulated environmental
+ * conditions only.
+ *
+ * They do not command real vessel propulsion,
+ * thrusters, navigation or DP equipment.
+ */
