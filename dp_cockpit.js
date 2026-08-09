@@ -905,3 +905,333 @@
      * actually change the simulated environmental
      * values before the engine is executed.
      */
+/* ========================================================
+       OPERATOR EVENT LOG
+    ======================================================== */
+
+    function appendOperatorLog(
+        message
+    ) {
+
+        const log =
+            el(
+                "operatorEventLog"
+            );
+
+
+        if (!log) {
+            return;
+        }
+
+
+        const timestamp =
+            new Date()
+                .toLocaleTimeString();
+
+
+        const line =
+            "[" +
+            timestamp +
+            "] " +
+            message;
+
+
+        /*
+         * Support both:
+         *
+         * <textarea>
+         *
+         * and:
+         *
+         * <div>
+         * <section>
+         * <ul>
+         * etc.
+         */
+
+        if (
+            log.tagName ===
+            "TEXTAREA"
+        ) {
+
+            log.value +=
+                (
+                    log.value
+                        ? "\n"
+                        : ""
+                ) +
+                line;
+
+
+            log.scrollTop =
+                log.scrollHeight;
+
+
+            return;
+
+        }
+
+
+        const entry =
+            document.createElement(
+                "div"
+            );
+
+
+        entry.textContent =
+            line;
+
+
+        log.appendChild(
+            entry
+        );
+
+
+        /*
+         * Keep the newest event visible.
+         */
+
+        log.scrollTop =
+            log.scrollHeight;
+
+    }
+
+
+    /*
+     * Make the logger available to other
+     * cockpit modules if required.
+     */
+
+    window.appendOperatorLog =
+        appendOperatorLog;
+
+
+    /* ========================================================
+       ENVIRONMENT DISPLAY
+    ======================================================== */
+
+    function updateEnvironment(
+        result
+    ) {
+
+        if (
+            !result ||
+            !result.environment
+        ) {
+
+            return;
+
+        }
+
+
+        const environment =
+            result.environment;
+
+
+        setText(
+            "windValue",
+            environment.wind
+        );
+
+
+        setText(
+            "currentValue",
+            environment.current
+        );
+
+
+        setText(
+            "waveValue",
+            environment.wave
+        );
+
+
+        setText(
+            "tidalValue",
+            environment.tidal
+        );
+
+
+        if (
+            typeof environment
+                .environmentalStress ===
+            "number"
+        ) {
+
+            setText(
+                "environmentStress",
+                environment
+                    .environmentalStress
+                    .toFixed(2)
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       SYSTEM STATUS DISPLAY
+    ======================================================== */
+
+    function updateSystem(
+        result
+    ) {
+
+        if (!result) {
+            return;
+        }
+
+
+        setText(
+            "systemStatus",
+            result.systemStatus ||
+            "SYSTEM ACTIVE"
+        );
+
+
+        setText(
+            "riskLevel",
+            result.risk ||
+            "UNKNOWN"
+        );
+
+
+        setText(
+            "environmentStatus",
+            "ACTIVE / SIMULATED"
+        );
+
+
+        if (result.primary) {
+
+            setText(
+                "primaryStatus",
+                result.primary.mode
+            );
+
+        }
+
+
+        if (result.secondary) {
+
+            setText(
+                "secondaryStatus",
+                result.secondary.mode
+            );
+
+        }
+
+
+        if (result.stabilizer) {
+
+            setText(
+                "stabilizerStatus",
+                result.stabilizer.mode
+            );
+
+        }
+
+
+        if (result.human) {
+
+            setText(
+                "humanAuthority",
+                result.human.status
+            );
+
+        } else {
+
+            setText(
+                "humanAuthority",
+                "AVAILABLE / FINAL"
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       ENVIRONMENTAL CHANGE STATUS
+    ======================================================== */
+
+    function determineEnvironmentalChange(
+        result
+    ) {
+
+        if (
+            !result ||
+            !result.environment
+        ) {
+
+            return "STABLE";
+
+        }
+
+
+        const stress =
+            Number(
+                result.environment
+                    .environmentalStress
+            );
+
+
+        if (
+            !Number.isFinite(stress)
+        ) {
+
+            return "STABLE";
+
+        }
+
+
+        if (stress >= 80) {
+
+            return "CRITICAL";
+
+        }
+
+
+        if (stress >= 60) {
+
+            return "SIGNIFICANT";
+
+        }
+
+
+        if (stress >= 35) {
+
+            return "ELEVATED";
+
+        }
+
+
+        return "STABLE";
+
+    }
+
+
+    /* ========================================================
+       PART 4 STATUS
+    ======================================================== */
+
+    /*
+     * Operator logging and environmental/system
+     * display rendering are now connected.
+     *
+     * Part 5 will add:
+     *
+     * - Resilience alert logic
+     * - Stabilizer display
+     * - DP operator recommendations
+     * - OFF-DP / anchoring decision-support
+     * - surveyed-seabed condition handling
+     *
+     * IMPORTANT:
+     *
+     * OFF-DP / ANCHOR will remain a simulated
+     * recommendation requiring human authority.
+     *
+     * The cockpit will NOT issue a real command.
+     */
