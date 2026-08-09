@@ -1208,3 +1208,358 @@
      * while the Master / authorised operator remains
      * the final decision authority.
      */
+/* ========================================================
+       MAIN SIMULATION EXECUTION
+    ======================================================== */
+
+    function runSimulation(
+        inputs
+    ) {
+
+        /*
+         * STEP 1
+         * Normalize all environmental inputs.
+         */
+
+        const environment =
+            normalizeEnvironment(
+                inputs
+            );
+
+
+        /*
+         * STEP 2
+         * Calculate deterministic environmental stress.
+         */
+
+        const environmentalStress =
+            calculateEnvironmentalStress(
+                environment
+            );
+
+
+        /*
+         * STEP 3
+         * Classify environmental risk.
+         */
+
+        const risk =
+            classifyRisk(
+                environmentalStress
+            );
+
+
+        /*
+         * STEP 4
+         * Primary AI assessment.
+         */
+
+        const primary =
+            evaluatePrimary(
+                environment,
+                environmentalStress
+            );
+
+
+        /*
+         * STEP 5
+         * Independent Secondary AI assessment.
+         */
+
+        const secondary =
+            evaluateSecondary(
+                environment,
+                environmentalStress
+            );
+
+
+        /*
+         * STEP 6
+         * Stabilizer arbitration.
+         */
+
+        const stabilizer =
+            evaluateStabilizer(
+                primary,
+                secondary,
+                risk
+            );
+
+
+        /*
+         * STEP 7
+         * Human authority.
+         */
+
+        const human =
+            determineHumanAuthority();
+
+
+        /*
+         * STEP 8
+         * Operator decision-support recommendation.
+         */
+
+        const recommendedAction =
+            determineRecommendedAction(
+                environment,
+                risk,
+                environmentalStress
+            );
+
+
+        /*
+         * STEP 9
+         * Generate simulated DP response.
+         */
+
+        const simulatedAction =
+            generateSimulatedDPAction(
+                environment,
+                risk,
+                stabilizer
+            );
+
+
+        /*
+         * STEP 10
+         * Calculate simulated vessel state.
+         */
+
+        const updatedState =
+            calculateSimulatedState(
+                environment,
+                risk,
+                simulatedAction
+                    .simulatedCommand
+            );
+
+
+        /*
+         * STEP 11
+         * System status.
+         */
+
+        const systemStatus =
+            determineSystemStatus(
+                risk
+            );
+
+
+        /*
+         * STEP 12
+         * Audit timestamp.
+         */
+
+        const timestamp =
+            new Date()
+                .toISOString();
+
+
+        /*
+         * STEP 13
+         * Build deterministic audit record.
+         */
+
+        const audit = {
+
+            timestamp:
+                timestamp,
+
+            engine:
+                ENGINE_NAME,
+
+            version:
+                VERSION,
+
+            mode:
+                MODE,
+
+            environmentalStress:
+                Number(
+                    environmentalStress
+                ).toFixed(2),
+
+            risk:
+                risk,
+
+            primary:
+                primary.mode,
+
+            secondary:
+                secondary.mode,
+
+            stabilizer:
+                stabilizer.mode,
+
+            recommendation:
+                recommendedAction
+                    .primaryRecommendation,
+
+            humanAuthority:
+                "FINAL",
+
+            autonomousCommand:
+                false,
+
+            operationalAuthority:
+                false
+
+        };
+
+
+        /*
+         * STEP 14
+         * Complete result object.
+         */
+
+        const result = {
+
+            engineName:
+                ENGINE_NAME,
+
+            version:
+                VERSION,
+
+            mode:
+                MODE,
+
+            systemStatus:
+                systemStatus,
+
+            environment: {
+
+                wind:
+                    environment.wind,
+
+                current:
+                    environment.current,
+
+                wave:
+                    environment.wave,
+
+                tidal:
+                    environment.tidal,
+
+                environmentalStress:
+                    environmentalStress
+
+            },
+
+            risk:
+                risk,
+
+            primary:
+                primary,
+
+            secondary:
+                secondary,
+
+            stabilizer:
+                stabilizer,
+
+            human:
+                human,
+
+            recommendedAction:
+                recommendedAction,
+
+            simulatedAction:
+                simulatedAction,
+
+            updatedState:
+                updatedState,
+
+            audit:
+                audit
+
+        };
+
+
+        /*
+         * Store the most recent simulation result
+         * for browser inspection and audit/replay.
+         */
+
+        window.lastDPSimulation =
+            result;
+
+
+        return result;
+
+    }
+
+
+    /* ========================================================
+       ENGINE PUBLIC API
+    ======================================================== */
+
+    const DPSimulationEngine = {
+
+        name:
+            ENGINE_NAME,
+
+        version:
+            VERSION,
+
+        mode:
+            MODE,
+
+        run:
+            runSimulation,
+
+        validate:
+            validate,
+
+        normalizeEnvironment:
+            normalizeEnvironment,
+
+        calculateEnvironmentalStress:
+            calculateEnvironmentalStress,
+
+        classifyRisk:
+            classifyRisk
+
+    };
+
+
+    /* ========================================================
+       BROWSER EXPORT
+    ======================================================== */
+
+    window.DPSimulationEngine =
+        DPSimulationEngine;
+
+
+    /* ========================================================
+       ENGINE READY MESSAGE
+    ======================================================== */
+
+    if (
+        typeof console !==
+        "undefined"
+    ) {
+
+        console.log(
+            "SEXTANT PROTOCOL DP SIMULATION ENGINE — READY"
+        );
+
+        console.log(
+            "ENGINE:",
+            ENGINE_NAME
+        );
+
+        console.log(
+            "VERSION:",
+            VERSION
+        );
+
+        console.log(
+            "MODE:",
+            MODE
+        );
+
+    }
+
+
+})();
