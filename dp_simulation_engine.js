@@ -1,75 +1,229 @@
 /*
- * Sextant Protocol – DP Simulation Engine
- * ----------------------------------------
+ * ============================================================
+ * SEXTANT PROTOCOL
+ * DP RESILIENCE SIMULATION ENGINE
+ * ============================================================
  *
- * Deterministic browser-based simulation engine for the
- * Sextant DP Resilience Research Prototype.
+ * File:
+ *     dp_simulation_engine.js
+ *
+ * Version:
+ *     1.1.0
+ *
+ * Purpose:
+ *     Deterministic browser-based simulation engine for the
+ *     Sextant DP Resilience Research Prototype.
  *
  * Architecture:
  *
- *   ENVIRONMENT
- *        ↓
- *   PRIMARY AI
- *        ↓
- *   SECONDARY AI
- *        ↓
- *   STABILIZER
- *        ↓
- *   HUMAN-IN-THE-LOOP
- *        ↓
- *   SIMULATED DP ACTION
- *        ↓
- *   UPDATED STATE
+ *     ENVIRONMENT
+ *          ↓
+ *     PRIMARY AI
+ *          ↓
+ *     SECONDARY AI
+ *          ↓
+ *     STABILIZER
+ *          ↓
+ *     HUMAN-IN-THE-LOOP
+ *          ↓
+ *     SIMULATED DP ACTION
+ *          ↓
+ *     UPDATED STATE
+ *          ↓
+ *     AUDIT RECORD
  *
  * Research / simulation use only.
  *
  * SAFETY BOUNDARY:
  * This engine is NOT certified marine control software.
- * It must never be connected to operational DP,
- * propulsion, navigation, or safety systems.
+ *
+ * It must NEVER be connected to:
+ *     - operational DP systems
+ *     - propulsion systems
+ *     - navigation systems
+ *     - vessel sensors
+ *     - safety systems
  *
  * All vessel behaviour, environmental conditions,
  * decisions and outputs are simulated.
+ *
+ * ============================================================
  */
 
 
 /* ============================================================
-   CONSTANTS
+   ENGINE CONSTANTS
    ============================================================ */
 
-const DP_SIMULATION_ENGINE_VERSION = "1.0.0";
+const DP_SIMULATION_ENGINE_VERSION = "1.1.0";
+
+const DP_SIMULATION_ENGINE_NAME =
+    "Sextant Protocol DP Resilience Simulation Engine";
+
+const DP_SIMULATION_MODE =
+    "SIMULATION_ONLY";
 
 const DP_NOMINAL_THRUST = 100;
 
+
+/* ============================================================
+   RISK THRESHOLDS
+   ============================================================ */
+
 const DP_THRESHOLDS = {
+
     LOW: 40,
+
     MEDIUM: 70,
+
     HIGH: 85
 };
+
+
+/* ============================================================
+   VESSEL SIMULATION PROFILE
+   ============================================================ */
+
+const DP_DEFAULT_VESSEL = {
+
+    name:
+        "SEXTANT-MPSV-01",
+
+    type:
+        "Multi-Purpose Support Vessel",
+
+    dpClass:
+        "DP2-SIMULATED",
+
+    dimensions: {
+
+        length:
+            85,
+
+        beam:
+            20,
+
+        draft:
+            6
+    },
+
+    propulsion: {
+
+        mainThrusters:
+            2,
+
+        tunnelThrusters:
+            2,
+
+        totalThrusters:
+            4,
+
+        nominalThrust:
+            DP_NOMINAL_THRUST
+    }
+};
+
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+
+/*
+ * Clamp a numeric value into a defined range.
+ */
+
+function clampDP(
+    value,
+    minimum = 0,
+    maximum = 100
+) {
+
+    const numericValue =
+        Number(value);
+
+    if (!Number.isFinite(numericValue)) {
+
+        return minimum;
+    }
+
+    return Math.max(
+        minimum,
+        Math.min(
+            maximum,
+            numericValue
+        )
+    );
+}
+
+
+/*
+ * Round numeric simulation output.
+ */
+
+function roundDP(
+    value,
+    decimals = 4
+) {
+
+    const factor =
+        Math.pow(
+            10,
+            decimals
+        );
+
+    return (
+        Math.round(
+            Number(value) * factor
+        ) / factor
+    );
+}
 
 
 /* ============================================================
    INPUT VALIDATION
    ============================================================ */
 
-function clampDP(value, minimum = 0, maximum = 100) {
+function validateDPInputs(
+    inputs = {}
+) {
 
-    const numericValue = Number(value);
+    return {
 
-    if (!Number.isFinite(numericValue)) {
-        return minimum;
-    }
+        wind:
+            clampDP(inputs.wind),
 
-    return Math.max(
-        minimum,
-        Math.min(maximum, numericValue)
-    );
+        current:
+            clampDP(inputs.current),
+
+        wave:
+            clampDP(inputs.wave),
+
+        tidal:
+            clampDP(
+                inputs.tidal !== undefined
+                    ? inputs.tidal
+                    : inputs.tidal_effect
+            )
+    };
 }
 
 
 /* ============================================================
    ENVIRONMENT MODEL
    ============================================================ */
+
+/*
+ * Environmental weighting:
+ *
+ * Wind      30%
+ * Current   25%
+ * Wave      30%
+ * Tidal     15%
+ *
+ * Total     100%
+ *
+ * This is a research abstraction only.
+ */
 
 function calculateDPEnvironmentalStress(
     wind,
@@ -78,25 +232,46 @@ function calculateDPEnvironmentalStress(
     tidal
 ) {
 
-    const normalizedWind = clampDP(wind);
-    const normalizedCurrent = clampDP(current);
-    const normalizedWave = clampDP(wave);
-    const normalizedTidal = clampDP(tidal);
+    const normalizedWind =
+        clampDP(wind);
+
+    const normalizedCurrent =
+        clampDP(current);
+
+    const normalizedWave =
+        clampDP(wave);
+
+    const normalizedTidal =
+        clampDP(tidal);
 
     const environmentalStress =
+
         normalizedWind * 0.30 +
+
         normalizedCurrent * 0.25 +
+
         normalizedWave * 0.30 +
+
         normalizedTidal * 0.15;
 
     return {
-        wind: normalizedWind,
-        current: normalizedCurrent,
-        wave: normalizedWave,
-        tidal: normalizedTidal,
+
+        wind:
+            normalizedWind,
+
+        current:
+            normalizedCurrent,
+
+        wave:
+            normalizedWave,
+
+        tidal:
+            normalizedTidal,
 
         environmentalStress:
-            environmentalStress
+            roundDP(
+                environmentalStress
+            )
     };
 }
 
@@ -105,17 +280,36 @@ function calculateDPEnvironmentalStress(
    RISK CLASSIFICATION
    ============================================================ */
 
-function classifyDPRisk(environmentalStress) {
+function classifyDPRisk(
+    environmentalStress
+) {
 
-    if (environmentalStress < DP_THRESHOLDS.LOW) {
+    const stress =
+        clampDP(
+            environmentalStress
+        );
+
+    if (
+        stress <
+        DP_THRESHOLDS.LOW
+    ) {
+
         return "LOW";
     }
 
-    if (environmentalStress < DP_THRESHOLDS.MEDIUM) {
+    if (
+        stress <
+        DP_THRESHOLDS.MEDIUM
+    ) {
+
         return "MEDIUM";
     }
 
-    if (environmentalStress < DP_THRESHOLDS.HIGH) {
+    if (
+        stress <
+        DP_THRESHOLDS.HIGH
+    ) {
+
         return "HIGH";
     }
 
@@ -133,41 +327,88 @@ function dpPrimaryAI(
 ) {
 
     const thrust =
-        Number.isFinite(Number(nominalThrust))
+        Number.isFinite(
+            Number(nominalThrust)
+        )
             ? Number(nominalThrust)
             : DP_NOMINAL_THRUST;
 
     const environment =
-        clampDP(environmentalStress);
+        clampDP(
+            environmentalStress
+        );
+
 
     /*
-     * Simulated disturbance model.
+     * Deterministic research disturbance model.
      *
-     * This is deliberately a research abstraction.
-     * It is NOT a DP control algorithm.
+     * This does NOT represent a certified
+     * marine DP control algorithm.
      */
 
     const disturbance =
+
         environment * 0.60 +
+
         environment * 0.40;
 
+
     const thrustOutput =
+
         Math.max(
             0,
             thrust - disturbance
         );
 
+
+    let mode =
+        "PRIMARY_AI";
+
+    let status =
+        "NORMAL_CONTROL";
+
+
+    if (
+        environment >=
+        DP_THRESHOLDS.MEDIUM
+    ) {
+
+        mode =
+            "PRIMARY_AI_DEGRADED";
+
+        status =
+            "DEGRADED_CONTROL";
+    }
+
+
+    if (
+        environment >=
+        DP_THRESHOLDS.HIGH
+    ) {
+
+        mode =
+            "PRIMARY_AI_CRITICAL";
+
+        status =
+            "PRIMARY_LIMIT_REACHED";
+    }
+
+
     return {
 
-        layer: "PRIMARY_AI",
+        layer:
+            "PRIMARY_AI",
 
-        mode: "PRIMARY_AI",
+        mode:
+            mode,
 
         thrustOutput:
-            thrustOutput,
+            roundDP(
+                thrustOutput
+            ),
 
         status:
-            "NORMAL_CONTROL"
+            status
     };
 }
 
@@ -181,21 +422,58 @@ function dpSecondaryAI(
 ) {
 
     const environment =
-        clampDP(environmentalStress);
+        clampDP(
+            environmentalStress
+        );
 
-    const safetyThreshold = 70;
+    const safetyThreshold =
+        DP_THRESHOLDS.MEDIUM;
 
     const safetyMode =
-        environment > safetyThreshold;
+        environment >=
+        safetyThreshold;
+
 
     let thrustOutput;
+
     let status;
 
-    if (safetyMode) {
+    let mode;
 
-        /*
-         * Conservative simulated fallback.
-         */
+
+    /*
+     * Critical simulated condition.
+     */
+
+    if (
+        environment >=
+        DP_THRESHOLDS.HIGH
+    ) {
+
+        mode =
+            "EMERGENCY_SAFETY_LAYER";
+
+        thrustOutput =
+            Math.max(
+                0,
+                40 - environment
+            );
+
+        status =
+            "CRITICAL_SAFETY_RESPONSE";
+    }
+
+
+    /*
+     * High / degraded condition.
+     */
+
+    else if (
+        safetyMode
+    ) {
+
+        mode =
+            "SECONDARY_SAFETY_LAYER";
 
         thrustOutput =
             Math.max(
@@ -205,24 +483,38 @@ function dpSecondaryAI(
 
         status =
             "SAFETY_OVERRIDE_ACTIVE";
+    }
 
-    } else {
 
-        thrustOutput = 50;
+    /*
+     * Normal monitoring.
+     */
+
+    else {
+
+        mode =
+            "SECONDARY_AI_MONITORING";
+
+        thrustOutput =
+            50;
 
         status =
             "MONITORING";
     }
 
+
     return {
 
-        layer: "SECONDARY_AI",
-
-        mode:
+        layer:
             "SECONDARY_AI",
 
+        mode:
+            mode,
+
         thrustOutput:
-            thrustOutput,
+            roundDP(
+                thrustOutput
+            ),
 
         status:
             status,
@@ -237,22 +529,60 @@ function dpSecondaryAI(
    HUMAN-IN-THE-LOOP
    ============================================================ */
 
+/*
+ * Human authority is based on the actual risk classification.
+ *
+ * Critical environmental stress:
+ *     HUMAN OVERRIDE REQUIRED
+ *
+ * The AI does not replace the human authority layer.
+ */
+
 function dpHumanDecision(
     environmentalStress,
     riskLevel
 ) {
 
     const environment =
-        clampDP(environmentalStress);
+        clampDP(
+            environmentalStress
+        );
 
-    const risk =
-        clampDP(riskLevel);
 
-    const criticalThreshold = 85;
+    let risk =
+        riskLevel;
+
+
+    /*
+     * Ensure a valid risk classification exists.
+     */
+
+    if (
+        risk !== "LOW" &&
+        risk !== "MEDIUM" &&
+        risk !== "HIGH" &&
+        risk !== "CRITICAL"
+    ) {
+
+        risk =
+            classifyDPRisk(
+                environment
+            );
+    }
+
+
+    const criticalCondition =
+
+        environment >=
+        DP_THRESHOLDS.HIGH;
+
 
     const override =
-        environment > criticalThreshold ||
-        risk > criticalThreshold;
+
+        criticalCondition ||
+
+        risk === "CRITICAL";
+
 
     return {
 
@@ -260,14 +590,20 @@ function dpHumanDecision(
             "HUMAN_IN_LOOP",
 
         mode:
-            "HUMAN_IN_LOOP",
+            "HUMAN_AUTHORITY",
+
+        risk:
+            risk,
 
         override:
             override,
 
         status:
+
             override
+
                 ? "HUMAN_OVERRIDE_REQUIRED"
+
                 : "MONITORING / AVAILABLE"
     };
 }
@@ -277,18 +613,20 @@ function dpHumanDecision(
    STABILIZER / ARBITRATION
    ============================================================ */
 
+/*
+ * Human authority takes precedence within
+ * the simulation governance architecture.
+ */
+
 function dpStabilizer(
     primary,
     secondary,
     humanOverride
 ) {
 
-    /*
-     * Human authority takes precedence
-     * inside the simulation architecture.
-     */
-
-    if (humanOverride) {
+    if (
+        humanOverride
+    ) {
 
         return {
 
@@ -296,10 +634,12 @@ function dpStabilizer(
                 "STABILIZER",
 
             mode:
-                "STABILIZED",
+                "SAFE_STATE_LOCK",
 
             finalOutput:
-                secondary.thrustOutput,
+                roundDP(
+                    secondary.thrustOutput
+                ),
 
             source:
                 "SECONDARY_AI_OVERRIDE",
@@ -309,13 +649,20 @@ function dpStabilizer(
         };
     }
 
+
     /*
-     * Normal simulated arbitration.
+     * Normal simulated arbitration:
+     *
+     * Primary   70%
+     * Secondary 30%
      */
 
     const blendedOutput =
+
         primary.thrustOutput * 0.70 +
+
         secondary.thrustOutput * 0.30;
+
 
     return {
 
@@ -326,7 +673,9 @@ function dpStabilizer(
             "STABILIZED",
 
         finalOutput:
-            blendedOutput,
+            roundDP(
+                blendedOutput
+            ),
 
         source:
             "BLENDED_CONTROL",
@@ -338,61 +687,108 @@ function dpStabilizer(
 
 
 /* ============================================================
-   SIMULATION STATE UPDATE
+   SIMULATED STATE UPDATE
    ============================================================ */
 
 function updateDPSimulationState(
-    previousState,
+    previousState = {},
     finalOutput,
     environmentalStress
 ) {
 
     const previousPosition =
-        previousState &&
+
         Number.isFinite(
-            Number(previousState.positionError)
+            Number(
+                previousState.positionError
+            )
         )
-            ? Number(previousState.positionError)
+
+            ? Number(
+                previousState.positionError
+            )
+
             : 0;
 
+
     const stress =
-        clampDP(environmentalStress);
+        clampDP(
+            environmentalStress
+        );
+
 
     const command =
+
         Math.max(
             0,
             Number(finalOutput) || 0
         );
 
+
     /*
      * Simplified research state model.
-     * This does NOT represent real vessel dynamics.
+     *
+     * This does NOT represent real vessel
+     * hydrodynamics or DP control behaviour.
      */
 
     const simulatedPositionError =
+
         Math.max(
             0,
+
             previousPosition +
-            (stress * 0.01) -
-            (command * 0.002)
+
+            stress * 0.01 -
+
+            command * 0.002
         );
+
+
+    const stabilityIndex =
+
+        Math.max(
+            0,
+
+            Math.min(
+                100,
+
+                100 -
+
+                stress * 0.60 +
+
+                command * 0.10
+            )
+        );
+
 
     return {
 
         positionError:
-            simulatedPositionError,
+            roundDP(
+                simulatedPositionError
+            ),
 
         simulatedCommand:
-            command,
+            roundDP(
+                command
+            ),
 
         environmentalStress:
-            stress
+            roundDP(
+                stress
+            ),
+
+        stabilityIndex:
+            roundDP(
+                stabilityIndex
+            )
     };
 }
 
 
 /* ============================================================
-   GOVERNANCE STATUS
+   SYSTEM STATUS
    ============================================================ */
 
 function determineDPSystemStatus(
@@ -400,22 +796,131 @@ function determineDPSystemStatus(
     humanOverride
 ) {
 
-    if (humanOverride) {
+    if (
+        humanOverride
+    ) {
 
         return "HUMAN OVERRIDE REQUIRED";
     }
 
-    if (risk === "HIGH") {
 
-        return "DEGRADED / HIGH RISK";
-    }
-
-    if (risk === "CRITICAL") {
+    if (
+        risk === "CRITICAL"
+    ) {
 
         return "CRITICAL / HUMAN REVIEW";
     }
 
+
+    if (
+        risk === "HIGH"
+    ) {
+
+        return "DEGRADED / HIGH RISK";
+    }
+
+
+    if (
+        risk === "MEDIUM"
+    ) {
+
+        return "PREVENTIVE MONITORING";
+    }
+
+
     return "SIMULATION STABLE";
+}
+
+
+/* ============================================================
+   GOLDEN RULE / GOVERNANCE PIPELINE
+   ============================================================ */
+
+function getDPPipeline() {
+
+    return [
+
+        "OBSERVE",
+
+        "VERIFY",
+
+        "ASSESS",
+
+        "DECIDE",
+
+        "ACT",
+
+        "UPDATE"
+    ];
+}
+
+
+/* ============================================================
+   AUDIT RECORD
+   ============================================================ */
+
+function createDPAuditRecord(
+    inputs,
+    environment,
+    risk,
+    primary,
+    secondary,
+    human,
+    stabilizer,
+    updatedState,
+    systemStatus
+) {
+
+    return {
+
+        engine:
+            DP_SIMULATION_ENGINE_NAME,
+
+        engineVersion:
+            DP_SIMULATION_ENGINE_VERSION,
+
+        mode:
+            DP_SIMULATION_MODE,
+
+        timestamp:
+            new Date().toISOString(),
+
+        pipeline:
+            getDPPipeline(),
+
+        inputs:
+            inputs,
+
+        environment:
+            environment,
+
+        environmentalStress:
+            environment.environmentalStress,
+
+        risk:
+            risk,
+
+        primaryAI:
+            primary,
+
+        secondaryAI:
+            secondary,
+
+        humanAuthority:
+            human,
+
+        stabilizer:
+            stabilizer,
+
+        updatedState:
+            updatedState,
+
+        systemStatus:
+            systemStatus,
+
+        safetyBoundary:
+            "SIMULATION ONLY — NOT FOR OPERATIONAL DP CONTROL"
+    };
 }
 
 
@@ -424,68 +929,58 @@ function determineDPSystemStatus(
    ============================================================ */
 
 function runDPSimulation(
-    inputs,
+    inputs = {},
     previousState = {}
 ) {
 
-    const wind =
-        clampDP(inputs.wind);
+    /*
+     * --------------------------------------------------------
+     * INPUT VALIDATION
+     * --------------------------------------------------------
+     */
 
-    const current =
-        clampDP(inputs.current);
+    const verifiedInputs =
+        validateDPInputs(
+            inputs
+        );
 
-    const wave =
-        clampDP(inputs.wave);
 
-    const tidal =
-        clampDP(inputs.tidal);
-
-    /* --------------------------------------------------------
-       OBSERVE
-       -------------------------------------------------------- */
+    /*
+     * --------------------------------------------------------
+     * OBSERVE
+     * --------------------------------------------------------
+     */
 
     const environment =
         calculateDPEnvironmentalStress(
-            wind,
-            current,
-            wave,
-            tidal
+            verifiedInputs.wind,
+            verifiedInputs.current,
+            verifiedInputs.wave,
+            verifiedInputs.tidal
         );
+
 
     const environmentalStress =
         environment.environmentalStress;
 
-    /* --------------------------------------------------------
-       VERIFY
-       -------------------------------------------------------- */
 
-    const verifiedInputs = {
-
-        wind:
-            environment.wind,
-
-        current:
-            environment.current,
-
-        wave:
-            environment.wave,
-
-        tidal:
-            environment.tidal
-    };
-
-    /* --------------------------------------------------------
-       ASSESS
-       -------------------------------------------------------- */
+    /*
+     * --------------------------------------------------------
+     * ASSESS
+     * --------------------------------------------------------
+     */
 
     const risk =
         classifyDPRisk(
             environmentalStress
         );
 
-    /* --------------------------------------------------------
-       PRIMARY AI
-       -------------------------------------------------------- */
+
+    /*
+     * --------------------------------------------------------
+     * PRIMARY AI
+     * --------------------------------------------------------
+     */
 
     const primary =
         dpPrimaryAI(
@@ -493,50 +988,65 @@ function runDPSimulation(
             environmentalStress
         );
 
-    /* --------------------------------------------------------
-       SECONDARY AI
-       -------------------------------------------------------- */
+
+    /*
+     * --------------------------------------------------------
+     * SECONDARY AI
+     * --------------------------------------------------------
+     */
 
     const secondary =
         dpSecondaryAI(
             environmentalStress
         );
 
-    /* --------------------------------------------------------
-       HUMAN
-       -------------------------------------------------------- */
+
+    /*
+     * --------------------------------------------------------
+     * HUMAN AUTHORITY
+     * --------------------------------------------------------
+     */
 
     const human =
         dpHumanDecision(
             environmentalStress,
-            environmentalStress
+            risk
         );
 
-    /* --------------------------------------------------------
-       DECIDE / STABILIZE
-       -------------------------------------------------------- */
 
-    const final =
+    /*
+     * --------------------------------------------------------
+     * DECIDE / STABILIZE
+     * --------------------------------------------------------
+     */
+
+    const stabilizer =
         dpStabilizer(
             primary,
             secondary,
             human.override
         );
 
-    /* --------------------------------------------------------
-       ACT / SIMULATED COMMAND
-       -------------------------------------------------------- */
+
+    /*
+     * --------------------------------------------------------
+     * ACT / UPDATE
+     * --------------------------------------------------------
+     */
 
     const updatedState =
         updateDPSimulationState(
             previousState,
-            final.finalOutput,
+            stabilizer.finalOutput,
             environmentalStress
         );
 
-    /* --------------------------------------------------------
-       SYSTEM STATUS
-       -------------------------------------------------------- */
+
+    /*
+     * --------------------------------------------------------
+     * SYSTEM STATUS
+     * --------------------------------------------------------
+     */
 
     const systemStatus =
         determineDPSystemStatus(
@@ -544,30 +1054,55 @@ function runDPSimulation(
             human.override
         );
 
-    /* --------------------------------------------------------
-       AUDIT RECORD
-       -------------------------------------------------------- */
 
-    const auditRecord = {
+    /*
+     * --------------------------------------------------------
+     * AUDIT
+     * --------------------------------------------------------
+     */
 
-        engineVersion:
+    const audit =
+        createDPAuditRecord(
+            verifiedInputs,
+            environment,
+            risk,
+            primary,
+            secondary,
+            human,
+            stabilizer,
+            updatedState,
+            systemStatus
+        );
+
+
+    /*
+     * --------------------------------------------------------
+     * COMPLETE RESULT
+     * --------------------------------------------------------
+     */
+
+    return {
+
+        engine:
+            "DP_SIMULATION_ENGINE",
+
+        engineName:
+            DP_SIMULATION_ENGINE_NAME,
+
+        version:
             DP_SIMULATION_ENGINE_VERSION,
 
-        timestamp:
-            new Date().toISOString(),
+        mode:
+            DP_SIMULATION_MODE,
 
-        pipeline:
-            [
-                "OBSERVE",
-                "VERIFY",
-                "ASSESS",
-                "DECIDE",
-                "ACT",
-                "UPDATE"
-            ],
+        vessel:
+            DP_DEFAULT_VESSEL,
 
         inputs:
             verifiedInputs,
+
+        environment:
+            environment,
 
         environmentalStress:
             environmentalStress,
@@ -585,47 +1120,7 @@ function runDPSimulation(
             human,
 
         stabilizer:
-            final,
-
-        updatedState:
-            updatedState,
-
-        systemStatus:
-            systemStatus
-    };
-
-    /* --------------------------------------------------------
-       COMPLETE RESULT
-       -------------------------------------------------------- */
-
-    return {
-
-        engine:
-            "DP_SIMULATION_ENGINE",
-
-        version:
-            DP_SIMULATION_ENGINE_VERSION,
-
-        mode:
-            "SIMULATION_ONLY",
-
-        environment:
-            environment,
-
-        risk:
-            risk,
-
-        primary:
-            primary,
-
-        secondary:
-            secondary,
-
-        human:
-            human,
-
-        stabilizer:
-            final,
+            stabilizer,
 
         updatedState:
             updatedState,
@@ -633,8 +1128,11 @@ function runDPSimulation(
         systemStatus:
             systemStatus,
 
+        pipeline:
+            getDPPipeline(),
+
         audit:
-            auditRecord
+            audit
     };
 }
 
@@ -740,16 +1238,199 @@ function dpScenarioRandom() {
 
 
 /* ============================================================
+   SCENARIO EXECUTION
+   ============================================================ */
+
+function runDPScenario(
+    scenario,
+    previousState = {}
+) {
+
+    if (
+        !scenario
+    ) {
+
+        throw new Error(
+            "DP scenario is required."
+        );
+    }
+
+
+    return runDPSimulation(
+        scenario,
+        previousState
+    );
+}
+
+
+/* ============================================================
+   ENGINE SELF-TEST
+   ============================================================ */
+
+function validateDPSimulationEngine() {
+
+    const normalScenario =
+        dpScenarioNormal();
+
+
+    const heavyScenario =
+        dpScenarioHeavyWeather();
+
+
+    const criticalScenario =
+        dpScenarioCritical();
+
+
+    const normal =
+        runDPSimulation(
+            normalScenario
+        );
+
+
+    const heavy =
+        runDPSimulation(
+            heavyScenario
+        );
+
+
+    const critical =
+        runDPSimulation(
+            criticalScenario
+        );
+
+
+    const checks = {
+
+        engineLoaded:
+            true,
+
+        normalExecuted:
+            Boolean(
+                normal
+            ),
+
+        heavyWeatherExecuted:
+            Boolean(
+                heavy
+            ),
+
+        criticalExecuted:
+            Boolean(
+                critical
+            ),
+
+        normalRisk:
+            normal.risk === "LOW",
+
+        heavyRisk:
+            heavy.risk === "HIGH",
+
+        criticalRisk:
+            critical.risk === "CRITICAL",
+
+        humanEscalation:
+            critical.human.override === true,
+
+        stabilizerExecuted:
+            Boolean(
+                critical.stabilizer
+            ),
+
+        stateUpdateExecuted:
+            Boolean(
+                critical.updatedState
+            ),
+
+        auditExecuted:
+            Boolean(
+                critical.audit
+            ),
+
+        pipelineExecuted:
+            critical.pipeline.length === 6
+    };
+
+
+    const total =
+        Object.keys(
+            checks
+        ).length;
+
+
+    const passed =
+        Object.values(
+            checks
+        ).filter(
+            Boolean
+        ).length;
+
+
+    return {
+
+        engine:
+            DP_SIMULATION_ENGINE_NAME,
+
+        version:
+            DP_SIMULATION_ENGINE_VERSION,
+
+        passed:
+            passed,
+
+        total:
+            total,
+
+        status:
+            passed === total
+                ? "PASS"
+                : "FAIL",
+
+        checks:
+            checks,
+
+        scenarios: {
+
+            normal:
+                normal,
+
+            heavyWeather:
+                heavy,
+
+            critical:
+                critical
+        }
+    };
+}
+
+
+/* ============================================================
    PUBLIC ENGINE API
    ============================================================ */
 
 const DPSimulationEngine = {
 
+    name:
+        DP_SIMULATION_ENGINE_NAME,
+
     version:
         DP_SIMULATION_ENGINE_VERSION,
 
+    mode:
+        DP_SIMULATION_MODE,
+
+    vessel:
+        DP_DEFAULT_VESSEL,
+
+    thresholds:
+        DP_THRESHOLDS,
+
     run:
         runDPSimulation,
+
+    runScenario:
+        runDPScenario,
+
+    validate:
+        validateDPSimulationEngine,
 
     calculateEnvironment:
         calculateDPEnvironmentalStress,
@@ -772,6 +1453,9 @@ const DPSimulationEngine = {
     updateState:
         updateDPSimulationState,
 
+    pipeline:
+        getDPPipeline(),
+
     scenarios: {
 
         normal:
@@ -793,7 +1477,9 @@ const DPSimulationEngine = {
    BROWSER EXPORT
    ============================================================ */
 
-if (typeof window !== "undefined") {
+if (
+    typeof window !== "undefined"
+) {
 
     window.DPSimulationEngine =
         DPSimulationEngine;
@@ -804,9 +1490,35 @@ if (typeof window !== "undefined") {
    NODE.JS EXPORT
    ============================================================ */
 
-if (typeof module !== "undefined" &&
-    module.exports) {
+if (
+    typeof module !== "undefined" &&
+    module.exports
+) {
 
     module.exports =
         DPSimulationEngine;
+}
+
+
+/* ============================================================
+   ENGINE READY MESSAGE
+   ============================================================ */
+
+if (
+    typeof console !== "undefined"
+) {
+
+    console.log(
+        "SEXTANT PROTOCOL DP SIMULATION ENGINE " +
+        DP_SIMULATION_ENGINE_VERSION +
+        " — READY"
+    );
+
+    console.log(
+        "MODE: SIMULATION ONLY"
+    );
+
+    console.log(
+        "SAFETY BOUNDARY: NOT FOR OPERATIONAL DP CONTROL"
+    );
 }
