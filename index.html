@@ -1161,3 +1161,194 @@ are simulated decision-support information only.
      • Response-window handling
      • Stabilizer presentation
 ======================================================= -->
+<!-- =========================================================
+     ALERT / EARLY-WARNING RESILIENCE PANEL
+     ========================================================= -->
+
+<div class="panel" id="resilienceAlertPanel">
+
+    <h2>⚠ RESILIENCE EARLY-WARNING / OPERATOR ALERT</h2>
+
+    <div id="resilienceAlert"
+         style="
+            padding:18px;
+            border-radius:8px;
+            background:#091827;
+            border:2px solid #29445f;
+            text-align:center;
+            font-weight:bold;
+            font-size:18px;
+            line-height:1.5;
+         ">
+
+        SYSTEM MONITORING — NO RESILIENCE ALERT
+
+    </div>
+
+    <div class="status-grid"
+         style="margin-top:12px;">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                ALERT LEVEL
+            </div>
+
+            <div id="alertLevel"
+                 class="status-value">
+                NORMAL
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                ENVIRONMENTAL CHANGE
+            </div>
+
+            <div id="environmentChange"
+                 class="status-value">
+                STABLE
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                RESILIENCE STATE
+            </div>
+
+            <div id="resilienceState"
+                 class="status-value">
+                MONITORING
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                OPERATOR ATTENTION
+            </div>
+
+            <div id="operatorAttention"
+                 class="status-value">
+                NOT REQUIRED
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     OPERATOR NOTIFICATION
+     ========================================================= -->
+
+<div class="panel">
+
+    <h2>Operator Notification</h2>
+
+    <div id="operatorNotification"
+         style="
+            padding:15px;
+            border-radius:6px;
+            background:#050c14;
+            border:1px solid #29445f;
+            font-family:monospace;
+            font-size:14px;
+            line-height:1.7;
+         ">
+
+        SYSTEM READY.<br>
+        CONTINUOUS SIMULATED MONITORING ACTIVE.<br>
+        NO OPERATOR INTERVENTION REQUESTED.
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     RESILIENCE RESPONSE PATH
+     ========================================================= -->
+
+<div class="panel">
+
+    <h2>Resilience Response Path</h2>
+
+    <div class="architecture">
+
+        <div class="node">
+            ENVIRONMENTAL<br>
+            OBSERVATION
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            EARLY<br>
+            DETECTION
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            SECONDARY<br>
+            VERIFICATION
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            STABILIZER<br>
+            RESPONSE
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            OPERATOR<br>
+            ALERT
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            HUMAN<br>
+            DECISION
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ALERT EVENT LOG
+     ========================================================= -->
+
+<div class="panel">
+
+    <h2>Resilience Event Log</h2>
+
+    <div id="alertLog"
+         class="output"
+         style="min-height:180px;">
+
+SYSTEM EVENT LOG
+------------------------------------------------------------
+System initialised.
+Waiting for simulated environmental input.
+No resilience alert generated.
+
+    </div>
+
+</div>
