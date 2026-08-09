@@ -985,3 +985,365 @@
         );
 
     }
+/* ========================================================
+       GOLDEN-RULE-STYLE SIMULATION PIPELINE DISPLAY
+    ======================================================== */
+
+    function updatePipeline(result) {
+
+        setText(
+            "pipelineEnvironment",
+            "OBSERVED"
+        );
+
+        setText(
+            "pipelineVerify",
+            "VERIFIED"
+        );
+
+        setText(
+            "pipelineAssess",
+            result.risk
+        );
+
+        setText(
+            "pipelineDecide",
+            result.recommendedAction
+                ? result.recommendedAction.primaryRecommendation
+                : "NO DECISION"
+        );
+
+        setText(
+            "pipelineAct",
+            "HUMAN REVIEW / SIMULATED"
+        );
+
+        setText(
+            "pipelineUpdate",
+            "STATE UPDATED"
+        );
+
+    }
+
+
+    /* ========================================================
+       AUDIT LOG DISPLAY
+    ======================================================== */
+
+    function updateAudit(result) {
+
+        const audit =
+            result.audit || {};
+
+
+        const environment =
+            result.environment || {};
+
+
+        const primary =
+            result.primary || {};
+
+
+        const secondary =
+            result.secondary || {};
+
+
+        const stabilizer =
+            result.stabilizer || {};
+
+
+        const text = [
+
+            "SYSTEM EVENT LOG",
+
+            "------------------------------------------------------------",
+
+            "ENGINE: " +
+                result.engineName,
+
+            "VERSION: " +
+                result.version,
+
+            "MODE: " +
+                result.mode,
+
+            "",
+
+            "ENVIRONMENTAL INPUTS:",
+
+            "  WIND: " +
+                environment.wind,
+
+            "  CURRENT: " +
+                environment.current,
+
+            "  WAVE: " +
+                environment.wave,
+
+            "  TIDAL: " +
+                environment.tidal,
+
+            "",
+
+            "ENVIRONMENTAL STRESS: " +
+                Number(
+                    environment.environmentalStress || 0
+                ).toFixed(2),
+
+            "RISK: " +
+                result.risk,
+
+            "",
+
+            "PRIMARY AI: " +
+                (primary.mode || "N/A"),
+
+            "SECONDARY AI: " +
+                (secondary.mode || "N/A"),
+
+            "STABILIZER: " +
+                (stabilizer.mode || "N/A"),
+
+            "",
+
+            "HUMAN AUTHORITY: FINAL",
+
+            "AUTONOMOUS COMMAND: FALSE",
+
+            "OPERATIONAL AUTHORITY: FALSE",
+
+            "",
+
+            "TIMESTAMP: " +
+                (audit.timestamp || "N/A")
+
+        ].join(
+            "\n"
+        );
+
+
+        setText(
+            "auditLog",
+            text
+        );
+
+    }
+
+
+    /* ========================================================
+       COMPLETE RESULT RENDER
+    ======================================================== */
+
+    function renderResult(result) {
+
+        if (!result) {
+            return;
+        }
+
+
+        updateEnvironment(
+            result
+        );
+
+        updateSystem(
+            result
+        );
+
+        updateAlert(
+            result
+        );
+
+        updateStabilizer(
+            result
+        );
+
+        updateRecommendation(
+            result
+        );
+
+        updateSimulation(
+            result
+        );
+
+        updatePipeline(
+            result
+        );
+
+        updateAudit(
+            result
+        );
+
+    }
+
+
+    /* ========================================================
+       MAIN DP SIMULATION FUNCTION
+    ======================================================== */
+
+    window.runSimulation =
+        function () {
+
+            try {
+
+                /*
+                 * Confirm that the simulation engine exists.
+                 */
+
+                if (
+                    !window.DPSimulationEngine ||
+                    typeof
+                    window.DPSimulationEngine.run !==
+                    "function"
+                ) {
+
+                    setText(
+                        "dpSimulationStatus",
+                        "ENGINE NOT CONNECTED"
+                    );
+
+                    appendOperatorLog(
+                        "ERROR — DP simulation engine unavailable."
+                    );
+
+                    return null;
+                }
+
+
+                /*
+                 * IMPORTANT:
+                 *
+                 * Read the environmental controls AFTER
+                 * the scenario has been applied.
+                 *
+                 * This is what ensures CRITICAL WEATHER,
+                 * HEAVY WEATHER, CURRENT SURGE, etc.
+                 * are actually passed to the engine.
+                 */
+
+                const inputs =
+                    readDPInputs();
+
+
+                appendOperatorLog(
+
+                    "SIMULATION START — " +
+
+                    "Wind=" +
+                    inputs.wind +
+
+                    " Current=" +
+                    inputs.current +
+
+                    " Wave=" +
+                    inputs.wave +
+
+                    " Tidal=" +
+                    inputs.tidal
+
+                );
+
+
+                /*
+                 * Run deterministic simulation engine.
+                 */
+
+                const result =
+                    window.DPSimulationEngine.run(
+                        inputs
+                    );
+
+
+                if (!result) {
+
+                    appendOperatorLog(
+                        "ERROR — DP engine returned no result."
+                    );
+
+                    setText(
+                        "dpSimulationStatus",
+                        "SIMULATION ERROR"
+                    );
+
+                    return null;
+                }
+
+
+                /*
+                 * Render complete result.
+                 */
+
+                renderResult(
+                    result
+                );
+
+
+                /*
+                 * Record completion.
+                 */
+
+                appendOperatorLog(
+
+                    "SIMULATION COMPLETE — " +
+
+                    "Stress=" +
+
+                    Number(
+                        result.environment
+                            .environmentalStress
+                    ).toFixed(2) +
+
+                    " Risk=" +
+
+                    result.risk
+
+                );
+
+
+                /*
+                 * Record decision-support recommendation.
+                 */
+
+                if (
+                    result.recommendedAction
+                ) {
+
+                    appendOperatorLog(
+
+                        "RECOMMENDATION — " +
+
+                        result
+                            .recommendedAction
+                            .primaryRecommendation
+
+                    );
+
+                }
+
+
+                return result;
+
+
+            } catch (error) {
+
+                console.error(
+                    "DP simulation error:",
+                    error
+                );
+
+
+                setText(
+                    "dpSimulationStatus",
+                    "SIMULATION ERROR"
+                );
+
+
+                appendOperatorLog(
+                    "ERROR — DP simulation execution failed."
+                );
+
+
+                return null;
+
+            }
+
+        };
