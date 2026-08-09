@@ -1,0 +1,604 @@
+<script>
+
+/* =========================================================
+   SEXTANT PROTOCOL
+   DP RESILIENCE COCKPIT WIRING
+   ========================================================= */
+
+
+/* =========================================================
+   ENGINE VALIDATION
+   ========================================================= */
+
+function verifyDPEngine() {
+
+    const status =
+        document.getElementById(
+            "engineStatus"
+        );
+
+
+    if (
+        typeof DPSimulationEngine ===
+        "undefined"
+    ) {
+
+        status.textContent =
+            "ENGINE NOT LOADED";
+
+        status.style.color =
+            "#ff6b6b";
+
+        return false;
+    }
+
+
+    status.textContent =
+        "DP SIMULATION ENGINE " +
+        DPSimulationEngine.version +
+        " CONNECTED";
+
+    status.style.color =
+        "#54d38b";
+
+    return true;
+}
+
+
+/* =========================================================
+   SCENARIO LIBRARY VALIDATION
+   ========================================================= */
+
+function verifyDPScenarioLibrary() {
+
+    if (
+        typeof DP_SCENARIOS ===
+        "undefined"
+    ) {
+
+        console.warn(
+            "DP scenario library not loaded."
+        );
+
+        return false;
+    }
+
+
+    console.log(
+        "DP scenario library connected:",
+        Object.keys(
+            DP_SCENARIOS
+        ).length,
+        "scenarios"
+    );
+
+
+    return true;
+}
+
+
+/* =========================================================
+   INPUT READER
+   ========================================================= */
+
+function getDPInput(
+    id
+) {
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+    if (!element) {
+
+        return 0;
+    }
+
+
+    const value =
+        Number(
+            element.value
+        );
+
+
+    if (
+        !Number.isFinite(
+            value
+        )
+    ) {
+
+        return 0;
+    }
+
+
+    return Math.max(
+        0,
+        Math.min(
+            100,
+            value
+        )
+    );
+}
+
+
+/* =========================================================
+   SIMULATION EXECUTION
+   ========================================================= */
+
+function runSimulation() {
+
+    if (
+        !verifyDPEngine()
+    ) {
+
+        document.getElementById(
+            "output"
+        ).textContent =
+
+`DP SIMULATION ENGINE ERROR
+
+The external engine could not be loaded.
+
+Required file:
+dp_simulation_engine.js
+
+Simulation not executed.`;
+
+        return;
+    }
+
+
+    const inputs = {
+
+        wind:
+            getDPInput(
+                "wind"
+            ),
+
+        current:
+            getDPInput(
+                "current"
+            ),
+
+        wave:
+            getDPInput(
+                "wave"
+            ),
+
+        tidal:
+            getDPInput(
+                "tidal"
+            )
+    };
+
+
+    let result;
+
+
+    try {
+
+        result =
+            DPSimulationEngine.run(
+                inputs
+            );
+
+    }
+
+    catch (
+        error
+    ) {
+
+        console.error(
+            "DP Simulation Error:",
+            error
+        );
+
+
+        document.getElementById(
+            "output"
+        ).textContent =
+
+`DP SIMULATION ERROR
+
+${error.message}
+
+No simulated action was executed.`;
+
+        return;
+    }
+
+
+    updateDPCockpit(
+        result
+    );
+
+
+    renderDPReport(
+        result,
+        inputs
+    );
+}
+
+
+/* =========================================================
+   UPDATE LIVE STATUS
+   ========================================================= */
+
+function updateDPCockpit(
+    result
+) {
+
+    const environment =
+        result.environment;
+
+    const primary =
+        result.primary;
+
+    const secondary =
+        result.secondary;
+
+    const human =
+        result.human;
+
+    const stabilizer =
+        result.stabilizer;
+
+
+    document.getElementById(
+        "environmentStatus"
+    ).textContent =
+
+        environment.environmentalStress
+            .toFixed(2)
+        +
+        " / "
+        +
+        result.risk;
+
+
+    document.getElementById(
+        "primaryStatus"
+    ).textContent =
+
+        primary.thrustOutput
+            .toFixed(2)
+        +
+        " / "
+        +
+        primary.status;
+
+
+    document.getElementById(
+        "secondaryStatus"
+    ).textContent =
+
+        secondary.safetyMode
+
+            ? "SAFETY ACTIVE"
+
+            : "MONITORING";
+
+
+    document.getElementById(
+        "stabilizerStatus"
+    ).textContent =
+
+        stabilizer.source;
+
+
+    document.getElementById(
+        "humanStatus"
+    ).textContent =
+
+        human.override
+
+            ? "OVERRIDE REQUIRED"
+
+            : "AVAILABLE";
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+
+        result.systemStatus;
+}
+
+
+/* =========================================================
+   RESULT REPORT
+   ========================================================= */
+
+function renderDPReport(
+    result,
+    inputs
+) {
+
+    const environment =
+        result.environment;
+
+    const primary =
+        result.primary;
+
+    const secondary =
+        result.secondary;
+
+    const human =
+        result.human;
+
+    const stabilizer =
+        result.stabilizer;
+
+    const updatedState =
+        result.updatedState;
+
+
+    const report =
+
+`
+============================================================
+             SEXTANT DP SIMULATION RESULT
+============================================================
+
+ENGINE
+------------------------------------------------------------
+Engine            : ${result.engineName}
+Version           : ${result.version}
+Mode              : ${result.mode}
+
+
+VESSEL
+------------------------------------------------------------
+Name              : ${result.vessel.name}
+Type              : ${result.vessel.type}
+DP Classification : ${result.vessel.dpClass}
+
+Dimensions        : ${
+    result.vessel.dimensions.length
+}m × ${
+    result.vessel.dimensions.beam
+}m × ${
+    result.vessel.dimensions.draft
+}m
+
+Thrusters         : ${
+    result.vessel.propulsion.totalThrusters
+}
+
+Nominal Thrust    : ${
+    result.vessel.propulsion.nominalThrust
+} simulation units
+
+
+ENVIRONMENT
+------------------------------------------------------------
+Wind Stress       : ${inputs.wind.toFixed(2)}
+Current Stress    : ${inputs.current.toFixed(2)}
+Wave Stress       : ${inputs.wave.toFixed(2)}
+Tidal Stress      : ${inputs.tidal.toFixed(2)}
+
+Environmental
+Stress            : ${
+    environment.environmentalStress.toFixed(2)
+}
+
+Risk Classification:
+${result.risk}
+
+
+PRIMARY AI
+------------------------------------------------------------
+Layer             : ${primary.layer}
+Mode              : ${primary.mode}
+Thrust Output     : ${primary.thrustOutput.toFixed(2)}
+Status            : ${primary.status}
+
+
+SECONDARY AI
+------------------------------------------------------------
+Layer             : ${secondary.layer}
+Mode              : ${secondary.mode}
+Thrust Output     : ${secondary.thrustOutput.toFixed(2)}
+Status            : ${secondary.status}
+Safety Mode       : ${secondary.safetyMode}
+
+
+HUMAN-IN-THE-LOOP
+------------------------------------------------------------
+Layer             : ${human.layer}
+Mode              : ${human.mode}
+Override          : ${human.override}
+Status            : ${human.status}
+
+
+STABILIZER
+------------------------------------------------------------
+Layer             : ${stabilizer.layer}
+Mode              : ${stabilizer.mode}
+Final Output      : ${stabilizer.finalOutput.toFixed(2)}
+Source            : ${stabilizer.source}
+Status            : ${stabilizer.status}
+
+
+UPDATED SIMULATED STATE
+------------------------------------------------------------
+Position Error    : ${
+    updatedState.positionError.toFixed(4)
+}
+
+Simulated Command : ${
+    updatedState.simulatedCommand.toFixed(2)
+}
+
+Environmental
+Stress            : ${
+    updatedState.environmentalStress.toFixed(2)
+}
+
+Stability Index   : ${
+    updatedState.stabilityIndex.toFixed(2)
+}
+
+
+GOVERNANCE
+------------------------------------------------------------
+Primary AI        : ACTIVE
+Secondary AI      : ACTIVE
+Stabilizer        : ACTIVE
+Human Authority   : ${
+    human.override
+        ? "OVERRIDE REQUIRED"
+        : "MONITORING / AVAILABLE"
+}
+
+
+FINAL SYSTEM STATUS
+------------------------------------------------------------
+${result.systemStatus}
+
+
+SIMULATION PIPELINE
+------------------------------------------------------------
+OBSERVE
+   ↓
+VERIFY
+   ↓
+ASSESS
+   ↓
+DECIDE
+   ↓
+ACT
+   ↓
+UPDATE
+
+
+AUDIT
+------------------------------------------------------------
+Timestamp         : ${
+    result.audit.timestamp
+}
+
+Engine Version    : ${
+    result.audit.engineVersion
+}
+
+
+============================================================
+SIMULATION COMPLETE
+============================================================
+
+SAFETY BOUNDARY:
+
+This is a research and simulation demonstrator only.
+
+It is NOT certified marine control software and must
+NOT be connected to operational DP, propulsion,
+navigation or safety systems.
+
+All vessel behaviour, environmental conditions,
+decisions and outputs are simulated.
+
+============================================================
+`;
+
+
+    document.getElementById(
+        "output"
+    ).textContent =
+        report;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+function resetSimulation() {
+
+    document.getElementById(
+        "wind"
+    ).value = 30;
+
+
+    document.getElementById(
+        "current"
+    ).value = 25;
+
+
+    document.getElementById(
+        "wave"
+    ).value = 30;
+
+
+    document.getElementById(
+        "tidal"
+    ).value = 20;
+
+
+    document.getElementById(
+        "environmentStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "primaryStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "secondaryStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "stabilizerStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "humanStatus"
+    ).textContent =
+        "AVAILABLE";
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+        "READY";
+
+
+    document.getElementById(
+        "output"
+    ).textContent =
+
+`System ready.
+
+Select environmental conditions or a scenario,
+then press RUN DP SIMULATION.`;
+}
+
+
+/* =========================================================
+   STARTUP
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        verifyDPEngine();
+
+        verifyDPScenarioLibrary();
+
+        resetSimulation();
+
+    }
+);
+
+</script>
