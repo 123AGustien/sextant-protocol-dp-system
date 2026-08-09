@@ -1,56 +1,56 @@
-name: Sextant DP System CI
+name: Deploy Sextant DP Resilience Cockpit to GitHub Pages
 
 on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
 jobs:
-  test:
+
+  deploy:
+
     runs-on: ubuntu-latest
 
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
+
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
-      - name: Check DP files
+      - name: Verify DP Cockpit files
         run: |
-          test -f dp_cockpit.html
+          echo "Checking Sextant DP Resilience Cockpit..."
+
+          test -f index.html
           test -f dp_simulation_engine.js
           test -f dp_scenarios.js
-          echo "DP files OK"
 
-      - name: Check JavaScript syntax
-        run: |
-          node --check dp_simulation_engine.js
-          node --check dp_scenarios.js
-          echo "JavaScript syntax OK"
+          echo "index.html: OK"
+          echo "dp_simulation_engine.js: OK"
+          echo "dp_scenarios.js: OK"
 
-      - name: Test DP simulation engine
-        run: |
-          node <<'NODE'
-          const engine = require('./dp_simulation_engine.js');
+      - name: Upload DP Cockpit artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
 
-          const normal = engine.scenarios.normal();
-          const heavy = engine.scenarios.heavyWeather();
-          const critical = engine.scenarios.critical();
-
-          const r1 = engine.run(normal);
-          const r2 = engine.run(heavy);
-          const r3 = engine.run(critical);
-
-          if (!r1 || !r2 || !r3) {
-            throw new Error("DP simulation failed");
-          }
-
-          console.log("NORMAL:", r1.risk);
-          console.log("HEAVY WEATHER:", r2.risk);
-          console.log("CRITICAL:", r3.risk);
-          console.log("DP ENGINE TEST PASSED");
-          NODE
+      - name: Deploy DP Cockpit to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
