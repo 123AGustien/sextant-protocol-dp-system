@@ -22,9 +22,9 @@ The objective is to provide engineers, maritime professionals, researchers, clas
 
 ---
 
-🚀 Live Simulator
+🚀 Live Research Simulator
 
-Launch the Sextant Protocol™ DP Resilience Cockpit
+"Launch the Sextant Protocol™ DP Resilience Cockpit" (https://123agustien.github.io/sextant-protocol-dp-system/)
 
 Live Research Simulator:
 
@@ -58,115 +58,61 @@ SIMULATED DP RESPONSE
 
 Table of Contents
 
-1. Introduction and Research Context
+1. "Introduction and Research Context" (01_Introduction_and_Research_Context.md)
 
-"Read Section 1" (01_Introduction_and_Research_Context.md)
+Research problem, motivation, scope and objectives.
 
-Introduces the research problem, motivation, scope and objectives.
+2. "System Architecture" (02_System_Architecture.md)
 
----
+Principal Sextant Protocol™ architecture, independent analytical layers, Stabilizer arbitration and human decision authority.
 
-2. System Architecture
+3. "Simulation Environment" (03_Simulation_Environment.md)
 
-"Read Section 2" (02_System_Architecture.md)
+Simulated vessel, environmental inputs, navigation representation, sensor states and controlled scenario generation.
 
-Describes the principal Sextant Protocol™ architecture and the relationship between environmental assessment, independent analytical layers, Stabilizer arbitration and human decision authority.
+4. "Resilience Assessment" (04_Resilience_Assessment.md)
 
----
+Environmental stress calculation, risk classification and resilience-state assessment.
 
-3. Simulation Environment
+5. "Stabilizer Arbitration" (05_Stabilizer_Arbitration.md)
 
-"Read Section 3" (03_Simulation_Environment.md)
+Deterministic Stabilizer operation and its role in controlling the propagation of conflicting or deteriorating assessment states.
 
-Describes the simulated vessel, environmental inputs, navigation representation, sensor states and controlled scenario generation.
+6. "Human-in-the-Loop Decision Support" (06_Human_in_the_Loop_Decision_Support.md)
 
----
+Operator alerts, recommendations, escalation and preservation of final human authority.
 
-4. Resilience Assessment
+7. "Scenario and Cascade Research" (07_Scenario_and_Cascade_Research.md)
 
-"Read Section 4" (04_Resilience_Assessment.md)
+Controlled scenarios and the research methodology for investigating developing and cascading conditions.
 
-Describes environmental stress calculation, risk classification and resilience-state assessment.
+8. "Validation Framework" (08_Validation_Framework.md)
 
----
+Software testing, scenario testing, fault injection, repeatability, human-factors testing and future hardware-in-the-loop validation.
 
-5. Stabilizer Arbitration
+9. "Operational Boundary" (09_Operational_Boundary.md)
 
-"Read Section 5" (05_Stabilizer_Arbitration.md)
+Strict separation between the research simulator and operational vessel systems.
 
-Describes the deterministic Stabilizer and its role in controlling the propagation of conflicting or deteriorating assessment states.
+10. "Comparison with Conventional Approaches" (10_Comparison_with_Conventional_Approaches.md)
 
----
+Research-oriented comparison between the proposed resilience layer and conventional decision-support approaches.
 
-6. Human-in-the-Loop Decision Support
+11. "Research Questions and Hypotheses" (11_Research_Questions_and_Hypotheses.md)
 
-"Read Section 6" (06_Human_in_the_Loop_Decision_Support.md)
+Principal research hypothesis, null hypothesis, measurable outcomes and proposed experimental methodology.
 
-Describes operator alerts, recommendations, escalation and the preservation of final human authority.
+12. "Proposed Research Programme and Partnership" (12_Proposed_Research_Programme_and_Partnership.md)
 
----
+Potential collaboration with maritime professionals, researchers, engineering organisations, classification societies and academic institutions.
 
-7. Scenario and Cascade Research
+13. "Conclusions and Research Contribution" (13_Conclusions_and_Research_Contribution.md)
 
-"Read Section 7" (07_Scenario_and_Cascade_Research.md)
+Proposed contribution and evidence required before consideration of higher-assurance implementation.
 
-Describes controlled scenarios and the research approach to developing and cascading environmental conditions.
+14. "References, Standards and Technical Background" (14_References_and_Standards.md)
 
----
-
-8. Validation Framework
-
-"Read Section 8" (08_Validation_Framework.md)
-
-Describes proposed software testing, scenario testing, fault injection, repeatability, human-factors testing and future hardware-in-the-loop validation.
-
----
-
-9. Operational Boundary
-
-"Read Section 9" (09_Operational_Boundary.md)
-
-Defines the strict separation between the research simulator and operational vessel systems.
-
----
-
-10. Comparison with Conventional Approaches
-
-"Read Section 10" (10_Comparison_with_Conventional_Approaches.md)
-
-Provides a research-oriented comparison between the proposed resilience layer and conventional decision-support approaches.
-
----
-
-11. Research Questions and Hypotheses
-
-"Read Section 11" (11_Research_Questions_and_Hypotheses.md)
-
-Defines the principal research hypothesis, null hypothesis, measurable outcomes and proposed experimental methodology.
-
----
-
-12. Proposed Research Programme and Partnership
-
-"Read Section 12" (12_Proposed_Research_Programme_and_Partnership.md)
-
-Describes potential collaboration with maritime professionals, researchers, engineering organisations, classification societies and academic institutions.
-
----
-
-13. Conclusions and Research Contribution
-
-"Read Section 13" (13_Conclusions_and_Research_Contribution.md)
-
-Summarises the proposed contribution and identifies the evidence required before any consideration of higher-assurance implementation.
-
----
-
-14. References, Standards and Technical Background
-
-"Read Section 14" (14_References_and_Standards.md)
-
-Identifies relevant maritime, classification, professional, safety-engineering, software-assurance and human-factors areas for future technical review.
+Relevant maritime, classification, professional, safety-engineering, software-assurance and human-factors areas for technical review.
 
 ---
 
@@ -206,8 +152,8 @@ The simulator provides a controlled research environment for investigating:
 - simulated DP response;
 - event recording;
 - auditability;
-- repeatability;
-- and future fault-injection research.
+- repeatability; and
+- future fault-injection research.
 
 ---
 
@@ -222,8 +168,8 @@ The current prototype does not:
 - connect to navigation;
 - connect to steering;
 - connect to safety systems;
-- provide certified DP functionality;
-- or replace the Master, DPO or authorised operator.
+- provide certified DP functionality; or
+- replace the Master, DPO or authorised operator.
 
 ---
 
@@ -241,7 +187,7 @@ The human operator remains responsible for the final simulated decision.
 
 Cascade Research Principle
 
-The research is particularly interested in the question of whether developing conditions can be recognised before they become a larger cascading event.
+The research is particularly interested in whether developing conditions can be recognised before they become a larger cascading event.
 
 Conceptually:
 
@@ -336,8 +282,8 @@ Reviewers are invited to examine:
 - failure modes;
 - cybersecurity;
 - software assurance;
-- simulation validity;
-- and validation methodology.
+- simulation validity; and
+- validation methodology.
 
 The project does not seek automatic acceptance of its claims.
 
@@ -364,8 +310,8 @@ Potential domains include:
 - terrestrial transport;
 - energy;
 - cybersecurity;
-- financial resilience;
-- and orbital systems.
+- financial resilience; and
+- orbital systems.
 
 Each domain requires independent modelling and validation.
 
@@ -437,21 +383,15 @@ AUDITABLE RESULTS
 
 Publication Status
 
-Document: Sextant Protocol™ DP Resilience Research White Paper
-
-Version: Research Publication — Initial Release
-
-Environment: Deterministic Maritime Resilience Research Simulator
-
-Status: Research / Simulation Prototype
-
-Operational Authority: None
-
-Human Authority: Final within simulation
-
-Real Vessel Connection: None
-
-Certification Status: Not certified marine control software
+Field| Status
+Document| Sextant Protocol™ DP Resilience Research White Paper
+Version| Research Publication — Initial Release
+Environment| Deterministic Maritime Resilience Research Simulator
+Status| Research / Simulation Prototype
+Operational Authority| None
+Human Authority| Final within simulation
+Real Vessel Connection| None
+Certification Status| Not certified marine control software
 
 ---
 
