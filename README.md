@@ -378,7 +378,109 @@ Stage 7 – Integrated Prototype
 The validated modules are combined into the working simulation prototype.
 
 ---
+SEXTANT PROTOCOL — DP RESILIENCE SIMULATION RESEARCH PLATFORM
 
+What the Simulator Is
+
+The Sextant Protocol DP Resilience Cockpit is a deterministic maritime research and engineering simulation platform designed to demonstrate and study how a layered resilience architecture could respond to changing environmental and vessel conditions.
+
+The simulator creates a controlled virtual DP environment in which researchers can introduce different environmental conditions, observe system responses, compare resilience states and examine how multiple supervisory layers interact.
+
+The simulated architecture follows:
+
+ENVIRONMENT → PRIMARY AI → SECONDARY AI → STABILIZER → HUMAN-IN-THE-LOOP → SIMULATED DP RESPONSE
+
+The purpose is to make the resilience concept observable, repeatable and testable.
+
+Researchers can use the simulator to examine scenarios such as:
+
+- normal environmental conditions;
+- increasing wind, current, wave and tidal loading;
+- sudden environmental disturbances;
+- current surges;
+- heavy sea states;
+- wind-gust events;
+- combined environmental disturbances;
+- simulated sensor degradation;
+- partial sensor-loss scenarios;
+- rapidly changing environmental conditions.
+
+For each scenario, the deterministic engine processes the simulated inputs and produces a corresponding system assessment.
+
+The cockpit then makes the complete decision pathway visible, including:
+
+Environmental Stress → Risk Classification → Primary Assessment → Independent Secondary Assessment → Stabilizer Arbitration → Human Decision-Support → Simulated Response → Updated Simulated State → Audit Record
+
+This allows the behaviour of the proposed resilience architecture to be examined consistently rather than relying on a static demonstration.
+
+Research Purpose
+
+The simulator is intended to answer an engineering research question:
+
+«Can a layered, independently assessed and human-governed resilience architecture provide earlier recognition, structured escalation and better decision-support during rapidly developing simulated DP disturbances?»
+
+Because the environment is deterministic, the same scenario can be reproduced repeatedly.
+
+This enables researchers and engineers to:
+
+- compare different environmental conditions;
+- test predefined resilience thresholds;
+- examine primary and secondary assessment behaviour;
+- evaluate stabilizer arbitration;
+- study operator notification and decision-support;
+- analyse simulated response windows;
+- investigate degraded and abnormal scenarios;
+- record repeatable audit data;
+- identify areas requiring further engineering validation.
+
+The simulator therefore functions as a research laboratory for the resilience concept, rather than merely as a visual cockpit.
+
+Engineering Development Path
+
+The present simulator provides the software-level research foundation from which further investigation could proceed.
+
+A future engineering programme could progressively introduce:
+
+Deterministic Simulation → Scenario Validation → Statistical Testing → Hardware-in-the-Loop → Representative Control Hardware → Independent Engineering Verification → Classification Review → Controlled Testing
+
+The simulator allows these questions to be investigated before the considerable cost and risk associated with hardware or vessel-level testing.
+
+Human-in-the-Loop Principle
+
+A fundamental principle of the Sextant Protocol research architecture is that human authority remains final.
+
+The simulator can identify conditions, generate assessments, compare resilience states and provide simulated decision-support. It does not independently exercise operational authority.
+
+The human operator remains responsible for interpreting the simulated information and, within the research environment, remains the final decision authority.
+
+Research Boundary
+
+The simulator is deliberately separated from operational maritime control.
+
+It exists for:
+
+RESEARCH • SIMULATION • EDUCATION • ENGINEERING ANALYSIS • VALIDATION
+
+All environmental conditions, vessel behaviour, AI assessments, stabilizer decisions, operator notifications and DP responses are generated within the simulated environment.
+
+The simulator does not constitute certified marine control software and is not intended to replace:
+
+- a qualified DP operator;
+- certified DP equipment;
+- class-approved safety systems;
+- vessel automation systems;
+- operational navigation systems; or
+- established vessel operating procedures.
+
+No operational vessel command is generated or transmitted by the simulator.
+
+Core Research Proposition
+
+The significance of the Sextant Protocol DP Resilience Cockpit is therefore not that it controls a vessel.
+
+Its purpose is to provide a controlled, deterministic and auditable environment in which a proposed resilience architecture can be demonstrated, challenged, measured and independently evaluated.
+
+The ultimate research question is whether the principles demonstrated in simulation merit progression toward formal engineering research, hardware-in-the-loop testing and independent maritime technical evaluation.
 Research Boundary
 
 This project does not:
