@@ -1,4 +1,50 @@
 🛰️ Sextant Protocol™ — DP Resilience Research Simulator
+🚀 Live Research Simulator
+
+🛰️ "Launch the Sextant Protocol™ DP Resilience Cockpit" (https://123agustien.github.io/sextant-protocol-dp-system/)
+
+Live simulation:
+https://123agustien.github.io/sextant-protocol-dp-system/
+
+The live cockpit demonstrates the current research prototype:
+
+ENVIRONMENT → PRIMARY AI → SECONDARY AI → STABILIZER → HUMAN-IN-THE-LOOP → SIMULATED DP ACTION
+
+The simulator provides controlled environmental scenarios, independent assessment pathways, deterministic resilience arbitration, operator decision-support and simulated DP responses.
+
+Current Demonstration
+
+The cockpit currently provides:
+
+- Simulated vessel profile;
+- Wind, current, wave and tidal inputs;
+- Repeatable environmental scenarios;
+- Primary AI assessment;
+- Independent Secondary AI safety assessment;
+- Deterministic Stabilizer arbitration;
+- Resilience early-warning;
+- Operator decision-support;
+- Human-in-the-loop final authority;
+- Event logging;
+- Resilience audit logging; and
+- Simulated DP assessment.
+
+⚠️ Important Safety Boundary
+
+RESEARCH / SIMULATION ONLY
+
+The live cockpit is not certified marine control software and must not be connected to operational:
+
+- Dynamic Positioning systems;
+- propulsion systems;
+- navigation systems;
+- steering systems;
+- safety systems; or
+- vessel automation systems.
+
+All displayed vessel behaviour, environmental conditions, AI assessments, Stabilizer decisions, alerts and simulated actions are non-operational research representations.
+
+HUMAN AUTHORITY REMAINS FINAL.
 
 Deterministic Maritime Resilience Research Environment
 
