@@ -1,147 +1,534 @@
-Your site is live at https://123agustien.github.io/sextant-protocol-dp-system/
-Sextantt Protocol – Dynamic Positioning (DP) Resilience Control System
+🛰️ Sextant Protocol™ — DP Resilience Research Simulator
 
-Executive Summary
+Deterministic Maritime Resilience Research Environment
 
-The Sextant Protocol Dynamic Positioning (DP) Resilience Control System is a modular, simulation-based research prototype for studying resilient supervisory architectures for Dynamic Positioning operations under challenging and nonlinear marine environmental conditions.
+ENVIRONMENT → PRIMARY AI → SECONDARY AI → STABILIZER → HUMAN AUTHORITY → SIMULATED RESPONSE
 
-The project explores how independent decision layers, deterministic supervisory logic, stabilization mechanisms, simulated vessel and environmental inputs, and human-in-the-loop governance can work together to improve resilience during abnormal and degraded operating scenarios.
-
-The prototype is being developed as an engineering research and simulation environment. It does not connect to, control, or modify certified vessel DP equipment.
-
-«Safety Boundary: This project is not certified marine control software and must not be connected to operational vessel DP, propulsion, navigation, or safety systems. All vessel behaviour, sensors, environmental conditions, and control responses are simulated.»
+""Research" (https://img.shields.io/badge/Purpose-Research%20%2F%20Simulation-blue)" (docs/whitepaper/00_Whitepaper_Index.md)
+""Human Authority" (https://img.shields.io/badge/Human%20Authority-Final-green)" (#human-in-the-loop)
+""Operational Control" (https://img.shields.io/badge/Operational%20Control-NONE-red)" (#operational-boundary)
+""DP Connection" (https://img.shields.io/badge/Real%20DP%20Connection-NONE-red)" (#operational-boundary)
 
 ---
 
-Repository Status
+1. What Is Sextant Protocol™?
 
-Status: Active Research Prototype
+The Sextant Protocol™ DP Resilience Research Simulator is a deterministic maritime research and engineering environment designed to investigate how a layered resilience architecture could respond to changing simulated environmental and system conditions.
 
-Baseline: v1.0 conceptual reference
+The simulator creates a controlled virtual vessel environment in which environmental stress, sensor states and simulated system conditions can be varied, repeated and analysed.
 
-Development Direction: Modular working simulation prototype
+The research architecture consists of:
 
-Language: Python
+ENVIRONMENT
 
-License: MIT
+↓
 
-The original v1.0 architecture is preserved as a reference baseline while modular prototype components are developed and validated through separate development work.
+PRIMARY AI — S1
 
----
+↓
 
-Research Purpose
+SECONDARY AI — S2
 
-The objective is to investigate whether independent supervisory decision layers can improve resilience when environmental disturbances, sensor abnormalities, equipment degradation, or other simulated conditions exceed normal operating assumptions.
+↓
 
-The framework is intended for:
+STABILIZER — DETERMINISTIC ARBITRATION
 
-- DP resilience research
-- supervisory control architecture studies
-- maritime safety engineering
-- autonomous marine systems research
-- human-AI collaboration research
-- deterministic simulation
-- failure and degraded-mode analysis
-- explainable decision-support research
+↓
 
----
+HUMAN-IN-THE-LOOP
 
-Conceptual Supervisory Architecture
+↓
 
-The prototype follows a layered architecture.
+SIMULATED RESPONSE
 
-1. Primary AI Layer
-
-The Primary AI represents the normal supervisory decision layer.
-
-Responsibilities include:
-
-- normal operating assessment
-- environmental response
-- position-control objectives
-- first-response decision generation
-- nominal system-state evaluation
-
-2. Secondary AI Layer
-
-The Secondary AI provides an independent supervisory safety layer.
-
-Responsibilities include:
-
-- abnormal-condition detection
-- independent state assessment
-- conservative fallback decisions
-- primary-layer monitoring
-- escalation recommendations
-
-3. Stabilization Layer
-
-The Stabilization Layer coordinates transitions between competing decision states.
-
-Responsibilities include:
-
-- decision arbitration
-- transition management
-- oscillation prevention
-- degraded-mode coordination
-- escalation stabilization
-
-4. Human-in-the-Loop Layer
-
-The human operator remains the final authority within the simulation architecture.
-
-Responsibilities include:
-
-- reviewing escalated conditions
-- accepting or rejecting recommended actions
-- manual intervention
-- safety governance
-- command authority
-
-5. Simulation & Audit Layer
-
-The simulation environment provides deterministic scenario execution and records system behaviour.
-
-Responsibilities include:
-
-- environmental scenario generation
-- vessel-state simulation
-- sensor-state simulation
-- decision recording
-- event logging
-- replay and analysis
+The purpose is to investigate whether this additional resilience layer can provide earlier recognition, structured escalation and improved decision-support during simulated multi-factor deterioration.
 
 ---
 
-Conceptual System Flow
+2. The Research Question
 
-Environmental Model
-        │
-        ▼
-Simulated Vessel & Sensors
-        │
-        ▼
-Primary AI
-        │
-        ▼
-Secondary AI
-        │
-        ▼
-Stabilization / Arbitration
-        │
-        ▼
-Human-in-the-Loop
-        │
-        ▼
-Simulated Action
-        │
-        ▼
-Updated Vessel State
-        │
-        ▼
-Audit & Replay
+The central research question is:
 
-The system follows a continuous simulation cycle:
+«Can a layered deterministic resilience architecture provide earlier recognition, structured escalation and improved human decision-support during rapidly changing simulated maritime conditions?»
+
+The project does not assume the answer is yes.
+
+The hypothesis is intended to be:
+
+demonstrated → challenged → measured → independently reviewed.
+
+---
+
+3. Why This Research?
+
+Dynamic Positioning systems already incorporate sophisticated control, monitoring, redundancy, alarms, consequence analysis and operator interfaces.
+
+Sextant Protocol™ does not claim that existing DP systems lack resilience.
+
+Instead, this research investigates whether an additional analytical layer could provide useful decision-support by:
+
+- combining environmental conditions;
+- comparing independent assessments;
+- detecting assessment disagreement;
+- applying deterministic arbitration;
+- identifying developing resilience concerns;
+- presenting structured operator guidance;
+- and maintaining an auditable decision trail.
+
+The objective is therefore:
+
+COMPLEMENT — NOT REPLACE
+
+---
+
+4. Principal Architecture
+
+                    ENVIRONMENT
+                         │
+                         ▼
+                  ┌─────────────┐
+                  │ PRIMARY AI  │
+                  │     S1      │
+                  └──────┬──────┘
+                         │
+                         │
+                  ┌──────▼──────┐
+                  │ SECONDARY AI│
+                  │     S2      │
+                  └──────┬──────┘
+                         │
+                         ▼
+                  ┌─────────────┐
+                  │ STABILIZER  │
+                  │ DETERMINISTIC│
+                  │ ARBITRATION │
+                  └──────┬──────┘
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ HUMAN AUTHORITY  │
+                │   FINAL DECISION │
+                └────────┬─────────┘
+                         │
+                         ▼
+                 SIMULATED RESPONSE
+
+The architecture deliberately separates:
+
+assessment
+
+from:
+
+arbitration
+
+from:
+
+human decision
+
+from:
+
+simulated response.
+
+---
+
+5. The Stabilizer
+
+The Stabilizer is a central component of the research architecture.
+
+Its purpose is not to control a vessel.
+
+Its purpose is to provide deterministic arbitration between independent assessment pathways.
+
+Conceptually:
+
+S1 PRIMARY ASSESSMENT
+          +
+S2 SECONDARY ASSESSMENT
+          │
+          ▼
+     STABILIZER
+          │
+          ▼
+  RESILIENCE STATE
+          │
+          ▼
+ OPERATOR GUIDANCE
+
+The research proposition is that deterministic arbitration may provide a stable and auditable transition between analytical assessment and human decision-support.
+
+---
+
+6. Cascade Resilience
+
+The simulator specifically investigates developing conditions and potential cascading effects.
+
+A simplified research sequence is:
+
+ENVIRONMENTAL CHANGE
+        ↓
+INCREASED SYSTEM DEMAND
+        ↓
+REDUCED MARGIN
+        ↓
+INCREASED RESILIENCE CONCERN
+        ↓
+OPERATOR ESCALATION
+
+The objective is not to claim that the simulator prevents physical vessel failures.
+
+The research objective is to determine whether the resilience architecture can recognise a developing simulated cascade early enough to provide useful decision-support.
+
+---
+
+7. Human-in-the-Loop
+
+Human authority remains final in the present research architecture.
+
+The simulator may:
+
+- observe;
+- assess;
+- compare;
+- arbitrate;
+- warn;
+- recommend;
+- and simulate.
+
+It does not issue operational vessel commands.
+
+The current architecture therefore maintains:
+
+HUMAN AUTHORITY = FINAL
+
+This is an intentional research boundary.
+
+---
+
+8. Operational Boundary
+
+⚠️ SIMULATION ONLY
+
+The prototype is intentionally isolated from operational vessel control.
+
+It does not connect to:
+
+- Dynamic Positioning systems;
+- propulsion systems;
+- thrusters;
+- steering systems;
+- navigation systems;
+- safety systems;
+- vessel automation;
+- power-management systems;
+- or operational vessel networks.
+
+The simulator is not certified marine control software.
+
+It does not provide certified DP functionality.
+
+It must not be connected to a live vessel control system without an entirely separate engineering, safety, cybersecurity, verification, validation and regulatory programme.
+
+---
+
+9. Simulated Vessel
+
+The current research environment uses the following virtual vessel profile:
+
+Parameter| Simulated Value
+Vessel| SEXTANT-MPSV-01
+Type| Multi-Purpose Support Vessel
+DP Class| DP2-SIMULATED
+Length| 85 m
+Beam| 20 m
+Draft| 6 m
+Main Thrusters| 2
+Tunnel Thrusters| 2
+Total Thrusters| 4
+Nominal Simulated Thrust| 100 units
+
+These values are simulation parameters and do not represent a certified vessel model.
+
+---
+
+10. Environmental Simulation
+
+The research environment can vary:
+
+- Wind Stress;
+- Current Stress;
+- Wave Stress;
+- Tidal Stress;
+- and combined environmental conditions.
+
+Example:
+
+Wind Stress
+Current Stress
+Wave Stress
+Tidal Stress
+       ↓
+ENVIRONMENTAL STRESS
+       ↓
+RESILIENCE ASSESSMENT
+
+Scenarios can include:
+
+- NORMAL;
+- MODERATE;
+- HEAVY WEATHER;
+- CRITICAL CURRENT;
+- HEAVY SEA;
+- WIND GUST;
+- COMBINED;
+- RANDOM.
+
+---
+
+11. Navigation & Sensor Simulation
+
+The simulator can represent:
+
+- position reference;
+- heading;
+- position error;
+- GNSS / position sensor state;
+- gyro / heading sensor state;
+- environmental sensor state;
+- sensor integrity;
+- navigation confidence;
+- and simulated data source.
+
+All such information is generated within the simulation environment.
+
+---
+
+12. Research Capabilities
+
+The simulator is intended to support investigation of:
+
+Environmental scenarios
+
+Repeatable environmental stress conditions.
+
+Independent assessment
+
+Primary and Secondary analytical pathways.
+
+Deterministic arbitration
+
+Stabilizer-based resilience classification.
+
+Early warning
+
+Recognition of changing conditions.
+
+Cascade research
+
+Investigation of developing multi-factor deterioration.
+
+Operator decision-support
+
+Structured recommendations and escalation guidance.
+
+Human authority
+
+Explicit final decision gate.
+
+Auditability
+
+Traceable event and assessment records.
+
+Repeatability
+
+Identical controlled inputs can be rerun.
+
+Fault injection
+
+Future research can introduce controlled failures.
+
+---
+
+13. Example Research Scenario
+
+A representative simulated scenario may produce:
+
+Environmental Stress: 62.25
+Risk Classification: MEDIUM
+
+S1:
+ELEVATED CONTROL
+
+S2:
+INDEPENDENT SAFETY ADVISORY
+
+STABILIZER:
+PREVENTIVE ARBITRATION
+
+RESILIENCE STATE:
+ELEVATED MONITORING
+
+HUMAN AUTHORITY:
+FINAL
+
+OPERATIONAL COMMAND:
+FALSE
+
+REAL VESSEL CONNECTION:
+FALSE
+
+The corresponding operator recommendation may be:
+
+MAINTAIN DP WITH INCREASED OPERATOR ATTENTION
+
+This is simulated decision-support only.
+
+---
+
+14. Research Methodology
+
+The proposed research process is:
+
+DEFINE SCENARIO
+      ↓
+RUN BASELINE
+      ↓
+RUN SEXTANT CONFIGURATION
+      ↓
+COMPARE
+      ↓
+MEASURE
+      ↓
+REPEAT
+      ↓
+FAULT INJECT
+      ↓
+HUMAN-FACTORS TEST
+      ↓
+INDEPENDENT REVIEW
+
+Potential research metrics include:
+
+- recognition time;
+- escalation time;
+- cascade containment lead time;
+- false-positive rate;
+- false-negative rate;
+- decision time;
+- decision accuracy;
+- state oscillation;
+- recovery recognition;
+- audit completeness;
+- assessment agreement;
+- and operator workload.
+
+---
+
+15. White Paper
+
+The complete research paper is located in:
+
+"📘 Sextant Protocol™ DP Resilience White Paper" (docs/whitepaper/00_Whitepaper_Index.md)
+
+The white paper covers:
+
+1. Introduction and Research Context
+2. System Architecture
+3. Simulation Environment
+4. Resilience Assessment
+5. Stabilizer Arbitration
+6. Human-in-the-Loop Decision Support
+7. Scenario and Cascade Research
+8. Validation Framework
+9. Operational Boundary
+10. Comparison with Conventional Approaches
+11. Research Questions and Hypotheses
+12. Proposed Research Programme and Partnership
+13. Conclusions and Research Contribution
+14. References, Standards and Technical Background
+
+---
+
+16. Research Hypotheses
+
+The principal hypothesis is:
+
+«A layered resilience architecture using independent assessment and deterministic arbitration can provide earlier and more structured recognition of simulated multi-factor deterioration than a defined baseline assessment configuration.»
+
+The corresponding null hypothesis is:
+
+«The layered resilience architecture does not provide a statistically or practically meaningful improvement in recognition, escalation or decision-support compared with the defined baseline configuration.»
+
+Both outcomes are scientifically valid.
+
+---
+
+17. Independent Review
+
+The project is explicitly open to technical challenge.
+
+Review is particularly welcomed concerning:
+
+- DP architecture;
+- redundancy;
+- failure modes;
+- deterministic arbitration;
+- AI independence;
+- human factors;
+- software assurance;
+- cybersecurity;
+- simulation validity;
+- validation methodology;
+- and future autonomy.
+
+The project does not seek premature certification.
+
+The preferred request to technical organisations is:
+
+«Please examine the research proposition and advise what evidence, methodology and engineering controls would be required to determine whether the concept merits further investigation.»
+
+---
+
+18. Future Research Programme
+
+The proposed progression is:
+
+PROTOTYPE
+    ↓
+TECHNICAL REVIEW
+    ↓
+SCENARIO TESTING
+    ↓
+FAULT INJECTION
+    ↓
+HUMAN-FACTORS TESTING
+    ↓
+HIGH-FIDELITY SIMULATION
+    ↓
+HARDWARE-IN-THE-LOOP
+    ↓
+INDEPENDENT V&V
+    ↓
+TECHNICAL / CLASSIFICATION REVIEW
+
+No operational integration is implied by the current prototype.
+
+---
+
+19. Long-Term Sextant Protocol™ Research
+
+The wider Sextant Protocol™ concept investigates whether a common resilience architecture could eventually be studied across multiple domains.
+
+Potential research domains include:
+
+- Maritime;
+- Aviation;
+- Terrestrial;
+- Energy;
+- Financial;
+- Cyber;
+- and Orbital.
+
+The conceptual architecture is:
 
 OBSERVE
    ↓
@@ -149,476 +536,182 @@ VERIFY
    ↓
 ASSESS
    ↓
+ARBITRATE
+   ↓
+RECOMMEND
+   ↓
 DECIDE
    ↓
 ACT
    ↓
 UPDATE
-   ↓
-REASSESS
+
+Each domain would require its own validation.
 
 ---
 
-Working Prototype Architecture
+20. Captain AI Lena — Future Research Concept
 
-The repository is being expanded from the original conceptual model into modular executable simulation components.
+Captain AI Lena represents a proposed future higher-level resilience agent within the wider Sextant Protocol™ architecture.
 
-Planned and active modules include:
+The long-term research direction may investigate:
 
-Module| Purpose
-"main.py"| Prototype entry point and orchestration
-"primary_ai.py"| Primary supervisory decision layer
-"secondary_ai.py"| Independent safety decision layer
-"stabilizer.py"| Decision arbitration and stabilization
-"human_in_loop.py"| Human authority and intervention simulation
-"simulation_engine.py"| Main deterministic simulation environment
-"environment_model.py"| Simulated wind, current, wave and environmental disturbances
-"sensor_manager.py"| Simulated navigation and DP reference inputs
-"vessel_profile.py"| Configurable vessel characteristics
-"thruster_manager.py"| Simulated propulsion/thruster response
-"alarm_manager.py"| Alarm and escalation management
-"failsafe_manager.py"| Degraded-mode and fallback handling
-"audit_logger.py"| Deterministic event and decision recording
-"docs/"| Architecture, validation and research documentation
+HUMAN-IN-THE-LOOP
 
-Modules will be introduced incrementally and validated independently before integration.
+↓
+
+HUMAN-SUPERVISED AUTONOMY
+
+↓
+
+AUTONOMOUS OPERATION WITHIN A DEFINED VALIDATED ENVELOPE
+
+Any future autonomy would require separate safety assurance, human-factors, cybersecurity, engineering and regulatory evaluation.
+
+The current DP simulator remains human-in-the-loop.
 
 ---
 
-Vessel Profile Architecture
+21. Research Integrity
 
-The prototype will use a configurable vessel profile rather than assuming a particular real vessel.
+Sextant Protocol™ adopts the following principles:
 
-This allows the simulation to represent different offshore vessel configurations while preserving the same supervisory architecture.
+NO PREMATURE CERTIFICATION CLAIMS
 
-A vessel profile may include simulated parameters such as:
+NO OPERATIONAL CONTROL CLAIM
 
-- vessel type
-- DP class
-- propulsion configuration
-- thruster configuration
-- thruster count
-- nominal thrust
-- vessel dimensions
-- environmental operating limits
-- position-reference configuration
-- sensor configuration
-- redundancy assumptions
+NO GUARANTEED SAFETY CLAIM
 
-These parameters are simulation inputs only.
+NO REPLACEMENT CLAIM
 
-If reliable specifications for a particular vessel become available, a separate vessel configuration may be created for research purposes without changing the core supervisory architecture.
+INDEPENDENT CHALLENGE WELCOMED
 
-No vessel specification will be invented or represented as authoritative without an appropriate source.
+REPEATABLE TESTING
+
+AUDITABLE RESULTS
+
+NEGATIVE RESULTS ACCEPTED
 
 ---
 
-Environmental Simulation
+22. Repository Structure
 
-The environment model will provide controlled disturbances such as:
-
-- wind
-- current
-- waves
-- tidal effects
-- environmental instability
-- sudden disturbance events
-- progressive environmental escalation
-
-The objective is to study how the supervisory architecture responds as environmental stress increases.
-
----
-
-Simulated Sensor & Position References
-
-The prototype may simulate inputs representing:
-
-- GNSS/GPS position
-- gyro heading
-- wind sensors
-- motion reference inputs
-- DP position references
-- environmental measurements
-- sensor degradation or loss
-
-These are simulated data sources and do not interface with real navigation equipment.
+/
+├── README.md
+│
+├── docs/
+│   └── whitepaper/
+│       ├── 00_Whitepaper_Index.md
+│       ├── 01_Introduction_and_Research_Context.md
+│       ├── 02_System_Architecture.md
+│       ├── 03_Simulation_Environment.md
+│       ├── 04_Resilience_Assessment.md
+│       ├── 05_Stabilizer_Arbitration.md
+│       ├── 06_Human_in_the_Loop_Decision_Support.md
+│       ├── 07_Scenario_and_Cascade_Research.md
+│       ├── 08_Validation_Framework.md
+│       ├── 09_Operational_Boundary.md
+│       ├── 10_Comparison_with_Conventional_Approaches.md
+│       ├── 11_Research_Questions_and_Hypotheses.md
+│       ├── 12_Proposed_Research_Programme_and_Partnership.md
+│       ├── 13_Conclusions_and_Research_Contribution.md
+│       └── 14_References_and_Standards.md
+│
+├── simulator/
+│   └── [existing research simulator files]
+│
+└── [existing repository files]
 
 ---
 
-Thruster Simulation
+23. Important Disclaimer
 
-The thruster manager represents simulated vessel propulsion response.
+SEXTANT PROTOCOL™ DP RESILIENCE RESEARCH SIMULATOR
 
-It may model:
+This repository contains research and simulation software.
 
-- thrust commands
-- thrust limits
-- directional commands
-- propulsion degradation
-- individual thruster failure
-- loss of available thrust
-- command-response behaviour
+It is not certified marine control software.
 
-The purpose is to evaluate supervisory decisions rather than reproduce a certified DP control algorithm.
+It does not provide certified Dynamic Positioning functionality.
 
----
+It must not be connected to operational vessel systems.
 
-Failure & Degraded-Mode Research
+All vessel behaviour, environmental conditions, sensor states, AI assessments, Stabilizer outputs, alerts and responses are simulated representations.
 
-The prototype will allow controlled simulation of abnormal conditions including:
+No claim is made that the current prototype is suitable for operational deployment.
 
-- environmental escalation
-- sensor degradation
-- position-reference loss
-- individual thruster failure
-- multiple simulated equipment failures
-- loss of redundancy
-- conflicting supervisory decisions
-- communication degradation
-- progressive system stress
-
-The objective is to observe how the architecture detects, evaluates, escalates, stabilizes, and records these conditions.
+Any future operational implementation would require a separate engineering, verification, validation, safety, cybersecurity, human-factors and regulatory programme.
 
 ---
 
-Key Research Concept
+24. Research Philosophy
 
-The central research concept is layered supervisory independence.
+The project can be summarised in five principles:
 
-Rather than relying exclusively on identical redundant decision paths, the Sextant Protocol explores differentiated supervisory layers that can independently assess system conditions and provide alternative responses.
+1. Observe Early
 
-The research questions include:
+Recognise changing conditions.
 
-- Can independent decision layers reduce correlated decision failure?
-- Can a secondary supervisory layer identify conditions missed by the primary layer?
-- Can stabilization logic prevent oscillation between competing decisions?
-- Can human oversight remain clearly authoritative?
-- Can deterministic logging make system decisions reproducible and auditable?
+2. Assess Independently
 
-These questions are evaluated through simulation rather than operational deployment.
+Do not rely on a single analytical pathway.
 
----
+3. Arbitrate Deterministically
 
-Deterministic Simulation
+Make the resilience state traceable and reproducible.
 
-The prototype is designed around reproducible simulation.
+4. Preserve Human Authority
 
-Where practical:
+Provide decision-support without prematurely replacing the operator.
 
-Same scenario + same initial state + same parameters → reproducible system behaviour.
+5. Validate Independently
 
-Simulation records will include:
-
-- initial state
-- environmental conditions
-- sensor state
-- system condition
-- AI assessments
-- risk state
-- decisions
-- simulated actions
-- updated state
-- escalation events
-- human intervention
-- final simulation state
-
-This supports engineering review, debugging, replay, and comparative scenario analysis.
+Let evidence determine whether the architecture works.
 
 ---
 
-Human-in-the-Loop Governance
+25. Final Statement
 
-The architecture deliberately retains human authority.
+The Sextant Protocol™ DP Resilience Research Simulator is an invitation to investigate a question:
 
-The AI layers are treated as supervisory decision-support components within the simulation, not autonomous replacements for qualified maritime personnel.
+«Can an additional deterministic resilience layer give maritime operators more time, clearer information and better structured decision-support when conditions begin to deteriorate?»
 
-Critical simulated decisions may therefore be:
+The answer should not be assumed.
 
-AI Assessment
-      ↓
-Recommendation
-      ↓
-Human Review
-      ↓
-Accept / Modify / Reject
-      ↓
-Simulated Action
+It should be demonstrated.
 
----
+BUILD
 
-Validation Strategy
+→
 
-Development will follow staged validation:
+TEST
 
-Stage 1 – Module Validation
+→
 
-Each module is tested independently.
+CHALLENGE
 
-Stage 2 – Interface Validation
+→
 
-Module inputs and outputs are checked for compatibility.
+MEASURE
 
-Stage 3 – Scenario Validation
+→
 
-Controlled environmental and equipment scenarios are executed.
+REPEAT
 
-Stage 4 – Failure Validation
+→
 
-Failure and degraded-mode scenarios are introduced.
-
-Stage 5 – Decision Validation
-
-Primary AI, Secondary AI, Stabilization, and Human-in-the-Loop behaviour are evaluated.
-
-Stage 6 – Deterministic Replay
-
-Identical scenarios are replayed to verify reproducibility.
-
-Stage 7 – Integrated Prototype
-
-The validated modules are combined into the working simulation prototype.
+INDEPENDENTLY REVIEW
 
 ---
-SEXTANT PROTOCOL — DP RESILIENCE SIMULATION RESEARCH PLATFORM
 
-What the Simulator Is
+SEXTANT PROTOCOL™
 
-The Sextant Protocol DP Resilience Cockpit is a deterministic maritime research and engineering simulation platform designed to demonstrate and study how a layered resilience architecture could respond to changing environmental and vessel conditions.
+DP RESILIENCE RESEARCH SIMULATOR
 
-The simulator creates a controlled virtual DP environment in which researchers can introduce different environmental conditions, observe system responses, compare resilience states and examine how multiple supervisory layers interact.
+RESEARCH • SIMULATION • EDUCATION • ENGINEERING ANALYSIS
 
-The simulated architecture follows:
+COMPLEMENT — NOT REPLACE
 
-ENVIRONMENT → PRIMARY AI → SECONDARY AI → STABILIZER → HUMAN-IN-THE-LOOP → SIMULATED DP RESPONSE
+TESTABLE • AUDITABLE • REPEATABLE
 
-The purpose is to make the resilience concept observable, repeatable and testable.
-
-Researchers can use the simulator to examine scenarios such as:
-
-- normal environmental conditions;
-- increasing wind, current, wave and tidal loading;
-- sudden environmental disturbances;
-- current surges;
-- heavy sea states;
-- wind-gust events;
-- combined environmental disturbances;
-- simulated sensor degradation;
-- partial sensor-loss scenarios;
-- rapidly changing environmental conditions.
-
-For each scenario, the deterministic engine processes the simulated inputs and produces a corresponding system assessment.
-
-The cockpit then makes the complete decision pathway visible, including:
-
-Environmental Stress → Risk Classification → Primary Assessment → Independent Secondary Assessment → Stabilizer Arbitration → Human Decision-Support → Simulated Response → Updated Simulated State → Audit Record
-
-This allows the behaviour of the proposed resilience architecture to be examined consistently rather than relying on a static demonstration.
-
-Research Purpose
-
-The simulator is intended to answer an engineering research question:
-
-«Can a layered, independently assessed and human-governed resilience architecture provide earlier recognition, structured escalation and better decision-support during rapidly developing simulated DP disturbances?»
-
-Because the environment is deterministic, the same scenario can be reproduced repeatedly.
-
-This enables researchers and engineers to:
-
-- compare different environmental conditions;
-- test predefined resilience thresholds;
-- examine primary and secondary assessment behaviour;
-- evaluate stabilizer arbitration;
-- study operator notification and decision-support;
-- analyse simulated response windows;
-- investigate degraded and abnormal scenarios;
-- record repeatable audit data;
-- identify areas requiring further engineering validation.
-
-The simulator therefore functions as a research laboratory for the resilience concept, rather than merely as a visual cockpit.
-
-Engineering Development Path
-
-The present simulator provides the software-level research foundation from which further investigation could proceed.
-
-A future engineering programme could progressively introduce:
-
-Deterministic Simulation → Scenario Validation → Statistical Testing → Hardware-in-the-Loop → Representative Control Hardware → Independent Engineering Verification → Classification Review → Controlled Testing
-
-The simulator allows these questions to be investigated before the considerable cost and risk associated with hardware or vessel-level testing.
-
-Human-in-the-Loop Principle
-
-A fundamental principle of the Sextant Protocol research architecture is that human authority remains final.
-
-The simulator can identify conditions, generate assessments, compare resilience states and provide simulated decision-support. It does not independently exercise operational authority.
-
-The human operator remains responsible for interpreting the simulated information and, within the research environment, remains the final decision authority.
-
-Research Boundary
-
-The simulator is deliberately separated from operational maritime control.
-
-It exists for:
-
-RESEARCH • SIMULATION • EDUCATION • ENGINEERING ANALYSIS • VALIDATION
-
-All environmental conditions, vessel behaviour, AI assessments, stabilizer decisions, operator notifications and DP responses are generated within the simulated environment.
-
-The simulator does not constitute certified marine control software and is not intended to replace:
-
-- a qualified DP operator;
-- certified DP equipment;
-- class-approved safety systems;
-- vessel automation systems;
-- operational navigation systems; or
-- established vessel operating procedures.
-
-No operational vessel command is generated or transmitted by the simulator.
-
-Core Research Proposition
-
-The significance of the Sextant Protocol DP Resilience Cockpit is therefore not that it controls a vessel.
-
-Its purpose is to provide a controlled, deterministic and auditable environment in which a proposed resilience architecture can be demonstrated, challenged, measured and independently evaluated.
-
-The ultimate research question is whether the principles demonstrated in simulation merit progression toward formal engineering research, hardware-in-the-loop testing and independent maritime technical evaluation.
-Research Boundary
-
-This project does not:
-
-- connect to industrial DP systems
-- control real vessels
-- modify certified marine software
-- provide certified DP functionality
-- replace a vessel's DP operator
-- replace class-approved safety systems
-- provide operational navigation advice
-
-The system exists for research, simulation, education, and engineering analysis.
-
----
-
-Repository Development Model
-
-The "main" branch is maintained as the stable reference baseline.
-
-Experimental development should use separate branches.
-
-Recommended workflow:
-
-main
- │
- └── develop
-       │
-       ├── feature/stabilizer
-       ├── feature/environment-model
-       ├── feature/vessel-profile
-       ├── feature/sensor-manager
-       └── feature/thruster-simulation
-
-Validated modules may subsequently be incorporated into a versioned release.
-
-This preserves:
-
-- architectural traceability
-- reproducibility
-- baseline integrity
-- experimental isolation
-- research history
-
----
-
-Versioning
-
-The current reference baseline is v1.0.
-
-Future releases may follow:
-
-- "v1.1" — validated modular prototype
-- "v1.2" — expanded simulation capability
-- "v2.0" — major architectural evolution
-
-Experimental development remains separate from frozen reference releases.
-
----
-
-Continuous Integration
-
-GitHub Actions are used to support automated validation of repository integrity and simulation execution.
-
-As additional modules are introduced, automated tests will be expanded to cover:
-
-- module execution
-- interface compatibility
-- scenario behaviour
-- failure handling
-- deterministic replay
-- regression detection
-
----
-
-Related Sextant Research
-
-The DP project forms part of the wider Sextant Protocol research ecosystem.
-
-Related repositories include:
-
-- "sextant-resilience-operations-console"
-- "sextant-orbital-resilience-framework"
-- "sextant-rule-library"
-- "sextant-protocol-official-index"
-- "spd-captain-ai-lena-autonomous-agent-core"
-
-The wider ecosystem explores resilience, supervisory decision architecture, simulation, governance, observability, and autonomous-system research across multiple domains.
-
----
-
-Future Research
-
-Planned research directions include:
-
-- explainable AI decision support
-- advanced environmental modelling
-- digital-twin integration
-- vessel-specific simulation profiles
-- sensor failure modelling
-- propulsion degradation modelling
-- multi-failure scenarios
-- human-AI collaborative governance
-- deterministic replay and forensic analysis
-- cross-domain resilience architecture
-
----
-
-Author
-
-Don Herman Oswald Weerasekera
-
-Independent maritime researcher and engineering developer.
-
-Professional background includes:
-
-- Master Mariner (Foreign Going)
-- Offshore maritime operations
-- Dynamic Positioning operational experience
-- Diploma in Transport — RMIT University, Australia
-
-AI-assisted research and development with Captain AI Lena.
-
----
-
-Research Disclaimer
-
-This repository presents an independent engineering research prototype exploring supervisory architectures for Dynamic Positioning resilience.
-
-It is intended for simulation, research, engineering discussion, and educational purposes.
-
-It is not certified marine control software and must not be connected to operational vessel DP, propulsion, navigation, or safety systems.
-
-Any vessel configurations used within the project are simulation models unless explicitly identified as sourced technical information.
-
----
-
-Licence
-
-MIT License.
+SIMULATION ONLY — NOT CERTIFIED MARINE CONTROL SOFTWARE
