@@ -1,1 +1,827 @@
-g
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Sextant Protocol simulated DP navigation and sensor awareness panel"
+    >
+
+    <title>
+        Sextant Protocol – DP Navigation Panel
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #08111f;
+            color: #e8f0f7;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 15px;
+        }
+
+        .panel {
+            background: #0e1c2c;
+            border: 1px solid #29445f;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: 22px;
+        }
+
+        h2 {
+            margin: 0 0 15px;
+            font-size: 16px;
+            border-bottom: 1px solid #29445f;
+            padding-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #9fb3c8;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           NAVIGATION HEADER
+        ===================================================== */
+
+        .dp-nav-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #091827;
+            border: 1px solid #29445f;
+            border-radius: 6px;
+        }
+
+        .dp-nav-header span {
+            font-family: monospace;
+            font-size: 12px;
+            color: #9fb3c8;
+        }
+
+        /* =====================================================
+           POSITION DATA
+        ===================================================== */
+
+        .dp-nav-position,
+        .dp-nav-status,
+        .dp-nav-sensors {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .dp-nav-card,
+        .dp-nav-sensor {
+            background: #091827;
+            border: 1px solid #29445f;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .dp-nav-card small,
+        .dp-nav-sensor small {
+            display: block;
+            color: #91a8bd;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+
+        .dp-nav-card strong {
+            display: block;
+            font-size: 16px;
+        }
+
+        /* =====================================================
+           SENSOR CARDS
+        ===================================================== */
+
+        .dp-nav-sensor {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .dp-nav-sensor > span {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .dp-nav-sensor strong {
+            font-size: 12px;
+        }
+
+        .dp-nav-sensor small {
+            margin: 0;
+        }
+
+        /* =====================================================
+           SENSOR VISUAL STATUS
+        ===================================================== */
+
+        .sensor-available {
+            border-left: 4px solid #1f8f5f;
+        }
+
+        .sensor-degraded {
+            border-left: 4px solid #d9a441;
+        }
+
+        .sensor-critical {
+            border-left: 4px solid #d94a4a;
+        }
+
+        /* =====================================================
+           SIMULATED POSITION DISPLAY
+        ===================================================== */
+
+        .position-display {
+            position: relative;
+            min-height: 260px;
+            margin-top: 15px;
+            background:
+                linear-gradient(
+                    rgba(255,255,255,0.035) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.035) 1px,
+                    transparent 1px
+                ),
+                #050c14;
+
+            background-size: 32px 32px;
+
+            border: 1px solid #29445f;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .position-label {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 10px;
+            color: #91a8bd;
+            font-family: monospace;
+        }
+
+        .vessel-marker {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 44px;
+            height: 70px;
+            transform:
+                translate(-50%, -50%)
+                rotate(0deg);
+
+            background: #315a7d;
+            border: 2px solid #8faac0;
+
+            clip-path:
+                polygon(
+                    50% 0%,
+                    100% 28%,
+                    82% 100%,
+                    18% 100%,
+                    0% 28%
+                );
+        }
+
+        .heading-arrow {
+            position: absolute;
+            left: 50%;
+            top: 38%;
+            width: 2px;
+            height: 45px;
+            background: #d9a441;
+            transform:
+                translateX(-50%);
+        }
+
+        .heading-arrow::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: -5px;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-bottom: 10px solid #d9a441;
+        }
+
+        .position-ring {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 150px;
+            height: 150px;
+            border: 1px dashed #46627d;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* =====================================================
+           CONFIDENCE BAR
+        ===================================================== */
+
+        .confidence {
+            margin-top: 15px;
+        }
+
+        .confidence-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #91a8bd;
+            margin-bottom: 5px;
+        }
+
+        .confidence-track {
+            height: 12px;
+            background: #050c14;
+            border: 1px solid #29445f;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .confidence-value {
+            width: 100%;
+            height: 100%;
+            background: #1f8f5f;
+            transition: width 0.3s ease;
+        }
+
+        /* =====================================================
+           SAFETY BOUNDARY
+        ===================================================== */
+
+        .simulation-boundary {
+            margin-top: 15px;
+            padding: 12px;
+            border: 2px solid #46627d;
+            border-radius: 6px;
+            background: #091827;
+            color: #b8c9d8;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .simulation-boundary strong {
+            color: #d9a441;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 10px;
+            }
+
+            .panel {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            .dp-nav-header {
+                flex-direction: column;
+            }
+
+            .dp-nav-position,
+            .dp-nav-status,
+            .dp-nav-sensors {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 380px) {
+
+            .dp-nav-position,
+            .dp-nav-status,
+            .dp-nav-sensors {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+    <div class="panel">
+
+        <h1>
+            SEXTANT PROTOCOL – DP NAVIGATION PANEL
+        </h1>
+
+        <div class="subtitle">
+
+            SIMULATED NAVIGATION AND SENSOR AWARENESS
+
+            <br>
+
+            GNSS / DGPS • RADAR • CYSCAN / LASER • TAUT-WIRE • GYROCOMPASS
+
+        </div>
+
+
+        <!-- =================================================
+             NAVIGATION DISPLAY
+        ================================================= -->
+
+        <div
+            id="dpNavigationPanel"
+            style="margin-top:15px;"
+        >
+
+            <div class="dp-nav-header">
+
+                <strong>
+                    SIMULATED NAVIGATION / SENSOR AWARENESS
+                </strong>
+
+                <span>
+                    NORMAL SIMULATED MONITORING
+                </span>
+
+            </div>
+
+
+            <!-- POSITION -->
+
+            <div class="dp-nav-position">
+
+                <div class="dp-nav-card">
+
+                    <small>
+                        LATITUDE
+                    </small>
+
+                    <strong>
+                        1.290270
+                    </strong>
+
+                </div>
+
+
+                <div class="dp-nav-card">
+
+                    <small>
+                        LONGITUDE
+                    </small>
+
+                    <strong>
+                        103.851959
+                    </strong>
+
+                </div>
+
+
+                <div class="dp-nav-card">
+
+                    <small>
+                        HEADING
+                    </small>
+
+                    <strong>
+                        0.0°
+                    </strong>
+
+                </div>
+
+
+                <div class="dp-nav-card">
+
+                    <small>
+                        SPEED
+                    </small>
+
+                    <strong>
+                        0.00 kn
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- NAVIGATION STATUS -->
+
+            <div class="dp-nav-status">
+
+                <div class="dp-nav-card">
+
+                    <small>
+                        POSITION
+                    </small>
+
+                    <strong>
+                        STABLE
+                    </strong>
+
+                </div>
+
+
+                <div class="dp-nav-card">
+
+                    <small>
+                        HEADING
+                    </small>
+
+                    <strong>
+                        STABLE
+                    </strong>
+
+                </div>
+
+
+                <div class="dp-nav-card">
+
+                    <small>
+                        SENSOR AGREEMENT
+                    </small>
+
+                    <strong>
+                        100%
+                    </strong>
+
+                </div>
+
+
+                <div class="dp-nav-card">
+
+                    <small>
+                        NAVIGATION CONFIDENCE
+                    </small>
+
+                    <strong>
+                        100%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- SENSOR STATUS -->
+
+            <div class="dp-nav-sensors">
+
+                <div class="dp-nav-sensor sensor-available">
+
+                    <span>
+                        GNSS / DGPS
+                    </span>
+
+                    <strong>
+                        AVAILABLE
+                    </strong>
+
+                    <small>
+                        CONFIDENCE: 100%
+                    </small>
+
+                </div>
+
+
+                <div class="dp-nav-sensor sensor-available">
+
+                    <span>
+                        RADAR
+                    </span>
+
+                    <strong>
+                        AVAILABLE
+                    </strong>
+
+                    <small>
+                        CONFIDENCE: 100%
+                    </small>
+
+                </div>
+
+
+                <div class="dp-nav-sensor sensor-available">
+
+                    <span>
+                        CYSCAN / LASER
+                    </span>
+
+                    <strong>
+                        AVAILABLE
+                    </strong>
+
+                    <small>
+                        CONFIDENCE: 100%
+                    </small>
+
+                </div>
+
+
+                <div class="dp-nav-sensor sensor-available">
+
+                    <span>
+                        TAUT-WIRE
+                    </span>
+
+                    <strong>
+                        AVAILABLE
+                    </strong>
+
+                    <small>
+                        CONFIDENCE: 100%
+                    </small>
+
+                </div>
+
+
+                <div class="dp-nav-sensor sensor-available">
+
+                    <span>
+                        GYROCOMPASS
+                    </span>
+
+                    <strong>
+                        AVAILABLE
+                    </strong>
+
+                    <small>
+                        CONFIDENCE: 100%
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- SIMULATED POSITION VIEW -->
+
+            <div class="position-display">
+
+                <div class="position-label">
+                    SIMULATED VESSEL POSITION / HEADING
+                </div>
+
+                <div class="position-ring"></div>
+
+                <div
+                    id="vesselMarker"
+                    class="vessel-marker"
+                ></div>
+
+                <div
+                    id="headingArrow"
+                    class="heading-arrow"
+                ></div>
+
+            </div>
+
+
+            <!-- CONFIDENCE -->
+
+            <div class="confidence">
+
+                <div class="confidence-label">
+
+                    <span>
+                        NAVIGATION CONFIDENCE
+                    </span>
+
+                    <span id="navigationConfidence">
+                        100%
+                    </span>
+
+                </div>
+
+                <div class="confidence-track">
+
+                    <div
+                        id="navigationConfidenceBar"
+                        class="confidence-value"
+                        style="width:100%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SAFETY BOUNDARY
+        ================================================= -->
+
+        <div class="simulation-boundary">
+
+            <strong>
+                RESEARCH / SIMULATION ONLY
+            </strong>
+
+            <br><br>
+
+            This navigation panel generates simulated
+            navigation and sensor-awareness information only.
+
+            <br><br>
+
+            It does NOT interface with or control real:
+
+            <br>
+
+            • Dynamic Positioning systems
+
+            <br>
+
+            • Radar
+
+            <br>
+
+            • GNSS / DGPS
+
+            <br>
+
+            • CyScan / laser systems
+
+            <br>
+
+            • Taut-wire systems
+
+            <br>
+
+            • Gyrocompasses
+
+            <br>
+
+            • Propulsion or steering systems
+
+            <br><br>
+
+            <strong>
+                HUMAN AUTHORITY REMAINS FINAL.
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT MODULE
+========================================================= -->
+
+<script src="./dp_navigation_panel.js"></script>
+
+
+<script>
+
+    /*
+    =========================================================
+    OPTIONAL VISUAL UPDATE
+    =========================================================
+    */
+
+    function updateNavigationVisuals() {
+
+        if (
+            typeof DP_NAVIGATION_PANEL ===
+            "undefined"
+        ) {
+            return;
+        }
+
+        const vessel =
+            DP_NAVIGATION_PANEL.vessel;
+
+        const navigation =
+            DP_NAVIGATION_PANEL.navigation;
+
+
+        const marker =
+            document.getElementById(
+                "vesselMarker"
+            );
+
+        const arrow =
+            document.getElementById(
+                "headingArrow"
+            );
+
+
+        const confidence =
+            document.getElementById(
+                "navigationConfidence"
+            );
+
+        const confidenceBar =
+            document.getElementById(
+                "navigationConfidenceBar"
+            );
+
+
+        if (marker) {
+
+            marker.style.transform =
+                `translate(-50%, -50%)
+                 rotate(${vessel.heading}deg)`;
+
+        }
+
+
+        if (arrow) {
+
+            arrow.style.transform =
+                `translateX(-50%)
+                 rotate(${vessel.heading}deg)`;
+
+            arrow.style.transformOrigin =
+                "50% 100%";
+
+        }
+
+
+        if (confidence) {
+
+            confidence.textContent =
+                `${navigation.navigationConfidence}%`;
+
+        }
+
+
+        if (confidenceBar) {
+
+            confidenceBar.style.width =
+                `${navigation.navigationConfidence}%`;
+
+        }
+
+    }
+
+
+    /*
+    =========================================================
+    AUTO REFRESH
+    =========================================================
+    */
+
+    setInterval(
+        updateNavigationVisuals,
+        500
+    );
+
+</script>
+
+
+</body>
+
+</html>
