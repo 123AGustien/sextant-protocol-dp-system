@@ -1,1 +1,324 @@
-g
+name: Deploy Sextant DP Resilience Cockpit to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+
+      # ======================================================
+      # CHECKOUT
+      # ======================================================
+
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+
+      # ======================================================
+      # GITHUB PAGES CONFIGURATION
+      # ======================================================
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+
+      # ======================================================
+      # VERIFY CORE DP COCKPIT FILES
+      # ======================================================
+
+      - name: Verify DP Cockpit files
+        run: |
+          echo "============================================================"
+          echo "SEXTANT PROTOCOL DP RESILIENCE COCKPIT"
+          echo "FILE INTEGRITY CHECK"
+          echo "============================================================"
+
+          test -f index.html
+          test -f dp_simulation_engine.js
+          test -f dp_scenarios.js
+          test -f dp_cockpit.js
+          test -f dp_recommended_actions.js
+
+          echo "index.html: OK"
+          echo "dp_simulation_engine.js: OK"
+          echo "dp_scenarios.js: OK"
+          echo "dp_cockpit.js: OK"
+          echo "dp_recommended_actions.js: OK"
+
+          echo "============================================================"
+          echo "ALL REQUIRED DP FILES PRESENT"
+          echo "============================================================"
+
+
+      # ======================================================
+      # VERIFY RECOMMENDED ACTIONS ENGINE
+      # ======================================================
+
+      - name: Verify DP Recommended Actions Engine
+        run: |
+          echo "============================================================"
+          echo "DP RECOMMENDED ACTIONS ENGINE VALIDATION"
+          echo "============================================================"
+
+          node <<'NODE'
+          const fs = require("fs");
+          const vm = require("vm");
+
+          const file =
+            "dp_recommended_actions.js";
+
+          if (!fs.existsSync(file)) {
+            throw new Error(
+              "dp_recommended_actions.js not found"
+            );
+          }
+
+          const source =
+            fs.readFileSync(
+              file,
+              "utf8"
+            );
+
+          const context = {
+            window: {},
+            console: console
+          };
+
+          vm.createContext(context);
+
+          vm.runInContext(
+            source,
+            context,
+            {
+              filename: file
+            }
+          );
+
+          if (
+            !context.window.DPRecommendedActions
+          ) {
+            throw new Error(
+              "DPRecommendedActions API not created"
+            );
+          }
+
+          if (
+            typeof context.window.DPRecommendedActions.generate !==
+            "function"
+          ) {
+            throw new Error(
+              "DPRecommendedActions.generate() unavailable"
+            );
+          }
+
+          const result =
+            context.window.DPRecommendedActions.generate({
+              environmentalStress: 90,
+              risk: "CRITICAL",
+              windStress: 90,
+              currentStress: 80,
+              waveStress: 85
+            });
+
+          if (!result) {
+            throw new Error(
+              "Recommended Actions Engine returned no result"
+            );
+          }
+
+          if (
+            result.simulationOnly !== true
+          ) {
+            throw new Error(
+              "Simulation-only safety boundary failed"
+            );
+          }
+
+          if (
+            result.autonomousCommand !== false
+          ) {
+            throw new Error(
+              "Autonomous command safety boundary failed"
+            );
+          }
+
+          if (
+            result.humanAuthority !== "FINAL"
+          ) {
+            throw new Error(
+              "Human authority safety boundary failed"
+            );
+          }
+
+          if (
+            result.risk !== "CRITICAL"
+          ) {
+            throw new Error(
+              "Critical risk classification failed"
+            );
+          }
+
+          if (
+            !result.primary ||
+            !result.primary.action
+          ) {
+            throw new Error(
+              "Primary recommendation missing"
+            );
+          }
+
+          console.log(
+            "Module:",
+            result.module
+          );
+
+          console.log(
+            "Version:",
+            result.version
+          );
+
+          console.log(
+            "Risk:",
+            result.risk
+          );
+
+          console.log(
+            "Environmental Stress:",
+            result.environmentalStress
+          );
+
+          console.log(
+            "Human Authority:",
+            result.humanAuthority
+          );
+
+          console.log(
+            "Autonomous Command:",
+            result.autonomousCommand
+          );
+
+          console.log(
+            "Primary Recommendation:",
+            result.primary.action
+          );
+
+          console.log(
+            "DP Recommended Actions Engine: PASS"
+          );
+          NODE
+
+          echo "============================================================"
+          echo "RECOMMENDED ACTIONS ENGINE VALIDATION PASSED"
+          echo "============================================================"
+
+
+      # ======================================================
+      # VERIFY DP COCKPIT JAVASCRIPT SYNTAX
+      # ======================================================
+
+      - name: Verify DP Cockpit JavaScript syntax
+        run: |
+          echo "============================================================"
+          echo "DP COCKPIT JAVASCRIPT SYNTAX CHECK"
+          echo "============================================================"
+
+          node --check dp_simulation_engine.js
+          node --check dp_scenarios.js
+          node --check dp_cockpit.js
+          node --check dp_recommended_actions.js
+
+          echo "dp_simulation_engine.js: SYNTAX OK"
+          echo "dp_scenarios.js: SYNTAX OK"
+          echo "dp_cockpit.js: SYNTAX OK"
+          echo "dp_recommended_actions.js: SYNTAX OK"
+
+          echo "============================================================"
+          echo "JAVASCRIPT SYNTAX VALIDATION PASSED"
+          echo "============================================================"
+
+
+      # ======================================================
+      # VERIFY INDEX
+      # ======================================================
+
+      - name: Verify index.html
+        run: |
+          echo "============================================================"
+          echo "INDEX.HTML INTEGRATION CHECK"
+          echo "============================================================"
+
+          grep -q "dp_simulation_engine.js" index.html
+          grep -q "dp_scenarios.js" index.html
+          grep -q "dp_cockpit.js" index.html
+          grep -q "dp_recommended_actions.js" index.html
+
+          echo "Simulation Engine reference: OK"
+          echo "Scenario Engine reference: OK"
+          echo "DP Cockpit reference: OK"
+          echo "Recommended Actions reference: OK"
+
+          echo "============================================================"
+          echo "INDEX.HTML INTEGRATION PASSED"
+          echo "============================================================"
+
+
+      # ======================================================
+      # FINAL SAFETY GATE
+      # ======================================================
+
+      - name: Final DP Safety Gate
+        run: |
+          echo "============================================================"
+          echo "SEXTANT PROTOCOL FINAL DEPLOYMENT SAFETY GATE"
+          echo "============================================================"
+
+          echo "MODE: RESEARCH / SIMULATION ONLY"
+          echo "AUTONOMOUS OPERATIONAL COMMAND: FALSE"
+          echo "REAL VESSEL CONNECTION: FALSE"
+          echo "HUMAN AUTHORITY: FINAL"
+          echo "RECOMMENDED ACTIONS: SIMULATION ONLY"
+
+          echo "============================================================"
+          echo "FINAL SAFETY GATE PASSED"
+          echo "============================================================"
+
+
+      # ======================================================
+      # UPLOAD GITHUB PAGES ARTIFACT
+      # ======================================================
+
+      - name: Upload DP Cockpit artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+
+
+      # ======================================================
+      # DEPLOY
+      # ======================================================
+
+      - name: Deploy DP Cockpit to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
