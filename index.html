@@ -3378,3 +3378,173 @@ function enforceHumanAuthority() {
 ============================================================ */
 
 </script>
+<!-- ======================================================
+     SEXTANT DP RESILIENCE EXECUTION INTEGRITY
+     PART 7
+     UI PRESERVATION — NO SCREEN CHANGES
+======================================================= -->
+
+<script>
+
+/* ============================================================
+   SAFE SIMULATION START
+============================================================ */
+
+function prepareSimulationExecution() {
+
+    /*
+     Every new simulation begins behind the
+     human authorization gate.
+    */
+
+    humanAuthorityGuard();
+
+    DP_ENGINE.human.decision =
+        "PENDING";
+
+    DP_ENGINE.human.gate =
+        "HUMAN DECISION REQUIRED";
+
+    DP_ENGINE.vessel.simulatedCommand =
+        0;
+
+    DP_ENGINE.vessel.state =
+        "SIMULATED";
+
+    setText(
+        "humanDecisionStatus",
+        "PENDING"
+    );
+
+    setText(
+        "executionGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+    setText(
+        "traceGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+    setText(
+        "traceActionStatus",
+        "NOT EXECUTED"
+    );
+
+    setText(
+        "simulatedCommand",
+        "0"
+    );
+
+    setText(
+        "vesselState",
+        "SIMULATED"
+    );
+
+    setText(
+        "lenaAutonomousCommand",
+        "FALSE"
+    );
+
+    setText(
+        "recommendedAutonomous",
+        "FALSE"
+    );
+
+    setText(
+        "lenaUMVAction",
+        "NOT EXECUTED"
+    );
+
+}
+
+
+/* ============================================================
+   OVERRIDE RUN SIMULATION
+============================================================ */
+
+const originalRunSimulation =
+    window.runSimulation;
+
+
+/*
+   Preserve the existing Part 4 engine while adding
+   the Human Authority gate before every assessment.
+*/
+
+window.runSimulation = function () {
+
+    prepareSimulationExecution();
+
+    if (typeof originalRunSimulation === "function") {
+
+        originalRunSimulation();
+
+    }
+
+    /*
+     * Re-apply the human gate after assessment.
+     * The assessment may recommend an action, but
+     * it cannot execute that action.
+     */
+
+    enforceHumanAuthority();
+
+    protectSimulatedResponse();
+
+};
+
+
+/* ============================================================
+   SAFE RESET
+============================================================ */
+
+const originalResetSimulation =
+    window.resetSimulation;
+
+window.resetSimulation = function () {
+
+    if (typeof originalResetSimulation === "function") {
+
+        originalResetSimulation();
+
+    }
+
+    humanAuthorityGuard();
+
+    protectSimulatedResponse();
+
+    setText(
+        "humanDecisionStatus",
+        "PENDING"
+    );
+
+    setText(
+        "executionGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+};
+
+
+/* ============================================================
+   INITIAL SAFETY STATE
+============================================================ */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        humanAuthorityGuard();
+
+        protectSimulatedResponse();
+
+    }
+);
+
+
+/* ============================================================
+   END PART 7
+============================================================ */
+
+</script>
