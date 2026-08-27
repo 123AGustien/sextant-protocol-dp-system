@@ -1,0 +1,183 @@
+/*
+============================================================
+🛰️ Sextant Orbital Resilience Framework
+Manoeuvre Parameters Layer v1.0
+============================================================
+
+Purpose:
+
+Extended simulation parameter model
+for Trial Manoeuvre Engine.
+
+Simulation-only module.
+
+This module does NOT provide:
+- autonomous spacecraft control
+- collision avoidance commands
+- CPA avoidance recommendations
+- real trajectory execution
+
+Future enhancement layer for:
+- course/heading change simulation
+- correction magnitude modelling
+- trajectory planning profiles
+- energy/fuel impact estimation
+- recovery option comparison
+*/
+
+
+// =================================
+// MANOEUVRE PARAMETER PROFILES
+// =================================
+
+const MANOEUVRE_PARAMETERS = {
+
+    COMMUNICATION_RECOVERY_MANOEUVRE: {
+
+        courseChange: {
+            enabled: true,
+            type: "SIMULATED_HEADING_ADJUSTMENT",
+            value: 0,
+            unit: "degrees"
+        },
+
+        correctionMagnitude: {
+            level: "LOW",
+            value: 10,
+            unit: "simulation_scale"
+        },
+
+        trajectoryPlanning: {
+            profile: "RECOVERY_PATH_OPTIMISATION",
+            planningMode: "SIMULATION_ONLY",
+            status: "READY"
+        },
+
+        energyImpact: {
+            fuelImpact: "ESTIMATED",
+            consumption: "LOW",
+            status: "SIMULATION_MODEL"
+        },
+
+        recoveryOptions: [
+            "BACKUP_COMMUNICATION_PATH",
+            "ORBITAL_STABILITY_HOLD",
+            "GROUND_CONTACT_RESTORATION"
+        ]
+
+    },
+
+
+    ORBITAL_STABILITY_MANOEUVRE: {
+
+        courseChange: {
+            enabled: true,
+            type: "SIMULATED_HEADING_ADJUSTMENT",
+            value: 0,
+            unit: "degrees"
+        },
+
+        correctionMagnitude: {
+            level: "LOW",
+            value: 5,
+            unit: "simulation_scale"
+        },
+
+        trajectoryPlanning: {
+            profile: "ORBITAL_STABILITY_PATH",
+            planningMode: "SIMULATION_ONLY",
+            status: "READY"
+        },
+
+        energyImpact: {
+            fuelImpact: "ESTIMATED",
+            consumption: "LOW",
+            status: "SIMULATION_MODEL"
+        },
+
+        recoveryOptions: [
+            "ORBITAL_STABILITY_HOLD",
+            "SECONDARY_SYSTEM_SUPPORT",
+            "CONTROLLED_RECOVERY"
+        ]
+
+    },
+
+
+    ENERGY_RECOVERY_MANOEUVRE: {
+
+        courseChange: {
+            enabled: false,
+            type: "SIMULATED_HEADING_ADJUSTMENT",
+            value: 0,
+            unit: "degrees"
+        },
+
+        correctionMagnitude: {
+            level: "MEDIUM",
+            value: 20,
+            unit: "simulation_scale"
+        },
+
+        trajectoryPlanning: {
+            profile: "ENERGY_RECOVERY_PATH",
+            planningMode: "SIMULATION_ONLY",
+            status: "READY"
+        },
+
+        energyImpact: {
+            fuelImpact: "ESTIMATED",
+            consumption: "MEDIUM",
+            status: "SIMULATION_MODEL"
+        },
+
+        recoveryOptions: [
+            "POWER_RECOVERY_MODE",
+            "ENERGY_CONSERVATION_MODE",
+            "ORBITAL_STABILITY_HOLD"
+        ]
+
+    }
+
+};
+
+
+// =================================
+// PARAMETER ACCESS FUNCTION
+// =================================
+
+function getManoeuvreParameters(profile) {
+
+    return (
+        MANOEUVRE_PARAMETERS[profile]
+        ||
+        {
+            status: "DEFAULT_PARAMETERS",
+
+            courseChange: "NOT_DEFINED",
+
+            correctionMagnitude:
+                "NOT_DEFINED",
+
+            trajectoryPlanning:
+                "NOT_DEFINED",
+
+            energyImpact:
+                "NOT_DEFINED",
+
+            recoveryOptions: []
+        }
+    );
+
+}
+
+
+// =================================
+// GLOBAL EXPORT
+// =================================
+
+window.MANOEUVRE_PARAMETERS =
+    MANOEUVRE_PARAMETERS;
+
+window.getManoeuvreParameters =
+    getManoeuvreParameters;
