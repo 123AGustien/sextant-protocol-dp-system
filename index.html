@@ -1,1949 +1,2160 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8"><meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-
-«»
-
-<meta
-name="description"
-content="Sextant Protocol DP Resilience Research Simulator — deterministic environmental scenario, resilience assessment and human-in-the-loop decision-support research prototype."
-
-«»
-
-<meta
-name="theme-color"
-content="#08111f"
-
-«»
-
-<title>
-    Sextant Protocol – DP Resilience Research Simulator
-</title><style>
-
-    * {
-        box-sizing: border-box;
-    }
-
-    html {
-        -webkit-text-size-adjust: 100%;
-    }
-
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background: #08111f;
-        color: #e8f0f7;
-    }
-
-    button,
-    input {
-        font: inherit;
-    }
-
-    .header {
-        padding: 20px 18px;
-        text-align: center;
-        background: #0d1b2a;
-        border-bottom: 2px solid #29445f;
-    }
-
-    .header h1 {
-        margin: 0;
-        font-size: 24px;
-    }
-
-    .header p {
-        margin: 8px 0 0;
-        color: #9fb3c8;
-        font-size: 13px;
-        line-height: 1.6;
-    }
-
-    .header .purpose-line {
-        color: #d9e7f3;
-        font-weight: bold;
-    }
-
-    .header .boundary-line {
-        color: #d9a441;
-        font-weight: bold;
-    }
-
-    .container {
-        width: 100%;
-        max-width: 1200px;
-        margin: auto;
-        padding: 15px;
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns:
-            repeat(auto-fit, minmax(280px, 1fr));
-        gap: 15px;
-    }
-
-    .panel {
-        background: #0e1c2c;
-        border: 1px solid #29445f;
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 15px;
-    }
-
-    .panel h2 {
-        margin-top: 0;
-        font-size: 16px;
-        border-bottom: 1px solid #29445f;
-        padding-bottom: 8px;
-    }
-
-    /* =====================================================
-       RESEARCH PURPOSE
-    ===================================================== */
-
-    .research-purpose {
-        border: 2px solid #587590;
-        background: #0b1b2b;
-    }
-
-    .research-purpose strong {
-        color: #d9e7f3;
-    }
-
-    .purpose-lead {
-        font-size: 16px;
-        font-weight: bold;
-        line-height: 1.5;
-    }
-
-    .purpose-flow {
-        margin: 15px 0;
-        padding: 12px;
-        border-radius: 6px;
-        background: #091827;
-        border: 1px solid #29445f;
-        text-align: center;
-        font-weight: bold;
-        line-height: 1.8;
-    }
-
-    .research-purpose ul {
-        line-height: 1.7;
-    }
-
-    .research-purpose li {
-        margin-bottom: 5px;
-    }
-
-    /* =====================================================
-       ENGINE
-    ===================================================== */
-
-    .engine-status {
-        text-align: center;
-        padding: 12px;
-        margin-bottom: 15px;
-        border-radius: 6px;
-        background: #091827;
-        border: 1px solid #29445f;
-        font-family: monospace;
-        font-size: 12px;
-    }
-
-    #engineStatus {
-        font-weight: bold;
-    }
-
-    /* =====================================================
-       ARCHITECTURE
-    ===================================================== */
-
-    .architecture {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        margin-top: 10px;
-    }
-
-    .node {
-        padding: 10px;
-        border: 1px solid #587590;
-        border-radius: 6px;
-        background: #13283b;
-        text-align: center;
-        min-width: 125px;
-        font-size: 12px;
-        line-height: 1.4;
-    }
-
-    .arrow {
-        color: #8faac0;
-        font-size: 20px;
-    }
-
-    /* =====================================================
-       VESSEL
-    ===================================================== */
-
-    .vessel-data {
-        line-height: 1.8;
-        font-size: 14px;
-    }
-
-    /* =====================================================
-       INPUTS
-    ===================================================== */
-
-    .input-row {
-        display: grid;
-        grid-template-columns: 1fr 90px;
-        gap: 10px;
-        align-items: center;
-        margin: 10px 0;
-    }
-
-    input[type="number"] {
-        width: 100%;
-        min-height: 42px;
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #46627d;
-        background: #07111d;
-        color: white;
-        font-size: 15px;
-    }
-
-    input[type="number"]:focus {
-        outline: none;
-        border-color: #5c9dcc;
-    }
-
-    .environment-stress {
-        margin-top: 15px;
-        padding: 12px;
-        border-radius: 6px;
-        background: #091827;
-        border: 1px solid #29445f;
-        text-align: center;
-    }
-
-    .environment-stress-label {
-        font-size: 11px;
-        color: #91a8bd;
-    }
-
-    .environment-stress-value {
-        margin-top: 5px;
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
-
-    button {
-        border: none;
-        border-radius: 6px;
-        padding: 12px 18px;
-        margin: 5px;
-        font-weight: bold;
-        cursor: pointer;
-        color: white;
-        min-height: 44px;
-        touch-action: manipulation;
-    }
-
-    button:active {
-        transform: scale(0.98);
-    }
-
-    .run {
-        background: #1f8f5f;
-    }
-
-    .reset {
-        background: #46586d;
-    }
-
-    .scenario {
-        background: #315a7d;
-    }
-
-    .scenario:hover {
-        background: #3d6e97;
-    }
-
-    .controls {
-        text-align: center;
-        margin: 15px 0;
-    }
-
-    /* =====================================================
-       STATUS
-    ===================================================== */
-
-    .status-grid {
-        display: grid;
-        grid-template-columns:
-            repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-    }
-
-    .status-card {
-        padding: 12px;
-        background: #091827;
-        border: 1px solid #29445f;
-        border-radius: 6px;
-    }
-
-    .status-title {
-        font-size: 11px;
-        color: #91a8bd;
-    }
-
-    .status-value {
-        margin-top: 5px;
-        font-weight: bold;
-        font-size: 14px;
-        word-break: break-word;
-    }
-
-    /* =====================================================
-       OPERATOR ALERT
-    ===================================================== */
-
-    .operator-alert {
-        display: none;
-        padding: 16px;
-        margin-bottom: 15px;
-        border-radius: 8px;
-        border: 2px solid #29445f;
-        background: #091827;
-        text-align: center;
-    }
-
-    .operator-alert.active {
-        display: block;
-    }
-
-    .operator-alert-title {
-        font-size: 20px;
-        font-weight: bold;
-        letter-spacing: 1px;
-    }
-
-    .operator-alert-message {
-        margin-top: 8px;
-        font-size: 14px;
-        line-height: 1.5;
-    }
-
-    .operator-alert-instruction {
-        margin-top: 10px;
-        padding: 10px;
-        border-radius: 5px;
-        background: rgba(0, 0, 0, 0.25);
-        font-weight: bold;
-        font-size: 13px;
-    }
-
-    .operator-alert-meta {
-        margin-top: 10px;
-        display: grid;
-        grid-template-columns:
-            repeat(auto-fit, minmax(120px, 1fr));
-        gap: 8px;
-    }
-
-    .alert-meta-card {
-        padding: 8px;
-        border-radius: 5px;
-        background: rgba(0, 0, 0, 0.25);
-    }
-
-    .alert-meta-label {
-        display: block;
-        font-size: 10px;
-        opacity: 0.75;
-    }
-
-    .alert-meta-value {
-        display: block;
-        margin-top: 3px;
-        font-weight: bold;
-        font-size: 13px;
-    }
-
-    .alert-normal {
-        border-color: #29445f;
-        background: #091827;
-    }
-
-    .alert-advisory {
-        border-color: #5c9dcc;
-        background: #10283d;
-    }
-
-    .alert-warning {
-        border-color: #d9a441;
-        background: #352b12;
-    }
-
-    .alert-critical {
-        border-color: #d94a4a;
-        background: #3b1116;
-    }
-
-    /* =====================================================
-       STABILIZER
-    ===================================================== */
-
-    .stabilizer-panel {
-        border: 1px solid #587590;
-        background: #0b1b2b;
-    }
-
-    .stabilizer-state {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 8px;
-    }
-
-    .stabilizer-message {
-        font-size: 13px;
-        line-height: 1.5;
-        color: #b8c9d8;
-    }
-
-    .stabilizer-grid {
-        display: grid;
-        grid-template-columns:
-            repeat(auto-fit, minmax(150px, 1fr));
-        gap: 10px;
-        margin-top: 15px;
-    }
-
-    /* =====================================================
-       HUMAN AUTHORITY
-    ===================================================== */
-
-    .human-decision {
-        border: 2px solid #587590;
-        background: #0b1825;
-    }
-
-    .human-decision-title {
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .human-decision-message {
-        margin-top: 8px;
-        font-size: 13px;
-        line-height: 1.5;
-    }
-
-    /* =====================================================
-       RECOMMENDATION
-    ===================================================== */
-
-    .recommendation-primary {
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .recommendation-rationale {
-        padding: 10px;
-        background: #091827;
-        border-radius: 5px;
-        line-height: 1.5;
-        margin-top: 10px;
-    }
-
-    #recommendedActions {
-        margin-top: 10px;
-        padding-left: 20px;
-        line-height: 1.6;
-    }
-
-    /* =====================================================
-       RESPONSE INDICATORS
-    ===================================================== */
-
-    .response-indicator {
-        display: grid;
-        grid-template-columns:
-            repeat(auto-fit, minmax(140px, 1fr));
-        gap: 10px;
-    }
-
-    .response-card {
-        padding: 12px;
-        background: #091827;
-        border: 1px solid #29445f;
-        border-radius: 6px;
-        text-align: center;
-    }
-
-    .response-icon {
-        font-size: 22px;
-    }
-
-    .response-label {
-        margin-top: 5px;
-        font-size: 11px;
-        color: #91a8bd;
-    }
-
-    .response-value {
-        margin-top: 4px;
-        font-weight: bold;
-        font-size: 13px;
-    }
-
-    /* =====================================================
-       EVENT LOG
-    ===================================================== */
-
-    .event-log {
-        max-height: 240px;
-        overflow-y: auto;
-        background: #050c14;
-        border: 1px solid #29445f;
-        border-radius: 6px;
-        padding: 10px;
-        font-family: monospace;
-        font-size: 11px;
-    }
-
-    .event-entry {
-        padding: 6px 0;
-        border-bottom: 1px solid #172b3d;
-    }
-
-    .event-entry:last-child {
-        border-bottom: none;
-    }
-
-    /* =====================================================
-       OUTPUT
-    ===================================================== */
-
-    .output {
-        white-space: pre-wrap;
-        word-break: break-word;
-        overflow-wrap: anywhere;
-        background: #050c14;
-        border: 1px solid #29445f;
-        border-radius: 6px;
-        padding: 15px;
-        min-height: 320px;
-        font-family: monospace;
-        font-size: 13px;
-        overflow-x: auto;
-        line-height: 1.5;
-    }
-
-    /* =====================================================
-       SAFETY / OPERATIONAL BOUNDARY
-    ===================================================== */
-
-    .safety-boundary {
-        border: 2px solid #46627d;
-        background: #091827;
-        line-height: 1.6;
-        font-size: 12px;
-    }
-
-    .safety-boundary strong {
-        color: #d9a441;
-    }
-
-    .safety-boundary ul {
-        line-height: 1.7;
-    }
-
-    .safety-boundary hr {
-        border: 0;
-        border-top: 1px solid #29445f;
-        margin: 18px 0;
-    }
-
-    /* =====================================================
-       FOOTER
-    ===================================================== */
-
-    .footer {
-        text-align: center;
-        padding: 18px;
-        color: #8799aa;
-        font-size: 11px;
-        line-height: 1.7;
-    }
-
-    /* =====================================================
-       MOBILE
-    ===================================================== */
-
-    @media (max-width: 600px) {
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Sextant Protocol DP Resilience Research Simulator — deterministic environmental scenario, resilience assessment and human-in-the-loop decision-support research prototype."
+    >
+
+    <meta
+        name="theme-color"
+        content="#08111f"
+    >
+
+    <title>
+        Sextant Protocol – DP Resilience Research Simulator
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #08111f;
+            color: #e8f0f7;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
 
         .header {
-            padding: 14px 10px;
+            padding: 20px 18px;
+            text-align: center;
+            background: #0d1b2a;
+            border-bottom: 2px solid #29445f;
         }
 
         .header h1 {
-            font-size: 18px;
-            line-height: 1.3;
+            margin: 0;
+            font-size: 24px;
         }
 
         .header p {
-            font-size: 11px;
+            margin: 8px 0 0;
+            color: #9fb3c8;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .header .purpose-line {
+            color: #d9e7f3;
+            font-weight: bold;
+        }
+
+        .header .boundary-line {
+            color: #d9a441;
+            font-weight: bold;
         }
 
         .container {
-            padding: 10px;
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
         }
 
         .panel {
-            padding: 12px;
-            margin-bottom: 10px;
+            background: #0e1c2c;
+            border: 1px solid #29445f;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
         }
+
+        .panel h2 {
+            margin-top: 0;
+            font-size: 16px;
+            border-bottom: 1px solid #29445f;
+            padding-bottom: 8px;
+        }
+
+        /* =====================================================
+           RESEARCH PURPOSE
+        ===================================================== */
+
+        .research-purpose {
+            border: 2px solid #587590;
+            background: #0b1b2b;
+        }
+
+        .research-purpose strong {
+            color: #d9e7f3;
+        }
+
+        .purpose-lead {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .purpose-flow {
+            margin: 15px 0;
+            padding: 12px;
+            border-radius: 6px;
+            background: #091827;
+            border: 1px solid #29445f;
+            text-align: center;
+            font-weight: bold;
+            line-height: 1.8;
+        }
+
+        .research-purpose ul {
+            line-height: 1.7;
+        }
+
+        .research-purpose li {
+            margin-bottom: 5px;
+        }
+
+        /* =====================================================
+           ENGINE
+        ===================================================== */
+
+        .engine-status {
+            text-align: center;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            background: #091827;
+            border: 1px solid #29445f;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        #engineStatus {
+            font-weight: bold;
+        }
+
+        /* =====================================================
+           ARCHITECTURE
+        ===================================================== */
 
         .architecture {
-            flex-direction: column;
-        }
-
-        .arrow {
-            transform: rotate(90deg);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
         }
 
         .node {
-            width: 100%;
-            max-width: 280px;
+            padding: 10px;
+            border: 1px solid #587590;
+            border-radius: 6px;
+            background: #13283b;
+            text-align: center;
+            min-width: 125px;
+            font-size: 12px;
+            line-height: 1.4;
         }
 
+        .arrow {
+            color: #8faac0;
+            font-size: 20px;
+        }
+
+        /* =====================================================
+           VESSEL
+        ===================================================== */
+
+        .vessel-data {
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           INPUTS
+        ===================================================== */
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 90px;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            min-height: 42px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #46627d;
+            background: #07111d;
+            color: white;
+            font-size: 15px;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #5c9dcc;
+        }
+
+        .environment-stress {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            background: #091827;
+            border: 1px solid #29445f;
+            text-align: center;
+        }
+
+        .environment-stress-label {
+            font-size: 11px;
+            color: #91a8bd;
+        }
+
+        .environment-stress-value {
+            margin-top: 5px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
         button {
-            width: 94%;
-            margin: 5px auto;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 18px;
+            margin: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .run {
+            background: #1f8f5f;
+        }
+
+        .reset {
+            background: #46586d;
+        }
+
+        .scenario {
+            background: #315a7d;
+        }
+
+        .scenario:hover {
+            background: #3d6e97;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .status-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .status-card {
+            padding: 12px;
+            background: #091827;
+            border: 1px solid #29445f;
+            border-radius: 6px;
+        }
+
+        .status-title {
+            font-size: 11px;
+            color: #91a8bd;
+        }
+
+        .status-value {
+            margin-top: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        /* =====================================================
+           OPERATOR ALERT
+        ===================================================== */
+
+        .operator-alert {
+            display: none;
+            padding: 16px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 2px solid #29445f;
+            background: #091827;
+            text-align: center;
+        }
+
+        .operator-alert.active {
             display: block;
         }
 
-        .input-row {
-            grid-template-columns: 1fr 85px;
-        }
-
         .operator-alert-title {
-            font-size: 17px;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
-        .output {
+        .operator-alert-message {
+            margin-top: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .operator-alert-instruction {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.25);
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .operator-alert-meta {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
+        }
+
+        .alert-meta-card {
+            padding: 8px;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .alert-meta-label {
+            display: block;
+            font-size: 10px;
+            opacity: 0.75;
+        }
+
+        .alert-meta-value {
+            display: block;
+            margin-top: 3px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .alert-normal {
+            border-color: #29445f;
+            background: #091827;
+        }
+
+        .alert-advisory {
+            border-color: #5c9dcc;
+            background: #10283d;
+        }
+
+        .alert-warning {
+            border-color: #d9a441;
+            background: #352b12;
+        }
+
+        .alert-critical {
+            border-color: #d94a4a;
+            background: #3b1116;
+        }
+
+        /* =====================================================
+           STABILIZER
+        ===================================================== */
+
+        .stabilizer-panel {
+            border: 1px solid #587590;
+            background: #0b1b2b;
+        }
+
+        .stabilizer-state {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .stabilizer-message {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #b8c9d8;
+        }
+
+        .stabilizer-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        /* =====================================================
+           HUMAN AUTHORITY
+        ===================================================== */
+
+        .human-decision {
+            border: 2px solid #587590;
+            background: #0b1825;
+        }
+
+        .human-decision-title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .human-decision-message {
+            margin-top: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           RECOMMENDATION
+        ===================================================== */
+
+        .recommendation-primary {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .recommendation-rationale {
+            padding: 10px;
+            background: #091827;
+            border-radius: 5px;
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+
+        #recommendedActions {
+            margin-top: 10px;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           RESPONSE INDICATORS
+        ===================================================== */
+
+        .response-indicator {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .response-card {
+            padding: 12px;
+            background: #091827;
+            border: 1px solid #29445f;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .response-icon {
+            font-size: 22px;
+        }
+
+        .response-label {
+            margin-top: 5px;
+            font-size: 11px;
+            color: #91a8bd;
+        }
+
+        .response-value {
+            margin-top: 4px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           EVENT LOG
+        ===================================================== */
+
+        .event-log {
+            max-height: 240px;
+            overflow-y: auto;
+            background: #050c14;
+            border: 1px solid #29445f;
+            border-radius: 6px;
+            padding: 10px;
+            font-family: monospace;
             font-size: 11px;
         }
 
-        .status-grid {
-            grid-template-columns: 1fr 1fr;
+        .event-entry {
+            padding: 6px 0;
+            border-bottom: 1px solid #172b3d;
         }
 
-    }
-
-    @media (max-width: 380px) {
-
-        .status-grid {
-            grid-template-columns: 1fr;
+        .event-entry:last-child {
+            border-bottom: none;
         }
 
-        .input-row {
-            grid-template-columns: 1fr;
+        /* =====================================================
+           OUTPUT
+        ===================================================== */
+
+        .output {
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+            background: #050c14;
+            border: 1px solid #29445f;
+            border-radius: 6px;
+            padding: 15px;
+            min-height: 320px;
+            font-family: monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            line-height: 1.5;
         }
 
-    }
+        /* =====================================================
+           SAFETY / OPERATIONAL BOUNDARY
+        ===================================================== */
 
-</style></head><body><div class="header"><h1>
-    SEXTANT PROTOCOL – DP RESILIENCE COCKPIT
-</h1>
+        .safety-boundary {
+            border: 2px solid #46627d;
+            background: #091827;
+            line-height: 1.6;
+            font-size: 12px;
+        }
 
-<p class="purpose-line">
-    DETERMINISTIC MARITIME RESILIENCE RESEARCH SIMULATOR
-</p>
+        .safety-boundary strong {
+            color: #d9a441;
+        }
 
-<p>
-    Controlled environmental scenarios →
-    independent assessment →
-    resilience arbitration →
-    human decision-support →
-    simulated DP response
-</p>
+        .safety-boundary ul {
+            line-height: 1.7;
+        }
 
-<p class="boundary-line">
-    RESEARCH / SIMULATION PROTOTYPE •
-    HUMAN AUTHORITY REMAINS FINAL
-</p>
+        .safety-boundary hr {
+            border: 0;
+            border-top: 1px solid #29445f;
+            margin: 18px 0;
+        }
 
-</div><div class="container"><div class="panel research-purpose"><h2>
-    What This Simulator Is
-</h2>
+        /* =====================================================
+           FOOTER
+        ===================================================== */
 
-<p class="purpose-lead">
-    The Sextant Protocol DP Resilience Cockpit is a
-    deterministic research and engineering simulation
-    environment for studying how a layered resilience
-    architecture could respond to changing maritime
-    environmental conditions.
-</p>
+        .footer {
+            text-align: center;
+            padding: 18px;
+            color: #8799aa;
+            font-size: 11px;
+            line-height: 1.7;
+        }
 
-<p>
-    The simulator creates a controlled virtual vessel
-    environment in which wind, current, wave and tidal
-    conditions can be varied, repeated and analysed.
-    Each scenario is processed by the deterministic
-    simulation engine and presented through the cockpit
-    for technical observation.
-</p>
+        /* =====================================================
+           MOBILE
+        ===================================================== */
 
-<div class="purpose-flow">
+        @media (max-width: 600px) {
 
-    ENVIRONMENT
-    →
-    PRIMARY AI
-    →
-    SECONDARY AI
-    →
-    STABILIZER
-    →
-    HUMAN-IN-THE-LOOP
-    →
-    SIMULATED DP RESPONSE
+            .header {
+                padding: 14px 10px;
+            }
 
-</div>
+            .header h1 {
+                font-size: 18px;
+                line-height: 1.3;
+            }
 
-<p>
-    The research environment is intended to allow
-    engineers, maritime professionals, researchers and
-    reviewers to examine how the proposed architecture
-    behaves as simulated environmental stress changes.
-</p>
+            .header p {
+                font-size: 11px;
+            }
 
-<p>
-    In particular, the simulator provides a controlled
-    environment for investigating:
-</p>
+            .container {
+                padding: 10px;
+            }
 
-<ul>
+            .panel {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
 
-    <li>deterministic environmental scenario generation;</li>
+            .architecture {
+                flex-direction: column;
+            }
 
-    <li>
-        environmental stress calculation and risk classification;
-    </li>
+            .arrow {
+                transform: rotate(90deg);
+            }
 
-    <li>
-        independent Primary AI and Secondary AI assessments;
-    </li>
+            .node {
+                width: 100%;
+                max-width: 280px;
+            }
 
-    <li>
-        deterministic resilience arbitration through the Stabilizer;
-    </li>
+            button {
+                width: 94%;
+                margin: 5px auto;
+                display: block;
+            }
 
-    <li>
-        early recognition of simulated deteriorating conditions;
-    </li>
+            .input-row {
+                grid-template-columns: 1fr 85px;
+            }
 
-    <li>
-        operator decision-support and escalation recommendations;
-    </li>
+            .operator-alert-title {
+                font-size: 17px;
+            }
 
-    <li>
-        human-in-the-loop authority and intervention points;
-    </li>
+            .output {
+                font-size: 11px;
+            }
 
-    <li>
-        simulated DP response behaviour;
-    </li>
+            .status-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
 
-    <li>
-        repeatable scenario testing and comparison;
-    </li>
+        @media (max-width: 380px) {
 
-    <li>
-        audit and event recording; and
-    </li>
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
 
-    <li>
-        future validation through software testing,
-        hardware-in-the-loop simulation and independent
-        engineering review.
-    </li>
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+        }
 
-</ul>
+    </style>
+</head>
 
-<p>
-    The simulator is therefore intended to answer a
-    research question:
-    <strong>
-        can a layered deterministic resilience architecture
-        provide earlier recognition, structured escalation and
-        improved decision-support during rapidly changing
-        simulated maritime conditions?
-    </strong>
-</p>
+<body>
 
-<p>
-    This prototype provides a controlled environment in
-    which that hypothesis can be demonstrated, challenged,
-    measured and independently evaluated before any
-    consideration of physical implementation.
-</p>
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
 
-</div><div class="engine-status">ENGINE:
+    <div class="header">
 
-<span id="engineStatus">
-    INITIALISING...
-</span>
+        <h1>
+            SEXTANT PROTOCOL – DP RESILIENCE COCKPIT
+        </h1>
 
-</div><div
-    id="operatorAlert"
-    class="operator-alert alert-normal"
-><div
-    id="operatorAlertTitle"
-    class="operator-alert-title"
->
-    🟢 NORMAL
-</div>
+        <p class="purpose-line">
+            DETERMINISTIC MARITIME RESILIENCE RESEARCH SIMULATOR
+        </p>
 
-<div
-    id="operatorAlertMessage"
-    class="operator-alert-message"
->
-    System operating normally.
-    Continue monitoring.
-</div>
+        <p>
+            Controlled environmental scenarios →
+            independent assessment →
+            resilience arbitration →
+            human decision-support →
+            simulated DP response
+        </p>
 
-<div
-    id="operatorAlertInstruction"
-    class="operator-alert-instruction"
->
-    NO IMMEDIATE ACTION REQUIRED
-</div>
+        <p class="boundary-line">
+            RESEARCH / SIMULATION PROTOTYPE •
+            HUMAN AUTHORITY REMAINS FINAL
+        </p>
 
-<div class="operator-alert-meta">
+    </div>
 
-    <div class="alert-meta-card">
-        <span class="alert-meta-label">
-            ALERT LEVEL
-        </span>
 
-        <span
-            id="operatorAlertLevel"
-            class="alert-meta-value"
+    <div class="container">
+
+        <!-- =====================================================
+             RESEARCH PURPOSE
+        ====================================================== -->
+
+        <div class="panel research-purpose">
+
+            <h2>
+                What This Simulator Is
+            </h2>
+
+            <p class="purpose-lead">
+                The Sextant Protocol DP Resilience Cockpit is a
+                deterministic research and engineering simulation
+                environment for studying how a layered resilience
+                architecture could respond to changing maritime
+                environmental conditions.
+            </p>
+
+            <p>
+                The simulator creates a controlled virtual vessel
+                environment in which wind, current, wave and tidal
+                conditions can be varied, repeated and analysed.
+                Each scenario is processed by the deterministic
+                simulation engine and presented through the cockpit
+                for technical observation.
+            </p>
+
+            <div class="purpose-flow">
+
+                ENVIRONMENT
+                →
+                PRIMARY AI
+                →
+                SECONDARY AI
+                →
+                STABILIZER
+                →
+                HUMAN-IN-THE-LOOP
+                →
+                SIMULATED DP RESPONSE
+
+            </div>
+
+            <p>
+                The research environment is intended to allow
+                engineers, maritime professionals, researchers and
+                reviewers to examine how the proposed architecture
+                behaves as simulated environmental stress changes.
+            </p>
+
+            <p>
+                In particular, the simulator provides a controlled
+                environment for investigating:
+            </p>
+
+            <ul>
+
+                <li>
+                    deterministic environmental scenario generation;
+                </li>
+
+                <li>
+                    environmental stress calculation and risk classification;
+                </li>
+
+                <li>
+                    independent Primary AI and Secondary AI assessments;
+                </li>
+
+                <li>
+                    deterministic resilience arbitration through the Stabilizer;
+                </li>
+
+                <li>
+                    early recognition of simulated deteriorating conditions;
+                </li>
+
+                <li>
+                    operator decision-support and escalation recommendations;
+                </li>
+
+                <li>
+                    human-in-the-loop authority and intervention points;
+                </li>
+
+                <li>
+                    simulated DP response behaviour;
+                </li>
+
+                <li>
+                    repeatable scenario testing and comparison;
+                </li>
+
+                <li>
+                    audit and event recording; and
+                </li>
+
+                <li>
+                    future validation through software testing,
+                    hardware-in-the-loop simulation and independent
+                    engineering review.
+                </li>
+
+            </ul>
+
+            <p>
+                The simulator is therefore intended to answer a
+                research question:
+                <strong>
+                    can a layered deterministic resilience architecture
+                    provide earlier recognition, structured escalation and
+                    improved decision-support during rapidly changing
+                    simulated maritime conditions?
+                </strong>
+            </p>
+
+            <p>
+                This prototype provides a controlled environment in
+                which that hypothesis can be demonstrated, challenged,
+                measured and independently evaluated before any
+                consideration of physical implementation.
+            </p>
+
+        </div>
+
+
+        <!-- =====================================================
+             ENGINE STATUS
+        ====================================================== -->
+
+        <div class="engine-status">
+
+            ENGINE:
+
+            <span id="engineStatus">
+                INITIALISING...
+            </span>
+
+        </div>
+
+
+        <!-- =====================================================
+             OPERATOR ALERT
+        ====================================================== -->
+
+        <div
+            id="operatorAlert"
+            class="operator-alert alert-normal"
         >
-            NORMAL
-        </span>
-    </div>
 
-    <div class="alert-meta-card">
-        <span class="alert-meta-label">
-            EVENT PRIORITY
-        </span>
+            <div
+                id="operatorAlertTitle"
+                class="operator-alert-title"
+            >
+                🟢 NORMAL
+            </div>
 
-        <span
-            id="eventPriority"
-            class="alert-meta-value"
+            <div
+                id="operatorAlertMessage"
+                class="operator-alert-message"
+            >
+                System operating normally.
+                Continue monitoring.
+            </div>
+
+            <div
+                id="operatorAlertInstruction"
+                class="operator-alert-instruction"
+            >
+                NO IMMEDIATE ACTION REQUIRED
+            </div>
+
+            <div class="operator-alert-meta">
+
+                <div class="alert-meta-card">
+                    <span class="alert-meta-label">
+                        ALERT LEVEL
+                    </span>
+
+                    <span
+                        id="operatorAlertLevel"
+                        class="alert-meta-value"
+                    >
+                        NORMAL
+                    </span>
+                </div>
+
+                <div class="alert-meta-card">
+                    <span class="alert-meta-label">
+                        EVENT PRIORITY
+                    </span>
+
+                    <span
+                        id="eventPriority"
+                        class="alert-meta-value"
+                    >
+                        LOW
+                    </span>
+                </div>
+
+                <div class="alert-meta-card">
+                    <span class="alert-meta-label">
+                        OPERATOR RESPONSE
+                    </span>
+
+                    <span
+                        id="operatorResponse"
+                        class="alert-meta-value"
+                    >
+                        MONITOR
+                    </span>
+                </div>
+
+                <div class="alert-meta-card">
+                    <span class="alert-meta-label">
+                        HUMAN AUTHORITY
+                    </span>
+
+                    <span
+                        id="humanAuthority"
+                        class="alert-meta-value"
+                    >
+                        AVAILABLE
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             PRINCIPAL ARCHITECTURE
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                Principal Architecture
+            </h2>
+
+            <div class="architecture">
+
+                <div class="node">
+                    ENVIRONMENT
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="node">
+                    PRIMARY AI<br>
+                    Normal Control
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="node">
+                    SECONDARY AI<br>
+                    Independent Safety Layer
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="node">
+                    STABILIZER<br>
+                    Arbitration
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="node">
+                    HUMAN-IN-THE-LOOP<br>
+                    Final Authority
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="node">
+                    SIMULATED DP ACTION
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SIMULATED NAVIGATION & SENSOR AWARENESS
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                Simulated Navigation & Sensor Awareness
+            </h2>
+
+            <div id="dpNavigationPanel">
+
+                <div class="status-grid">
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            NAVIGATION SYSTEM
+                        </div>
+
+                        <div
+                            id="navigationSystemStatus"
+                            class="status-value"
+                        >
+                            ONLINE — SIMULATION
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            POSITION REFERENCE
+                        </div>
+
+                        <div
+                            id="navigationPosition"
+                            class="status-value"
+                        >
+                            SIMULATED
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            HEADING
+                        </div>
+
+                        <div
+                            id="navigationHeading"
+                            class="status-value"
+                        >
+                            000.0°
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            POSITION ERROR
+                        </div>
+
+                        <div
+                            id="navigationPositionError"
+                            class="status-value"
+                        >
+                            0.00 m
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            GNSS / POSITION SENSOR
+                        </div>
+
+                        <div
+                            id="gnssStatus"
+                            class="status-value"
+                        >
+                            NORMAL — SIMULATED
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            GYRO / HEADING SENSOR
+                        </div>
+
+                        <div
+                            id="gyroStatus"
+                            class="status-value"
+                        >
+                            NORMAL — SIMULATED
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            ENVIRONMENTAL SENSORS
+                        </div>
+
+                        <div
+                            id="environmentSensorStatus"
+                            class="status-value"
+                        >
+                            NORMAL — SIMULATED
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            SENSOR INTEGRITY
+                        </div>
+
+                        <div
+                            id="sensorIntegrity"
+                            class="status-value"
+                        >
+                            HIGH
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            NAVIGATION CONFIDENCE
+                        </div>
+
+                        <div
+                            id="navigationConfidence"
+                            class="status-value"
+                        >
+                            HIGH
+                        </div>
+                    </div>
+
+                    <div class="status-card">
+                        <div class="status-title">
+                            DATA SOURCE
+                        </div>
+
+                        <div
+                            id="navigationDataSource"
+                            class="status-value"
+                        >
+                            SIMULATION ENGINE
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             VESSEL + ENVIRONMENT
+        ====================================================== -->
+
+        <div class="grid">
+
+            <div class="panel">
+
+                <h2>
+                    Simulated Vessel Profile
+                </h2>
+
+                <div class="vessel-data">
+
+                    <strong>Name:</strong>
+                    SEXTANT-MPSV-01
+                    <br>
+
+                    <strong>Type:</strong>
+                    Multi-Purpose Support Vessel
+                    <br>
+
+                    <strong>DP Class:</strong>
+                    DP2-SIMULATED
+                    <br>
+
+                    <strong>Length:</strong>
+                    85 m
+                    <br>
+
+                    <strong>Beam:</strong>
+                    20 m
+                    <br>
+
+                    <strong>Draft:</strong>
+                    6 m
+                    <br>
+
+                    <strong>Main Thrusters:</strong>
+                    2
+                    <br>
+
+                    <strong>Tunnel Thrusters:</strong>
+                    2
+                    <br>
+
+                    <strong>Total Thrusters:</strong>
+                    4
+                    <br>
+
+                    <strong>
+                        Nominal Simulated Thrust:
+                    </strong>
+                    100 units
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Environmental Simulation Inputs
+                </h2>
+
+                <div class="input-row">
+
+                    <label for="wind">
+                        Wind Stress (0–100)
+                    </label>
+
+                    <input
+                        id="wind"
+                        type="number"
+                        min="0"
+                        max="100"
+                        value="20"
+                    >
+
+                </div>
+
+                <div class="input-row">
+
+                    <label for="current">
+                        Current Stress (0–100)
+                    </label>
+
+                    <input
+                        id="current"
+                        type="number"
+                        min="0"
+                        max="100"
+                        value="15"
+                    >
+
+                </div>
+
+                <div class="input-row">
+
+                    <label for="wave">
+                        Wave Stress (0–100)
+                    </label>
+
+                    <input
+                        id="wave"
+                        type="number"
+                        min="0"
+                        max="100"
+                        value="20"
+                    >
+
+                </div>
+
+                <div class="input-row">
+
+                    <label for="tidal">
+                        Tidal Stress (0–100)
+                    </label>
+
+                    <input
+                        id="tidal"
+                        type="number"
+                        min="0"
+                        max="100"
+                        value="15"
+                    >
+
+                </div>
+
+                <div class="environment-stress">
+
+                    <div class="environment-stress-label">
+                        ENVIRONMENTAL STRESS
+                    </div>
+
+                    <div
+                        id="environmentStress"
+                        class="environment-stress-value"
+                    >
+                        0.00
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SCENARIO CONTROLS
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                Scenario Controls
+            </h2>
+
+            <div class="controls">
+
+                <button
+                    class="scenario"
+                    onclick="executeDPCockpitScenario('NORMAL')"
+                >
+                    NORMAL
+                </button>
+
+                <button
+                    class="scenario"
+                    onclick="executeDPCockpitScenario('MODERATE_WEATHER')"
+                >
+                    MODERATE
+                </button>
+
+                <button
+                    class="scenario"
+                    onclick="executeDPCockpitScenario('HEAVY_WEATHER')"
+                >
+                    HEAVY WEATHER
+                </button>
+
+                <button
+                    class="scenario"
+                    onclick="executeDPCockpitScenario('CRITICAL_WEATHER')"
+                >
+                    CRITICAL
+                </button>
+
+                <button
+                    class="scenario"
+                    onclick="executeDPCockpitScenario('CURRENT_SURGE')"
+                >
+                    CURRENT SURGE
+                </button>
+
+                <button
+                    class="scenario"
+                    onclick="executeDPCockpitScenario('HEAVY_SEA_STATE')"
+                >
+                    HEAVY SEA
+                </button>
+
+                <button
+                    class="scenario"
+                    onclick="executeDPCockpitScenario('WIND_GUST_EVENT')"
+                >
+                    WIND GUST
+                </button>
+
+                <button
+                    class="scenario"
+                    onclick="executeDPCockpitScenario('COMBINED_DISTURBANCE')"
+                >
+                    COMBINED
+                </button>
+
+                <button
+                    class="scenario"
+                    onclick="executeRandomDPCockpitScenario()"
+                >
+                    RANDOM
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             RUN / RESET
+        ====================================================== -->
+
+        <div class="controls">
+
+            <button
+                class="run"
+                onclick="runSimulation()"
+            >
+                ▶ RUN DP SIMULATION
+            </button>
+
+            <button
+                class="reset"
+                onclick="resetSimulation()"
+            >
+                RESET
+            </button>
+
+        </div>
+
+
+        <!-- =====================================================
+             LIVE SYSTEM STATUS
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                Live System Status
+            </h2>
+
+            <div class="status-grid">
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        ENVIRONMENT
+                    </div>
+
+                    <div
+                        id="environmentStatus"
+                        class="status-value"
+                    >
+                        STANDBY
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        PRIMARY AI
+                    </div>
+
+                    <div
+                        id="primaryStatus"
+                        class="status-value"
+                    >
+                        STANDBY
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        SECONDARY AI
+                    </div>
+
+                    <div
+                        id="secondaryStatus"
+                        class="status-value"
+                    >
+                        STANDBY
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        STABILIZER
+                    </div>
+
+                    <div
+                        id="liveStabilizerStatus"
+                        class="status-value"
+                    >
+                        STANDBY
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        HUMAN AUTHORITY
+                    </div>
+
+                    <div
+                        id="humanStatus"
+                        class="status-value"
+                    >
+                        AVAILABLE
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        SYSTEM
+                    </div>
+
+                    <div
+                        id="systemStatus"
+                        class="status-value"
+                    >
+                        READY
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             RESILIENCE EARLY WARNING
+        ====================================================== -->
+
+        <div
+            class="panel"
+            id="resilienceAlertPanel"
         >
-            LOW
-        </span>
-    </div>
 
-    <div class="alert-meta-card">
-        <span class="alert-meta-label">
-            OPERATOR RESPONSE
-        </span>
+            <h2>
+                ⚠ Resilience Early-Warning / Operator Alert
+            </h2>
 
-        <span
-            id="operatorResponse"
-            class="alert-meta-value"
-        >
-            MONITOR
-        </span>
-    </div>
-
-    <div class="alert-meta-card">
-        <span class="alert-meta-label">
-            HUMAN AUTHORITY
-        </span>
-
-        <span
-            id="humanAuthority"
-            class="alert-meta-value"
-        >
-            AVAILABLE
-        </span>
-    </div>
-
-</div>
-
-</div><div class="panel"><h2>
-    Principal Architecture
-</h2>
-
-<div class="architecture">
-
-    <div class="node">
-        ENVIRONMENT
-    </div>
-
-    <div class="arrow">→</div>
-
-    <div class="node">
-        PRIMARY AI<br>
-        Normal Control
-    </div>
-
-    <div class="arrow">→</div>
-
-    <div class="node">
-        SECONDARY AI<br>
-        Independent Safety Layer
-    </div>
-
-    <div class="arrow">→</div>
-
-    <div class="node">
-        STABILIZER<br>
-        Arbitration
-    </div>
-
-    <div class="arrow">→</div>
-
-    <div class="node">
-        HUMAN-IN-THE-LOOP<br>
-        Final Authority
-    </div>
-
-    <div class="arrow">→</div>
-
-    <div class="node">
-        SIMULATED DP ACTION
-    </div>
-
-</div>
-
-</div><div class="panel"><h2>
-    Simulated Navigation & Sensor Awareness
-</h2>
-
-<div id="dpNavigationPanel">
-
-    <div class="status-grid">
-
-        <div class="status-card">
-            <div class="status-title">
-                NAVIGATION SYSTEM
+            <div
+                id="resilienceAlert"
+                class="operator-alert alert-normal active"
+            >
+                SYSTEM MONITORING —
+                NO RESILIENCE ALERT
             </div>
 
             <div
-                id="navigationSystemStatus"
-                class="status-value"
+                class="status-grid"
+                style="margin-top:12px;"
             >
-                ONLINE — SIMULATION
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        RESILIENCE ALERT LEVEL
+                    </div>
+
+                    <div
+                        id="resilienceAlertLevel"
+                        class="status-value"
+                    >
+                        NORMAL
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        ENVIRONMENTAL CHANGE
+                    </div>
+
+                    <div
+                        id="environmentalChange"
+                        class="status-value"
+                    >
+                        STABLE
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        RESILIENCE STATE
+                    </div>
+
+                    <div
+                        id="resilienceState"
+                        class="status-value"
+                    >
+                        MONITORING
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        OPERATOR ATTENTION
+                    </div>
+
+                    <div
+                        id="operatorAttention"
+                        class="status-value"
+                    >
+                        NOT REQUIRED
+                    </div>
+
+                </div>
+
             </div>
+
         </div>
 
-        <div class="status-card">
-            <div class="status-title">
-                POSITION REFERENCE
+
+        <!-- =====================================================
+             STABILIZER
+        ====================================================== -->
+
+        <div class="panel stabilizer-panel">
+
+            <h2>
+                Stabilizer – Resilience Arbitration
+            </h2>
+
+            <div
+                id="stabilizerState"
+                class="stabilizer-state"
+            >
+                STANDBY
             </div>
 
             <div
-                id="navigationPosition"
-                class="status-value"
+                id="stabilizerMessage"
+                class="stabilizer-message"
             >
-                SIMULATED
+                The stabilizer is awaiting simulated
+                environmental assessment.
             </div>
+
+            <div class="stabilizer-grid">
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        MODE
+                    </div>
+
+                    <div
+                        id="stabilizerMode"
+                        class="status-value"
+                    >
+                        STANDBY
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        SOURCE
+                    </div>
+
+                    <div
+                        id="stabilizerSource"
+                        class="status-value"
+                    >
+                        AWAITING ASSESSMENT
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        FINAL OUTPUT
+                    </div>
+
+                    <div
+                        id="stabilizerOutput"
+                        class="status-value"
+                    >
+                        0.00
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        STATUS
+                    </div>
+
+                    <div
+                        id="stabilizerStatus"
+                        class="status-value"
+                    >
+                        STANDBY
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="status-card">
-            <div class="status-title">
-                HEADING
+
+        <!-- =====================================================
+             HUMAN DECISION AUTHORITY
+        ====================================================== -->
+
+        <div class="panel human-decision">
+
+            <div class="human-decision-title">
+                HUMAN-IN-THE-LOOP — FINAL AUTHORITY
             </div>
 
             <div
-                id="navigationHeading"
-                class="status-value"
+                id="humanDecisionMessage"
+                class="human-decision-message"
             >
-                000.0°
+                No operator intervention currently required.
+                Human authority remains available and final.
             </div>
+
         </div>
 
-        <div class="status-card">
-            <div class="status-title">
-                POSITION ERROR
+
+        <!-- =====================================================
+             OPERATOR DECISION SUPPORT
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                Operator Decision-Support Recommendation
+            </h2>
+
+            <div
+                id="recommendedAction"
+                class="recommendation-primary"
+            >
+                NO SIMULATED RECOMMENDATION
+            </div>
+
+            <div class="status-grid">
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        URGENCY
+                    </div>
+
+                    <div
+                        id="actionUrgency"
+                        class="status-value"
+                    >
+                        NORMAL
+                    </div>
+
+                </div>
+
+                <div class="status-card">
+
+                    <div class="status-title">
+                        RESPONSE MODE
+                    </div>
+
+                    <div
+                        id="responseMode"
+                        class="status-value"
+                    >
+                        MONITORING
+                    </div>
+
+                </div>
+
             </div>
 
             <div
-                id="navigationPositionError"
-                class="status-value"
+                id="actionRationale"
+                class="recommendation-rationale"
             >
-                0.00 m
+                Awaiting simulated environmental assessment.
             </div>
+
+            <ul id="recommendedActions">
+
+                <li>
+                    Continue simulated monitoring.
+                </li>
+
+            </ul>
+
         </div>
 
-        <div class="status-card">
-            <div class="status-title">
-                GNSS / POSITION SENSOR
-            </div>
+
+        <!-- =====================================================
+             OPERATOR NOTIFICATION
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                Operator Notification
+            </h2>
 
             <div
-                id="gnssStatus"
-                class="status-value"
+                id="operatorNotification"
+                class="output"
+                style="min-height:150px;"
             >
-                NORMAL — SIMULATED
+                SYSTEM READY.
+
+                CONTINUOUS SIMULATED MONITORING ACTIVE.
+
+                NO OPERATOR INTERVENTION REQUESTED.
             </div>
+
         </div>
 
-        <div class="status-card">
-            <div class="status-title">
-                GYRO / HEADING SENSOR
+
+        <!-- =====================================================
+             RESPONSE INDICATORS
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                Operator Response Indicators
+            </h2>
+
+            <div class="response-indicator">
+
+                <div class="response-card">
+
+                    <div class="response-icon">
+                        🔔
+                    </div>
+
+                    <div class="response-label">
+                        AUDIBLE ALERT
+                    </div>
+
+                    <div
+                        id="audibleIndicator"
+                        class="response-value"
+                    >
+                        STANDBY
+                    </div>
+
+                </div>
+
+                <div class="response-card">
+
+                    <div class="response-icon">
+                        📳
+                    </div>
+
+                    <div class="response-label">
+                        ATTENTION INDICATOR
+                    </div>
+
+                    <div
+                        id="attentionIndicator"
+                        class="response-value"
+                    >
+                        STANDBY
+                    </div>
+
+                </div>
+
+                <div class="response-card">
+
+                    <div class="response-icon">
+                        ⏱️
+                    </div>
+
+                    <div class="response-label">
+                        RESPONSE WINDOW
+                    </div>
+
+                    <div
+                        id="responseWindowIndicator"
+                        class="response-value"
+                    >
+                        NOT ACTIVE
+                    </div>
+
+                </div>
+
+                <div class="response-card">
+
+                    <div class="response-icon">
+                        👨‍✈️
+                    </div>
+
+                    <div class="response-label">
+                        HUMAN DECISION
+                    </div>
+
+                    <div
+                        id="humanDecisionIndicator"
+                        class="response-value"
+                    >
+                        AVAILABLE
+                    </div>
+
+                </div>
+
             </div>
 
-            <div
-                id="gyroStatus"
-                class="status-value"
-            >
-                NORMAL — SIMULATED
-            </div>
         </div>
 
-        <div class="status-card">
-            <div class="status-title">
-                ENVIRONMENTAL SENSORS
-            </div>
+
+        <!-- =====================================================
+             OPERATOR EVENT LOG
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                Operator Event Log
+            </h2>
 
             <div
-                id="environmentSensorStatus"
-                class="status-value"
+                id="operatorEventLog"
+                class="event-log"
             >
-                NORMAL — SIMULATED
+
+                <div class="event-entry">
+                    [SYSTEM]
+                    DP resilience research simulator initialised.
+                </div>
+
             </div>
+
         </div>
 
-        <div class="status-card">
-            <div class="status-title">
-                SENSOR INTEGRITY
-            </div>
+
+        <!-- =====================================================
+             RESILIENCE AUDIT LOG
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                Resilience Audit Log
+            </h2>
 
             <div
-                id="sensorIntegrity"
-                class="status-value"
+                id="alertLog"
+                class="output"
+                style="min-height:180px;"
             >
-                HIGH
+                SYSTEM EVENT LOG
+
+                Research simulator initialised.
+
+                Waiting for simulated environmental input.
+
+                No resilience alert generated.
             </div>
+
         </div>
 
-        <div class="status-card">
-            <div class="status-title">
-                NAVIGATION CONFIDENCE
-            </div>
+
+        <!-- =====================================================
+             DP SIMULATION ASSESSMENT
+        ====================================================== -->
+
+        <div class="panel">
+
+            <h2>
+                DP Simulation Assessment
+            </h2>
 
             <div
-                id="navigationConfidence"
-                class="status-value"
+                id="output"
+                class="output"
             >
-                HIGH
+                System ready.
+
+                Select environmental conditions or a scenario,
+                then press RUN DP SIMULATION.
             </div>
+
         </div>
 
-        <div class="status-card">
-            <div class="status-title">
-                DATA SOURCE
-            </div>
 
-            <div
-                id="navigationDataSource"
-                class="status-value"
-            >
-                SIMULATION ENGINE
-            </div>
+        <!-- =====================================================
+             RESEARCH PURPOSE / OPERATIONAL BOUNDARY
+        ====================================================== -->
+
+        <div class="panel safety-boundary">
+
+            <h2>
+                Research Purpose & Operational Boundary
+            </h2>
+
+            <strong>
+                SEXTANT PROTOCOL — DP RESILIENCE RESEARCH SIMULATOR
+            </strong>
+
+            <p>
+                This cockpit is a deterministic research and engineering
+                simulation environment developed to explore how a layered
+                resilience architecture could respond to changing maritime
+                environmental conditions.
+            </p>
+
+            <p>
+                The simulator creates a controlled virtual vessel environment
+                in which wind, current, wave and tidal conditions can be varied,
+                repeated and analysed. The deterministic simulation engine
+                processes those conditions through the research architecture
+                and produces a traceable simulated result.
+            </p>
+
+            <p>
+                The simulator is intended to support research, education,
+                engineering analysis, scenario testing, technical demonstration,
+                repeatable validation and future independent review.
+            </p>
+
+            <p>
+                The simulated outputs can be used to examine relationships
+                between environmental loading, resilience assessment,
+                arbitration, operator attention and simulated response.
+            </p>
+
+            <p>
+                The simulator is designed to help investigate whether a layered
+                resilience architecture could provide earlier recognition,
+                structured escalation and improved decision-support during
+                rapidly changing simulated maritime conditions.
+            </p>
+
+            <hr>
+
+            <strong>
+                HUMAN-IN-THE-LOOP
+            </strong>
+
+            <p>
+                Human authority remains the final decision point in the research
+                architecture. The simulator provides decision-support and
+                simulated responses; it does not replace the Master, DPO,
+                authorised operator, vessel procedures or classification
+                requirements.
+            </p>
+
+            <hr>
+
+            <strong>
+                OPERATIONAL BOUNDARY
+            </strong>
+
+            <p>
+                The prototype is intentionally isolated from operational vessel
+                control. It does not connect to and must not be connected to:
+            </p>
+
+            <ul>
+
+                <li>
+                    Dynamic Positioning systems
+                </li>
+
+                <li>
+                    Propulsion systems
+                </li>
+
+                <li>
+                    Navigation systems
+                </li>
+
+                <li>
+                    Steering systems
+                </li>
+
+                <li>
+                    Safety systems
+                </li>
+
+                <li>
+                    Vessel automation systems
+                </li>
+
+            </ul>
+
+            <p>
+                It is not certified marine control software and does not provide
+                certified DP functionality.
+            </p>
+
+            <p>
+                All environmental conditions, vessel behaviour, sensor states,
+                AI assessments, stabilizer decisions, alerts and simulated
+                actions displayed by this cockpit are non-operational research
+                representations generated by the simulation environment.
+            </p>
+
+            <p>
+                <strong>
+                    RESEARCH • SIMULATION • EDUCATION • ENGINEERING ANALYSIS
+                </strong>
+            </p>
+
         </div>
 
     </div>
 
-</div>
 
-</div><div class="grid"><div class="panel">
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
 
-    <h2>
-        Simulated Vessel Profile
-    </h2>
+    <div class="footer">
 
-    <div class="vessel-data">
+        SEXTANT PROTOCOL™ – DP RESILIENCE RESEARCH SIMULATOR
 
-        <strong>Name:</strong>
-        SEXTANT-MPSV-01
         <br>
 
-        <strong>Type:</strong>
-        Multi-Purpose Support Vessel
+        Deterministic environmental scenario generation,
+        resilience assessment and human-in-the-loop
+        decision-support research.
+
         <br>
 
-        <strong>DP Class:</strong>
-        DP2-SIMULATED
-        <br>
+        ENVIRONMENT → PRIMARY AI → SECONDARY AI →
+        STABILIZER → HUMAN AUTHORITY → SIMULATED RESPONSE
 
-        <strong>Length:</strong>
-        85 m
-        <br>
+        <br><br>
 
-        <strong>Beam:</strong>
-        20 m
-        <br>
-
-        <strong>Draft:</strong>
-        6 m
-        <br>
-
-        <strong>Main Thrusters:</strong>
-        2
-        <br>
-
-        <strong>Tunnel Thrusters:</strong>
-        2
-        <br>
-
-        <strong>Total Thrusters:</strong>
-        4
-        <br>
-
-        <strong>
-            Nominal Simulated Thrust:
-        </strong>
-        100 units
-
-    </div>
-
-</div>
-
-<div class="panel">
-
-    <h2>
-        Environmental Simulation Inputs
-    </h2>
-
-    <div class="input-row">
-
-        <label for="wind">
-            Wind Stress (0–100)
-        </label>
-
-        <input
-            id="wind"
-            type="number"
-            min="0"
-            max="100"
-            value="20"
-        >
-
-    </div>
-
-    <div class="input-row">
-
-        <label for="current">
-            Current Stress (0–100)
-        </label>
-
-        <input
-            id="current"
-            type="number"
-            min="0"
-            max="100"
-            value="15"
-        >
-
-    </div>
-
-    <div class="input-row">
-
-        <label for="wave">
-            Wave Stress (0–100)
-        </label>
-
-        <input
-            id="wave"
-            type="number"
-            min="0"
-            max="100"
-            value="20"
-        >
-
-    </div>
-
-    <div class="input-row">
-
-        <label for="tidal">
-            Tidal Stress (0–100)
-        </label>
-
-        <input
-            id="tidal"
-            type="number"
-            min="0"
-            max="100"
-            value="15"
-        >
-
-    </div>
-
-    <div class="environment-stress">
-
-        <div class="environment-stress-label">
-            ENVIRONMENTAL STRESS
-        </div>
-
-        <div
-            id="environmentStress"
-            class="environment-stress-value"
-        >
-            0.00
-        </div>
-
-    </div>
-
-</div>
-
-</div><div class="panel"><h2>
-    Scenario Controls
-</h2>
-
-<div class="controls">
-
-    <button
-        class="scenario"
-        onclick="executeDPCockpitScenario('NORMAL')"
-    >
-        NORMAL
-    </button>
-
-    <button
-        class="scenario"
-        onclick="executeDPCockpitScenario('MODERATE_WEATHER')"
-    >
-        MODERATE
-    </button>
-
-    <button
-        class="scenario"
-        onclick="executeDPCockpitScenario('HEAVY_WEATHER')"
-    >
-        HEAVY WEATHER
-    </button>
-
-    <button
-        class="scenario"
-        onclick="executeDPCockpitScenario('CRITICAL_WEATHER')"
-    >
-        CRITICAL
-    </button>
-
-    <button
-        class="scenario"
-        onclick="executeDPCockpitScenario('CURRENT_SURGE')"
-    >
-        CURRENT SURGE
-    </button>
-
-    <button
-        class="scenario"
-        onclick="executeDPCockpitScenario('HEAVY_SEA_STATE')"
-    >
-        HEAVY SEA
-    </button>
-
-    <button
-        class="scenario"
-        onclick="executeDPCockpitScenario('WIND_GUST_EVENT')"
-    >
-        WIND GUST
-    </button>
-
-    <button
-        class="scenario"
-        onclick="executeDPCockpitScenario('COMBINED_DISTURBANCE')"
-    >
-        COMBINED
-    </button>
-
-    <button
-        class="scenario"
-        onclick="executeRandomDPCockpitScenario()"
-    >
-        RANDOM
-    </button>
-
-</div>
-
-</div><div class="controls"><button
-    class="run"
-    onclick="runSimulation()"
->
-    ▶ RUN DP SIMULATION
-</button>
-
-<button
-    class="reset"
-    onclick="resetSimulation()"
->
-    RESET
-</button>
-
-</div><div class="panel"><h2>
-    Live System Status
-</h2>
-
-<div class="status-grid">
-
-    <div class="status-card">
-
-        <div class="status-title">
-            ENVIRONMENT
-        </div>
-
-        <div
-            id="environmentStatus"
-            class="status-value"
-        >
-            STANDBY
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            PRIMARY AI
-        </div>
-
-        <div
-            id="primaryStatus"
-            class="status-value"
-        >
-            STANDBY
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            SECONDARY AI
-        </div>
-
-        <div
-            id="secondaryStatus"
-            class="status-value"
-        >
-            STANDBY
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            STABILIZER
-        </div>
-
-        <div
-            id="liveStabilizerStatus"
-            class="status-value"
-        >
-            STANDBY
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            HUMAN AUTHORITY
-        </div>
-
-        <div
-            id="humanStatus"
-            class="status-value"
-        >
-            AVAILABLE
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            SYSTEM
-        </div>
-
-        <div
-            id="systemStatus"
-            class="status-value"
-        >
-            READY
-        </div>
-
-    </div>
-
-</div>
-
-</div><div
-    class="panel"
-    id="resilienceAlertPanel"
-><h2>
-    ⚠ Resilience Early-Warning / Operator Alert
-</h2>
-
-<div
-    id="resilienceAlert"
-    class="operator-alert alert-normal active"
->
-    SYSTEM MONITORING —
-    NO RESILIENCE ALERT
-</div>
-
-<div
-    class="status-grid"
-    style="margin-top:12px;"
->
-
-    <div class="status-card">
-
-        <div class="status-title">
-            RESILIENCE ALERT LEVEL
-        </div>
-
-        <div
-            id="resilienceAlertLevel"
-            class="status-value"
-        >
-            NORMAL
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            ENVIRONMENTAL CHANGE
-        </div>
-
-        <div
-            id="environmentalChange"
-            class="status-value"
-        >
-            STABLE
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            RESILIENCE STATE
-        </div>
-
-        <div
-            id="resilienceState"
-            class="status-value"
-        >
-            MONITORING
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            OPERATOR ATTENTION
-        </div>
-
-        <div
-            id="operatorAttention"
-            class="status-value"
-        >
-            NOT REQUIRED
-        </div>
-
-    </div>
-
-</div>
-
-</div><div class="panel stabilizer-panel"><h2>
-    Stabilizer – Resilience Arbitration
-</h2>
-
-<div
-    id="stabilizerState"
-    class="stabilizer-state"
->
-    STANDBY
-</div>
-
-<div
-    id="stabilizerMessage"
-    class="stabilizer-message"
->
-    The stabilizer is awaiting simulated
-    environmental assessment.
-</div>
-
-<div class="stabilizer-grid">
-
-    <div class="status-card">
-
-        <div class="status-title">
-            MODE
-        </div>
-
-        <div
-            id="stabilizerMode"
-            class="status-value"
-        >
-            STANDBY
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            SOURCE
-        </div>
-
-        <div
-            id="stabilizerSource"
-            class="status-value"
-        >
-            AWAITING ASSESSMENT
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            FINAL OUTPUT
-        </div>
-
-        <div
-            id="stabilizerOutput"
-            class="status-value"
-        >
-            0.00
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            STATUS
-        </div>
-
-        <div
-            id="stabilizerStatus"
-            class="status-value"
-        >
-            STANDBY
-        </div>
-
-    </div>
-
-</div>
-
-</div><div class="panel human-decision"><div class="human-decision-title">
-    HUMAN-IN-THE-LOOP — FINAL AUTHORITY
-</div>
-
-<div
-    id="humanDecisionMessage"
-    class="human-decision-message"
->
-    No operator intervention currently required.
-    Human authority remains available and final.
-</div>
-
-</div><div class="panel"><h2>
-    Operator Decision-Support Recommendation
-</h2>
-
-<div
-    id="recommendedAction"
-    class="recommendation-primary"
->
-    NO SIMULATED RECOMMENDATION
-</div>
-
-<div class="status-grid">
-
-    <div class="status-card">
-
-        <div class="status-title">
-            URGENCY
-        </div>
-
-        <div
-            id="actionUrgency"
-            class="status-value"
-        >
-            NORMAL
-        </div>
-
-    </div>
-
-    <div class="status-card">
-
-        <div class="status-title">
-            RESPONSE MODE
-        </div>
-
-        <div
-            id="responseMode"
-            class="status-value"
-        >
-            MONITORING
-        </div>
-
-    </div>
-
-</div>
-
-<div
-    id="actionRationale"
-    class="recommendation-rationale"
->
-    Awaiting simulated environmental assessment.
-</div>
-
-<ul id="recommendedActions">
-
-    <li>
-        Continue simulated monitoring.
-    </li>
-
-</ul>
-
-</div><div class="panel"><h2>
-    Operator Notification
-</h2>
-
-<div
-    id="operatorNotification"
-    class="output"
-    style="min-height:150px;"
->
-    SYSTEM READY.
-
-    CONTINUOUS SIMULATED MONITORING ACTIVE.
-
-    NO OPERATOR INTERVENTION REQUESTED.
-</div>
-
-</div><div class="panel"><h2>
-    Operator Response Indicators
-</h2>
-
-<div class="response-indicator">
-
-    <div class="response-card">
-
-        <div class="response-icon">
-            🔔
-        </div>
-
-        <div class="response-label">
-            AUDIBLE ALERT
-        </div>
-
-        <div
-            id="audibleIndicator"
-            class="response-value"
-        >
-            STANDBY
-        </div>
-
-    </div>
-
-    <div class="response-card">
-
-        <div class="response-icon">
-            📳
-        </div>
-
-        <div class="response-label">
-            ATTENTION INDICATOR
-        </div>
-
-        <div
-            id="attentionIndicator"
-            class="response-value"
-        >
-            STANDBY
-        </div>
-
-    </div>
-
-    <div class="response-card">
-
-        <div class="response-icon">
-            ⏱️
-        </div>
-
-        <div class="response-label">
-            RESPONSE WINDOW
-        </div>
-
-        <div
-            id="responseWindowIndicator"
-            class="response-value"
-        >
-            NOT ACTIVE
-        </div>
-
-    </div>
-
-    <div class="response-card">
-
-        <div class="response-icon">
-            👨‍✈️
-        </div>
-
-        <div class="response-label">
-            HUMAN DECISION
-        </div>
-
-        <div
-            id="humanDecisionIndicator"
-            class="response-value"
-        >
-            AVAILABLE
-        </div>
-
-    </div>
-
-</div>
-
-</div><div class="panel"><h2>
-    Operator Event Log
-</h2>
-
-<div
-    id="operatorEventLog"
-    class="event-log"
->
-
-    <div class="event-entry">
-        [SYSTEM]
-        DP resilience research simulator initialised.
-    </div>
-
-</div>
-
-</div><div class="panel"><h2>
-    Resilience Audit Log
-</h2>
-
-<div
-    id="alertLog"
-    class="output"
-    style="min-height:180px;"
->
-
-    SYSTEM EVENT LOG
-
-    Research simulator initialised.
-
-    Waiting for simulated environmental input.
-
-    No resilience alert generated.
-
-</div>
-
-</div><div class="panel"><h2>
-    DP Simulation Assessment
-</h2>
-
-<div
-    id="output"
-    class="output"
->
-
-    System ready.
-
-    Select environmental conditions or a scenario,
-    then press RUN DP SIMULATION.
-
-</div>
-
-</div><div class="panel safety-boundary"><h2>
-    Research Purpose & Operational Boundary
-</h2>
-
-<strong>
-    SEXTANT PROTOCOL — DP RESILIENCE RESEARCH SIMULATOR
-</strong>
-
-<p>
-    This cockpit is a deterministic research and engineering
-    simulation environment developed to explore how a layered
-    resilience architecture could respond to changing maritime
-    environmental conditions.
-</p>
-
-<p>
-    The simulator creates a controlled virtual vessel environment
-    in which wind, current, wave and tidal conditions can be varied,
-    repeated and analysed. The deterministic simulation engine
-    processes those conditions through the research architecture
-    and produces a traceable simulated result.
-</p>
-
-<p>
-    The simulator is intended to support research, education,
-    engineering analysis, scenario testing, technical demonstration,
-    repeatable validation and future independent review.
-</p>
-
-<p>
-    The simulated outputs can be used to examine relationships
-    between environmental loading, resilience assessment,
-    arbitration, operator attention and simulated response.
-</p>
-
-<p>
-    The simulator is designed to help investigate whether a layered
-    resilience architecture could provide earlier recognition,
-    structured escalation and improved decision-support during
-    rapidly changing simulated maritime conditions.
-</p>
-
-<hr>
-
-<strong>
-    HUMAN-IN-THE-LOOP
-</strong>
-
-<p>
-    Human authority remains the final decision point in the research
-    architecture. The simulator provides decision-support and
-    simulated responses; it does not replace the Master, DPO,
-    authorised operator, vessel procedures or classification
-    requirements.
-</p>
-
-<hr>
-
-<strong>
-    OPERATIONAL BOUNDARY
-</strong>
-
-<p>
-    The prototype is intentionally isolated from operational vessel
-    control. It does not connect to and must not be connected to:
-</p>
-
-<ul>
-
-    <li>
-        Dynamic Positioning systems
-    </li>
-
-    <li>
-        Propulsion systems
-    </li>
-
-    <li>
-        Navigation systems
-    </li>
-
-    <li>
-        Steering systems
-    </li>
-
-    <li>
-        Safety systems
-    </li>
-
-    <li>
-        Vessel automation systems
-    </li>
-
-</ul>
-
-<p>
-    It is not certified marine control software and does not provide
-    certified DP functionality.
-</p>
-
-<p>
-    All environmental conditions, vessel behaviour, sensor states,
-    AI assessments, stabilizer decisions, alerts and simulated
-    actions displayed by this cockpit are non-operational research
-    representations generated by the simulation environment.
-</p>
-
-<p>
-    <strong>
         RESEARCH • SIMULATION • EDUCATION • ENGINEERING ANALYSIS
-    </strong>
-</p>
 
-</div></div><div class="footer">SEXTANT PROTOCOL™ – DP RESILIENCE RESEARCH SIMULATOR
+        <br>
 
-<br>
+        NOT CERTIFIED MARINE CONTROL SOFTWARE
 
-Deterministic environmental scenario generation,
-resilience assessment and human-in-the-loop
-decision-support research.
+    </div>
 
-<br>
 
-ENVIRONMENT → PRIMARY AI → SECONDARY AI →
-STABILIZER → HUMAN AUTHORITY → SIMULATED RESPONSE
+    <!-- =========================================================
+         JAVASCRIPT LOAD ORDER
 
-<br><br>
+         ENGINE MUST LOAD BEFORE COCKPIT.
 
-RESEARCH • SIMULATION • EDUCATION • ENGINEERING ANALYSIS
+         1. DP SIMULATION ENGINE
+         2. CAPTAIN AI LENA / UMV LAYER
+         3. SCENARIO LIBRARY
+         4. ALERT MANAGER
+         5. COCKPIT WIRING
 
-<br>
+         ARCHITECTURE:
 
-NOT CERTIFIED MARINE CONTROL SOFTWARE
+         dp_simulation_engine.js
+                 ↓
+         umv_captain_ai_lena.js
+                 ↓
+         dp_scenarios.js
+                 ↓
+         dp_alert_manager.js
+                 ↓
+         dp_cockpit.js
+                 ↓
+         index.html presentation
 
-</div><!-- =========================================================
-     JAVASCRIPT LOAD ORDER
+         IMPORTANT:
+         Each dependency is loaded ONCE.
+    ========================================================== -->
 
-     ENGINE MUST LOAD BEFORE COCKPIT.
+    <script src="./dp_simulation_engine.js"></script>
+    <script src="./umv_captain_ai_lena.js"></script>
+    <script src="./dp_scenarios.js"></script>
+    <script src="./dp_alert_manager.js"></script>
+    <script src="./dp_cockpit.js"></script>
 
-     1. DP SIMULATION ENGINE
-     2. SCENARIO LIBRARY
-     3. ALERT MANAGER
-     4. COCKPIT WIRING
+</body>
 
-     ARCHITECTURE:
-
-     dp_simulation_engine.js
-             ↓
-     dp_scenarios.js
-             ↓
-     dp_alert_manager.js
-             ↓
-     dp_cockpit.js
-             ↓
-     index.html presentation
-
-========================================================= --><script src="./dp_simulation_engine.js"></script><script src="./dp_scenarios.js"></script><script src="./dp_alert_manager.js"></script><script src="./dp_cockpit.js"></script></body>
 </html>
