@@ -4284,3 +4284,234 @@ function runStabilizer(
 ======================================================= */
 
 </script>
+<!-- ======================================================
+     PART 5D — CAPTAIN AI LENA RECOMMENDATION
+======================================================= -->
+
+<script>
+
+/* ======================================================
+   CAPTAIN AI LENA DECISION SUPPORT
+======================================================= */
+
+function runCaptainAILena(
+    stress,
+    environmentClass,
+    stabilizer
+) {
+
+    let recommendation;
+    let urgency;
+    let responseMode;
+    let message;
+
+    /*
+     * Captain AI Lena remains a decision-support layer.
+     * No operational command is generated.
+     */
+
+    if (stress < 30) {
+
+        recommendation =
+            "MAINTAIN SAFE DP STATE";
+
+        urgency =
+            "NORMAL";
+
+        responseMode =
+            "MONITORING";
+
+        message =
+            "Captain AI Lena assesses the simulated " +
+            "environment as LOW stress. " +
+            "Maintain the simulated safe DP state " +
+            "and continue monitoring.";
+
+    } else if (stress < 50) {
+
+        recommendation =
+            "INCREASE DP MONITORING";
+
+        urgency =
+            "ADVISORY";
+
+        responseMode =
+            "ENHANCED MONITORING";
+
+        message =
+            "Captain AI Lena assesses elevated " +
+            "environmental stress. Increase simulated " +
+            "monitoring and maintain human oversight.";
+
+    } else if (stress < 70) {
+
+        recommendation =
+            "PREPARE SAFE-STATE RESPONSE";
+
+        urgency =
+            "HIGH";
+
+        responseMode =
+            "STABILIZATION";
+
+        message =
+            "Captain AI Lena identifies a HIGH simulated " +
+            "environmental load. Prepare a safe-state " +
+            "response for human consideration.";
+
+    } else {
+
+        recommendation =
+            "MAINTAIN SAFE STATE";
+
+        urgency =
+            "CRITICAL";
+
+        responseMode =
+            "PROTECTIVE";
+
+        message =
+            "Captain AI Lena identifies a CRITICAL simulated " +
+            "environmental condition. Maintain the simulated " +
+            "safe state. Human authorization remains mandatory.";
+
+    }
+
+
+    /* ==================================================
+       INTERNAL STATE
+    ================================================== */
+
+    simulationState.recommendation =
+        recommendation;
+
+    simulationState.urgency =
+        urgency;
+
+    simulationState.responseMode =
+        responseMode;
+
+    simulationState.proposedAction =
+        recommendation;
+
+
+    /* ==================================================
+       EXISTING LENA DISPLAY
+    ================================================== */
+
+    setText(
+        "lenaStatus",
+        "ACTIVE — DECISION SUPPORT"
+    );
+
+    setText(
+        "lenaRecommendation",
+        recommendation
+    );
+
+    setText(
+        "lenaUrgency",
+        urgency
+    );
+
+    setText(
+        "lenaResponseMode",
+        responseMode
+    );
+
+    setText(
+        "lenaAutonomousCommand",
+        "FALSE"
+    );
+
+    setText(
+        "lenaUMVAction",
+        "NOT EXECUTED"
+    );
+
+
+    setText(
+        "lenaMessage",
+        message +
+        "\n\n" +
+        "Environment classification: " +
+        environmentClass +
+        "\n" +
+        "Stabilizer mode: " +
+        stabilizer.mode +
+        "\n\n" +
+        "HUMAN AUTHORITY REMAINS FINAL."
+    );
+
+
+    /* ==================================================
+       RECOMMENDED ACTION PANEL
+    ================================================== */
+
+    setText(
+        "recommendedLenaStatus",
+        "ACTIVE — DECISION SUPPORT"
+    );
+
+    setText(
+        "recommendedControlMode",
+        "HUMAN AUTHORITY"
+    );
+
+    setText(
+        "recommendedAction",
+        recommendation
+    );
+
+    setText(
+        "recommendedUrgency",
+        urgency
+    );
+
+    setText(
+        "recommendedAutonomous",
+        "FALSE"
+    );
+
+
+    setText(
+        "recommendedMessage",
+        "Captain AI Lena recommendation:\n\n" +
+        recommendation +
+        "\n\n" +
+        "Response mode: " +
+        responseMode +
+        "\n" +
+        "Urgency: " +
+        urgency +
+        "\n\n" +
+        "This is simulated decision support only.\n" +
+        "No operational command has been issued.\n" +
+        "Human authority remains FINAL."
+    );
+
+
+    return {
+
+        recommendation:
+            recommendation,
+
+        urgency:
+            urgency,
+
+        responseMode:
+            responseMode,
+
+        autonomousCommand:
+            false
+
+    };
+
+}
+
+
+/* ======================================================
+   END PART 5D
+======================================================= */
+
+</script>
