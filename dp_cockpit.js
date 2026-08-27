@@ -6,7 +6,7 @@
    dp_cockpit.js
 
    VERSION:
-   2.4.0
+   2.4.1
 
    PURPOSE:
    Browser-side controller for the deterministic DP resilience
@@ -60,7 +60,10 @@
         "SextantDPResilienceCockpit";
 
     const VERSION =
-        "2.4.0";
+        "2.4.1";
+
+    const RECOMMENDED_ACTIONS_VERSION =
+        "SPD-DP-RECOMMENDED-ACTIONS-V1.2";
 
     const SAFETY_BOUNDARY =
         "SIMULATION ONLY — NO AUTONOMOUS OPERATIONAL COMMAND";
@@ -237,6 +240,79 @@
 
 
     /* ========================================================
+       ENGINE STATUS DISPLAY
+       ======================================================== */
+
+    function updateEngineStatus(status) {
+
+        setFirst(
+            [
+                "engineStatus",
+                "engineState",
+                "engineIndicator",
+                "engine"
+            ],
+            status
+        );
+
+    }
+
+
+    /*
+     * Synchronize the visible ENGINE indicator with the
+     * actual JavaScript engine state.
+     *
+     * IMPORTANT:
+     * This does not create an engine.
+     * It only reports the state of engines that actually exist.
+     */
+
+    function synchronizeEngineStatus() {
+
+        const simulationEngine =
+            findSimulationEngine();
+
+        const recommendationEngine =
+            findRecommendedActionsEngine();
+
+
+        if (
+            simulationEngine &&
+            recommendationEngine
+        ) {
+
+            updateEngineStatus(
+                "CONNECTED — READY"
+            );
+
+            return true;
+
+        }
+
+
+        if (
+            simulationEngine
+        ) {
+
+            updateEngineStatus(
+                "SIMULATION ENGINE CONNECTED — ACTION ENGINE PENDING"
+            );
+
+            return false;
+
+        }
+
+
+        updateEngineStatus(
+            "ENGINE NOT CONNECTED"
+        );
+
+        return false;
+
+    }
+
+
+    /* ========================================================
        SAFETY
     ======================================================== */
 
@@ -302,7 +378,7 @@
 
 
     /* ========================================================
-       ENGINE DISCOVERY
+       SIMULATION ENGINE DISCOVERY
     ======================================================== */
 
     function findSimulationEngine() {
@@ -325,7 +401,8 @@
 
             if (
                 candidate &&
-                typeof candidate.run === "function"
+                typeof candidate.run ===
+                "function"
             ) {
 
                 return candidate;
@@ -339,34 +416,82 @@
     }
 
 
+    /* ========================================================
+       RECOMMENDED ACTIONS ENGINE DISCOVERY
+       REAL EXPORT:
+
+       window.DPRecommendedActions
+
+       API:
+
+       DPRecommendedActions.generate(result)
+    ======================================================== */
+
     function findRecommendedActionsEngine() {
 
-        const candidates = [
+        /*
+         * This is the actual public API exported by:
+         *
+         * dp_recommended_actions.js
+         *
+         * window.DPRecommendedActions = {
+         *     name,
+         *     version,
+         *     ...
+         *     generate
+         * };
+         */
 
-            window.DPRecommendedActionsEngine,
+        if (
+            window.DPRecommendedActions &&
+            typeof window.DPRecommendedActions.generate ===
+            "function"
+        ) {
 
-            window.DPRecommendedActionEngine,
-
-            window.RecommendedActionsEngine,
-
-            window.dpRecommendedActionsEngine
-
-        ];
-
-        for (const candidate of candidates) {
-
-            if (
-                candidate &&
-                typeof candidate.run === "function"
-            ) {
-
-                return candidate;
-
-            }
+            return window.DPRecommendedActions;
 
         }
 
         return null;
+
+    }
+
+
+    /* ========================================================
+       RECOMMENDED ACTIONS CONNECTION TEST
+    ======================================================== */
+
+    function testRecommendedActionsConnection() {
+
+        const engine =
+            findRecommendedActionsEngine();
+
+
+        if (!engine) {
+
+            log(
+                "[WIRING] Recommended Actions Engine = NOT FOUND"
+            );
+
+            return false;
+
+        }
+
+
+        log(
+            "[WIRING] Recommended Actions Engine = CONNECTED"
+        );
+
+
+        log(
+            "[WIRING] Recommended Actions API = " +
+            engine.name +
+            " " +
+            engine.version
+        );
+
+
+        return true;
 
     }
 
@@ -461,7 +586,7 @@
 
 
     /* ========================================================
-       ENGINE EXECUTION
+       SIMULATION ENGINE EXECUTION
     ======================================================== */
 
     function executeEngine(environment) {
@@ -473,6 +598,10 @@
 
             log(
                 "[ENGINE ERROR] DPSimulationEngine.run() not found."
+            );
+
+            updateEngineStatus(
+                "ENGINE NOT CONNECTED"
             );
 
             setText(
@@ -491,9 +620,14 @@
                 "[ENGINE] DPSimulationEngine.run()"
             );
 
-            return engine.run(
-                environment
-            );
+            const result =
+                engine.run(
+                    environment
+                );
+
+            synchronizeEngineStatus();
+
+            return result;
 
         } catch (error) {
 
@@ -534,6 +668,10 @@
             result.recommendedActions !== undefined
         ) {
 
+            log(
+                "[ACTION ENGINE] Recommendation supplied by simulation result."
+            );
+
             return result.recommendedActions;
 
         }
@@ -543,10 +681,18 @@
             result.dpRecommendedActions !== undefined
         ) {
 
+            log(
+                "[ACTION ENGINE] DP recommendation supplied by simulation result."
+            );
+
             return result.dpRecommendedActions;
 
         }
 
+
+        /*
+         * Use the actual Recommended Actions Engine.
+         */
 
         const engine =
             findRecommendedActionsEngine();
@@ -555,7 +701,11 @@
         if (!engine) {
 
             log(
-                "[ACTION ENGINE] No external action engine exposed."
+                "[ACTION ENGINE] Recommended Actions Engine NOT FOUND."
+            );
+
+            log(
+                "[ACTION ENGINE] NO RECOMMENDATION FABRICATED."
             );
 
             return null;
@@ -565,9 +715,51 @@
 
         try {
 
-            return engine.run(
-                result
+            log(
+                "[ACTION ENGINE] " +
+                engine.name +
+                " " +
+                engine.version +
+                " — generate()"
             );
+
+
+            const recommendation =
+                engine.generate(
+                    result
+                );
+
+
+            if (!recommendation) {
+
+                log(
+                    "[ACTION ENGINE] generate() returned no recommendation."
+                );
+
+                return null;
+
+            }
+
+
+            log(
+                "[ACTION ENGINE] Recommendation generated."
+            );
+
+
+            /*
+             * Keep the result available to the cockpit
+             * without modifying the simulation engine.
+             */
+
+            result.dpRecommendedActions =
+                recommendation;
+
+
+            window.lastDPRecommendedActions =
+                recommendation;
+
+
+            return recommendation;
 
         } catch (error) {
 
@@ -751,6 +943,11 @@
                 "NO SIMULATED RECOMMENDATION"
             );
 
+            setText(
+                "actionRationale",
+                "Recommended Actions Engine unavailable or no recommendation returned."
+            );
+
             return;
 
         }
@@ -767,6 +964,7 @@
         const rationale =
             actions.rationale ||
             actions.reason ||
+            actions.primary?.detail ||
             "";
 
 
@@ -1044,6 +1242,9 @@
         );
 
 
+        synchronizeEngineStatus();
+
+
         setJSON(
             "audit",
             {
@@ -1056,6 +1257,11 @@
 
                 version:
                     VERSION,
+
+                recommendedActionsEngine:
+                    findRecommendedActionsEngine()
+                        ? RECOMMENDED_ACTIONS_VERSION
+                        : "NOT FOUND",
 
                 risk:
                     getRisk(result),
@@ -1130,6 +1336,12 @@
 
 
         setText(
+            "riskLevel",
+            "UNKNOWN"
+        );
+
+
+        setText(
             "primaryStatus",
             "STANDBY"
         );
@@ -1150,6 +1362,18 @@
         setText(
             "recommendedAction",
             "WAITING FOR ASSESSMENT"
+        );
+
+
+        setText(
+            "recommendation",
+            "WAITING FOR ASSESSMENT"
+        );
+
+
+        setText(
+            "actionRationale",
+            ""
         );
 
 
@@ -1177,6 +1401,9 @@
 
         window.lastDPRecommendedActions =
             null;
+
+
+        synchronizeEngineStatus();
 
 
         log(
@@ -1218,6 +1445,15 @@
                     ? "CONNECTED"
                     : "NOT FOUND",
 
+            recommendedActionsAPI:
+                actionEngine
+                    ? (
+                        actionEngine.name +
+                        " " +
+                        actionEngine.version
+                    )
+                    : "NOT FOUND",
+
             pipeline:
                 PIPELINE,
 
@@ -1225,9 +1461,12 @@
                 safetyStatus(),
 
             status:
-                simulationEngine
+                simulationEngine &&
+                actionEngine
                     ? "READY"
-                    : "ENGINE NOT CONNECTED"
+                    : simulationEngine
+                        ? "SIMULATION ENGINE CONNECTED — ACTION ENGINE PENDING"
+                        : "ENGINE NOT CONNECTED"
 
         };
 
@@ -1254,6 +1493,21 @@
             "[WIRING] Recommended Actions Engine = " +
             report.recommendedActionsEngine
         );
+
+
+        if (actionEngine) {
+
+            log(
+                "[WIRING] Recommended Actions API = " +
+                actionEngine.name +
+                " " +
+                actionEngine.version
+            );
+
+        }
+
+
+        synchronizeEngineStatus();
 
 
         return report;
@@ -1345,6 +1599,71 @@
 
 
     /* ========================================================
+       STARTUP ENGINE RETRY
+    ======================================================== */
+
+    function retryRecommendedActionsEngine() {
+
+        if (
+            findRecommendedActionsEngine()
+        ) {
+
+            log(
+                "[WIRING] Recommended Actions Engine detected."
+            );
+
+            synchronizeEngineStatus();
+
+            return true;
+
+        }
+
+
+        log(
+            "[WIRING] Recommended Actions Engine not yet available."
+        );
+
+
+        window.setTimeout(
+            function () {
+
+                if (
+                    findRecommendedActionsEngine()
+                ) {
+
+                    log(
+                        "[WIRING] Recommended Actions Engine = CONNECTED"
+                    );
+
+                    log(
+                        "[WIRING] API = " +
+                        window.DPRecommendedActions.name +
+                        " " +
+                        window.DPRecommendedActions.version
+                    );
+
+                } else {
+
+                    log(
+                        "[WIRING] Recommended Actions Engine = NOT FOUND"
+                    );
+
+                }
+
+
+                synchronizeEngineStatus();
+
+            },
+            100
+        );
+
+
+        return false;
+
+    }
+
+
+    /* ========================================================
        PUBLIC API
     ======================================================== */
 
@@ -1370,6 +1689,10 @@
 
     window.testDPEngineConnection =
         validateWiring;
+
+
+    window.testRecommendedActionsConnection =
+        testRecommendedActionsConnection;
 
 
     window.DPCockpit =
@@ -1407,14 +1730,31 @@
 
         displaySafety();
 
+
         wireUI();
 
+
+        /*
+         * Validate both engines.
+         */
+
         validateWiring();
+
+
+        /*
+         * Protect against script-load race.
+         */
+
+        retryRecommendedActionsEngine();
+
 
         setText(
             "systemStatus",
             "SYSTEM READY"
         );
+
+
+        synchronizeEngineStatus();
 
 
         log(
@@ -1454,11 +1794,25 @@
 
 
         log(
+            "RECOMMENDED ACTIONS ENGINE: " +
+            (
+                findRecommendedActionsEngine()
+                    ? "CONNECTED"
+                    : "PENDING"
+            )
+        );
+
+
+        log(
             "================================================"
         );
 
     }
 
+
+    /* ========================================================
+       START
+    ======================================================== */
 
     if (
         document.readyState ===
