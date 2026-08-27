@@ -3213,3 +3213,168 @@ function randomScenario() {
 ============================================================ */
 
 </script>
+<!-- ======================================================
+     SEXTANT DP RESILIENCE HUMAN AUTHORITY GUARD
+     PART 6
+     UI PRESERVATION — HUMAN FINAL AUTHORITY
+======================================================= -->
+
+<script>
+
+/* ============================================================
+   HUMAN AUTHORITY GUARD
+============================================================ */
+
+function humanAuthorityGuard() {
+
+    /*
+     Captain AI Lena is decision-support only.
+
+     No function in the simulation is permitted to
+     represent an operational vessel command.
+    */
+
+    DP_ENGINE.human.finalAuthority = true;
+
+    DP_ENGINE.human.autonomousCommand = false;
+
+    DP_ENGINE.human.operationalConnection = false;
+
+}
+
+
+/* ============================================================
+   APPLY HUMAN GATE
+============================================================ */
+
+function applyHumanGate() {
+
+    humanAuthorityGuard();
+
+    DP_ENGINE.human.decision =
+        "PENDING";
+
+    DP_ENGINE.human.gate =
+        "HUMAN DECISION REQUIRED";
+
+    setText(
+        "humanDecisionStatus",
+        "PENDING"
+    );
+
+    setText(
+        "executionGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+    setText(
+        "traceGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+    setText(
+        "traceActionStatus",
+        "NOT EXECUTED"
+    );
+
+    setText(
+        "lenaAutonomousCommand",
+        "FALSE"
+    );
+
+    setText(
+        "recommendedAutonomous",
+        "FALSE"
+    );
+
+    setText(
+        "lenaUMVAction",
+        "NOT EXECUTED"
+    );
+
+}
+
+
+/* ============================================================
+   PROTECT SIMULATED RESPONSE
+============================================================ */
+
+function protectSimulatedResponse() {
+
+    humanAuthorityGuard();
+
+    /*
+     The simulator starts every assessment with
+     zero simulated command until human authorization.
+    */
+
+    DP_ENGINE.vessel.simulatedCommand = 0;
+
+    DP_ENGINE.vessel.state =
+        "SIMULATED";
+
+    setText(
+        "simulatedCommand",
+        "0"
+    );
+
+    setText(
+        "vesselState",
+        "SIMULATED"
+    );
+
+    setText(
+        "traceActionStatus",
+        "NOT EXECUTED"
+    );
+
+    setText(
+        "lenaUMVAction",
+        "NOT EXECUTED"
+    );
+
+}
+
+
+/* ============================================================
+   REINFORCE HUMAN AUTHORITY AFTER SIMULATION
+============================================================ */
+
+function enforceHumanAuthority() {
+
+    humanAuthorityGuard();
+
+    DP_ENGINE.human.decision =
+        "PENDING";
+
+    DP_ENGINE.human.gate =
+        "HUMAN DECISION REQUIRED";
+
+    setText(
+        "humanDecisionStatus",
+        "PENDING"
+    );
+
+    setText(
+        "executionGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+    setText(
+        "traceGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+    setText(
+        "traceActionStatus",
+        "NOT EXECUTED"
+    );
+
+}
+
+
+/* ============================================================
+   END PART 6
+============================================================ */
+
+</script>
