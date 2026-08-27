@@ -6,7 +6,7 @@
    dp_simulation_engine.js
 
    VERSION:
-   1.1.0
+   1.2.0
 
    PURPOSE:
    Deterministic browser-based DP resilience research simulator.
@@ -20,6 +20,8 @@
    S2 INDEPENDENT SAFETY ASSESSMENT
         ↓
    STABILIZER / ARBITRATION
+        ↓
+   RECOMMENDATION
         ↓
    HUMAN DECISION GATE
         ↓
@@ -60,7 +62,7 @@
         "DPSimulationEngine";
 
     const VERSION =
-        "1.1.0";
+        "1.2.0";
 
     const MODE =
         "SIMULATION ONLY";
@@ -848,7 +850,7 @@
 
     /* ========================================================
        HUMAN AUTHORITY
-    ======================================================== */
+       ======================================================== */
 
     function determineHumanAuthority() {
 
@@ -982,6 +984,11 @@
         proposedAction
     ) {
 
+        /*
+         * NO ACKNOWLEDGEMENT:
+         * Nothing is executed.
+         */
+
         if (
             !humanDecisionState.acknowledged
         ) {
@@ -1014,6 +1021,11 @@
         }
 
 
+        /*
+         * ACKNOWLEDGED BUT NOT AUTHORIZED:
+         * Safe simulated state remains.
+         */
+
         if (
             !humanDecisionState.authorized
         ) {
@@ -1045,6 +1057,11 @@
 
         }
 
+
+        /*
+         * HUMAN AUTHORIZATION:
+         * Execute ONLY the simulated response.
+         */
 
         humanDecisionState.actionExecuted =
             true;
@@ -1080,7 +1097,7 @@
 
     /* ========================================================
        SIMULATED VESSEL STATE
-    ======================================================== */
+       ======================================================== */
 
     function calculateSimulatedState(
         environment,
@@ -1129,13 +1146,17 @@
         return {
 
             positionError:
-                positionError,
+                Number(
+                    positionError
+                ).toFixed(2),
 
             simulatedCommand:
                 simulatedCommand,
 
             stabilityIndex:
-                stabilityIndex,
+                Number(
+                    stabilityIndex
+                ).toFixed(2),
 
             risk:
                 risk,
@@ -1150,7 +1171,7 @@
 
     /* ========================================================
        HUMAN DECISION API
-    ======================================================== */
+       ======================================================== */
 
     function acknowledgeHumanDecision(
         reason
@@ -1206,6 +1227,10 @@
     }
 
 
+    /* ========================================================
+       MAINTAIN SIMULATED SAFE STATE
+       ======================================================== */
+
     function maintainSafeState(
         reason
     ) {
@@ -1259,6 +1284,10 @@
 
     }
 
+
+    /* ========================================================
+       AUTHORIZE SIMULATED RESPONSE
+       ======================================================== */
 
     function authorizeSimulatedResponse(
         reason
@@ -1626,13 +1655,13 @@
 
     /* ========================================================
        MAIN SIMULATION
-       ======================================================== */
+    ======================================================== */
 
     function runSimulation(inputs) {
 
         /*
-         * Every new environmental run starts a new
-         * human decision cycle.
+         * Every new environmental run starts a completely
+         * new human decision cycle.
          */
 
         pendingSimulation =
@@ -1852,6 +1881,26 @@
 
             &&
 
+            typeof determineRecommendedAction ===
+            "function"
+
+            &&
+
+            typeof proposeSimulatedDPAction ===
+            "function"
+
+            &&
+
+            typeof executeSimulatedDPAction ===
+            "function"
+
+            &&
+
+            typeof calculateSimulatedState ===
+            "function"
+
+            &&
+
             typeof acknowledgeHumanDecision ===
             "function"
 
@@ -1863,6 +1912,11 @@
             &&
 
             typeof authorizeSimulatedResponse ===
+            "function"
+
+            &&
+
+            typeof finalizePendingSimulation ===
             "function"
 
         );
@@ -1964,7 +2018,15 @@
         );
 
         console.log(
+            "RECOMMENDATION ENGINE: ACTIVE"
+        );
+
+        console.log(
             "HUMAN DECISION GATE: ACTIVE"
+        );
+
+        console.log(
+            "SIMULATED RESPONSE: HUMAN AUTHORIZATION ONLY"
         );
 
         console.log(
