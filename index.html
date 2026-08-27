@@ -4830,3 +4830,363 @@ function authorizeSimulatedResponse() {
 ======================================================= */
 
 </script>
+<script>
+
+/* =========================================================
+   SEXTANT PROTOCOL
+   DP RESILIENCE COCKPIT
+   DETERMINISTIC SIMULATION ENGINE
+========================================================= */
+
+const PHI = 1.618033988749895;
+
+let simulationState = {
+    wind: 30,
+    current: 25,
+    wave: 30,
+    tidal: 20,
+
+    environmentStress: 0,
+    riskLevel: "LOW",
+
+    primaryMode: "STANDBY",
+    primaryResponse: "—",
+
+    secondaryMode: "STANDBY",
+    secondaryAssessment: "—",
+
+    stabilizerMode: "STANDBY",
+    stabilizerSource: "—",
+    stabilizerOutput: "—",
+
+    urgency: "NORMAL",
+    responseMode: "MONITORING",
+    recommendation: "NO ACTION",
+
+    proposedAction: "—",
+    executionGate: "HUMAN DECISION REQUIRED",
+    actionStatus: "NOT EXECUTED",
+
+    humanDecision: "PENDING",
+
+    positionError: 0,
+    simulatedCommand: 0,
+    stabilityIndex: 100,
+
+    timestamp: null
+};
+
+
+/* =========================================================
+   DOM HELPER
+========================================================= */
+
+function setText(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.textContent = value;
+    }
+
+}
+
+
+/* =========================================================
+   ENGINE INITIALISATION
+========================================================= */
+
+function initialiseEngine() {
+
+    setText(
+        "engineStatus",
+        "ENGINE: READY — DETERMINISTIC LOCAL SIMULATION"
+    );
+
+    setText(
+        "systemStatus",
+        "SYSTEM READY"
+    );
+
+    setText(
+        "primaryStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "secondaryStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "stabilizerStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "humanStatus",
+        "FINAL"
+    );
+
+    setText(
+        "lenaStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "recommendedLenaStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "recommendedControlMode",
+        "HUMAN AUTHORITY"
+    );
+
+    setText(
+        "recommendedAutonomous",
+        "FALSE"
+    );
+
+}
+
+
+/* =========================================================
+   INPUT READER
+========================================================= */
+
+function readEnvironmentInputs() {
+
+    const wind =
+        Number(document.getElementById("wind")?.value || 0);
+
+    const current =
+        Number(document.getElementById("current")?.value || 0);
+
+    const wave =
+        Number(document.getElementById("wave")?.value || 0);
+
+    const tidal =
+        Number(document.getElementById("tidal")?.value || 0);
+
+    return {
+        wind: Math.max(0, Math.min(100, wind)),
+        current: Math.max(0, Math.min(100, current)),
+        wave: Math.max(0, Math.min(100, wave)),
+        tidal: Math.max(0, Math.min(100, tidal))
+    };
+
+}
+
+
+/* =========================================================
+   ENVIRONMENT STRESS CALCULATION
+========================================================= */
+
+function calculateEnvironmentStress(environment) {
+
+    const stress =
+        (
+            environment.wind +
+            environment.current +
+            environment.wave +
+            environment.tidal
+        ) / 4;
+
+    return Number(stress.toFixed(2));
+
+}
+
+
+/* =========================================================
+   RISK CLASSIFICATION
+========================================================= */
+
+function classifyEnvironmentRisk(stress) {
+
+    if (stress < 30) {
+        return "LOW";
+    }
+
+    if (stress < 50) {
+        return "MEDIUM";
+    }
+
+    return "HIGH";
+
+}
+
+
+/* =========================================================
+   PRIMARY AI
+========================================================= */
+
+function primaryAI(environment, stress) {
+
+    if (stress < 30) {
+
+        return {
+            mode: "NORMAL CONTROL",
+            response: "MAINTAIN DP CONTROL"
+        };
+
+    }
+
+    if (stress < 50) {
+
+        return {
+            mode: "ADAPTIVE CONTROL",
+            response: "INCREASE MONITORING"
+        };
+
+    }
+
+    return {
+        mode: "PROTECTIVE CONTROL",
+        response: "PREPARE RESILIENCE RESPONSE"
+    };
+
+}
+
+
+/* =========================================================
+   SECONDARY AI
+========================================================= */
+
+function secondaryAI(environment, stress) {
+
+    if (stress < 30) {
+
+        return {
+            mode: "SAFETY MONITOR",
+            assessment: "ENVIRONMENT WITHIN SIMULATED LIMITS"
+        };
+
+    }
+
+    if (stress < 50) {
+
+        return {
+            mode: "ENHANCED SAFETY",
+            assessment: "ELEVATED ENVIRONMENTAL STRESS"
+        };
+
+    }
+
+    return {
+        mode: "CRITICAL SAFETY",
+        assessment: "HIGH ENVIRONMENTAL STRESS"
+    };
+
+}
+
+
+/* =========================================================
+   STABILIZER
+========================================================= */
+
+function stabilizer(primary, secondary, risk) {
+
+    if (risk === "LOW") {
+
+        return {
+            mode: "STABLE",
+            source: "PRIMARY AI",
+            output: "NORMAL DP RESILIENCE"
+        };
+
+    }
+
+    if (risk === "MEDIUM") {
+
+        return {
+            mode: "ARBITRATION",
+            source: "PRIMARY + SECONDARY",
+            output: "ENHANCED MONITORING"
+        };
+
+    }
+
+    return {
+        mode: "PROTECTIVE ARBITRATION",
+        source: "SECONDARY SAFETY LAYER",
+        output: "RESILIENCE RESPONSE REQUIRED"
+    };
+
+}
+
+
+/* =========================================================
+   CAPTAIN AI LENA DECISION SUPPORT
+========================================================= */
+
+function captainLenaAssessment(risk) {
+
+    if (risk === "LOW") {
+
+        return {
+            urgency: "NORMAL",
+            responseMode: "MONITORING",
+            recommendation: "MAINTAIN SAFE STATE",
+            proposedAction: "NO SIMULATED MANOEUVRE"
+        };
+
+    }
+
+    if (risk === "MEDIUM") {
+
+        return {
+            urgency: "ELEVATED",
+            responseMode: "ENHANCED MONITORING",
+            recommendation: "PREPARE RESILIENCE RESPONSE",
+            proposedAction: "SIMULATED DP STABILIZATION"
+        };
+
+    }
+
+    return {
+        urgency: "HIGH",
+        responseMode: "PROTECTIVE",
+        recommendation: "INITIATE HUMAN REVIEW",
+        proposedAction: "SIMULATED PROTECTIVE RESPONSE"
+    };
+
+}
+
+
+/* =========================================================
+   HUMAN AUTHORITY RESET
+========================================================= */
+
+function resetHumanDecision() {
+
+    simulationState.humanDecision = "PENDING";
+
+    setText(
+        "humanDecisionStatus",
+        "PENDING"
+    );
+
+    setText(
+        "executionGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+    setText(
+        "traceGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+    setText(
+        "traceActionStatus",
+        "NOT EXECUTED"
+    );
+
+    setText(
+        "lenaUMVAction",
+        "NOT EXECUTED"
+    );
+
+}
+
+</script>
