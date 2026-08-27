@@ -3030,3 +3030,186 @@
     NAVIGATION OR SAFETY SYSTEMS
 
 </div>
+<!-- ======================================================
+     SEXTANT DP RESILIENCE SCENARIO CONTROLS
+     PART 5
+     UI PRESERVATION — NO SCREEN CHANGES
+======================================================= -->
+
+<script>
+
+/* ============================================================
+   SCENARIO INPUT HELPER
+============================================================ */
+
+function setScenario(wind, current, wave, tidal) {
+
+    document.getElementById("wind").value = wind;
+    document.getElementById("current").value = current;
+    document.getElementById("wave").value = wave;
+    document.getElementById("tidal").value = tidal;
+
+}
+
+
+/* ============================================================
+   NORMAL
+============================================================ */
+
+function normalScenario() {
+
+    setScenario(
+        20,
+        15,
+        20,
+        10
+    );
+
+}
+
+
+/* ============================================================
+   MODERATE WEATHER
+============================================================ */
+
+function moderateWeatherScenario() {
+
+    setScenario(
+        40,
+        30,
+        40,
+        25
+    );
+
+}
+
+
+/* ============================================================
+   HEAVY WEATHER
+============================================================ */
+
+function heavyWeatherScenario() {
+
+    setScenario(
+        70,
+        55,
+        70,
+        45
+    );
+
+}
+
+
+/* ============================================================
+   CRITICAL
+============================================================ */
+
+function criticalScenario() {
+
+    setScenario(
+        90,
+        90,
+        90,
+        80
+    );
+
+}
+
+
+/* ============================================================
+   CURRENT SURGE
+============================================================ */
+
+function currentSurgeScenario() {
+
+    setScenario(
+        35,
+        90,
+        45,
+        50
+    );
+
+}
+
+
+/* ============================================================
+   HEAVY SEA
+============================================================ */
+
+function heavySeaStateScenario() {
+
+    setScenario(
+        55,
+        45,
+        90,
+        50
+    );
+
+}
+
+
+/* ============================================================
+   WIND GUST
+============================================================ */
+
+function windGustScenario() {
+
+    setScenario(
+        95,
+        35,
+        40,
+        20
+    );
+
+}
+
+
+/* ============================================================
+   COMBINED DISTURBANCE
+============================================================ */
+
+function combinedDisturbanceScenario() {
+
+    setScenario(
+        80,
+        75,
+        85,
+        70
+    );
+
+}
+
+
+/* ============================================================
+   RANDOM SCENARIO
+============================================================ */
+
+function randomScenario() {
+
+    const wind =
+        Math.floor(Math.random() * 101);
+
+    const current =
+        Math.floor(Math.random() * 101);
+
+    const wave =
+        Math.floor(Math.random() * 101);
+
+    const tidal =
+        Math.floor(Math.random() * 101);
+
+    setScenario(
+        wind,
+        current,
+        wave,
+        tidal
+    );
+
+}
+
+
+/* ============================================================
+   END PART 5
+============================================================ */
+
+</script>
