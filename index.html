@@ -845,3 +845,502 @@ then press RUN DP SIMULATION.
     </div>
 
 </div>
+<!-- ======================================================
+     CAPTAIN AI LENA — UMV DECISION SUPPORT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Captain AI Lena — UMV Control / Recommended Actions
+    </h2>
+
+    <div class="alert-box">
+
+        <strong>CAPTAIN AI LENA</strong>
+
+        <br><br>
+
+        ROLE:
+        <strong>UMV RESILIENCE DECISION-SUPPORT LAYER</strong>
+
+        <br>
+
+        AUTHORITY:
+        <strong>HUMAN-IN-THE-LOOP</strong>
+
+        <br>
+
+        AUTONOMOUS COMMAND:
+        <strong>FALSE</strong>
+
+        <br><br>
+
+        Captain AI Lena evaluates the simulated
+        resilience assessment and presents recommended
+        actions for human consideration.
+
+    </div>
+
+    <br>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                LENA STATUS
+            </div>
+
+            <div
+                id="lenaStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <div class="status-title">
+                UMV CONTROL MODE
+            </div>
+
+            <div
+                id="lenaControlMode"
+                class="status-value"
+            >
+                HUMAN AUTHORITY
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <div class="status-title">
+                RECOMMENDED ACTION
+            </div>
+
+            <div
+                id="lenaRecommendedAction"
+                class="status-value"
+            >
+                NO ACTION
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <div class="status-title">
+                URGENCY
+            </div>
+
+            <div
+                id="lenaUrgency"
+                class="status-value"
+            >
+                NORMAL
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div
+        id="lenaDecision"
+        class="log-output"
+    >
+Captain AI Lena awaiting simulated assessment.
+
+No UMV action recommendation available.
+
+Human authority remains FINAL.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     HUMAN AUTHORIZATION
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Human Authorization — Final Decision
+    </h2>
+
+    <div
+        id="humanAuthorizationStatus"
+        class="alert-box"
+    >
+
+        HUMAN AUTHORIZATION REQUIRED
+
+        <br><br>
+
+        Captain AI Lena provides decision support only.
+
+        <br>
+
+        No simulated manoeuvre is treated as an
+        operational command.
+
+        <br><br>
+
+        FINAL AUTHORITY:
+        <strong>HUMAN OPERATOR</strong>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     RESEARCH PURPOSE / OPERATIONAL BOUNDARY
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Research Purpose & Operational Boundary
+    </h2>
+
+    <div class="alert-box">
+
+        <strong>
+            SEXTANT PROTOCOL — DP RESILIENCE RESEARCH SIMULATOR
+        </strong>
+
+        <br><br>
+
+        This cockpit is a deterministic research and
+        engineering simulation environment developed to
+        explore how a layered resilience architecture could
+        respond to changing maritime environmental conditions.
+
+        <br><br>
+
+        The simulator creates a controlled virtual vessel
+        environment in which wind, current, wave and tidal
+        conditions can be varied, repeated and analysed.
+
+        <br><br>
+
+        The deterministic simulation engine processes those
+        conditions through the research architecture and
+        produces a traceable simulated result.
+
+        <br><br>
+
+        The simulator is intended to support:
+
+        <br><br>
+
+        • research
+        <br>
+        • education
+        <br>
+        • engineering analysis
+        <br>
+        • scenario testing
+        <br>
+        • technical demonstration
+        <br>
+        • repeatable validation
+        <br>
+        • future independent review
+
+        <br><br>
+
+        Trial manoeuvres and simulated responses shown by
+        this cockpit are planning and assessment
+        representations only.
+
+        <br><br>
+
+        They are NOT operational DP commands and are NOT
+        transmitted to any vessel control system.
+
+        <br><br>
+
+        <strong>
+            HUMAN-IN-THE-LOOP
+        </strong>
+
+        <br><br>
+
+        Human authority remains the final decision point
+        in the research architecture.
+
+        <br><br>
+
+        The simulator provides decision-support and
+        simulated responses; it does not replace the Master,
+        DPO, authorised operator, vessel procedures or
+        classification requirements.
+
+        <br><br>
+
+        <strong>
+            OPERATIONAL BOUNDARY
+        </strong>
+
+        <br><br>
+
+        This prototype is intentionally isolated from
+        operational vessel control.
+
+        <br><br>
+
+        It does not connect to and must not be connected to:
+
+        <br><br>
+
+        • Dynamic Positioning systems
+        <br>
+        • Propulsion systems
+        <br>
+        • Navigation systems
+        <br>
+        • Steering systems
+        <br>
+        • Safety systems
+        <br>
+        • Vessel automation systems
+
+        <br><br>
+
+        It is not certified marine control software and
+        does not provide certified DP functionality.
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- ======================================================
+     FOOTER
+======================================================= -->
+
+<div class="footer">
+
+    SEXTANT PROTOCOL™ – DP RESILIENCE RESEARCH SIMULATOR
+
+    <br>
+
+    RESEARCH • SIMULATION • EDUCATION • ENGINEERING ANALYSIS
+
+    <br><br>
+
+    ENVIRONMENT →
+    PRIMARY AI →
+    SECONDARY AI →
+    STABILIZER →
+    RECOMMENDED ACTIONS →
+    CAPTAIN AI LENA →
+    HUMAN AUTHORITY →
+    SIMULATED DP RESPONSE
+
+    <br><br>
+
+    NOT CERTIFIED MARINE CONTROL SOFTWARE
+
+    <br>
+
+    NOT FOR CONNECTION TO OPERATIONAL DP,
+    PROPULSION, NAVIGATION OR SAFETY SYSTEMS
+
+</div>
+
+
+<!-- ======================================================
+     EXTERNAL MODULES
+=======================================================
+
+LOAD ORDER:
+
+1. dp_simulation_engine.js
+2. dp_scenarios.js
+3. dp_operational_state_manager.js
+4. dp_recommendation_manager.js
+5. dp_recommended_actions.js
+6. dp_cockpit.js
+
+The existing engines remain authoritative.
+
+======================================================= -->
+
+<script src="dp_simulation_engine.js"></script>
+
+<script src="dp_scenarios.js"></script>
+
+<script src="dp_operational_state_manager.js"></script>
+
+<script src="dp_recommendation_manager.js"></script>
+
+<script src="dp_recommended_actions.js"></script>
+
+<script src="dp_cockpit.js"></script>
+
+
+<script>
+
+/* =========================================================
+   CAPTAIN AI LENA — SAFE DISPLAY BRIDGE
+   DISPLAY ONLY — NO OPERATIONAL COMMAND
+========================================================= */
+
+function updateCaptainAILena(result) {
+
+    const lenaStatus =
+        document.getElementById("lenaStatus");
+
+    const lenaControlMode =
+        document.getElementById("lenaControlMode");
+
+    const lenaRecommendedAction =
+        document.getElementById(
+            "lenaRecommendedAction"
+        );
+
+    const lenaUrgency =
+        document.getElementById("lenaUrgency");
+
+    const lenaDecision =
+        document.getElementById("lenaDecision");
+
+    if (!result) {
+        return;
+    }
+
+    const recommendation =
+        result.recommendedAction || null;
+
+    lenaStatus.textContent =
+        "ASSESSMENT COMPLETE";
+
+    lenaControlMode.textContent =
+        "HUMAN AUTHORITY";
+
+    if (recommendation) {
+
+        lenaRecommendedAction.textContent =
+            recommendation.primaryRecommendation ||
+            "NO ACTION";
+
+        lenaUrgency.textContent =
+            recommendation.urgency ||
+            "NORMAL";
+
+        lenaDecision.textContent =
+
+`CAPTAIN AI LENA — UMV DECISION SUPPORT
+
+RECOMMENDATION:
+${recommendation.primaryRecommendation || "NO ACTION"}
+
+URGENCY:
+${recommendation.urgency || "NORMAL"}
+
+RESPONSE MODE:
+${recommendation.responseMode || "MONITORING"}
+
+RATIONALE:
+${recommendation.rationale || "No additional rationale provided."}
+
+AUTONOMOUS COMMAND:
+FALSE
+
+REAL VESSEL CONNECTION:
+FALSE
+
+HUMAN AUTHORITY:
+FINAL
+
+EXECUTION:
+HUMAN AUTHORIZATION REQUIRED`;
+
+    } else {
+
+        lenaRecommendedAction.textContent =
+            "NO ACTION";
+
+        lenaUrgency.textContent =
+            "NORMAL";
+
+        lenaDecision.textContent =
+
+`CAPTAIN AI LENA — UMV DECISION SUPPORT
+
+No simulated recommendation available.
+
+AUTONOMOUS COMMAND:
+FALSE
+
+HUMAN AUTHORITY:
+FINAL
+
+EXECUTION:
+HUMAN AUTHORIZATION REQUIRED`;
+
+    }
+
+}
+
+
+/* =========================================================
+   CONNECT TO EXISTING COCKPIT WITHOUT REPLACING IT
+========================================================= */
+
+const originalUpdateDPCockpit =
+    window.updateDPCockpit;
+
+if (typeof originalUpdateDPCockpit === "function") {
+
+    window.updateDPCockpit =
+        function(result) {
+
+            originalUpdateDPCockpit(result);
+
+            updateCaptainAILena(result);
+
+        };
+
+}
+
+
+/* =========================================================
+   STARTUP
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        const status =
+            document.getElementById("lenaStatus");
+
+        if (status) {
+
+            status.textContent =
+                "STANDBY";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>
+
