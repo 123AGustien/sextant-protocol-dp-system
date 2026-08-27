@@ -4515,3 +4515,318 @@ function runCaptainAILena(
 ======================================================= */
 
 </script>
+<!-- ======================================================
+     PART 5E — SIMULATED DP RESPONSE / HUMAN GATE
+======================================================= -->
+
+<script>
+
+/* ======================================================
+   PREPARE SIMULATED RESPONSE
+======================================================= */
+
+function prepareSimulatedResponse(
+    stress,
+    recommendation
+) {
+
+    let proposed;
+    let command;
+    let positionError;
+    let stability;
+
+    /*
+     * These are simulation values only.
+     * No vessel control interface exists.
+     */
+
+    if (stress < 30) {
+
+        proposed =
+            "MAINTAIN SIMULATED DP";
+
+        command =
+            25;
+
+        positionError =
+            0.20;
+
+        stability =
+            95;
+
+    } else if (stress < 50) {
+
+        proposed =
+            "INCREASE SIMULATED DP RESPONSE";
+
+        command =
+            45;
+
+        positionError =
+            0.50;
+
+        stability =
+            85;
+
+    } else if (stress < 70) {
+
+        proposed =
+            "SIMULATED STABILIZATION RESPONSE";
+
+        command =
+            65;
+
+        positionError =
+            0.90;
+
+        stability =
+            70;
+
+    } else {
+
+        proposed =
+            "SIMULATED SAFE-STATE RESPONSE";
+
+        command =
+            80;
+
+        positionError =
+            1.40;
+
+        stability =
+            50;
+
+    }
+
+
+    simulationState.proposedAction =
+        proposed;
+
+    simulationState.simulatedCommand =
+        0;
+
+    simulationState.positionError =
+        positionError;
+
+    simulationState.stabilityIndex =
+        stability;
+
+    simulationState.vesselState =
+        "SIMULATED";
+
+    /*
+     * IMPORTANT:
+     * The proposed command is NOT applied.
+     * Human authorization is required first.
+     */
+
+    setText(
+        "traceProposed",
+        proposed
+    );
+
+    setText(
+        "traceGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+    setText(
+        "traceActionStatus",
+        "PROPOSED — NOT EXECUTED"
+    );
+
+    setText(
+        "positionError",
+        positionError.toFixed(2)
+    );
+
+    setText(
+        "simulatedCommand",
+        "0"
+    );
+
+    setText(
+        "stabilityIndex",
+        stability
+    );
+
+    setText(
+        "vesselState",
+        "SIMULATED"
+    );
+
+    return {
+
+        proposed: proposed,
+
+        command: command,
+
+        positionError: positionError,
+
+        stability: stability,
+
+        authorized: false
+
+    };
+
+}
+
+
+/* ======================================================
+   ACKNOWLEDGE CONDITION
+======================================================= */
+
+function acknowledgeCondition() {
+
+    simulationState.humanDecision =
+        "CONDITION ACKNOWLEDGED";
+
+    simulationState.executionGate =
+        "HUMAN DECISION RECORDED";
+
+    setText(
+        "humanDecisionStatus",
+        "CONDITION ACKNOWLEDGED"
+    );
+
+    setText(
+        "executionGate",
+        "HUMAN DECISION RECORDED"
+    );
+
+    setText(
+        "traceGate",
+        "HUMAN DECISION RECORDED"
+    );
+
+    setText(
+        "traceActionStatus",
+        "NOT EXECUTED"
+    );
+
+}
+
+
+/* ======================================================
+   MAINTAIN SAFE STATE
+======================================================= */
+
+function maintainSafeState() {
+
+    simulationState.humanDecision =
+        "MAINTAIN SAFE STATE";
+
+    simulationState.executionGate =
+        "SAFE STATE MAINTAINED";
+
+    simulationState.simulatedCommand =
+        0;
+
+    simulationState.vesselState =
+        "SAFE STATE — SIMULATED";
+
+    setText(
+        "humanDecisionStatus",
+        "MAINTAIN SAFE STATE"
+    );
+
+    setText(
+        "executionGate",
+        "SAFE STATE MAINTAINED"
+    );
+
+    setText(
+        "traceGate",
+        "SAFE STATE MAINTAINED"
+    );
+
+    setText(
+        "traceActionStatus",
+        "SAFE STATE — NO RESPONSE EXECUTED"
+    );
+
+    setText(
+        "simulatedCommand",
+        "0"
+    );
+
+    setText(
+        "vesselState",
+        "SAFE STATE — SIMULATED"
+    );
+
+    setText(
+        "lenaUMVAction",
+        "NOT EXECUTED"
+    );
+
+}
+
+
+/* ======================================================
+   AUTHORIZE SIMULATED RESPONSE
+======================================================= */
+
+function authorizeSimulatedResponse() {
+
+    /*
+     * This is authorization of the SIMULATION ONLY.
+     * It does not authorize an operational vessel command.
+     */
+
+    simulationState.humanDecision =
+        "AUTHORIZE SIMULATED RESPONSE";
+
+    simulationState.executionGate =
+        "HUMAN AUTHORIZED — SIMULATION ONLY";
+
+    simulationState.simulatedCommand =
+        1;
+
+    simulationState.vesselState =
+        "SIMULATED RESPONSE AUTHORIZED";
+
+
+    setText(
+        "humanDecisionStatus",
+        "AUTHORIZE SIMULATED RESPONSE"
+    );
+
+    setText(
+        "executionGate",
+        "HUMAN AUTHORIZED — SIMULATION ONLY"
+    );
+
+    setText(
+        "traceGate",
+        "HUMAN AUTHORIZED — SIMULATION ONLY"
+    );
+
+    setText(
+        "traceActionStatus",
+        "SIMULATED RESPONSE EXECUTED"
+    );
+
+    setText(
+        "simulatedCommand",
+        "SIMULATED"
+    );
+
+    setText(
+        "vesselState",
+        "SIMULATED RESPONSE AUTHORIZED"
+    );
+
+    setText(
+        "lenaUMVAction",
+        "SIMULATED RESPONSE — HUMAN AUTHORIZED"
+    );
+
+}
+
+
+/* ======================================================
+   END PART 5E
+======================================================= */
+
+</script>
