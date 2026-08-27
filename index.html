@@ -1230,3 +1230,968 @@ Human authority remains FINAL.
     PROPULSION, NAVIGATION OR SAFETY SYSTEMS
 
 </div>
+<!-- ======================================================
+     EXTERNAL MODULES
+=======================================================
+
+LOAD ORDER:
+
+1. dp_simulation_engine.js
+2. dp_scenarios.js
+3. dp_operational_state_manager.js
+4. dp_recommendation_manager.js
+5. cockpit wiring
+
+======================================================= -->
+
+<script src="dp_simulation_engine.js"></script>
+
+<script src="dp_scenarios.js"></script>
+
+<script src="dp_operational_state_manager.js"></script>
+
+<script src="dp_recommendation_manager.js"></script>
+
+
+<script>
+
+/* =========================================================
+   SEXTANT PROTOCOL
+   DP COCKPIT WIRING LAYER
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   ENGINE VALIDATION
+--------------------------------------------------------- */
+
+function verifyDPEngine() {
+
+    const status =
+        document.getElementById("engineStatus");
+
+    if (
+        typeof DPSimulationEngine ===
+        "undefined"
+    ) {
+
+        status.textContent =
+            "ENGINE NOT LOADED";
+
+        status.style.color =
+            "#ff6b6b";
+
+        return false;
+    }
+
+
+    status.textContent =
+        "DP SIMULATION ENGINE " +
+        DPSimulationEngine.version +
+        " CONNECTED — READY";
+
+    status.style.color =
+        "#54d38b";
+
+    return true;
+}
+
+
+/* ---------------------------------------------------------
+   MODULE STATUS
+--------------------------------------------------------- */
+
+function verifyDPModules() {
+
+    const modules = {
+
+        simulation:
+            typeof DPSimulationEngine !==
+            "undefined",
+
+        scenarios:
+            typeof window !==
+            "undefined",
+
+        operationalState:
+            typeof DPOperationalStateManager !==
+            "undefined",
+
+        recommendation:
+            typeof DPRecommendationManager !==
+            "undefined"
+
+    };
+
+
+    console.log(
+        "DP MODULE STATUS:",
+        modules
+    );
+
+
+    return modules;
+}
+
+
+/* ---------------------------------------------------------
+   INPUT READER
+--------------------------------------------------------- */
+
+function getDPInput(id) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element) {
+
+        return 0;
+
+    }
+
+    const value =
+        Number(element.value);
+
+    if (!Number.isFinite(value)) {
+
+        return 0;
+
+    }
+
+    return Math.max(
+        0,
+        Math.min(100, value)
+    );
+}
+
+
+/* ---------------------------------------------------------
+   CAPTAIN AI LENA — RESET DISPLAY
+--------------------------------------------------------- */
+
+function resetCaptainAILena() {
+
+    document.getElementById(
+        "lenaStatus"
+    ).textContent =
+        "STANDBY";
+
+    document.getElementById(
+        "lenaRecommendation"
+    ).textContent =
+        "NO SIMULATED RECOMMENDATION";
+
+    document.getElementById(
+        "lenaUrgency"
+    ).textContent =
+        "NORMAL";
+
+    document.getElementById(
+        "lenaResponseMode"
+    ).textContent =
+        "MONITORING";
+
+    document.getElementById(
+        "lenaHumanAuthority"
+    ).textContent =
+        "FINAL";
+
+    document.getElementById(
+        "lenaAutonomousCommand"
+    ).textContent =
+        "FALSE";
+
+    document.getElementById(
+        "lenaAction"
+    ).textContent =
+        "NOT EXECUTED";
+
+    document.getElementById(
+        "lenaMessage"
+    ).textContent =
+
+`Captain AI Lena is awaiting simulated environmental assessment.
+
+No simulated actions recommended.`;
+
+
+    document.getElementById(
+        "lenaControlStatus"
+    ).textContent =
+        "STANDBY";
+
+    document.getElementById(
+        "lenaControlMode"
+    ).textContent =
+        "HUMAN AUTHORITY";
+
+    document.getElementById(
+        "lenaRecommendedAction"
+    ).textContent =
+        "NO ACTION";
+
+    document.getElementById(
+        "lenaControlUrgency"
+    ).textContent =
+        "NORMAL";
+
+    document.getElementById(
+        "lenaControlMessage"
+    ).textContent =
+
+`Captain AI Lena awaiting simulated assessment.
+
+No UMV action recommendation available.
+
+Human authority remains FINAL.`;
+}
+
+
+/* ---------------------------------------------------------
+   UPDATE CAPTAIN AI LENA
+--------------------------------------------------------- */
+
+function updateCaptainAILena(result) {
+
+    const recommended =
+        result.recommendedAction;
+
+
+    if (!recommended) {
+
+        resetCaptainAILena();
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "lenaStatus"
+    ).textContent =
+        "ASSESSMENT COMPLETE";
+
+
+    document.getElementById(
+        "lenaRecommendation"
+    ).textContent =
+        recommended.primaryRecommendation ||
+        "NO SIMULATED RECOMMENDATION";
+
+
+    document.getElementById(
+        "lenaUrgency"
+    ).textContent =
+        recommended.urgency ||
+        "NORMAL";
+
+
+    document.getElementById(
+        "lenaResponseMode"
+    ).textContent =
+        recommended.responseMode ||
+        "MONITORING";
+
+
+    document.getElementById(
+        "lenaHumanAuthority"
+    ).textContent =
+        recommended.humanAuthority ||
+        "FINAL";
+
+
+    document.getElementById(
+        "lenaAutonomousCommand"
+    ).textContent =
+        recommended.autonomousCommand === true
+            ? "TRUE"
+            : "FALSE";
+
+
+    document.getElementById(
+        "lenaAction"
+    ).textContent =
+        "NOT EXECUTED";
+
+
+    document.getElementById(
+        "lenaMessage"
+    ).textContent =
+
+        recommended.rationale ||
+        "Captain AI Lena has completed the simulated assessment.";
+
+
+    document.getElementById(
+        "lenaControlStatus"
+    ).textContent =
+        "ASSESSMENT COMPLETE";
+
+
+    document.getElementById(
+        "lenaControlMode"
+    ).textContent =
+        "HUMAN AUTHORITY";
+
+
+    document.getElementById(
+        "lenaRecommendedAction"
+    ).textContent =
+        recommended.primaryRecommendation ||
+        "NO ACTION";
+
+
+    document.getElementById(
+        "lenaControlUrgency"
+    ).textContent =
+        recommended.urgency ||
+        "NORMAL";
+
+
+    document.getElementById(
+        "lenaControlMessage"
+    ).textContent =
+
+        recommended.rationale ||
+        "Captain AI Lena has completed the simulated assessment." +
+        "\n\nHuman authority remains FINAL.";
+}
+
+
+/* ---------------------------------------------------------
+   SIMULATION EXECUTION
+--------------------------------------------------------- */
+
+function runSimulation() {
+
+    if (!verifyDPEngine()) {
+
+        document.getElementById(
+            "output"
+        ).textContent =
+
+`DP SIMULATION ENGINE ERROR
+
+The external engine could not be loaded.
+
+Required file:
+dp_simulation_engine.js
+
+Simulation not executed.`;
+
+        return;
+
+    }
+
+
+    const inputs = {
+
+        wind:
+            getDPInput("wind"),
+
+        current:
+            getDPInput("current"),
+
+        wave:
+            getDPInput("wave"),
+
+        tidal:
+            getDPInput("tidal")
+
+    };
+
+
+    let result;
+
+
+    try {
+
+        result =
+            DPSimulationEngine.run(
+                inputs
+            );
+
+    } catch (error) {
+
+        console.error(
+            "DP Simulation Error:",
+            error
+        );
+
+        document.getElementById(
+            "output"
+        ).textContent =
+
+`DP SIMULATION ERROR
+
+${error.message}
+
+No simulated action was executed.`;
+
+        return;
+
+    }
+
+
+    /*
+     * =====================================================
+     * OPERATIONAL STATE MANAGER
+     * =====================================================
+     */
+
+    if (
+        typeof DPOperationalStateManager !==
+        "undefined"
+    ) {
+
+        try {
+
+            if (
+                typeof DPOperationalStateManager.update ===
+                "function"
+            ) {
+
+                DPOperationalStateManager.update(
+                    result
+                );
+
+            }
+
+            else if (
+                typeof DPOperationalStateManager.process ===
+                "function"
+            ) {
+
+                DPOperationalStateManager.process(
+                    result
+                );
+
+            }
+
+            else if (
+                typeof DPOperationalStateManager.setState ===
+                "function"
+            ) {
+
+                DPOperationalStateManager.setState(
+                    result
+                );
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "DP Operational State Manager:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+     * =====================================================
+     * RECOMMENDATION MANAGER
+     * =====================================================
+     */
+
+    if (
+        typeof DPRecommendationManager !==
+        "undefined"
+    ) {
+
+        try {
+
+            if (
+                typeof DPRecommendationManager.render ===
+                "function"
+            ) {
+
+                const recommendationPayload =
+                    result.recommendation ||
+                    result.recommendations ||
+                    result.recommendedAction;
+
+
+                if (
+                    recommendationPayload &&
+                    recommendationPayload.primary &&
+                    recommendationPayload.controlMode &&
+                    recommendationPayload.heading &&
+                    recommendationPayload.separation
+                ) {
+
+                    DPRecommendationManager.render(
+                        recommendationPayload
+                    );
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "DP Recommendation Manager:",
+                error
+            );
+
+        }
+
+    }
+
+
+    updateDPCockpit(result);
+
+    updateCaptainAILena(result);
+
+    renderDPReport(
+        result,
+        inputs
+    );
+}
+
+
+/* ---------------------------------------------------------
+   UPDATE LIVE STATUS
+--------------------------------------------------------- */
+
+function updateDPCockpit(result) {
+
+    const environment =
+        result.environment;
+
+    const primary =
+        result.primary;
+
+    const secondary =
+        result.secondary;
+
+    const human =
+        result.human;
+
+    const stabilizer =
+        result.stabilizer;
+
+
+    document.getElementById(
+        "environmentStatus"
+    ).textContent =
+
+        environment.environmentalStress.toFixed(2)
+        +
+        " / "
+        +
+        result.risk;
+
+
+    document.getElementById(
+        "primaryStatus"
+    ).textContent =
+
+        primary.thrustOutput.toFixed(2)
+        +
+        " / "
+        +
+        primary.status;
+
+
+    document.getElementById(
+        "secondaryStatus"
+    ).textContent =
+
+        secondary.safetyMode
+            ? "SAFETY ACTIVE"
+            : "MONITORING";
+
+
+    document.getElementById(
+        "stabilizerStatus"
+    ).textContent =
+
+        stabilizer.source;
+
+
+    document.getElementById(
+        "humanStatus"
+    ).textContent =
+
+        human.override
+            ? "OVERRIDE REQUIRED"
+            : "FINAL";
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+
+        result.systemStatus;
+
+}
+
+
+/* ---------------------------------------------------------
+   RESULT REPORT
+--------------------------------------------------------- */
+
+function renderDPReport(
+    result,
+    inputs
+) {
+
+    const environment =
+        result.environment;
+
+    const primary =
+        result.primary;
+
+    const secondary =
+        result.secondary;
+
+    const human =
+        result.human;
+
+    const stabilizer =
+        result.stabilizer;
+
+    const updatedState =
+        result.updatedState;
+
+    const recommended =
+        result.recommendedAction;
+
+
+    const report =
+
+`
+============================================================
+             SEXTANT DP SIMULATION RESULT
+============================================================
+
+ENGINE
+------------------------------------------------------------
+Engine            : ${result.engineName}
+Version           : ${result.version}
+Mode              : ${result.mode}
+
+
+VESSEL
+------------------------------------------------------------
+Name              : SEXTANT-MPSV-01
+Type              : Multi-Purpose Support Vessel
+DP Classification : DP2-SIMULATED
+
+Dimensions        : 85m × 20m × 6m
+Thrusters         : 4
+Nominal Thrust    : 100 simulation units
+
+
+ENVIRONMENT
+------------------------------------------------------------
+Wind Stress       : ${inputs.wind.toFixed(2)}
+Current Stress    : ${inputs.current.toFixed(2)}
+Wave Stress       : ${inputs.wave.toFixed(2)}
+Tidal Stress      : ${inputs.tidal.toFixed(2)}
+
+Environmental Stress:
+${environment.environmentalStress.toFixed(2)}
+
+Risk Classification:
+${result.risk}
+
+
+PRIMARY AI
+------------------------------------------------------------
+Layer             : ${primary.layer}
+Mode              : ${primary.mode}
+Thrust Output     : ${primary.thrustOutput.toFixed(2)}
+Status            : ${primary.status}
+
+
+SECONDARY AI
+------------------------------------------------------------
+Layer             : ${secondary.layer}
+Mode              : ${secondary.mode}
+Thrust Output     : ${secondary.thrustOutput.toFixed(2)}
+Status            : ${secondary.status}
+Safety Mode       : ${secondary.safetyMode}
+
+
+STABILIZER
+------------------------------------------------------------
+Layer             : ${stabilizer.layer}
+Mode              : ${stabilizer.mode}
+Final Output      : ${stabilizer.finalOutput.toFixed(2)}
+Source            : ${stabilizer.source}
+Status            : ${stabilizer.status}
+
+
+CAPTAIN AI LENA
+------------------------------------------------------------
+Role              : UMV RESILIENCE DECISION-SUPPORT LAYER
+Authority         : HUMAN-IN-THE-LOOP
+Autonomous Command:
+${
+    recommended &&
+    recommended.autonomousCommand === true
+        ? "TRUE"
+        : "FALSE"
+}
+
+Recommendation:
+${
+    recommended
+        ? recommended.primaryRecommendation
+        : "NO SIMULATED RECOMMENDATION"
+}
+
+Urgency:
+${
+    recommended
+        ? recommended.urgency
+        : "NORMAL"
+}
+
+Response Mode:
+${
+    recommended
+        ? recommended.responseMode
+        : "MONITORING"
+}
+
+Rationale:
+${
+    recommended
+        ? recommended.rationale
+        : "Captain AI Lena awaiting simulated assessment."
+}
+
+UMV Action:
+NOT EXECUTED
+
+
+HUMAN-IN-THE-LOOP
+------------------------------------------------------------
+Authority         : ${human.authority}
+Override          : ${human.override}
+Status            : ${human.status}
+
+
+RECOMMENDED ACTIONS
+------------------------------------------------------------
+${
+    recommended &&
+    Array.isArray(
+        recommended.recommendedActions
+    )
+        ? recommended.recommendedActions
+            .map(
+                function(action, index) {
+
+                    return (
+                        (index + 1) +
+                        ". " +
+                        action
+                    );
+
+                }
+            )
+            .join("\n")
+        : "No recommendation actions available."
+}
+
+
+UPDATED SIMULATED STATE
+------------------------------------------------------------
+Position Error    : ${updatedState.positionError.toFixed(4)}
+Simulated Output  : ${updatedState.simulatedCommand.toFixed(2)}
+Environmental Stress:
+${updatedState.environmentalStress.toFixed(2)}
+Stability Index   : ${updatedState.stabilityIndex.toFixed(2)}
+
+
+FINAL SYSTEM STATUS
+------------------------------------------------------------
+${result.systemStatus}
+
+
+SIMULATION PIPELINE
+------------------------------------------------------------
+OBSERVE
+   ↓
+VERIFY
+   ↓
+ASSESS
+   ↓
+DECIDE
+   ↓
+ACT
+   ↓
+UPDATE
+
+
+AUDIT
+------------------------------------------------------------
+Timestamp         : ${result.audit.timestamp}
+Engine Version    : ${result.audit.engineVersion}
+Engine Name       : ${result.audit.engineName}
+Mode              : ${result.audit.mode}
+
+
+============================================================
+SIMULATION COMPLETE
+============================================================
+
+SAFETY BOUNDARY:
+
+This is a research and simulation demonstrator only.
+
+It is NOT certified marine control software and must
+NOT be connected to operational DP, propulsion,
+navigation or safety systems.
+
+All vessel behaviour, environmental conditions,
+decisions and outputs are simulated.
+
+Human operator retains final authority.
+
+============================================================
+`;
+
+
+    document.getElementById(
+        "output"
+    ).textContent =
+        report;
+}
+
+
+/* ---------------------------------------------------------
+   RESET
+--------------------------------------------------------- */
+
+function resetSimulation() {
+
+    document.getElementById("wind").value = 30;
+
+    document.getElementById("current").value = 25;
+
+    document.getElementById("wave").value = 30;
+
+    document.getElementById("tidal").value = 20;
+
+
+    document.getElementById(
+        "environmentStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "primaryStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "secondaryStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "stabilizerStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "humanStatus"
+    ).textContent =
+        "FINAL";
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+        "SYSTEM READY";
+
+
+    document.getElementById(
+        "output"
+    ).textContent =
+
+`System ready.
+
+Select environmental conditions or a scenario,
+then press RUN DP SIMULATION.`;
+
+
+    resetCaptainAILena();
+
+
+    if (
+        typeof DPRecommendationManager !==
+        "undefined" &&
+        typeof DPRecommendationManager.reset ===
+        "function"
+    ) {
+
+        DPRecommendationManager.reset();
+
+    }
+
+
+    if (
+        typeof DPOperationalStateManager !==
+        "undefined"
+    ) {
+
+        try {
+
+            if (
+                typeof DPOperationalStateManager.reset ===
+                "function"
+            ) {
+
+                DPOperationalStateManager.reset();
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "DP Operational State Manager reset:",
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   STARTUP
+--------------------------------------------------------- */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        verifyDPEngine();
+
+        verifyDPModules();
+
+        resetSimulation();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
