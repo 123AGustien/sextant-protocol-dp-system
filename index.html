@@ -4040,6 +4040,1112 @@ function resetSimulation() {
 </script>
 
 </body>
+<script src="dp_simulation_engine.js"></script>
+
+<script>
+/* ============================================================
+   SEXTANT PROTOCOL
+   DP RESILIENCE COCKPIT
+   UI ↔ DP SIMULATION ENGINE 1.2.0
+   ============================================================ */
+
+"use strict";
+
+
+/* ============================================================
+   ENGINE INITIALISATION
+============================================================ */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const engineStatus =
+        document.getElementById("engineStatus");
+
+    if (
+        window.DPSimulationEngine &&
+        window.DPSimulationEngine.validate()
+    ) {
+
+        engineStatus.textContent =
+            "DP SIMULATION ENGINE 1.2.0 CONNECTED — READY";
+
+    } else {
+
+        engineStatus.textContent =
+            "ENGINE ERROR — NOT CONNECTED";
+
+        console.error(
+            "DPSimulationEngine validation failed."
+        );
+
+    }
+
+    updateInterfaceToStandby();
+
+});
+
+
+/* ============================================================
+   DOM HELPERS
+============================================================ */
+
+function getInputValue(id) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element) {
+        return 0;
+    }
+
+    return Number(element.value) || 0;
+
+}
+
+
+function setInputValue(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+        element.value = value;
+    }
+
+}
+
+
+function setText(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+        element.textContent = value;
+    }
+
+}
+
+
+/* ============================================================
+   ENVIRONMENT
+============================================================ */
+
+function getEnvironmentInputs() {
+
+    return {
+
+        wind:
+            getInputValue("wind"),
+
+        current:
+            getInputValue("current"),
+
+        wave:
+            getInputValue("wave"),
+
+        tidal:
+            getInputValue("tidal")
+
+    };
+
+}
+
+
+/* ============================================================
+   SCENARIO FUNCTIONS
+============================================================ */
+
+function normalScenario() {
+
+    setInputValue("wind", 20);
+    setInputValue("current", 15);
+    setInputValue("wave", 20);
+    setInputValue("tidal", 10);
+
+    updateScenarioMessage("NORMAL");
+
+}
+
+
+function moderateWeatherScenario() {
+
+    setInputValue("wind", 45);
+    setInputValue("current", 40);
+    setInputValue("wave", 45);
+    setInputValue("tidal", 30);
+
+    updateScenarioMessage("MODERATE WEATHER");
+
+}
+
+
+function heavyWeatherScenario() {
+
+    setInputValue("wind", 75);
+    setInputValue("current", 70);
+    setInputValue("wave", 80);
+    setInputValue("tidal", 65);
+
+    updateScenarioMessage("HEAVY WEATHER");
+
+}
+
+
+function criticalScenario() {
+
+    setInputValue("wind", 95);
+    setInputValue("current", 95);
+    setInputValue("wave", 95);
+    setInputValue("tidal", 90);
+
+    updateScenarioMessage("CRITICAL");
+
+}
+
+
+function currentSurgeScenario() {
+
+    setInputValue("wind", 35);
+    setInputValue("current", 95);
+    setInputValue("wave", 45);
+    setInputValue("tidal", 70);
+
+    updateScenarioMessage("CURRENT SURGE");
+
+}
+
+
+function heavySeaStateScenario() {
+
+    setInputValue("wind", 70);
+    setInputValue("current", 45);
+    setInputValue("wave", 95);
+    setInputValue("tidal", 40);
+
+    updateScenarioMessage("HEAVY SEA");
+
+}
+
+
+function windGustScenario() {
+
+    setInputValue("wind", 90);
+    setInputValue("current", 30);
+    setInputValue("wave", 35);
+    setInputValue("tidal", 20);
+
+    updateScenarioMessage("WIND GUST");
+
+}
+
+
+function combinedDisturbanceScenario() {
+
+    setInputValue("wind", 80);
+    setInputValue("current", 80);
+    setInputValue("wave", 80);
+    setInputValue("tidal", 80);
+
+    updateScenarioMessage("COMBINED DISTURBANCE");
+
+}
+
+
+function randomScenario() {
+
+    setInputValue(
+        "wind",
+        Math.floor(Math.random() * 101)
+    );
+
+    setInputValue(
+        "current",
+        Math.floor(Math.random() * 101)
+    );
+
+    setInputValue(
+        "wave",
+        Math.floor(Math.random() * 101)
+    );
+
+    setInputValue(
+        "tidal",
+        Math.floor(Math.random() * 101)
+    );
+
+    updateScenarioMessage("RANDOM");
+
+}
+
+
+function updateScenarioMessage(name) {
+
+    const output =
+        document.getElementById("assessmentOutput");
+
+    if (output) {
+
+        output.textContent =
+            "SCENARIO SELECTED: " +
+            name +
+            "\n\n" +
+            "Environmental conditions loaded.\n" +
+            "Press RUN DP SIMULATION to execute the layered architecture.";
+
+    }
+
+}
+
+
+/* ============================================================
+   MAIN EXECUTION PATH
+============================================================ */
+
+function runSimulation() {
+
+    if (
+        !window.DPSimulationEngine
+    ) {
+
+        setText(
+            "engineStatus",
+            "ENGINE ERROR — NOT CONNECTED"
+        );
+
+        return;
+
+    }
+
+
+    /*
+     * The environmental state enters the actual engine here.
+     */
+
+    const environment =
+        getEnvironmentInputs();
+
+
+    /*
+     * ENGINE EXECUTION:
+     *
+     * ENVIRONMENT
+     *      ↓
+     * S1 PRIMARY
+     *      ↓
+     * S2 SECONDARY
+     *      ↓
+     * STABILIZER
+     *      ↓
+     * RECOMMENDATION
+     *      ↓
+     * HUMAN DECISION GATE
+     *
+     * No response is executed at this point.
+     */
+
+    const result =
+        window.DPSimulationEngine.run(
+            environment
+        );
+
+
+    /*
+     * Display the complete layered result.
+     */
+
+    renderSimulationResult(
+        result
+    );
+
+}
+
+
+/* ============================================================
+   RENDER COMPLETE ENGINE RESULT
+============================================================ */
+
+function renderSimulationResult(result) {
+
+    if (!result) {
+        return;
+    }
+
+
+    /* --------------------------------------------------------
+       LIVE SYSTEM STATUS
+    -------------------------------------------------------- */
+
+    setText(
+        "environmentStatus",
+        Number(
+            result.environment.environmentalStress
+        ).toFixed(2) +
+        " / " +
+        result.risk
+    );
+
+
+    setText(
+        "primaryStatus",
+        result.primary.mode
+    );
+
+
+    setText(
+        "secondaryStatus",
+        result.secondary.mode
+    );
+
+
+    setText(
+        "stabilizerStatus",
+        result.stabilizer.status
+    );
+
+
+    setText(
+        "humanStatus",
+        "FINAL"
+    );
+
+
+    setText(
+        "systemStatus",
+        result.systemStatus
+    );
+
+
+    /* --------------------------------------------------------
+       CAPTAIN AI LENA
+    -------------------------------------------------------- */
+
+    setText(
+        "lenaStatus",
+        "ASSESSMENT COMPLETE"
+    );
+
+
+    setText(
+        "lenaRecommendation",
+        result.recommendedAction
+            .primaryRecommendation
+    );
+
+
+    setText(
+        "lenaUrgency",
+        result.recommendedAction.urgency
+    );
+
+
+    setText(
+        "lenaResponseMode",
+        result.recommendedAction.responseMode
+    );
+
+
+    setText(
+        "lenaAutonomousCommand",
+        "FALSE"
+    );
+
+
+    setText(
+        "lenaUMVAction",
+        "HELD FOR HUMAN DECISION"
+    );
+
+
+    /* --------------------------------------------------------
+       ASSESSMENT OUTPUT
+    -------------------------------------------------------- */
+
+    const output =
+        document.getElementById(
+            "assessmentOutput"
+        );
+
+
+    if (output) {
+
+        output.textContent =
+            buildAssessmentText(result);
+
+    }
+
+
+    /*
+     * Make the human decision controls visible
+     * after a simulation has reached the gate.
+     */
+
+    showHumanDecisionControls();
+
+}
+
+
+/* ============================================================
+   ASSESSMENT TEXT
+============================================================ */
+
+function buildAssessmentText(result) {
+
+    const env =
+        result.environment;
+
+    const primary =
+        result.primary;
+
+    const secondary =
+        result.secondary;
+
+    const stabilizer =
+        result.stabilizer;
+
+    const recommendation =
+        result.recommendedAction;
+
+    const proposed =
+        result.proposedAction;
+
+
+    let text = "";
+
+    text +=
+        "SEXTANT PROTOCOL — DP RESILIENCE ASSESSMENT\n";
+
+    text +=
+        "============================================================\n\n";
+
+
+    text +=
+        "ENGINE\n";
+
+    text +=
+        result.engineName +
+        " v" +
+        result.version +
+        "\n";
+
+    text +=
+        "MODE: " +
+        result.mode +
+        "\n\n";
+
+
+    text +=
+        "ENVIRONMENT\n";
+
+    text +=
+        "Wind Stress:    " +
+        env.wind +
+        "\n";
+
+    text +=
+        "Current Stress: " +
+        env.current +
+        "\n";
+
+    text +=
+        "Wave Stress:    " +
+        env.wave +
+        "\n";
+
+    text +=
+        "Tidal Stress:   " +
+        env.tidal +
+        "\n";
+
+    text +=
+        "Environmental Stress: " +
+        Number(
+            env.environmentalStress
+        ).toFixed(2) +
+        "\n";
+
+    text +=
+        "Risk: " +
+        result.risk +
+        "\n\n";
+
+
+    text +=
+        "LAYER S1 — PRIMARY AI\n";
+
+    text +=
+        "Mode: " +
+        primary.mode +
+        "\n";
+
+    text +=
+        "Response: " +
+        primary.response +
+        "\n";
+
+    text +=
+        "Stress: " +
+        primary.stress +
+        "\n\n";
+
+
+    text +=
+        "LAYER S2 — SECONDARY AI\n";
+
+    text +=
+        "Mode: " +
+        secondary.mode +
+        "\n";
+
+    text +=
+        "Assessment: " +
+        secondary.assessment +
+        "\n";
+
+    text +=
+        "Independent Stress: " +
+        secondary.independentStress +
+        "\n\n";
+
+
+    text +=
+        "STABILIZER / ARBITRATION\n";
+
+    text +=
+        "Mode: " +
+        stabilizer.mode +
+        "\n";
+
+    text +=
+        "Source: " +
+        stabilizer.source +
+        "\n";
+
+    text +=
+        "Status: " +
+        stabilizer.status +
+        "\n";
+
+    text +=
+        "Final Output: " +
+        stabilizer.finalOutput +
+        "\n\n";
+
+
+    text +=
+        "CAPTAIN AI LENA — DECISION SUPPORT\n";
+
+    text +=
+        "Recommendation: " +
+        recommendation.primaryRecommendation +
+        "\n";
+
+    text +=
+        "Urgency: " +
+        recommendation.urgency +
+        "\n";
+
+    text +=
+        "Response Mode: " +
+        recommendation.responseMode +
+        "\n";
+
+    text +=
+        "Rationale: " +
+        recommendation.rationale +
+        "\n\n";
+
+
+    text +=
+        "RECOMMENDED ACTIONS\n";
+
+    recommendation.recommendedActions
+        .forEach(function (action, index) {
+
+            text +=
+                (index + 1) +
+                ". " +
+                action +
+                "\n";
+
+        });
+
+
+    text +=
+        "\nPROPOSED SIMULATED DP RESPONSE\n";
+
+    text +=
+        "Command: " +
+        proposed.simulatedCommand +
+        " units\n";
+
+    text +=
+        "Status: " +
+        proposed.status +
+        "\n";
+
+    text +=
+        "Execution Gate: " +
+        proposed.executionGate +
+        "\n";
+
+    text +=
+        "Operational Command: FALSE\n";
+
+    text +=
+        "Real Vessel Connection: FALSE\n\n";
+
+
+    text +=
+        "HUMAN AUTHORITY\n";
+
+    text +=
+        "Authority: FINAL\n";
+
+    text +=
+        "Decision: PENDING\n";
+
+    text +=
+        "No simulated action has been executed.\n";
+
+
+    text +=
+        "\n============================================================\n";
+
+    text +=
+        "SIMULATION STOPPED AT HUMAN DECISION GATE\n";
+
+    text +=
+        "============================================================";
+
+
+    return text;
+
+}
+
+
+/* ============================================================
+   HUMAN DECISION CONTROLS
+============================================================ */
+
+function showHumanDecisionControls() {
+
+    const panel =
+        document.getElementById(
+            "humanDecisionControls"
+        );
+
+    if (panel) {
+
+        panel.style.display =
+            "block";
+
+    }
+
+}
+
+
+function acknowledgeSimulation() {
+
+    const result =
+        window.DPSimulationEngine
+            .acknowledgeHumanDecision(
+                "Human operator acknowledged the simulated environmental assessment."
+            );
+
+
+    renderHumanDecisionResult(
+        result
+    );
+
+}
+
+
+function maintainSafeState() {
+
+    const result =
+        window.DPSimulationEngine
+            .maintainSafeState(
+                "Human operator elected to maintain the simulated safe state."
+            );
+
+
+    renderFinalResult(
+        result
+    );
+
+}
+
+
+function authorizeSimulatedResponse() {
+
+    const result =
+        window.DPSimulationEngine
+            .authorizeSimulatedResponse(
+                "Human operator authorized the proposed simulated response."
+            );
+
+
+    renderFinalResult(
+        result
+    );
+
+}
+
+
+/* ============================================================
+   HUMAN ACKNOWLEDGEMENT RESULT
+============================================================ */
+
+function renderHumanDecisionResult(result) {
+
+    if (!result) {
+        return;
+    }
+
+
+    const output =
+        document.getElementById(
+            "assessmentOutput"
+        );
+
+
+    if (output) {
+
+        output.textContent =
+            buildAssessmentText(result) +
+
+            "\n\n" +
+
+            "HUMAN ACKNOWLEDGEMENT RECEIVED\n" +
+
+            "------------------------------------------------------------\n" +
+
+            "The simulated condition has been acknowledged.\n" +
+
+            "No simulated response has been executed.\n\n" +
+
+            "NEXT HUMAN DECISION:\n" +
+
+            "• MAINTAIN SAFE STATE\n" +
+
+            "OR\n" +
+
+            "• AUTHORIZE SIMULATED RESPONSE";
+
+    }
+
+
+    setText(
+        "humanStatus",
+        "ACKNOWLEDGED / FINAL"
+    );
+
+
+    setText(
+        "lenaStatus",
+        "AWAITING HUMAN DECISION"
+    );
+
+
+    setText(
+        "lenaUMVAction",
+        "HELD — HUMAN AUTHORIZATION"
+    );
+
+}
+
+
+/* ============================================================
+   FINAL RESULT
+============================================================ */
+
+function renderFinalResult(result) {
+
+    if (!result) {
+        return;
+    }
+
+
+    setText(
+        "humanStatus",
+        result.human.status
+    );
+
+
+    setText(
+        "lenaStatus",
+        "DECISION RECORDED"
+    );
+
+
+    setText(
+        "lenaUMVAction",
+        result.simulatedAction.status
+    );
+
+
+    const output =
+        document.getElementById(
+            "assessmentOutput"
+        );
+
+
+    if (output) {
+
+        output.textContent =
+            buildAssessmentText(result) +
+
+            "\n\n" +
+
+            "FINAL HUMAN DECISION\n" +
+
+            "------------------------------------------------------------\n" +
+
+            "Decision: " +
+            result.human.decision +
+            "\n" +
+
+            "Acknowledged: " +
+            result.human.acknowledged +
+            "\n" +
+
+            "Authorized: " +
+            result.human.authorized +
+            "\n" +
+
+            "Simulated Action Executed: " +
+            result.human.actionExecuted +
+            "\n\n" +
+
+            "SIMULATED RESPONSE\n" +
+
+            "Mode: " +
+            result.simulatedAction.mode +
+            "\n" +
+
+            "Command: " +
+            result.simulatedAction.simulatedCommand +
+            " units\n" +
+
+            "Status: " +
+            result.simulatedAction.status +
+            "\n" +
+
+            "Execution Gate: " +
+            result.simulatedAction.executionGate +
+            "\n\n" +
+
+            "UPDATED SIMULATED STATE\n" +
+
+            "Position Error: " +
+            result.updatedState.positionError +
+            "\n" +
+
+            "Stability Index: " +
+            result.updatedState.stabilityIndex +
+            "\n" +
+
+            "Risk: " +
+            result.updatedState.risk +
+            "\n" +
+
+            "State: " +
+            result.updatedState.status +
+            "\n\n" +
+
+            "AUDIT\n" +
+
+            "Human Decision: " +
+            result.audit.humanDecision +
+            "\n" +
+
+            "Human Authorized: " +
+            result.audit.humanAuthorized +
+            "\n" +
+
+            "Action Executed: " +
+            result.audit.simulatedActionExecuted +
+            "\n" +
+
+            "Operational Command: FALSE\n" +
+
+            "Real Vessel Connection: FALSE\n\n" +
+
+            "============================================================\n" +
+
+            "SIMULATION COMPLETE — RESEARCH / SIMULATION ONLY\n" +
+
+            "============================================================";
+
+    }
+
+
+    hideHumanDecisionControls();
+
+}
+
+
+/* ============================================================
+   HIDE HUMAN CONTROLS AFTER FINAL DECISION
+============================================================ */
+
+function hideHumanDecisionControls() {
+
+    const panel =
+        document.getElementById(
+            "humanDecisionControls"
+        );
+
+    if (panel) {
+
+        panel.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* ============================================================
+   RESET
+============================================================ */
+
+function resetSimulation() {
+
+    setInputValue("wind", 30);
+    setInputValue("current", 25);
+    setInputValue("wave", 30);
+    setInputValue("tidal", 20);
+
+
+    updateInterfaceToStandby();
+
+
+    const output =
+        document.getElementById(
+            "assessmentOutput"
+        );
+
+
+    if (output) {
+
+        output.textContent =
+            "System ready. Select environmental conditions or a scenario, then press RUN DP SIMULATION.";
+
+    }
+
+
+    window.lastDPSimulation =
+        null;
+
+}
+
+
+/* ============================================================
+   STANDBY STATE
+============================================================ */
+
+function updateInterfaceToStandby() {
+
+    setText(
+        "environmentStatus",
+        "17.50 / LOW"
+    );
+
+    setText(
+        "primaryStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "secondaryStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "stabilizerStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "humanStatus",
+        "FINAL"
+    );
+
+    setText(
+        "systemStatus",
+        "SYSTEM READY"
+    );
+
+
+    setText(
+        "lenaStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "lenaRecommendation",
+        "NO SIMULATED RECOMMENDATION"
+    );
+
+    setText(
+        "lenaUrgency",
+        "NORMAL"
+    );
+
+    setText(
+        "lenaResponseMode",
+        "MONITORING"
+    );
+
+    setText(
+        "lenaAutonomousCommand",
+        "FALSE"
+    );
+
+    setText(
+        "lenaUMVAction",
+        "NOT EXECUTED"
+    );
+
+
+    hideHumanDecisionControls();
+
+}
+
+
+/* ============================================================
+   EXTERNAL DEBUG / RESEARCH ACCESS
+============================================================ */
+
+window.SextantDPCockpit = {
+
+    run:
+        runSimulation,
+
+    reset:
+        resetSimulation,
+
+    acknowledge:
+        acknowledgeSimulation,
+
+    maintainSafeState:
+        maintainSafeState,
+
+    authorize:
+        authorizeSimulatedResponse,
+
+    getLastResult:
+        function () {
+
+            return window.lastDPSimulation;
+
+        }
+
+};
+
+</script>
 
 </html>
 
