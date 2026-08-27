@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
@@ -10,7 +12,7 @@
 
     <meta
         name="description"
-        content="Sextant Protocol DP Resilience Research Simulator — deterministic environmental scenario, resilience assessment and human-in-the-loop decision-support research prototype."
+        content="Sextant Protocol DP Resilience Research Simulator — deterministic environmental scenario, resilience assessment, trial manoeuvre simulation and human-in-the-loop decision-support research prototype."
     >
 
     <meta
@@ -21,6 +23,7 @@
     <title>
         Sextant Protocol – DP Resilience Research Simulator
     </title>
+
 
     <style>
 
@@ -103,6 +106,7 @@
             padding-bottom: 8px;
         }
 
+
         /* =====================================================
            RESEARCH PURPOSE
         ===================================================== */
@@ -141,6 +145,7 @@
             margin-bottom: 5px;
         }
 
+
         /* =====================================================
            ENGINE
         ===================================================== */
@@ -159,6 +164,7 @@
         #engineStatus {
             font-weight: bold;
         }
+
 
         /* =====================================================
            ARCHITECTURE
@@ -189,6 +195,7 @@
             font-size: 20px;
         }
 
+
         /* =====================================================
            VESSEL
         ===================================================== */
@@ -197,6 +204,7 @@
             line-height: 1.8;
             font-size: 14px;
         }
+
 
         /* =====================================================
            INPUTS
@@ -246,6 +254,7 @@
             font-weight: bold;
         }
 
+
         /* =====================================================
            BUTTONS
         ===================================================== */
@@ -282,10 +291,27 @@
             background: #3d6e97;
         }
 
+        .trial-generate {
+            background: #315a7d;
+        }
+
+        .trial-verify {
+            background: #7a6330;
+        }
+
+        .trial-authorize {
+            background: #1f8f5f;
+        }
+
+        .trial-abort {
+            background: #7b3030;
+        }
+
         .controls {
             text-align: center;
             margin: 15px 0;
         }
+
 
         /* =====================================================
            STATUS
@@ -316,6 +342,7 @@
             font-size: 14px;
             word-break: break-word;
         }
+
 
         /* =====================================================
            OPERATOR ALERT
@@ -403,6 +430,7 @@
             background: #3b1116;
         }
 
+
         /* =====================================================
            STABILIZER
         ===================================================== */
@@ -432,6 +460,7 @@
             margin-top: 15px;
         }
 
+
         /* =====================================================
            HUMAN AUTHORITY
         ===================================================== */
@@ -451,6 +480,7 @@
             font-size: 13px;
             line-height: 1.5;
         }
+
 
         /* =====================================================
            RECOMMENDATION
@@ -475,6 +505,102 @@
             padding-left: 20px;
             line-height: 1.6;
         }
+
+
+        /* =====================================================
+           TRIAL MANOEUVRE SCREEN
+        ===================================================== */
+
+        .trial-manoeuvre-panel {
+            border: 2px solid #587590;
+            background: #0b1b2b;
+        }
+
+        .trial-manoeuvre-banner {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            background: #091827;
+            border: 1px solid #29445f;
+            text-align: center;
+            font-family: monospace;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .trial-manoeuvre-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px;
+        }
+
+        .trial-card {
+            padding: 12px;
+            background: #091827;
+            border: 1px solid #29445f;
+            border-radius: 6px;
+        }
+
+        .trial-card-title {
+            font-size: 10px;
+            color: #91a8bd;
+        }
+
+        .trial-card-value {
+            margin-top: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .trial-command {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            background: #050c14;
+            border: 1px solid #587590;
+            text-align: center;
+        }
+
+        .trial-command-label {
+            font-size: 11px;
+            color: #91a8bd;
+        }
+
+        .trial-command-value {
+            margin-top: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .trial-authority {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            border: 2px solid #d9a441;
+            background: #352b12;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .trial-log {
+            margin-top: 15px;
+            min-height: 150px;
+            max-height: 260px;
+            overflow-y: auto;
+            background: #050c14;
+            border: 1px solid #29445f;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 11px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
 
         /* =====================================================
            RESPONSE INDICATORS
@@ -511,6 +637,7 @@
             font-size: 13px;
         }
 
+
         /* =====================================================
            EVENT LOG
         ===================================================== */
@@ -535,6 +662,7 @@
             border-bottom: none;
         }
 
+
         /* =====================================================
            OUTPUT
         ===================================================== */
@@ -553,6 +681,7 @@
             overflow-x: auto;
             line-height: 1.5;
         }
+
 
         /* =====================================================
            SAFETY / OPERATIONAL BOUNDARY
@@ -579,6 +708,7 @@
             margin: 18px 0;
         }
 
+
         /* =====================================================
            FOOTER
         ===================================================== */
@@ -590,6 +720,7 @@
             font-size: 11px;
             line-height: 1.7;
         }
+
 
         /* =====================================================
            MOBILE
@@ -653,6 +784,10 @@
             .status-grid {
                 grid-template-columns: 1fr 1fr;
             }
+
+            .trial-command-value {
+                font-size: 16px;
+            }
         }
 
         @media (max-width: 380px) {
@@ -667,9 +802,12 @@
         }
 
     </style>
+
 </head>
 
+
 <body>
+
 
     <!-- =========================================================
          HEADER
@@ -690,6 +828,7 @@
             independent assessment →
             resilience arbitration →
             human decision-support →
+            trial manoeuvre simulation →
             simulated DP response
         </p>
 
@@ -702,6 +841,7 @@
 
 
     <div class="container">
+
 
         <!-- =====================================================
              RESEARCH PURPOSE
@@ -741,6 +881,8 @@
                 STABILIZER
                 →
                 HUMAN-IN-THE-LOOP
+                →
+                TRIAL MANOEUVRE
                 →
                 SIMULATED DP RESPONSE
 
@@ -782,6 +924,10 @@
 
                 <li>
                     operator decision-support and escalation recommendations;
+                </li>
+
+                <li>
+                    trial manoeuvre generation and verification;
                 </li>
 
                 <li>
@@ -878,6 +1024,7 @@
             <div class="operator-alert-meta">
 
                 <div class="alert-meta-card">
+
                     <span class="alert-meta-label">
                         ALERT LEVEL
                     </span>
@@ -888,9 +1035,11 @@
                     >
                         NORMAL
                     </span>
+
                 </div>
 
                 <div class="alert-meta-card">
+
                     <span class="alert-meta-label">
                         EVENT PRIORITY
                     </span>
@@ -901,9 +1050,11 @@
                     >
                         LOW
                     </span>
+
                 </div>
 
                 <div class="alert-meta-card">
+
                     <span class="alert-meta-label">
                         OPERATOR RESPONSE
                     </span>
@@ -914,9 +1065,11 @@
                     >
                         MONITOR
                     </span>
+
                 </div>
 
                 <div class="alert-meta-card">
+
                     <span class="alert-meta-label">
                         HUMAN AUTHORITY
                     </span>
@@ -927,6 +1080,7 @@
                     >
                         AVAILABLE
                     </span>
+
                 </div>
 
             </div>
@@ -981,6 +1135,13 @@
                 <div class="arrow">→</div>
 
                 <div class="node">
+                    TRIAL MANOEUVRE<br>
+                    SIMULATION
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="node">
                     SIMULATED DP ACTION
                 </div>
 
@@ -1004,6 +1165,7 @@
                 <div class="status-grid">
 
                     <div class="status-card">
+
                         <div class="status-title">
                             NAVIGATION SYSTEM
                         </div>
@@ -1014,9 +1176,11 @@
                         >
                             ONLINE — SIMULATION
                         </div>
+
                     </div>
 
                     <div class="status-card">
+
                         <div class="status-title">
                             POSITION REFERENCE
                         </div>
@@ -1027,9 +1191,11 @@
                         >
                             SIMULATED
                         </div>
+
                     </div>
 
                     <div class="status-card">
+
                         <div class="status-title">
                             HEADING
                         </div>
@@ -1040,9 +1206,11 @@
                         >
                             000.0°
                         </div>
+
                     </div>
 
                     <div class="status-card">
+
                         <div class="status-title">
                             POSITION ERROR
                         </div>
@@ -1053,9 +1221,11 @@
                         >
                             0.00 m
                         </div>
+
                     </div>
 
                     <div class="status-card">
+
                         <div class="status-title">
                             GNSS / POSITION SENSOR
                         </div>
@@ -1066,9 +1236,11 @@
                         >
                             NORMAL — SIMULATED
                         </div>
+
                     </div>
 
                     <div class="status-card">
+
                         <div class="status-title">
                             GYRO / HEADING SENSOR
                         </div>
@@ -1079,9 +1251,11 @@
                         >
                             NORMAL — SIMULATED
                         </div>
+
                     </div>
 
                     <div class="status-card">
+
                         <div class="status-title">
                             ENVIRONMENTAL SENSORS
                         </div>
@@ -1092,9 +1266,11 @@
                         >
                             NORMAL — SIMULATED
                         </div>
+
                     </div>
 
                     <div class="status-card">
+
                         <div class="status-title">
                             SENSOR INTEGRITY
                         </div>
@@ -1105,9 +1281,11 @@
                         >
                             HIGH
                         </div>
+
                     </div>
 
                     <div class="status-card">
+
                         <div class="status-title">
                             NAVIGATION CONFIDENCE
                         </div>
@@ -1118,9 +1296,11 @@
                         >
                             HIGH
                         </div>
+
                     </div>
 
                     <div class="status-card">
+
                         <div class="status-title">
                             DATA SOURCE
                         </div>
@@ -1131,6 +1311,7 @@
                         >
                             SIMULATION ENGINE
                         </div>
+
                     </div>
 
                 </div>
@@ -1774,6 +1955,242 @@
 
 
         <!-- =====================================================
+             TRIAL MANOEUVRE SCREEN
+        ====================================================== -->
+
+        <div class="panel trial-manoeuvre-panel">
+
+            <h2>
+                ⚓ Trial Manoeuvre Simulation
+            </h2>
+
+            <div class="trial-manoeuvre-banner">
+
+                TRIAL MANOEUVRE MODE —
+                SIMULATION ONLY —
+                NO PHYSICAL DP COMMAND
+
+            </div>
+
+
+            <div class="trial-manoeuvre-grid">
+
+                <div class="trial-card">
+
+                    <div class="trial-card-title">
+                        MANOEUVRE ENGINE
+                    </div>
+
+                    <div
+                        id="trialManoeuvreEngine"
+                        class="trial-card-value"
+                    >
+                        STANDBY
+                    </div>
+
+                </div>
+
+
+                <div class="trial-card">
+
+                    <div class="trial-card-title">
+                        MANOEUVRE STATUS
+                    </div>
+
+                    <div
+                        id="trialManoeuvreStatus"
+                        class="trial-card-value"
+                    >
+                        NOT GENERATED
+                    </div>
+
+                </div>
+
+
+                <div class="trial-card">
+
+                    <div class="trial-card-title">
+                        TRIGGER
+                    </div>
+
+                    <div
+                        id="trialManoeuvreTrigger"
+                        class="trial-card-value"
+                    >
+                        NONE
+                    </div>
+
+                </div>
+
+
+                <div class="trial-card">
+
+                    <div class="trial-card-title">
+                        PROFILE
+                    </div>
+
+                    <div
+                        id="trialManoeuvreProfile"
+                        class="trial-card-value"
+                    >
+                        NONE
+                    </div>
+
+                </div>
+
+
+                <div class="trial-card">
+
+                    <div class="trial-card-title">
+                        VERIFICATION
+                    </div>
+
+                    <div
+                        id="trialManoeuvreVerification"
+                        class="trial-card-value"
+                    >
+                        NOT VERIFIED
+                    </div>
+
+                </div>
+
+
+                <div class="trial-card">
+
+                    <div class="trial-card-title">
+                        HUMAN AUTHORIZATION
+                    </div>
+
+                    <div
+                        id="trialManoeuvreHumanAuthority"
+                        class="trial-card-value"
+                    >
+                        REQUIRED
+                    </div>
+
+                </div>
+
+
+                <div class="trial-card">
+
+                    <div class="trial-card-title">
+                        EXECUTION STATE
+                    </div>
+
+                    <div
+                        id="trialManoeuvreExecution"
+                        class="trial-card-value"
+                    >
+                        NOT EXECUTED
+                    </div>
+
+                </div>
+
+
+                <div class="trial-card">
+
+                    <div class="trial-card-title">
+                        SIMULATED RESULT
+                    </div>
+
+                    <div
+                        id="trialManoeuvreResult"
+                        class="trial-card-value"
+                    >
+                        AWAITING
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="trial-command">
+
+                <div class="trial-command-label">
+                    PROPOSED TRIAL MANOEUVRE
+                </div>
+
+                <div
+                    id="trialManoeuvreCommand"
+                    class="trial-command-value"
+                >
+                    NO TRIAL MANOEUVRE GENERATED
+                </div>
+
+            </div>
+
+
+            <div class="trial-authority">
+
+                <strong>
+                    HUMAN AUTHORITY GATE
+                </strong>
+
+                <br>
+
+                No simulated manoeuvre may proceed to the
+                simulated execution stage until the human
+                operator authorizes it.
+
+            </div>
+
+
+            <div class="controls">
+
+                <button
+                    class="trial-generate"
+                    onclick="generateTrialManoeuvre()"
+                >
+                    GENERATE TRIAL MANOEUVRE
+                </button>
+
+                <button
+                    class="trial-verify"
+                    onclick="verifyTrialManoeuvre()"
+                >
+                    VERIFY TRIAL MANOEUVRE
+                </button>
+
+                <button
+                    class="trial-authorize"
+                    onclick="authorizeTrialManoeuvre()"
+                >
+                    AUTHORIZE SIMULATED MANOEUVRE
+                </button>
+
+                <button
+                    class="trial-abort"
+                    onclick="abortTrialManoeuvre()"
+                >
+                    ABORT TRIAL
+                </button>
+
+            </div>
+
+
+            <div
+                id="trialManoeuvreLog"
+                class="trial-log"
+            >
+
+TRIAL MANOEUVRE LOG
+
+System initialized.
+No trial manoeuvre generated.
+
+IMPORTANT:
+This screen represents simulated manoeuvre planning,
+verification and human-authority gating only.
+
+No physical DP command is generated or transmitted.
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
              OPERATOR NOTIFICATION
         ====================================================== -->
 
@@ -1931,6 +2348,7 @@
                 class="output"
                 style="min-height:180px;"
             >
+
                 SYSTEM EVENT LOG
 
                 Research simulator initialised.
@@ -1938,6 +2356,7 @@
                 Waiting for simulated environmental input.
 
                 No resilience alert generated.
+
             </div>
 
         </div>
@@ -1957,10 +2376,12 @@
                 id="output"
                 class="output"
             >
+
                 System ready.
 
                 Select environmental conditions or a scenario,
                 then press RUN DP SIMULATION.
+
             </div>
 
         </div>
@@ -2002,16 +2423,16 @@
             </p>
 
             <p>
-                The simulated outputs can be used to examine relationships
-                between environmental loading, resilience assessment,
-                arbitration, operator attention and simulated response.
+                Trial manoeuvres shown in this cockpit are simulated planning
+                and assessment representations. They are not operational DP
+                commands and are not transmitted to any vessel control system.
             </p>
 
             <p>
-                The simulator is designed to help investigate whether a layered
-                resilience architecture could provide earlier recognition,
-                structured escalation and improved decision-support during
-                rapidly changing simulated maritime conditions.
+                The simulated outputs can be used to examine relationships
+                between environmental loading, resilience assessment,
+                arbitration, operator attention, trial manoeuvre planning
+                and simulated response.
             </p>
 
             <hr>
@@ -2074,9 +2495,10 @@
 
             <p>
                 All environmental conditions, vessel behaviour, sensor states,
-                AI assessments, stabilizer decisions, alerts and simulated
-                actions displayed by this cockpit are non-operational research
-                representations generated by the simulation environment.
+                AI assessments, stabilizer decisions, trial manoeuvres,
+                alerts and simulated actions displayed by this cockpit are
+                non-operational research representations generated by the
+                simulation environment.
             </p>
 
             <p>
@@ -2101,13 +2523,14 @@
         <br>
 
         Deterministic environmental scenario generation,
-        resilience assessment and human-in-the-loop
-        decision-support research.
+        resilience assessment, trial manoeuvre simulation
+        and human-in-the-loop decision-support research.
 
         <br>
 
         ENVIRONMENT → PRIMARY AI → SECONDARY AI →
-        STABILIZER → HUMAN AUTHORITY → SIMULATED RESPONSE
+        STABILIZER → HUMAN AUTHORITY →
+        TRIAL MANOEUVRE → SIMULATED RESPONSE
 
         <br><br>
 
@@ -2130,23 +2553,14 @@
          3. SCENARIO LIBRARY
          4. ALERT MANAGER
          5. COCKPIT WIRING
-
-         ARCHITECTURE:
-
-         dp_simulation_engine.js
-                 ↓
-         umv_captain_ai_lena.js
-                 ↓
-         dp_scenarios.js
-                 ↓
-         dp_alert_manager.js
-                 ↓
-         dp_cockpit.js
-                 ↓
-         index.html presentation
+         6. TRIAL MANOEUVRE PRESENTATION / GATE
 
          IMPORTANT:
-         Each dependency is loaded ONCE.
+         Existing authoritative simulation modules remain external.
+
+         The trial manoeuvre screen is a simulation presentation
+         and human-authority gate. It does not transmit physical
+         DP commands.
     ========================================================== -->
 
     <script src="./dp_simulation_engine.js"></script>
@@ -2154,6 +2568,563 @@
     <script src="./dp_scenarios.js"></script>
     <script src="./dp_alert_manager.js"></script>
     <script src="./dp_cockpit.js"></script>
+
+
+    <!-- =========================================================
+         TRIAL MANOEUVRE PRESENTATION LAYER
+
+         IMPORTANT:
+         This layer does NOT replace the authoritative simulation
+         engine or create a physical DP control interface.
+
+         It provides:
+         GENERATE → VERIFY → HUMAN AUTHORIZE → SIMULATED RESULT
+
+         The manoeuvre remains non-operational.
+    ========================================================== -->
+
+    <script>
+
+        let trialManoeuvreState = {
+
+            generated: false,
+            verified: false,
+            authorized: false,
+            executed: false,
+
+            trigger: "NONE",
+            profile: "NONE",
+            command: "NO TRIAL MANOEUVRE GENERATED"
+
+        };
+
+
+        function trialLog(message) {
+
+            const log =
+                document.getElementById(
+                    "trialManoeuvreLog"
+                );
+
+            if (!log) {
+                return;
+            }
+
+            const timestamp =
+                new Date().toLocaleTimeString();
+
+            log.textContent +=
+                "\n[" +
+                timestamp +
+                "] " +
+                message;
+
+            log.scrollTop =
+                log.scrollHeight;
+        }
+
+
+        function getTrialEnvironment() {
+
+            const wind =
+                Number(
+                    document.getElementById("wind").value
+                ) || 0;
+
+            const current =
+                Number(
+                    document.getElementById("current").value
+                ) || 0;
+
+            const wave =
+                Number(
+                    document.getElementById("wave").value
+                ) || 0;
+
+            const tidal =
+                Number(
+                    document.getElementById("tidal").value
+                ) || 0;
+
+            return {
+                wind: Math.max(0, Math.min(100, wind)),
+                current: Math.max(0, Math.min(100, current)),
+                wave: Math.max(0, Math.min(100, wave)),
+                tidal: Math.max(0, Math.min(100, tidal))
+            };
+        }
+
+
+        function generateTrialManoeuvre() {
+
+            const environment =
+                getTrialEnvironment();
+
+            const average =
+                (
+                    environment.wind +
+                    environment.current +
+                    environment.wave +
+                    environment.tidal
+                ) / 4;
+
+
+            let trigger =
+                "ENVIRONMENTAL ASSESSMENT";
+
+            let profile =
+                "STANDARD DP HOLDING RESPONSE";
+
+            let command =
+                "MAINTAIN SAFE SIMULATED STATE";
+
+
+            if (average >= 75) {
+
+                trigger =
+                    "CRITICAL ENVIRONMENTAL STRESS";
+
+                profile =
+                    "CRITICAL STABILIZATION TRIAL";
+
+                command =
+                    "SIMULATE SAFE-STATE STABILIZATION";
+
+            }
+
+            else if (average >= 55) {
+
+                trigger =
+                    "HIGH ENVIRONMENTAL STRESS";
+
+                profile =
+                    "ENHANCED STABILIZATION TRIAL";
+
+                command =
+                    "SIMULATE ENHANCED DP STABILIZATION";
+
+            }
+
+            else if (average >= 35) {
+
+                trigger =
+                    "MODERATE ENVIRONMENTAL STRESS";
+
+                profile =
+                    "CONTROLLED STABILIZATION TRIAL";
+
+                command =
+                    "SIMULATE CONTROLLED DP RESPONSE";
+
+            }
+
+
+            trialManoeuvreState = {
+
+                generated: true,
+                verified: false,
+                authorized: false,
+                executed: false,
+
+                trigger: trigger,
+                profile: profile,
+                command: command
+
+            };
+
+
+            document.getElementById(
+                "trialManoeuvreEngine"
+            ).textContent =
+                "CONNECTED — SIMULATION";
+
+
+            document.getElementById(
+                "trialManoeuvreStatus"
+            ).textContent =
+                "GENERATED";
+
+
+            document.getElementById(
+                "trialManoeuvreTrigger"
+            ).textContent =
+                trigger;
+
+
+            document.getElementById(
+                "trialManoeuvreProfile"
+            ).textContent =
+                profile;
+
+
+            document.getElementById(
+                "trialManoeuvreVerification"
+            ).textContent =
+                "NOT VERIFIED";
+
+
+            document.getElementById(
+                "trialManoeuvreHumanAuthority"
+            ).textContent =
+                "REQUIRED";
+
+
+            document.getElementById(
+                "trialManoeuvreExecution"
+            ).textContent =
+                "NOT EXECUTED";
+
+
+            document.getElementById(
+                "trialManoeuvreResult"
+            ).textContent =
+                "AWAITING HUMAN AUTHORIZATION";
+
+
+            document.getElementById(
+                "trialManoeuvreCommand"
+            ).textContent =
+                command;
+
+
+            trialLog(
+                "TRIAL_MANOEUVRE_GENERATED"
+            );
+
+            trialLog(
+                "Profile: " + profile
+            );
+
+            trialLog(
+                "Human authorization required before simulated execution."
+            );
+
+        }
+
+
+        function verifyTrialManoeuvre() {
+
+            if (
+                !trialManoeuvreState.generated
+            ) {
+
+                trialLog(
+                    "VERIFICATION BLOCKED — NO TRIAL MANOEUVRE GENERATED."
+                );
+
+                return;
+            }
+
+
+            trialManoeuvreState.verified =
+                true;
+
+
+            document.getElementById(
+                "trialManoeuvreStatus"
+            ).textContent =
+                "VERIFIED";
+
+
+            document.getElementById(
+                "trialManoeuvreVerification"
+            ).textContent =
+                "PASS — SIMULATION";
+
+
+            document.getElementById(
+                "trialManoeuvreHumanAuthority"
+            ).textContent =
+                "REQUIRED";
+
+
+            trialLog(
+                "TRIAL_MANOEUVRE_VERIFICATION PASS"
+            );
+
+            trialLog(
+                "Execution remains blocked pending human authorization."
+            );
+
+        }
+
+
+        function authorizeTrialManoeuvre() {
+
+            if (
+                !trialManoeuvreState.generated
+            ) {
+
+                trialLog(
+                    "AUTHORIZATION BLOCKED — NO TRIAL MANOEUVRE GENERATED."
+                );
+
+                return;
+            }
+
+
+            if (
+                !trialManoeuvreState.verified
+            ) {
+
+                trialLog(
+                    "AUTHORIZATION BLOCKED — TRIAL MANOEUVRE NOT VERIFIED."
+                );
+
+                return;
+            }
+
+
+            trialManoeuvreState.authorized =
+                true;
+
+
+            trialManoeuvreState.executed =
+                true;
+
+
+            document.getElementById(
+                "trialManoeuvreStatus"
+            ).textContent =
+                "SIMULATED EXECUTION";
+
+
+            document.getElementById(
+                "trialManoeuvreHumanAuthority"
+            ).textContent =
+                "AUTHORIZED — SIMULATION";
+
+
+            document.getElementById(
+                "trialManoeuvreExecution"
+            ).textContent =
+                "SIMULATED ONLY";
+
+
+            document.getElementById(
+                "trialManoeuvreResult"
+            ).textContent =
+                "SIMULATED MANOEUVRE COMPLETE";
+
+
+            trialLog(
+                "HUMAN_AUTHORIZATION_RECEIVED"
+            );
+
+            trialLog(
+                "TRIAL_MANOEUVRE_SIMULATED"
+            );
+
+            trialLog(
+                "SIMULATED RESULT: COMPLETE"
+            );
+
+            trialLog(
+                "NO PHYSICAL DP COMMAND GENERATED OR TRANSMITTED."
+            );
+
+        }
+
+
+        function abortTrialManoeuvre() {
+
+            trialManoeuvreState.authorized =
+                false;
+
+            trialManoeuvreState.executed =
+                false;
+
+
+            document.getElementById(
+                "trialManoeuvreStatus"
+            ).textContent =
+                trialManoeuvreState.generated
+                    ? "ABORTED"
+                    : "NOT GENERATED";
+
+
+            document.getElementById(
+                "trialManoeuvreHumanAuthority"
+            ).textContent =
+                "AUTHORIZATION WITHDRAWN";
+
+
+            document.getElementById(
+                "trialManoeuvreExecution"
+            ).textContent =
+                "ABORTED";
+
+
+            document.getElementById(
+                "trialManoeuvreResult"
+            ).textContent =
+                "NO SIMULATED ACTION";
+
+
+            trialLog(
+                "TRIAL_MANOEUVRE_ABORTED"
+            );
+
+            trialLog(
+                "No simulated manoeuvre executed."
+            );
+
+        }
+
+
+        function resetTrialManoeuvre() {
+
+            trialManoeuvreState = {
+
+                generated: false,
+                verified: false,
+                authorized: false,
+                executed: false,
+
+                trigger: "NONE",
+                profile: "NONE",
+                command:
+                    "NO TRIAL MANOEUVRE GENERATED"
+
+            };
+
+
+            const engine =
+                document.getElementById(
+                    "trialManoeuvreEngine"
+                );
+
+            if (engine) {
+                engine.textContent =
+                    "STANDBY";
+            }
+
+
+            document.getElementById(
+                "trialManoeuvreStatus"
+            ).textContent =
+                "NOT GENERATED";
+
+
+            document.getElementById(
+                "trialManoeuvreTrigger"
+            ).textContent =
+                "NONE";
+
+
+            document.getElementById(
+                "trialManoeuvreProfile"
+            ).textContent =
+                "NONE";
+
+
+            document.getElementById(
+                "trialManoeuvreVerification"
+            ).textContent =
+                "NOT VERIFIED";
+
+
+            document.getElementById(
+                "trialManoeuvreHumanAuthority"
+            ).textContent =
+                "REQUIRED";
+
+
+            document.getElementById(
+                "trialManoeuvreExecution"
+            ).textContent =
+                "NOT EXECUTED";
+
+
+            document.getElementById(
+                "trialManoeuvreResult"
+            ).textContent =
+                "AWAITING";
+
+
+            document.getElementById(
+                "trialManoeuvreCommand"
+            ).textContent =
+                "NO TRIAL MANOEUVRE GENERATED";
+
+
+            document.getElementById(
+                "trialManoeuvreLog"
+            ).textContent =
+
+`TRIAL MANOEUVRE LOG
+
+System initialized.
+No trial manoeuvre generated.
+
+IMPORTANT:
+This screen represents simulated manoeuvre planning,
+verification and human-authority gating only.
+
+No physical DP command is generated or transmitted.
+`;
+
+        }
+
+
+        /*
+         * ---------------------------------------------------------
+         * STARTUP
+         * ---------------------------------------------------------
+         */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                resetTrialManoeuvre();
+
+            }
+        );
+
+
+        /*
+         * ---------------------------------------------------------
+         * RESET INTEGRATION
+         *
+         * If the existing cockpit exposes resetSimulation(),
+         * preserve its original function and additionally reset
+         * the trial manoeuvre presentation layer.
+         * ---------------------------------------------------------
+         */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                if (
+                    typeof window.resetSimulation ===
+                    "function"
+                ) {
+
+                    const originalReset =
+                        window.resetSimulation;
+
+
+                    window.resetSimulation =
+                        function () {
+
+                            originalReset.apply(
+                                this,
+                                arguments
+                            );
+
+                            resetTrialManoeuvre();
+
+                        };
+
+                }
+
+            }
+        );
+
+    </script>
+
 
 </body>
 
