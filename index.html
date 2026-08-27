@@ -1052,3 +1052,2994 @@ Human authority remains FINAL.
     </div>
 
 </div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sextant Protocol – DP Resilience Cockpit</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #08111f;
+    color: #e8f0f7;
+}
+
+.header {
+    padding: 18px;
+    text-align: center;
+    background: #0d1b2a;
+    border-bottom: 2px solid #29445f;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header p {
+    margin: 8px 0 0;
+    color: #9fb3c8;
+    font-size: 13px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.panel {
+    background: #0e1c2c;
+    border: 1px solid #29445f;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 1px solid #29445f;
+    padding-bottom: 8px;
+}
+
+.vessel-data {
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    gap: 10px;
+    align-items: center;
+    margin: 10px 0;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #46627d;
+    background: #07111d;
+    color: white;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.run {
+    background: #1f8f5f;
+    color: white;
+}
+
+.reset {
+    background: #46586d;
+    color: white;
+}
+
+.scenario {
+    background: #315a7d;
+    color: white;
+}
+
+.human {
+    background: #806b2f;
+    color: white;
+}
+
+.authorize {
+    background: #287a55;
+    color: white;
+}
+
+.controls {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.architecture {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.node {
+    padding: 10px;
+    border: 1px solid #587590;
+    border-radius: 6px;
+    background: #13283b;
+    text-align: center;
+    min-width: 125px;
+    font-size: 12px;
+}
+
+.arrow {
+    color: #8faac0;
+    font-size: 20px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.status-card {
+    padding: 12px;
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+}
+
+.status-title {
+    font-size: 11px;
+    color: #91a8bd;
+}
+
+.status-value {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.output {
+    white-space: pre-wrap;
+    background: #050c14;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    padding: 15px;
+    min-height: 320px;
+    font-family: monospace;
+    font-size: 13px;
+    overflow-x: auto;
+}
+
+.footer {
+    text-align: center;
+    padding: 18px;
+    color: #8799aa;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.engine-status {
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    background: #091827;
+    border: 1px solid #29445f;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+/* =========================================================
+   CAPTAIN AI LENA
+========================================================= */
+
+.lena-panel {
+    background: #0e1c2c;
+    border: 1px solid #587590;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.lena-panel h2 {
+    margin-top: 0;
+    font-size: 17px;
+    border-bottom: 1px solid #587590;
+    padding-bottom: 8px;
+}
+
+.lena-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.lena-card {
+    padding: 12px;
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+}
+
+.lena-title {
+    font-size: 11px;
+    color: #91a8bd;
+}
+
+.lena-value {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.lena-message {
+    margin-top: 12px;
+    padding: 12px;
+    background: #050c14;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   HUMAN AUTHORITY
+========================================================= */
+
+.human-panel {
+    background: #0e1c2c;
+    border: 1px solid #587590;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.human-panel h2 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 1px solid #587590;
+    padding-bottom: 8px;
+}
+
+.gate-box {
+    padding: 14px;
+    margin-top: 10px;
+    background: #050c14;
+    border: 1px solid #806b2f;
+    border-radius: 6px;
+    line-height: 1.7;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.human-controls {
+    text-align: center;
+    margin-top: 12px;
+}
+
+/* =========================================================
+   LAYER EXECUTION TRACE
+========================================================= */
+
+.trace-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+}
+
+.trace-card {
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.trace-card h3 {
+    margin: 0 0 8px;
+    font-size: 13px;
+}
+
+.trace-card p {
+    margin: 4px 0;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.trace-value {
+    font-weight: bold;
+}
+
+/* =========================================================
+   SAFETY BOUNDARY
+========================================================= */
+
+.boundary {
+    border: 1px solid #587590;
+    background: #0a1724;
+    padding: 15px;
+    border-radius: 8px;
+    line-height: 1.6;
+    font-size: 12px;
+}
+
+.boundary strong {
+    font-size: 13px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .architecture {
+        flex-direction: column;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+    }
+
+    button {
+        width: 90%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>
+        SEXTANT PROTOCOL – DP RESILIENCE COCKPIT
+    </h1>
+
+    <p>
+        MPSV SIMULATION • PRIMARY AI →
+        SECONDARY AI → STABILIZER →
+        CAPTAIN AI LENA → HUMAN-IN-THE-LOOP
+    </p>
+
+</div>
+
+<div class="container">
+
+<!-- ======================================================
+     ENGINE STATUS
+======================================================= -->
+
+<div class="engine-status">
+
+    ENGINE:
+    <span id="engineStatus">
+        INITIALISING...
+    </span>
+
+</div>
+
+
+<!-- ======================================================
+     PRINCIPAL ARCHITECTURE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>Principal Architecture</h2>
+
+    <div class="architecture">
+
+        <div class="node">
+            ENVIRONMENT
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            PRIMARY AI<br>
+            Normal Control
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            SECONDARY AI<br>
+            Safety Layer
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            STABILIZER<br>
+            Arbitration
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            CAPTAIN AI LENA<br>
+            Decision Support
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            HUMAN AUTHORITY<br>
+            Final Decision
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            SIMULATED DP ACTION
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     VESSEL + ENVIRONMENT
+======================================================= -->
+
+<div class="grid">
+
+<div class="panel">
+
+    <h2>Simulated Vessel Profile</h2>
+
+    <div class="vessel-data">
+
+        <strong>Name:</strong>
+        SEXTANT-MPSV-01
+        <br>
+
+        <strong>Type:</strong>
+        Multi-Purpose Support Vessel
+        <br>
+
+        <strong>DP Class:</strong>
+        DP2-SIMULATED
+        <br>
+
+        <strong>Length:</strong>
+        85 m
+        <br>
+
+        <strong>Beam:</strong>
+        20 m
+        <br>
+
+        <strong>Draft:</strong>
+        6 m
+        <br>
+
+        <strong>Main Thrusters:</strong>
+        2
+        <br>
+
+        <strong>Tunnel Thrusters:</strong>
+        2
+        <br>
+
+        <strong>Total Thrusters:</strong>
+        4
+        <br>
+
+        <strong>Nominal Simulated Thrust:</strong>
+        100 units
+
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <h2>
+        Environmental Simulation Inputs
+    </h2>
+
+    <div class="input-row">
+
+        <label>
+            Wind Stress (0–100)
+        </label>
+
+        <input
+            id="wind"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+    <div class="input-row">
+
+        <label>
+            Current Stress (0–100)
+        </label>
+
+        <input
+            id="current"
+            type="number"
+            min="0"
+            max="100"
+            value="25"
+        >
+
+    </div>
+
+    <div class="input-row">
+
+        <label>
+            Wave Stress (0–100)
+        </label>
+
+        <input
+            id="wave"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+    <div class="input-row">
+
+        <label>
+            Tidal Stress (0–100)
+        </label>
+
+        <input
+            id="tidal"
+            type="number"
+            min="0"
+            max="100"
+            value="20"
+        >
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     SCENARIO CONTROLS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>Scenario Controls</h2>
+
+    <div class="controls">
+
+        <button class="scenario"
+                onclick="normalScenario()">
+            NORMAL
+        </button>
+
+        <button class="scenario"
+                onclick="moderateWeatherScenario()">
+            MODERATE
+        </button>
+
+        <button class="scenario"
+                onclick="heavyWeatherScenario()">
+            HEAVY WEATHER
+        </button>
+
+        <button class="scenario"
+                onclick="criticalScenario()">
+            CRITICAL
+        </button>
+
+        <button class="scenario"
+                onclick="currentSurgeScenario()">
+            CURRENT SURGE
+        </button>
+
+        <button class="scenario"
+                onclick="heavySeaStateScenario()">
+            HEAVY SEA
+        </button>
+
+        <button class="scenario"
+                onclick="windGustScenario()">
+            WIND GUST
+        </button>
+
+        <button class="scenario"
+                onclick="combinedDisturbanceScenario()">
+            COMBINED
+        </button>
+
+        <button class="scenario"
+                onclick="randomScenario()">
+            RANDOM
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     MAIN CONTROL
+======================================================= -->
+
+<div class="controls">
+
+    <button
+        class="run"
+        onclick="runSimulation()">
+        ▶ RUN DP SIMULATION
+    </button>
+
+    <button
+        class="reset"
+        onclick="resetSimulation()">
+        RESET
+    </button>
+
+</div>
+
+
+<!-- ======================================================
+     LIVE SYSTEM STATUS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>Live System Status</h2>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+            <div class="status-title">
+                ENVIRONMENT
+            </div>
+            <div
+                id="environmentStatus"
+                class="status-value">
+                0.00 / LOW
+            </div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-title">
+                PRIMARY AI
+            </div>
+            <div
+                id="primaryStatus"
+                class="status-value">
+                STANDBY
+            </div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-title">
+                SECONDARY AI
+            </div>
+            <div
+                id="secondaryStatus"
+                class="status-value">
+                STANDBY
+            </div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-title">
+                STABILIZER
+            </div>
+            <div
+                id="stabilizerStatus"
+                class="status-value">
+                STANDBY
+            </div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-title">
+                HUMAN AUTHORITY
+            </div>
+            <div
+                id="humanStatus"
+                class="status-value">
+                FINAL
+            </div>
+        </div>
+
+        <div class="status-card">
+            <div class="status-title">
+                SYSTEM
+            </div>
+            <div
+                id="systemStatus"
+                class="status-value">
+                SYSTEM READY
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     LAYER EXECUTION TRACE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Layer Execution Trace
+    </h2>
+
+    <div class="trace-grid">
+
+        <div class="trace-card">
+
+            <h3>
+                ENVIRONMENT
+            </h3>
+
+            <p>
+                Stress:
+                <span
+                    id="traceEnvironment"
+                    class="trace-value">
+                    —
+                </span>
+            </p>
+
+            <p>
+                Wind:
+                <span id="traceWind">
+                    —
+                </span>
+            </p>
+
+            <p>
+                Current:
+                <span id="traceCurrent">
+                    —
+                </span>
+            </p>
+
+            <p>
+                Wave:
+                <span id="traceWave">
+                    —
+                </span>
+            </p>
+
+            <p>
+                Tidal:
+                <span id="traceTidal">
+                    —
+                </span>
+            </p>
+
+        </div>
+
+
+        <div class="trace-card">
+
+            <h3>
+                S1 PRIMARY
+            </h3>
+
+            <p>
+                Mode:
+                <span
+                    id="tracePrimaryMode"
+                    class="trace-value">
+                    STANDBY
+                </span>
+            </p>
+
+            <p>
+                Response:
+                <span id="tracePrimaryResponse">
+                    —
+                </span>
+            </p>
+
+        </div>
+
+
+        <div class="trace-card">
+
+            <h3>
+                S2 SECONDARY
+            </h3>
+
+            <p>
+                Mode:
+                <span
+                    id="traceSecondaryMode"
+                    class="trace-value">
+                    STANDBY
+                </span>
+            </p>
+
+            <p>
+                Assessment:
+                <span id="traceSecondaryAssessment">
+                    —
+                </span>
+            </p>
+
+        </div>
+
+
+        <div class="trace-card">
+
+            <h3>
+                STABILIZER
+            </h3>
+
+            <p>
+                Mode:
+                <span
+                    id="traceStabilizerMode"
+                    class="trace-value">
+                    STANDBY
+                </span>
+            </p>
+
+            <p>
+                Source:
+                <span id="traceStabilizerSource">
+                    —
+                </span>
+            </p>
+
+            <p>
+                Output:
+                <span id="traceStabilizerOutput">
+                    —
+                </span>
+            </p>
+
+        </div>
+
+
+        <div class="trace-card">
+
+            <h3>
+                RECOMMENDATION
+            </h3>
+
+            <p>
+                Urgency:
+                <span
+                    id="traceUrgency"
+                    class="trace-value">
+                    —
+                </span>
+            </p>
+
+            <p>
+                Mode:
+                <span id="traceResponseMode">
+                    —
+                </span>
+            </p>
+
+            <p>
+                Recommendation:
+                <span id="traceRecommendation">
+                    —
+                </span>
+            </p>
+
+        </div>
+
+
+        <div class="trace-card">
+
+            <h3>
+                SIMULATED RESPONSE
+            </h3>
+
+            <p>
+                Proposed:
+                <span
+                    id="traceProposed"
+                    class="trace-value">
+                    —
+                </span>
+            </p>
+
+            <p>
+                Gate:
+                <span id="traceGate">
+                    —
+                </span>
+            </p>
+
+            <p>
+                Status:
+                <span id="traceActionStatus">
+                    —
+                </span>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     CAPTAIN AI LENA
+======================================================= -->
+
+<div class="lena-panel">
+
+    <h2>
+        Captain AI Lena — UMV Control
+    </h2>
+
+    <div class="lena-grid">
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                LENA STATUS
+            </div>
+
+            <div
+                id="lenaStatus"
+                class="lena-value">
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                AI ROLE
+            </div>
+
+            <div class="lena-value">
+                DECISION SUPPORT
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                RECOMMENDATION
+            </div>
+
+            <div
+                id="lenaRecommendation"
+                class="lena-value">
+                NO SIMULATED RECOMMENDATION
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                URGENCY
+            </div>
+
+            <div
+                id="lenaUrgency"
+                class="lena-value">
+                NORMAL
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                RESPONSE MODE
+            </div>
+
+            <div
+                id="lenaResponseMode"
+                class="lena-value">
+                MONITORING
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                HUMAN AUTHORITY
+            </div>
+
+            <div class="lena-value">
+                FINAL
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                AUTONOMOUS COMMAND
+            </div>
+
+            <div
+                id="lenaAutonomous"
+                class="lena-value">
+                FALSE
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                UMV ACTION
+            </div>
+
+            <div
+                id="lenaAction"
+                class="lena-value">
+                NOT EXECUTED
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="lenaMessage"
+        class="lena-message">
+
+        Captain AI Lena is awaiting simulated
+        environmental assessment.
+
+        No simulated actions recommended.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     DP SIMULATION ASSESSMENT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        DP Simulation Assessment
+    </h2>
+
+    <div
+        id="assessmentOutput"
+        class="output">
+
+System ready.
+
+Select environmental conditions or a scenario,
+then press RUN DP SIMULATION.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     CAPTAIN AI LENA — RECOMMENDED ACTIONS
+======================================================= -->
+
+<div class="lena-panel">
+
+    <h2>
+        Captain AI Lena — UMV Control / Recommended Actions
+    </h2>
+
+    <p>
+
+        <strong>CAPTAIN AI LENA</strong><br>
+
+        ROLE:
+        <strong>
+            UMV RESILIENCE DECISION-SUPPORT LAYER
+        </strong>
+        <br>
+
+        AUTHORITY:
+        <strong>
+            HUMAN-IN-THE-LOOP
+        </strong>
+        <br>
+
+        AUTONOMOUS COMMAND:
+        <strong>
+            FALSE
+        </strong>
+
+    </p>
+
+    <p>
+
+        Captain AI Lena evaluates the simulated
+        resilience assessment and presents recommended
+        actions for human consideration.
+
+    </p>
+
+    <div class="lena-grid">
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                LENA STATUS
+            </div>
+
+            <div
+                id="recommendedLenaStatus"
+                class="lena-value">
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                UMV CONTROL MODE
+            </div>
+
+            <div
+                id="recommendedControlMode"
+                class="lena-value">
+                HUMAN AUTHORITY
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                RECOMMENDED ACTION
+            </div>
+
+            <div
+                id="recommendedAction"
+                class="lena-value">
+                NO ACTION
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                URGENCY
+            </div>
+
+            <div
+                id="recommendedUrgency"
+                class="lena-value">
+                NORMAL
+            </div>
+
+        </div>
+
+    </div>
+
+    <div
+        id="recommendedActionMessage"
+        class="lena-message">
+
+        Captain AI Lena awaiting simulated assessment.
+
+        No UMV action recommendation available.
+
+        Human authority remains FINAL.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     HUMAN DECISION GATE
+======================================================= -->
+
+<div class="human-panel">
+
+    <h2>
+        Human Authorization — Final Decision
+    </h2>
+
+    <div class="gate-box">
+
+        <strong>
+            HUMAN AUTHORIZATION REQUIRED
+        </strong>
+
+        <br><br>
+
+        Captain AI Lena provides decision support only.
+
+        <br>
+
+        No simulated manoeuvre is treated as an
+        operational command.
+
+        <br><br>
+
+        FINAL AUTHORITY:
+        <strong>HUMAN OPERATOR</strong>
+
+        <br>
+
+        CURRENT DECISION:
+        <span id="humanDecision">
+            PENDING
+        </span>
+
+        <br>
+
+        EXECUTION GATE:
+        <span id="humanGate">
+            HUMAN DECISION REQUIRED
+        </span>
+
+    </div>
+
+
+    <div class="human-controls">
+
+        <button
+            id="acknowledgeButton"
+            class="human"
+            onclick="acknowledgeSimulation()"
+            disabled>
+
+            ACKNOWLEDGE CONDITION
+
+        </button>
+
+
+        <button
+            id="maintainButton"
+            class="human"
+            onclick="maintainSafeState()"
+            disabled>
+
+            MAINTAIN SAFE STATE
+
+        </button>
+
+
+        <button
+            id="authorizeButton"
+            class="authorize"
+            onclick="authorizeSimulatedResponse()"
+            disabled>
+
+            AUTHORIZE SIMULATED RESPONSE
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     UPDATED SIMULATED STATE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Updated Simulated Vessel State
+    </h2>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                POSITION ERROR
+            </div>
+
+            <div
+                id="positionError"
+                class="status-value">
+                —
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                SIMULATED COMMAND
+            </div>
+
+            <div
+                id="simulatedCommand"
+                class="status-value">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                STABILITY INDEX
+            </div>
+
+            <div
+                id="stabilityIndex"
+                class="status-value">
+                —
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                STATE
+            </div>
+
+            <div
+                id="simulatedState"
+                class="status-value">
+                SIMULATED
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     AUDIT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Simulation Audit
+    </h2>
+
+    <div
+        id="auditOutput"
+        class="output">
+
+No completed simulation audit.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     RESEARCH PURPOSE / OPERATIONAL BOUNDARY
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Research Purpose & Operational Boundary
+    </h2>
+
+    <div class="boundary">
+
+        <strong>
+            SEXTANT PROTOCOL — DP RESILIENCE
+            RESEARCH SIMULATOR
+        </strong>
+
+        <p>
+
+            This cockpit is a deterministic research and
+            engineering simulation environment developed
+            to explore how a layered resilience architecture
+            could respond to changing maritime environmental
+            conditions.
+
+        </p>
+
+        <p>
+
+            The simulator creates a controlled virtual vessel
+            environment in which wind, current, wave and tidal
+            conditions can be varied, repeated and analysed.
+
+        </p>
+
+        <p>
+
+            The deterministic simulation engine processes
+            those conditions through the research architecture
+            and produces a traceable simulated result.
+
+        </p>
+
+        <p>
+            The simulator is intended to support:
+        </p>
+
+        <ul>
+
+            <li>Research</li>
+            <li>Education</li>
+            <li>Engineering analysis</li>
+            <li>Scenario testing</li>
+            <li>Technical demonstration</li>
+            <li>Repeatable validation</li>
+            <li>Future independent review</li>
+
+        </ul>
+
+        <p>
+
+            Trial manoeuvres and simulated responses shown
+            by this cockpit are planning and assessment
+            representations only.
+
+        </p>
+
+        <p>
+
+            They are <strong>NOT operational DP commands</strong>
+            and are <strong>NOT transmitted to any vessel
+            control system.</strong>
+
+        </p>
+
+        <p>
+
+            <strong>HUMAN-IN-THE-LOOP</strong><br>
+
+            Human authority remains the final decision point
+            in the research architecture.
+
+        </p>
+
+        <p>
+
+            The simulator provides decision-support and
+            simulated responses; it does not replace the
+            Master, DPO, authorised operator, vessel
+            procedures or classification requirements.
+
+        </p>
+
+        <p>
+
+            <strong>OPERATIONAL BOUNDARY</strong>
+
+        </p>
+
+        <p>
+            This prototype is intentionally isolated from
+            operational vessel control.
+        </p>
+
+        <p>
+            It does not connect to and must not be connected to:
+        </p>
+
+        <ul>
+
+            <li>Dynamic Positioning systems</li>
+            <li>Propulsion systems</li>
+            <li>Navigation systems</li>
+            <li>Steering systems</li>
+            <li>Safety systems</li>
+            <li>Vessel automation systems</li>
+
+        </ul>
+
+        <p>
+
+            It is not certified marine control software
+            and does not provide certified DP functionality.
+
+        </p>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<!-- ======================================================
+     FOOTER
+======================================================= -->
+
+<div class="footer">
+
+    <strong>
+        SEXTANT PROTOCOL™ – DP RESILIENCE
+        RESEARCH SIMULATOR
+    </strong>
+
+    <br>
+
+    RESEARCH • SIMULATION • EDUCATION •
+    ENGINEERING ANALYSIS
+
+    <br><br>
+
+    ENVIRONMENT →
+    PRIMARY AI →
+    SECONDARY AI →
+    STABILIZER →
+    RECOMMENDED ACTIONS →
+    CAPTAIN AI LENA →
+    HUMAN AUTHORITY →
+    SIMULATED DP RESPONSE
+
+    <br><br>
+
+    NOT CERTIFIED MARINE CONTROL SOFTWARE
+
+    <br>
+
+    NOT FOR CONNECTION TO OPERATIONAL DP,
+    PROPULSION, NAVIGATION OR SAFETY SYSTEMS
+
+</div>
+
+
+<!-- =========================================================
+     ENGINE
+     IMPORTANT:
+     dp_simulation_engine.js MUST BE IN THE SAME DIRECTORY
+========================================================= -->
+
+<script src="./dp_simulation_engine.js"></script>
+
+
+<!-- =========================================================
+     COCKPIT INTEGRATION / EXECUTION WIRING
+========================================================= -->
+
+<script>
+
+"use strict";
+
+
+/* =========================================================
+   ENGINE VALIDATION
+========================================================= */
+
+function engineReady() {
+
+    return (
+        typeof window.DPSimulationEngine !== "undefined"
+        &&
+        typeof window.DPSimulationEngine.run === "function"
+        &&
+        typeof window.DPSimulationEngine.validate === "function"
+    );
+
+}
+
+
+if (engineReady()) {
+
+    document.getElementById("engineStatus").textContent =
+        "DP SIMULATION ENGINE 1.2.0 CONNECTED — READY";
+
+} else {
+
+    document.getElementById("engineStatus").textContent =
+        "ENGINE CONNECTION ERROR";
+
+}
+
+
+/* =========================================================
+   DOM HELPERS
+========================================================= */
+
+function value(id) {
+
+    return document.getElementById(id);
+
+}
+
+
+function setText(id, text) {
+
+    const element =
+        value(id);
+
+    if (element) {
+
+        element.textContent =
+            text;
+
+    }
+
+}
+
+
+/* =========================================================
+   INPUT COLLECTION
+========================================================= */
+
+function getEnvironmentInputs() {
+
+    return {
+
+        wind:
+            Number(
+                value("wind").value
+            ),
+
+        current:
+            Number(
+                value("current").value
+            ),
+
+        wave:
+            Number(
+                value("wave").value
+            ),
+
+        tidal:
+            Number(
+                value("tidal").value
+            )
+
+    };
+
+}
+
+
+/* =========================================================
+   HUMAN BUTTON STATE
+========================================================= */
+
+function setHumanButtons(
+    acknowledge,
+    maintain,
+    authorize
+) {
+
+    value("acknowledgeButton").disabled =
+        !acknowledge;
+
+    value("maintainButton").disabled =
+        !maintain;
+
+    value("authorizeButton").disabled =
+        !authorize;
+
+}
+
+
+/* =========================================================
+   RESET HUMAN GATE
+========================================================= */
+
+function resetHumanGate() {
+
+    setHumanButtons(
+        false,
+        false,
+        false
+    );
+
+    setText(
+        "humanDecision",
+        "PENDING"
+    );
+
+    setText(
+        "humanGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY ENVIRONMENT
+========================================================= */
+
+function displayEnvironment(result) {
+
+    const env =
+        result.environment;
+
+    setText(
+        "environmentStatus",
+        result.recommendedAction.environmentalStress
+        + " / "
+        + result.risk
+    );
+
+    setText(
+        "traceEnvironment",
+        result.recommendedAction.environmentalStress
+        + " / "
+        + result.risk
+    );
+
+    setText(
+        "traceWind",
+        env.wind
+    );
+
+    setText(
+        "traceCurrent",
+        env.current
+    );
+
+    setText(
+        "traceWave",
+        env.wave
+    );
+
+    setText(
+        "traceTidal",
+        env.tidal
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY PRIMARY
+========================================================= */
+
+function displayPrimary(result) {
+
+    setText(
+        "primaryStatus",
+        result.primary.mode
+    );
+
+    setText(
+        "tracePrimaryMode",
+        result.primary.mode
+    );
+
+    setText(
+        "tracePrimaryResponse",
+        result.primary.response
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY SECONDARY
+========================================================= */
+
+function displaySecondary(result) {
+
+    setText(
+        "secondaryStatus",
+        result.secondary.mode
+    );
+
+    setText(
+        "traceSecondaryMode",
+        result.secondary.mode
+    );
+
+    setText(
+        "traceSecondaryAssessment",
+        result.secondary.assessment
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY STABILIZER
+========================================================= */
+
+function displayStabilizer(result) {
+
+    setText(
+        "stabilizerStatus",
+        result.stabilizer.mode
+    );
+
+    setText(
+        "traceStabilizerMode",
+        result.stabilizer.mode
+    );
+
+    setText(
+        "traceStabilizerSource",
+        result.stabilizer.source
+    );
+
+    setText(
+        "traceStabilizerOutput",
+        result.stabilizer.finalOutput
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY RECOMMENDATION
+========================================================= */
+
+function displayRecommendation(result) {
+
+    const recommendation =
+        result.recommendedAction;
+
+    setText(
+        "traceUrgency",
+        recommendation.urgency
+    );
+
+    setText(
+        "traceResponseMode",
+        recommendation.responseMode
+    );
+
+    setText(
+        "traceRecommendation",
+        recommendation.primaryRecommendation
+    );
+
+    setText(
+        "lenaStatus",
+        "ASSESSMENT COMPLETE"
+    );
+
+    setText(
+        "lenaRecommendation",
+        recommendation.primaryRecommendation
+    );
+
+    setText(
+        "lenaUrgency",
+        recommendation.urgency
+    );
+
+    setText(
+        "lenaResponseMode",
+        recommendation.responseMode
+    );
+
+    setText(
+        "lenaAutonomous",
+        "FALSE"
+    );
+
+    setText(
+        "lenaAction",
+        "HELD FOR HUMAN DECISION"
+    );
+
+    setText(
+        "recommendedLenaStatus",
+        "ASSESSMENT COMPLETE"
+    );
+
+    setText(
+        "recommendedControlMode",
+        "HUMAN AUTHORITY"
+    );
+
+    setText(
+        "recommendedAction",
+        recommendation.primaryRecommendation
+    );
+
+    setText(
+        "recommendedUrgency",
+        recommendation.urgency
+    );
+
+    value("lenaMessage").textContent =
+        "Captain AI Lena has evaluated the simulated "
+        + "environmental condition.\n\n"
+        + "RISK: "
+        + result.risk
+        + "\n\n"
+        + "RECOMMENDATION:\n"
+        + recommendation.primaryRecommendation
+        + "\n\n"
+        + "RATIONALE:\n"
+        + recommendation.rationale
+        + "\n\n"
+        + "Human authority remains FINAL. "
+        + "No operational command is generated.";
+
+    value("recommendedActionMessage").textContent =
+        "CAPTAIN AI LENA RECOMMENDATION\n\n"
+        + recommendation.primaryRecommendation
+        + "\n\n"
+        + "URGENCY: "
+        + recommendation.urgency
+        + "\n\n"
+        + "RESPONSE MODE:\n"
+        + recommendation.responseMode
+        + "\n\n"
+        + "RECOMMENDED ACTIONS:\n"
+        + recommendation.recommendedActions
+            .map(function(action, index) {
+                return (
+                    (index + 1)
+                    + ". "
+                    + action
+                );
+            })
+            .join("\n")
+        + "\n\n"
+        + "HUMAN AUTHORITY: FINAL"
+        + "\nAUTONOMOUS COMMAND: FALSE";
+
+}
+
+
+/* =========================================================
+   DISPLAY PROPOSED RESPONSE
+========================================================= */
+
+function displayProposedAction(result) {
+
+    const proposed =
+        result.proposedAction;
+
+    setText(
+        "traceProposed",
+        proposed.simulatedCommand
+        + " units"
+    );
+
+    setText(
+        "traceGate",
+        proposed.executionGate
+    );
+
+    setText(
+        "traceActionStatus",
+        proposed.status
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY HUMAN GATE
+========================================================= */
+
+function displayHumanGate(result) {
+
+    setText(
+        "humanDecision",
+        result.human.decision
+    );
+
+    setText(
+        "humanGate",
+        result.executionGate.status
+    );
+
+    setHumanButtons(
+        true,
+        true,
+        false
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY UPDATED STATE
+========================================================= */
+
+function displayUpdatedState(result) {
+
+    const state =
+        result.updatedState;
+
+    setText(
+        "positionError",
+        state.positionError
+    );
+
+    setText(
+        "simulatedCommand",
+        state.simulatedCommand
+    );
+
+    setText(
+        "stabilityIndex",
+        state.stabilityIndex
+    );
+
+    setText(
+        "simulatedState",
+        state.status
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY ASSESSMENT
+========================================================= */
+
+function displayAssessment(result) {
+
+    const output = [
+
+        "SEXTANT PROTOCOL — DP RESILIENCE ASSESSMENT",
+
+        "============================================",
+
+        "",
+
+        "ENGINE: "
+        + result.engineName,
+
+        "VERSION: "
+        + result.version,
+
+        "MODE: "
+        + result.mode,
+
+        "",
+
+        "ENVIRONMENTAL STRESS: "
+        + result.recommendedAction.environmentalStress,
+
+        "RISK: "
+        + result.risk,
+
+        "SYSTEM STATUS: "
+        + result.systemStatus,
+
+        "",
+
+        "S1 PRIMARY",
+
+        "MODE: "
+        + result.primary.mode,
+
+        "RESPONSE: "
+        + result.primary.response,
+
+        "",
+
+        "S2 SECONDARY",
+
+        "MODE: "
+        + result.secondary.mode,
+
+        "ASSESSMENT: "
+        + result.secondary.assessment,
+
+        "",
+
+        "STABILIZER",
+
+        "MODE: "
+        + result.stabilizer.mode,
+
+        "SOURCE: "
+        + result.stabilizer.source,
+
+        "OUTPUT: "
+        + result.stabilizer.finalOutput,
+
+        "",
+
+        "CAPTAIN AI LENA",
+
+        "RECOMMENDATION: "
+        + result.recommendedAction.primaryRecommendation,
+
+        "URGENCY: "
+        + result.recommendedAction.urgency,
+
+        "RESPONSE MODE: "
+        + result.recommendedAction.responseMode,
+
+        "",
+
+        "HUMAN DECISION GATE",
+
+        "STATUS: "
+        + result.executionGate.status,
+
+        "ACKNOWLEDGED: "
+        + result.executionGate.acknowledged,
+
+        "AUTHORIZED: "
+        + result.executionGate.authorized,
+
+        "EXECUTED: "
+        + result.executionGate.executed,
+
+        "",
+
+        "PROPOSED SIMULATED COMMAND: "
+        + result.proposedAction.simulatedCommand,
+
+        "OPERATIONAL COMMAND: FALSE",
+
+        "REAL VESSEL CONNECTION: FALSE",
+
+        "",
+
+        "SYSTEM STOPPED AT HUMAN DECISION GATE.",
+
+        "NO SIMULATED RESPONSE HAS BEEN EXECUTED."
+
+    ];
+
+    value("assessmentOutput").textContent =
+        output.join("\n");
+
+}
+
+
+/* =========================================================
+   DISPLAY AUDIT
+========================================================= */
+
+function displayAudit(result) {
+
+    value("auditOutput").textContent =
+        JSON.stringify(
+            result.audit,
+            null,
+            2
+        );
+
+}
+
+
+/* =========================================================
+   COMPLETE PENDING DISPLAY
+========================================================= */
+
+function displayPendingResult(result) {
+
+    displayEnvironment(result);
+
+    displayPrimary(result);
+
+    displaySecondary(result);
+
+    displayStabilizer(result);
+
+    displayRecommendation(result);
+
+    displayProposedAction(result);
+
+    displayHumanGate(result);
+
+    displayUpdatedState(result);
+
+    displayAssessment(result);
+
+}
+
+
+/* =========================================================
+   RUN SIMULATION
+========================================================= */
+
+function runSimulation() {
+
+    if (!engineReady()) {
+
+        setText(
+            "engineStatus",
+            "ENGINE CONNECTION ERROR"
+        );
+
+        return;
+
+    }
+
+
+    const inputs =
+        getEnvironmentInputs();
+
+
+    const result =
+        window.DPSimulationEngine.run(
+            inputs
+        );
+
+
+    displayPendingResult(
+        result
+    );
+
+
+    setText(
+        "systemStatus",
+        result.systemStatus
+    );
+
+
+    setText(
+        "humanStatus",
+        "FINAL / DECISION REQUIRED"
+    );
+
+
+    setText(
+        "traceActionStatus",
+        "HELD FOR HUMAN DECISION"
+    );
+
+
+    value("auditOutput").textContent =
+        "Simulation assessment created.\n\n"
+        + "Audit will be finalized after the human "
+        + "decision gate is completed.";
+
+
+    window.lastDPSimulation =
+        result;
+
+}
+
+
+/* =========================================================
+   HUMAN ACKNOWLEDGEMENT
+========================================================= */
+
+function acknowledgeSimulation() {
+
+    const result =
+        window.DPSimulationEngine
+            .acknowledgeHumanDecision(
+                "Human operator acknowledged the simulated environmental condition."
+            );
+
+
+    if (!result || result.success === false) {
+
+        return;
+
+    }
+
+
+    displayPendingResult(
+        result
+    );
+
+
+    setText(
+        "humanDecision",
+        result.human.decision
+    );
+
+    setText(
+        "humanGate",
+        result.executionGate.status
+    );
+
+
+    setHumanButtons(
+        false,
+        true,
+        true
+    );
+
+
+    value("assessmentOutput").textContent +=
+        "\n\n"
+        + "HUMAN DECISION:\n"
+        + "CONDITION ACKNOWLEDGED."
+        + "\n\n"
+        + "SIMULATED RESPONSE REMAINS HELD."
+        + "\n"
+        + "Further human decision required.";
+
+}
+
+
+/* =========================================================
+   MAINTAIN SAFE STATE
+========================================================= */
+
+function maintainSafeState() {
+
+    const result =
+        window.DPSimulationEngine
+            .maintainSafeState(
+                "Human operator elected to maintain the simulated safe state."
+            );
+
+
+    if (!result || result.success === false) {
+
+        return;
+
+    }
+
+
+    displayFinalResult(
+        result
+    );
+
+}
+
+
+/* =========================================================
+   AUTHORIZE SIMULATED RESPONSE
+========================================================= */
+
+function authorizeSimulatedResponse() {
+
+    const result =
+        window.DPSimulationEngine
+            .authorizeSimulatedResponse(
+                "Human operator authorized the proposed simulated response."
+            );
+
+
+    if (!result || result.success === false) {
+
+        alert(
+            result
+                ? result.message
+                : "Authorization failed."
+        );
+
+        return;
+
+    }
+
+
+    displayFinalResult(
+        result
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY FINAL RESULT
+========================================================= */
+
+function displayFinalResult(result) {
+
+    displayEnvironment(result);
+
+    displayPrimary(result);
+
+    displaySecondary(result);
+
+    displayStabilizer(result);
+
+    displayRecommendation(result);
+
+    displayProposedAction(result);
+
+    displayUpdatedState(result);
+
+    displayAssessment(result);
+
+    displayAudit(result);
+
+
+    setText(
+        "humanDecision",
+        result.human.decision
+    );
+
+    setText(
+        "humanGate",
+        result.executionGate.status
+    );
+
+
+    setText(
+        "humanStatus",
+        result.human.status
+    );
+
+
+    setText(
+        "traceActionStatus",
+        result.simulatedAction.status
+    );
+
+
+    setText(
+        "lenaAction",
+        result.simulatedAction.status
+    );
+
+
+    setText(
+        "lenaStatus",
+        "DECISION COMPLETE"
+    );
+
+
+    setText(
+        "recommendedLenaStatus",
+        "DECISION COMPLETE"
+    );
+
+
+    if (
+        result.executionGate.executed
+    ) {
+
+        value("assessmentOutput").textContent +=
+            "\n\n"
+            + "HUMAN DECISION:\n"
+            + "SIMULATED RESPONSE AUTHORIZED."
+            + "\n\n"
+            + "SIMULATED COMMAND EXECUTED:"
+            + " "
+            + result.simulatedAction.simulatedCommand
+            + " units."
+            + "\n\n"
+            + "OPERATIONAL COMMAND: FALSE"
+            + "\n"
+            + "REAL VESSEL CONNECTION: FALSE";
+
+    } else {
+
+        value("assessmentOutput").textContent +=
+            "\n\n"
+            + "HUMAN DECISION:\n"
+            + "SAFE SIMULATED STATE MAINTAINED."
+            + "\n\n"
+            + "NO SIMULATED RESPONSE EXECUTED.";
+
+    }
+
+
+    setHumanButtons(
+        false,
+        false,
+        false
+    );
+
+}
+
+
+/* =========================================================
+   SCENARIO HELPERS
+========================================================= */
+
+function setScenario(
+    wind,
+    current,
+    wave,
+    tidal
+) {
+
+    value("wind").value =
+        wind;
+
+    value("current").value =
+        current;
+
+    value("wave").value =
+        wave;
+
+    value("tidal").value =
+        tidal;
+
+}
+
+
+/* =========================================================
+   SCENARIOS
+========================================================= */
+
+function normalScenario() {
+
+    setScenario(
+        20,
+        15,
+        20,
+        10
+    );
+
+}
+
+
+function moderateWeatherScenario() {
+
+    setScenario(
+        45,
+        40,
+        45,
+        30
+    );
+
+}
+
+
+function heavyWeatherScenario() {
+
+    setScenario(
+        70,
+        65,
+        75,
+        55
+    );
+
+}
+
+
+function criticalScenario() {
+
+    setScenario(
+        95,
+        95,
+        95,
+        90
+    );
+
+}
+
+
+function currentSurgeScenario() {
+
+    setScenario(
+        35,
+        90,
+        45,
+        50
+    );
+
+}
+
+
+function heavySeaStateScenario() {
+
+    setScenario(
+        55,
+        50,
+        95,
+        60
+    );
+
+}
+
+
+function windGustScenario() {
+
+    setScenario(
+        90,
+        35,
+        40,
+        25
+    );
+
+}
+
+
+function combinedDisturbanceScenario() {
+
+    setScenario(
+        80,
+        75,
+        85,
+        70
+    );
+
+}
+
+
+function randomScenario() {
+
+    setScenario(
+
+        Math.floor(
+            Math.random() * 101
+        ),
+
+        Math.floor(
+            Math.random() * 101
+        ),
+
+        Math.floor(
+            Math.random() * 101
+        ),
+
+        Math.floor(
+            Math.random() * 101
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   RESET SIMULATION
+========================================================= */
+
+function resetSimulation() {
+
+    setScenario(
+        30,
+        25,
+        30,
+        20
+    );
+
+
+    setText(
+        "environmentStatus",
+        "0.00 / LOW"
+    );
+
+    setText(
+        "primaryStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "secondaryStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "stabilizerStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "humanStatus",
+        "FINAL"
+    );
+
+    setText(
+        "systemStatus",
+        "SYSTEM READY"
+    );
+
+
+    setText(
+        "traceEnvironment",
+        "—"
+    );
+
+    setText(
+        "tracePrimaryMode",
+        "STANDBY"
+    );
+
+    setText(
+        "tracePrimaryResponse",
+        "—"
+    );
+
+    setText(
+        "traceSecondaryMode",
+        "STANDBY"
+    );
+
+    setText(
+        "traceSecondaryAssessment",
+        "—"
+    );
+
+    setText(
+        "traceStabilizerMode",
+        "STANDBY"
+    );
+
+    setText(
+        "traceStabilizerSource",
+        "—"
+    );
+
+    setText(
+        "traceStabilizerOutput",
+        "—"
+    );
+
+    setText(
+        "traceUrgency",
+        "—"
+    );
+
+    setText(
+        "traceResponseMode",
+        "—"
+    );
+
+    setText(
+        "traceRecommendation",
+        "—"
+    );
+
+    setText(
+        "traceProposed",
+        "—"
+    );
+
+    setText(
+        "traceGate",
+        "—"
+    );
+
+    setText(
+        "traceActionStatus",
+        "—"
+    );
+
+
+    setText(
+        "lenaStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "lenaRecommendation",
+        "NO SIMULATED RECOMMENDATION"
+    );
+
+    setText(
+        "lenaUrgency",
+        "NORMAL"
+    );
+
+    setText(
+        "lenaResponseMode",
+        "MONITORING"
+    );
+
+    setText(
+        "lenaAutonomous",
+        "FALSE"
+    );
+
+    setText(
+        "lenaAction",
+        "NOT EXECUTED"
+    );
+
+
+    value("lenaMessage").textContent =
+        "Captain AI Lena is awaiting simulated "
+        + "environmental assessment.\n\n"
+        + "No simulated actions recommended.";
+
+
+    setText(
+        "recommendedLenaStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "recommendedControlMode",
+        "HUMAN AUTHORITY"
+    );
+
+    setText(
+        "recommendedAction",
+        "NO ACTION"
+    );
+
+    setText(
+        "recommendedUrgency",
+        "NORMAL"
+    );
+
+
+    value("recommendedActionMessage").textContent =
+        "Captain AI Lena awaiting simulated assessment.\n\n"
+        + "No UMV action recommendation available.\n\n"
+        + "Human authority remains FINAL.";
+
+
+    value("assessmentOutput").textContent =
+        "System ready.\n\n"
+        + "Select environmental conditions or a scenario, "
+        + "then press RUN DP SIMULATION.";
+
+
+    value("auditOutput").textContent =
+        "No completed simulation audit.";
+
+
+    setText(
+        "humanDecision",
+        "PENDING"
+    );
+
+    setText(
+        "humanGate",
+        "HUMAN DECISION REQUIRED"
+    );
+
+
+    setText(
+        "positionError",
+        "—"
+    );
+
+    setText(
+        "simulatedCommand",
+        "0"
+    );
+
+    setText(
+        "stabilityIndex",
+        "—"
+    );
+
+    setText(
+        "simulatedState",
+        "SIMULATED"
+    );
+
+
+    setHumanButtons(
+        false,
+        false,
+        false
+    );
+
+
+    window.lastDPSimulation =
+        null;
+
+}
+
+
+/* =========================================================
+   INITIALISE COCKPIT
+========================================================= */
+
+(function initialiseCockpit() {
+
+    if (!engineReady()) {
+
+        return;
+
+    }
+
+
+    const valid =
+        window.DPSimulationEngine.validate();
+
+
+    if (!valid) {
+
+        setText(
+            "engineStatus",
+            "ENGINE VALIDATION FAILED"
+        );
+
+        return;
+
+    }
+
+
+    setText(
+        "engineStatus",
+        "DP SIMULATION ENGINE 1.2.0 CONNECTED — READY"
+    );
+
+
+    console.log(
+        "SEXTANT PROTOCOL — DP RESILIENCE COCKPIT"
+    );
+
+    console.log(
+        "Layer execution wiring active."
+    );
+
+    console.log(
+        "ENVIRONMENT → S1 → S2 → STABILIZER → "
+        + "RECOMMENDATION → LENA → HUMAN → "
+        + "SIMULATED RESPONSE"
+    );
+
+})();
+
+</script>
+
+</body>
+
+</html>
+
