@@ -4025,3 +4025,262 @@ function randomScenario() {
 ======================================================= */
 
 </script>
+
+<!-- ======================================================
+     PART 5C — PRIMARY AI / SECONDARY AI
+======================================================= -->
+
+<script>
+
+/* ======================================================
+   PRIMARY AI — NORMAL CONTROL ASSESSMENT
+======================================================= */
+
+function runPrimaryAI(stress) {
+
+    let mode;
+    let response;
+
+    if (stress < 30) {
+
+        mode =
+            "NORMAL CONTROL";
+
+        response =
+            "MAINTAIN DP POSITION";
+
+    } else if (stress < 50) {
+
+        mode =
+            "ENHANCED CONTROL";
+
+        response =
+            "INCREASE DP MONITORING";
+
+    } else if (stress < 70) {
+
+        mode =
+            "HIGH LOAD CONTROL";
+
+        response =
+            "PREPARE STABILIZATION";
+
+    } else {
+
+        mode =
+            "CRITICAL CONTROL";
+
+        response =
+            "PREPARE SAFE-STATE RESPONSE";
+
+    }
+
+    simulationState.primaryMode =
+        mode;
+
+    setText(
+        "primaryStatus",
+        mode
+    );
+
+    setText(
+        "tracePrimaryMode",
+        mode
+    );
+
+    setText(
+        "tracePrimaryResponse",
+        response
+    );
+
+    return {
+
+        mode: mode,
+
+        response: response,
+
+        stress: stress
+
+    };
+
+}
+
+
+/* ======================================================
+   SECONDARY AI — SAFETY ASSESSMENT
+======================================================= */
+
+function runSecondaryAI(stress, primary) {
+
+    let mode;
+    let assessment;
+
+    if (stress < 30) {
+
+        mode =
+            "SAFETY MONITORING";
+
+        assessment =
+            "NO SECONDARY INTERVENTION REQUIRED";
+
+    } else if (stress < 50) {
+
+        mode =
+            "SAFETY WATCH";
+
+        assessment =
+            "ENVIRONMENTAL LOAD ELEVATED";
+
+    } else if (stress < 70) {
+
+        mode =
+            "SAFETY INTERVENTION";
+
+        assessment =
+            "STABILIZATION SUPPORT REQUIRED";
+
+    } else {
+
+        mode =
+            "PROTECTIVE SAFETY MODE";
+
+        assessment =
+            "CRITICAL ENVIRONMENTAL CONDITION";
+
+    }
+
+    simulationState.secondaryMode =
+        mode;
+
+    setText(
+        "secondaryStatus",
+        mode
+    );
+
+    setText(
+        "traceSecondaryMode",
+        mode
+    );
+
+    setText(
+        "traceSecondaryAssessment",
+        assessment
+    );
+
+    return {
+
+        mode: mode,
+
+        assessment: assessment,
+
+        primaryResponse:
+            primary.response,
+
+        stress: stress
+
+    };
+
+}
+
+
+/* ======================================================
+   STABILIZER ARBITRATION
+======================================================= */
+
+function runStabilizer(
+    stress,
+    primary,
+    secondary
+) {
+
+    let mode;
+    let source;
+    let output;
+
+    if (stress < 30) {
+
+        mode =
+            "STABLE";
+
+        source =
+            "PRIMARY AI";
+
+        output =
+            primary.response;
+
+    } else if (stress < 50) {
+
+        mode =
+            "ASSISTED STABILIZATION";
+
+        source =
+            "PRIMARY + SECONDARY";
+
+        output =
+            "ENHANCED DP MONITORING";
+
+    } else if (stress < 70) {
+
+        mode =
+            "ACTIVE STABILIZATION";
+
+        source =
+            "SECONDARY SAFETY LAYER";
+
+        output =
+            "PREPARE SAFE-STATE RESPONSE";
+
+    } else {
+
+        mode =
+            "PROTECTIVE STABILIZATION";
+
+        source =
+            "SECONDARY SAFETY OVERRIDE";
+
+        output =
+            "MAINTAIN SAFE STATE";
+
+    }
+
+    simulationState.stabilizerMode =
+        mode;
+
+    setText(
+        "stabilizerStatus",
+        mode
+    );
+
+    setText(
+        "traceStabilizerMode",
+        mode
+    );
+
+    setText(
+        "traceStabilizerSource",
+        source
+    );
+
+    setText(
+        "traceStabilizerOutput",
+        output
+    );
+
+    return {
+
+        mode: mode,
+
+        source: source,
+
+        output: output
+
+    };
+
+}
+
+
+/* ======================================================
+   END PART 5C
+======================================================= */
+
+</script>
