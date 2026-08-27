@@ -3548,3 +3548,263 @@ document.addEventListener(
 ============================================================ */
 
 </script>
+<!-- ======================================================
+     JAVASCRIPT — SPD DP RESILIENCE ENGINE
+======================================================= -->
+
+<script>
+
+"use strict";
+
+/* ======================================================
+   SYSTEM CONFIGURATION
+======================================================= */
+
+const SPD_CONFIG = {
+
+    VERSION: "13.1.0",
+
+    ENGINE_NAME:
+        "Sextant Protocol DP Resilience Engine",
+
+    VESSEL:
+        "SEXTANT-MPSV-01",
+
+    NOMINAL_THRUST:
+        100,
+
+    HUMAN_AUTHORIZATION_REQUIRED:
+        true
+
+};
+
+
+/* ======================================================
+   SIMULATION STATE
+======================================================= */
+
+let simulationState = {
+
+    wind: 30,
+
+    current: 25,
+
+    wave: 30,
+
+    tidal: 20,
+
+    environmentalStress: 0,
+
+    primaryMode: "STANDBY",
+
+    secondaryMode: "STANDBY",
+
+    stabilizerMode: "STANDBY",
+
+    recommendation: "NO ACTION",
+
+    urgency: "NORMAL",
+
+    responseMode: "MONITORING",
+
+    proposedAction: "NONE",
+
+    humanDecision: "PENDING",
+
+    executionGate:
+        "HUMAN DECISION REQUIRED",
+
+    simulatedCommand: 0,
+
+    positionError: 0,
+
+    stabilityIndex: 100,
+
+    vesselState: "SIMULATED",
+
+    lastScenario: "NONE",
+
+    simulationComplete: false
+
+};
+
+
+/* ======================================================
+   DOM HELPER
+======================================================= */
+
+function setText(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+
+        element.textContent =
+            value;
+
+    }
+
+}
+
+
+/* ======================================================
+   NUMERIC INPUT HELPER
+======================================================= */
+
+function getInputValue(id) {
+
+    const element =
+        document.getElementById(id);
+
+    if (!element) {
+        return 0;
+    }
+
+    let value =
+        Number(element.value);
+
+    if (!Number.isFinite(value)) {
+        value = 0;
+    }
+
+    return Math.max(
+        0,
+        Math.min(100, value)
+    );
+
+}
+
+
+/* ======================================================
+   READ ENVIRONMENT
+======================================================= */
+
+function readEnvironment() {
+
+    simulationState.wind =
+        getInputValue("wind");
+
+    simulationState.current =
+        getInputValue("current");
+
+    simulationState.wave =
+        getInputValue("wave");
+
+    simulationState.tidal =
+        getInputValue("tidal");
+
+}
+
+
+/* ======================================================
+   ENVIRONMENT STRESS CALCULATION
+======================================================= */
+
+function calculateEnvironmentalStress() {
+
+    const {
+
+        wind,
+        current,
+        wave,
+        tidal
+
+    } = simulationState;
+
+    const stress = (
+
+        wind * 0.30 +
+
+        current * 0.25 +
+
+        wave * 0.30 +
+
+        tidal * 0.15
+
+    );
+
+    simulationState.environmentalStress =
+        Number(stress.toFixed(2));
+
+    return simulationState.environmentalStress;
+
+}
+
+
+/* ======================================================
+   RISK CLASSIFICATION
+======================================================= */
+
+function classifyEnvironment(stress) {
+
+    if (stress < 30) {
+
+        return "LOW";
+
+    }
+
+    if (stress < 50) {
+
+        return "MEDIUM";
+
+    }
+
+    return "HIGH";
+
+}
+
+
+/* ======================================================
+   INITIAL SYSTEM STATUS
+======================================================= */
+
+function initialiseSystem() {
+
+    setText(
+        "engineStatus",
+        "ENGINE: READY — SPD v13.1.0"
+    );
+
+    setText(
+        "systemStatus",
+        "SYSTEM READY"
+    );
+
+    setText(
+        "primaryStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "secondaryStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "stabilizerStatus",
+        "STANDBY"
+    );
+
+    setText(
+        "humanStatus",
+        "FINAL"
+    );
+
+}
+
+
+/* ======================================================
+   STARTUP
+======================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        initialiseSystem();
+
+    }
+);
+
+</script>
