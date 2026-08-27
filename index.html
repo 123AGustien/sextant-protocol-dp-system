@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        SEXTANT PROTOCOL – DP RESILIENCE COCKPIT
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #07111c;
+            color: #e8f1f8;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin-top: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            padding: 24px;
+            border: 1px solid #29465c;
+            background: #0c1b29;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #9db4c7;
+            font-size: 14px;
+        }
+
+        .engine-status {
+            margin-top: 16px;
+            padding: 12px;
+            border: 1px solid #29465c;
+            background: #081522;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .architecture {
+            padding: 20px;
+            border: 1px solid #29465c;
+            background: #0c1b29;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .architecture-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .architecture-node {
+            min-width: 120px;
+            padding: 14px 10px;
+            text-align: center;
+            border: 1px solid #385a70;
+            background: #102536;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .arrow {
+            font-size: 22px;
+            color: #8caec4;
+        }
+
+        .panel {
+            padding: 20px;
+            border: 1px solid #29465c;
+            background: #0c1b29;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .status-card {
+            padding: 16px;
+            border: 1px solid #29465c;
+            background: #081522;
+            border-radius: 6px;
+        }
+
+        .status-title {
+            font-size: 12px;
+            color: #8fa8bb;
+            margin-bottom: 8px;
+        }
+
+        .status-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .output {
+            white-space: pre-wrap;
+            min-height: 120px;
+            padding: 16px;
+            border: 1px solid #29465c;
+            background: #050d15;
+            border-radius: 6px;
+            font-family:
+                Consolas,
+                "Courier New",
+                monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: 1px solid #496b82;
+            background: #102536;
+            color: #e8f1f8;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #173247;
+        }
+
+        button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            background: #081522;
+            color: #e8f1f8;
+            border: 1px solid #385a70;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #a9bdcc;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+        }
+
+        .scenario-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .human-panel {
+            padding: 20px;
+            border: 2px solid #496b82;
+            background: #0c1b29;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .gate-box {
+            padding: 18px;
+            background: #081522;
+            border: 1px solid #385a70;
+            border-radius: 6px;
+            line-height: 1.7;
+        }
+
+        .human-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .footer {
+            padding: 24px;
+            text-align: center;
+            border-top: 1px solid #29465c;
+            color: #8fa8bb;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+
+<!-- ======================================================
+     HEADER
+======================================================= -->
+
+<div class="header">
+
+    <h1>
+        SEXTANT PROTOCOL – DP RESILIENCE COCKPIT
+    </h1>
+
+    <div class="subtitle">
+
+        MPSV SIMULATION • PRIMARY AI →
+        SECONDARY AI → STABILIZER →
+        HUMAN-IN-THE-LOOP
+
+    </div>
+
+    <div
+        id="engineStatus"
+        class="engine-status">
+
+        ENGINE: INITIALISING...
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     PRINCIPAL ARCHITECTURE
+======================================================= -->
+
+<div class="architecture">
+
+    <h2>
+        Principal Architecture
+    </h2>
+
+    <div class="architecture-flow">
+
+        <div class="architecture-node">
+            ENVIRONMENT
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            PRIMARY AI
+            <br>
+            <small>Normal Control</small>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            SECONDARY AI
+            <br>
+            <small>Safety Layer</small>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            STABILIZER
+            <br>
+            <small>Arbitration</small>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            CAPTAIN AI LENA
+            <br>
+            <small>UMV Decision Support</small>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            HUMAN-IN-THE-LOOP
+            <br>
+            <small>Final Authority</small>
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            SIMULATED DP ACTION
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     LAYERED EXECUTION PATH
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Layered Architecture Execution Path
+    </h2>
+
+    <div class="architecture-flow">
+
+        <div class="architecture-node">
+            ENVIRONMENT
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            S1 PRIMARY
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            S2 SECONDARY
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            STABILIZER
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            RECOMMENDATION
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            CAPTAIN AI LENA
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            HUMAN AUTHORITY
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="architecture-node">
+            SIMULATED DP RESPONSE
+        </div>
+
+    </div>
+
+</div>
