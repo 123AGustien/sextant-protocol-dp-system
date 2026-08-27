@@ -1060,3 +1060,457 @@
     </div>
 
 </div>
+<!-- ======================================================
+     CAPTAIN AI LENA — RECOMMENDED ACTIONS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Captain AI Lena — UMV Control / Recommended Actions
+    </h2>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                CAPTAIN AI LENA
+            </div>
+
+            <div class="status-value">
+                ROLE: UMV RESILIENCE DECISION-SUPPORT LAYER
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                AUTHORITY
+            </div>
+
+            <div class="status-value">
+                HUMAN-IN-THE-LOOP
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                AUTONOMOUS COMMAND
+            </div>
+
+            <div
+                id="recommendedAutonomous"
+                class="status-value">
+
+                FALSE
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <p style="margin-top: 16px; color: #a9bdcc;">
+
+        Captain AI Lena evaluates the simulated resilience
+        assessment and presents recommended actions for
+        human consideration.
+
+    </p>
+
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                LENA STATUS
+            </div>
+
+            <div
+                id="recommendedLenaStatus"
+                class="status-value">
+
+                STANDBY
+
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                UMV CONTROL MODE
+            </div>
+
+            <div
+                id="recommendedControlMode"
+                class="status-value">
+
+                HUMAN AUTHORITY
+
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                RECOMMENDED ACTION
+            </div>
+
+            <div
+                id="recommendedAction"
+                class="status-value">
+
+                NO ACTION
+
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                URGENCY
+            </div>
+
+            <div
+                id="recommendedUrgency"
+                class="status-value">
+
+                NORMAL
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="recommendedMessage"
+        class="output"
+        style="margin-top: 16px;">
+
+        Captain AI Lena awaiting simulated assessment.
+
+        No UMV action recommendation available.
+
+        Human authority remains FINAL.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     HUMAN AUTHORIZATION — FINAL DECISION
+======================================================= -->
+
+<div
+    id="humanDecisionControls"
+    class="human-panel">
+
+    <h2>
+        Human Authorization — Final Decision
+    </h2>
+
+
+    <div class="gate-box">
+
+        <strong>
+            HUMAN AUTHORIZATION REQUIRED
+        </strong>
+
+        <br><br>
+
+        Captain AI Lena provides decision support only.
+
+        <br>
+
+        No simulated manoeuvre is treated as an operational command.
+
+        <br><br>
+
+        FINAL AUTHORITY:
+        <strong>HUMAN OPERATOR</strong>
+
+        <br>
+
+        CURRENT DECISION:
+        <strong id="humanDecisionStatus">
+            PENDING
+        </strong>
+
+        <br>
+
+        EXECUTION GATE:
+        <strong id="executionGate">
+            HUMAN DECISION REQUIRED
+        </strong>
+
+    </div>
+
+
+    <div class="human-controls">
+
+        <button
+            onclick="acknowledgeCondition()">
+
+            ACKNOWLEDGE CONDITION
+
+        </button>
+
+
+        <button
+            onclick="maintainSafeState()">
+
+            MAINTAIN SAFE STATE
+
+        </button>
+
+
+        <button
+            onclick="authorizeSimulatedResponse()">
+
+            AUTHORIZE SIMULATED RESPONSE
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     UPDATED SIMULATED VESSEL STATE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Updated Simulated Vessel State
+    </h2>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                POSITION ERROR
+            </div>
+
+            <div
+                id="positionError"
+                class="status-value">
+
+                —
+
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                SIMULATED COMMAND
+            </div>
+
+            <div
+                id="simulatedCommand"
+                class="status-value">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                STABILITY INDEX
+            </div>
+
+            <div
+                id="stabilityIndex"
+                class="status-value">
+
+                —
+
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                STATE
+            </div>
+
+            <div
+                id="vesselState"
+                class="status-value">
+
+                SIMULATED
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     SIMULATION AUDIT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Simulation Audit
+    </h2>
+
+    <div
+        id="auditOutput"
+        class="output">
+
+        No completed simulation audit.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     RESEARCH PURPOSE & OPERATIONAL BOUNDARY
+======================================================= -->
+
+<div class="footer">
+
+    <strong>
+        SEXTANT PROTOCOL — DP RESILIENCE RESEARCH SIMULATOR
+    </strong>
+
+    <br><br>
+
+    This cockpit is a deterministic research and engineering
+    simulation environment developed to explore how a layered
+    resilience architecture could respond to changing maritime
+    environmental conditions.
+
+    <br><br>
+
+    The simulator creates a controlled virtual vessel environment
+    in which wind, current, wave and tidal conditions can be
+    varied, repeated and analysed.
+
+    <br><br>
+
+    The deterministic simulation engine processes those
+    conditions through the research architecture and produces
+    a traceable simulated result.
+
+    <br><br>
+
+    The simulator is intended to support:
+
+    <br>
+
+    Research • Education • Engineering analysis • Scenario testing
+    • Technical demonstration • Repeatable validation • Future
+    independent review
+
+    <br><br>
+
+    Trial manoeuvres and simulated responses shown by this cockpit
+    are planning and assessment representations only.
+
+    <br>
+
+    They are <strong>NOT operational DP commands</strong>
+    and are <strong>NOT transmitted to any vessel control system.</strong>
+
+    <br><br>
+
+    <strong>HUMAN-IN-THE-LOOP</strong>
+
+    <br>
+
+    Human authority remains the final decision point in the
+    research architecture.
+
+    <br><br>
+
+    The simulator provides decision-support and simulated
+    responses; it does not replace the Master, DPO, authorised
+    operator, vessel procedures or classification requirements.
+
+    <br><br>
+
+    <strong>OPERATIONAL BOUNDARY</strong>
+
+    <br><br>
+
+    This prototype is intentionally isolated from operational
+    vessel control.
+
+    <br>
+
+    It does not connect to and must not be connected to:
+
+    <br>
+
+    Dynamic Positioning systems • Propulsion systems • Navigation
+    systems • Steering systems • Safety systems • Vessel
+    automation systems
+
+    <br><br>
+
+    It is not certified marine control software and does not
+    provide certified DP functionality.
+
+    <br><br>
+
+    <strong>
+        SEXTANT PROTOCOL™ – DP RESILIENCE RESEARCH SIMULATOR
+    </strong>
+
+    <br>
+
+    RESEARCH • SIMULATION • EDUCATION • ENGINEERING ANALYSIS
+
+    <br>
+
+    ENVIRONMENT → PRIMARY AI → SECONDARY AI → STABILIZER →
+    RECOMMENDED ACTIONS → CAPTAIN AI LENA → HUMAN AUTHORITY →
+    SIMULATED DP RESPONSE
+
+    <br><br>
+
+    <strong>
+        NOT CERTIFIED MARINE CONTROL SOFTWARE
+    </strong>
+
+    <br>
+
+    NOT FOR CONNECTION TO OPERATIONAL DP, PROPULSION,
+    NAVIGATION OR SAFETY SYSTEMS
+
+</div>
