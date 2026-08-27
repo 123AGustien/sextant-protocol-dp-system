@@ -448,3 +448,400 @@ button:active {
 </div>
 
 </div>
+<!-- ======================================================
+     SCENARIO CONTROLS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Scenario Controls
+    </h2>
+
+    <div class="controls">
+
+        <button
+            class="scenario"
+            onclick="normalScenario()"
+        >
+            NORMAL
+        </button>
+
+        <button
+            class="scenario"
+            onclick="moderateWeatherScenario()"
+        >
+            MODERATE
+        </button>
+
+        <button
+            class="scenario"
+            onclick="heavyWeatherScenario()"
+        >
+            HEAVY WEATHER
+        </button>
+
+        <button
+            class="scenario"
+            onclick="criticalScenario()"
+        >
+            CRITICAL
+        </button>
+
+        <button
+            class="scenario"
+            onclick="currentSurgeScenario()"
+        >
+            CURRENT SURGE
+        </button>
+
+        <button
+            class="scenario"
+            onclick="heavySeaStateScenario()"
+        >
+            HEAVY SEA
+        </button>
+
+        <button
+            class="scenario"
+            onclick="windGustScenario()"
+        >
+            WIND GUST
+        </button>
+
+        <button
+            class="scenario"
+            onclick="combinedDisturbanceScenario()"
+        >
+            COMBINED
+        </button>
+
+        <button
+            class="scenario"
+            onclick="randomScenario()"
+        >
+            RANDOM
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     MAIN CONTROL
+======================================================= -->
+
+<div class="controls">
+
+    <button
+        class="run"
+        onclick="runSimulation()"
+    >
+        ▶ RUN DP SIMULATION
+    </button>
+
+    <button
+        class="reset"
+        onclick="resetSimulation()"
+    >
+        RESET
+    </button>
+
+</div>
+
+
+<!-- ======================================================
+     LIVE SYSTEM STATUS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Live System Status
+    </h2>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                ENVIRONMENT
+            </div>
+
+            <div
+                id="environmentStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                PRIMARY AI
+            </div>
+
+            <div
+                id="primaryStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                SECONDARY AI
+            </div>
+
+            <div
+                id="secondaryStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                STABILIZER
+            </div>
+
+            <div
+                id="stabilizerStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                HUMAN AUTHORITY
+            </div>
+
+            <div
+                id="humanStatus"
+                class="status-value"
+            >
+                AVAILABLE
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                SYSTEM
+            </div>
+
+            <div
+                id="systemStatus"
+                class="status-value"
+            >
+                READY
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     CAPTAIN AI LENA — UMV CONTROL
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Captain AI Lena — UMV Control
+    </h2>
+
+    <div
+        id="lenaStatus"
+        class="status-value"
+    >
+        STANDBY — AWAITING SIMULATED ASSESSMENT
+    </div>
+
+    <br>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                AI ROLE
+            </div>
+
+            <div
+                id="lenaRole"
+                class="status-value"
+            >
+                DECISION SUPPORT
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                RECOMMENDATION
+            </div>
+
+            <div
+                id="lenaRecommendation"
+                class="status-value"
+            >
+                NO SIMULATED RECOMMENDATION
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                URGENCY
+            </div>
+
+            <div
+                id="lenaUrgency"
+                class="status-value"
+            >
+                NORMAL
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                RESPONSE MODE
+            </div>
+
+            <div
+                id="lenaResponseMode"
+                class="status-value"
+            >
+                MONITORING
+            </div>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    <div
+        id="lenaRationale"
+        class="alert-box"
+    >
+        Captain AI Lena is awaiting simulated
+        environmental assessment.
+    </div>
+
+    <br>
+
+    <div
+        id="lenaActions"
+        class="log-output"
+    >
+        No simulated actions recommended.
+    </div>
+
+    <br>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                HUMAN AUTHORITY
+            </div>
+
+            <div
+                id="lenaHumanAuthority"
+                class="status-value"
+            >
+                FINAL
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                AUTONOMOUS COMMAND
+            </div>
+
+            <div
+                id="lenaAutonomousCommand"
+                class="status-value"
+            >
+                FALSE
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                UMV ACTION
+            </div>
+
+            <div
+                id="lenaUMVAction"
+                class="status-value"
+            >
+                NOT EXECUTED
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     RESULTS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        DP Simulation Assessment
+    </h2>
+
+    <div
+        id="output"
+        class="output"
+    >
+System ready.
+
+Select environmental conditions or a scenario,
+then press RUN DP SIMULATION.
+    </div>
+
+</div>
