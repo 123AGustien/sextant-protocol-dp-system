@@ -3027,7 +3027,1127 @@ if (
         sextantResiliencePlanResult;
 
 }
+/* =========================================================
+   FINAL ADDITIONAL MARITIME COMPLIANCE, SAFETY,
+   NAVIGATION, STORES & RESILIENCE REVIEW
+   VERSION: V1.1
+========================================================= */
 
+const finalMaritimeReview =
+    condition.finalMaritimeReview || {};
+
+
+/* =========================================================
+   PRIORITY 1 — SEXTANT PROTOCOL RESILIENCE PLAN
+   FIRST ITEM IN THE JOB / REVIEW SEQUENCE
+========================================================= */
+
+/*
+ * The Sextant Protocol Resilience Plan is positioned as
+ * an INITIAL resilience and readiness review, not as the
+ * last item on the vessel inspection/job list.
+ *
+ * Purpose:
+ * identify foreseeable failure modes, degraded conditions,
+ * operational vulnerabilities and recovery pathways before
+ * routine operational tasks are treated as complete.
+ *
+ * This does NOT replace statutory, Flag, Class, ISM, SOLAS,
+ * MARPOL, Load Line, COLREG or Port State requirements.
+ */
+
+const sextantResiliencePlanAvailable =
+    finalMaritimeReview.sextantResiliencePlanAvailable === true;
+
+const sextantInitialRiskReviewCompleted =
+    finalMaritimeReview.sextantInitialRiskReviewCompleted === true;
+
+const sextantFailureModeReviewCompleted =
+    finalMaritimeReview.sextantFailureModeReviewCompleted === true;
+
+const sextantRecoveryPathwaysReviewed =
+    finalMaritimeReview.sextantRecoveryPathwaysReviewed === true;
+
+const sextantHumanAuthorityConfirmed =
+    finalMaritimeReview.sextantHumanAuthorityConfirmed === true;
+
+const sextantAuditTrailAvailable =
+    finalMaritimeReview.sextantAuditTrailAvailable === true;
+
+
+/* =========================================================
+   PRIORITY ORDER
+========================================================= */
+
+const resiliencePriorityOrder = [
+
+    "PRIORITY_1_SEXTANT_RESILIENCE_PLAN",
+
+    "PRIORITY_2_VESSEL_STATUTORY_AND_CLASS_STATUS",
+
+    "PRIORITY_3_NAVIGATION_AND_SAFE_CLEARANCE",
+
+    "PRIORITY_4_MACHINERY_AND_PROPULSION",
+
+    "PRIORITY_5_DECK_AND_CARGO_OPERATIONS",
+
+    "PRIORITY_6_EMERGENCY_SYSTEMS",
+
+    "PRIORITY_7_ENVIRONMENTAL_PROTECTION",
+
+    "PRIORITY_8_CATERING_CREW_SUPPORT_AND_ACCOMMODATION",
+
+    "PRIORITY_9_STORES_SPARES_AND_LOGISTICS",
+
+    "PRIORITY_10_DOCUMENTATION_AUDIT_AND_CLOSEOUT"
+];
+
+
+/* =========================================================
+   DANGEROUS GOODS
+========================================================= */
+
+const dangerousGoodsOnboard =
+    finalMaritimeReview.dangerousGoodsOnboard === true;
+
+const dangerousGoodsDeclared =
+    finalMaritimeReview.dangerousGoodsDeclared === true;
+
+const dangerousGoodsManifestCurrent =
+    finalMaritimeReview.dangerousGoodsManifestCurrent === true;
+
+const dangerousGoodsSegregationCompliant =
+    finalMaritimeReview.dangerousGoodsSegregationCompliant === true;
+
+const dangerousGoodsStowagePlanAvailable =
+    finalMaritimeReview.dangerousGoodsStowagePlanAvailable === true;
+
+const dangerousGoodsLabelsAndPlacardsCurrent =
+    finalMaritimeReview.dangerousGoodsLabelsAndPlacardsCurrent === true;
+
+const dangerousGoodsEmergencyInformationAvailable =
+    finalMaritimeReview.dangerousGoodsEmergencyInformationAvailable === true;
+
+
+/* =========================================================
+   CARGO / STOWAGE / SECURING
+========================================================= */
+
+const cargoStowagePlanAvailable =
+    finalMaritimeReview.cargoStowagePlanAvailable === true;
+
+const cargoSecuringArrangementsAvailable =
+    finalMaritimeReview.cargoSecuringArrangementsAvailable === true;
+
+const cargoDistributionReviewed =
+    finalMaritimeReview.cargoDistributionReviewed === true;
+
+const stabilityImpactReviewed =
+    finalMaritimeReview.stabilityImpactReviewed === true;
+
+const deckLoadLimitsReviewed =
+    finalMaritimeReview.deckLoadLimitsReviewed === true;
+
+
+/* =========================================================
+   LOAD LINE / FREEBOARD
+========================================================= */
+
+const loadLineCertificateCurrent =
+    finalMaritimeReview.loadLineCertificateCurrent === true;
+
+const loadLineMarkingsVerified =
+    finalMaritimeReview.loadLineMarkingsVerified === true;
+
+const loadLineConditionsReviewed =
+    finalMaritimeReview.loadLineConditionsReviewed === true;
+
+const freeboardRequirementReviewed =
+    finalMaritimeReview.freeboardRequirementReviewed === true;
+
+const seasonalOrZoneLoadLineRequirementsReviewed =
+    finalMaritimeReview.seasonalOrZoneLoadLineRequirementsReviewed === true;
+
+
+/* =========================================================
+   ZONE / DRAFT / OPERATING LIMITS
+========================================================= */
+
+const draftLimitDeclared =
+    finalMaritimeReview.draftLimitDeclared === true;
+
+const actualDraftMeasured =
+    finalMaritimeReview.actualDraftMeasured === true;
+
+const trimConditionReviewed =
+    finalMaritimeReview.trimConditionReviewed === true;
+
+const operatingZoneDeclared =
+    finalMaritimeReview.operatingZoneDeclared === true;
+
+const zoneDraftRequirementReviewed =
+    finalMaritimeReview.zoneDraftRequirementReviewed === true;
+
+const portDraftRestrictionReviewed =
+    finalMaritimeReview.portDraftRestrictionReviewed === true;
+
+
+/* =========================================================
+   TIDAL HEIGHT / CHART DATUM / WATER DEPTH
+========================================================= */
+
+/*
+ * Basic assessment relationship:
+ *
+ * Depth of water =
+ * charted depth above chart datum + height of tide
+ *
+ * This is a simplified assessment relationship.
+ * Actual navigation must use the applicable official
+ * nautical chart, tide information and navigation rules.
+ */
+
+const chartedDepthAboveChartDatum =
+    Number(finalMaritimeReview.chartedDepthAboveChartDatum || 0);
+
+const tideHeightAboveChartDatum =
+    Number(finalMaritimeReview.tideHeightAboveChartDatum || 0);
+
+const vesselDraft =
+    Number(finalMaritimeReview.vesselDraft || 0);
+
+const trimAllowance =
+    Number(finalMaritimeReview.trimAllowance || 0);
+
+const squatAllowance =
+    Number(finalMaritimeReview.squatAllowance || 0);
+
+const safetyMargin =
+    Number(finalMaritimeReview.safetyMargin || 0);
+
+
+const calculatedWaterDepth =
+    chartedDepthAboveChartDatum +
+    tideHeightAboveChartDatum;
+
+
+/*
+ * Simplified available UKC:
+ *
+ * Water depth
+ * - vessel draft
+ * - trim allowance
+ * - squat allowance
+ * - safety margin
+ */
+
+const calculatedUnderKeelClearance =
+    calculatedWaterDepth -
+    vesselDraft -
+    trimAllowance -
+    squatAllowance -
+    safetyMargin;
+
+
+const underKeelClearancePositive =
+    calculatedUnderKeelClearance > 0;
+
+
+/* =========================================================
+   VERTICAL CLEARANCE
+========================================================= */
+
+const vesselHeightAboveKeel =
+    Number(finalMaritimeReview.vesselHeightAboveKeel || 0);
+
+const highestPointHeightDeclared =
+    finalMaritimeReview.highestPointHeightDeclared === true;
+
+const overheadClearanceHazardReviewed =
+    finalMaritimeReview.overheadClearanceHazardReviewed === true;
+
+const bridgeClearanceReviewed =
+    finalMaritimeReview.bridgeClearanceReviewed === true;
+
+const cableClearanceReviewed =
+    finalMaritimeReview.cableClearanceReviewed === true;
+
+
+/*
+ * Examples of highest-point considerations:
+ *
+ * - bridge
+ * - mast
+ * - antenna
+ * - radar
+ * - crane
+ * - cable
+ * - other fixed structure
+ *
+ * Required clearance is assessed from the relevant
+ * navigation reference level and applicable authority.
+ */
+
+const overheadClearanceValue =
+    Number(finalMaritimeReview.overheadClearanceValue || 0);
+
+const calculatedVerticalClearance =
+    overheadClearanceValue -
+    vesselHeightAboveKeel;
+
+
+const verticalClearancePositive =
+    calculatedVerticalClearance > 0;
+
+
+/* =========================================================
+   SAFE MANNING / UMV CERTIFICATION
+========================================================= */
+
+const safeManningCertificateAvailable =
+    finalMaritimeReview.safeManningCertificateAvailable === true;
+
+const safeManningCertificateCurrent =
+    finalMaritimeReview.safeManningCertificateCurrent === true;
+
+const umvCertificateApplicable =
+    finalMaritimeReview.umvCertificateApplicable === true;
+
+const umvCertificateCurrent =
+    finalMaritimeReview.umvCertificateCurrent === true;
+
+const minimumCrewRequirementReviewed =
+    finalMaritimeReview.minimumCrewRequirementReviewed === true;
+
+
+/* =========================================================
+   REQUIRED PUBLICATIONS ONBOARD
+========================================================= */
+
+const requiredPublicationsInventoryAvailable =
+    finalMaritimeReview.requiredPublicationsInventoryAvailable === true;
+
+const nauticalChartsCurrent =
+    finalMaritimeReview.nauticalChartsCurrent === true;
+
+const electronicNavigationPublicationsCurrent =
+    finalMaritimeReview.electronicNavigationPublicationsCurrent === true;
+
+const sailingDirectionsAvailable =
+    finalMaritimeReview.sailingDirectionsAvailable === true;
+
+const noticesToMarinersCurrent =
+    finalMaritimeReview.noticesToMarinersCurrent === true;
+
+const tideTablesOrApprovedTidalInformationAvailable =
+    finalMaritimeReview.tideTablesOrApprovedTidalInformationAvailable === true;
+
+const applicableRegulationsAvailable =
+    finalMaritimeReview.applicableRegulationsAvailable === true;
+
+const emergencyPublicationsAvailable =
+    finalMaritimeReview.emergencyPublicationsAvailable === true;
+
+
+/* =========================================================
+   BRIDGE / NAVIGATION STORES
+========================================================= */
+
+const bridgeStoresAvailable =
+    finalMaritimeReview.bridgeStoresAvailable === true;
+
+const navigationEquipmentSparesAvailable =
+    finalMaritimeReview.navigationEquipmentSparesAvailable === true;
+
+const communicationEquipmentSparesAvailable =
+    finalMaritimeReview.communicationEquipmentSparesAvailable === true;
+
+const signalFlagsAndRequiredSignalsAvailable =
+    finalMaritimeReview.signalFlagsAndRequiredSignalsAvailable === true;
+
+const batteriesAndConsumableNavigationStoresAvailable =
+    finalMaritimeReview.batteriesAndConsumableNavigationStoresAvailable === true;
+
+
+/* =========================================================
+   ELECTRONIC STORES — MANDATORY REVIEW CATEGORY
+========================================================= */
+
+const electronicStoresAvailable =
+    finalMaritimeReview.electronicStoresAvailable === true;
+
+const criticalElectronicSparesAvailable =
+    finalMaritimeReview.criticalElectronicSparesAvailable === true;
+
+const navigationSensorSparesAvailable =
+    finalMaritimeReview.navigationSensorSparesAvailable === true;
+
+const communicationSparesAvailable =
+    finalMaritimeReview.communicationSparesAvailable === true;
+
+const networkAndComputerSparesAvailable =
+    finalMaritimeReview.networkAndComputerSparesAvailable === true;
+
+const powerSupplyElectronicSparesAvailable =
+    finalMaritimeReview.powerSupplyElectronicSparesAvailable === true;
+
+const approvedReplacementPartsAvailable =
+    finalMaritimeReview.approvedReplacementPartsAvailable === true;
+
+const electronicStoresInventoryCurrent =
+    finalMaritimeReview.electronicStoresInventoryCurrent === true;
+
+
+/* =========================================================
+   DECK STORES
+========================================================= */
+
+const deckStoresAvailable =
+    finalMaritimeReview.deckStoresAvailable === true;
+
+const mooringStoresAvailable =
+    finalMaritimeReview.mooringStoresAvailable === true;
+
+const anchoringStoresAvailable =
+    finalMaritimeReview.anchoringStoresAvailable === true;
+
+const liftingAndRiggingStoresAvailable =
+    finalMaritimeReview.liftingAndRiggingStoresAvailable === true;
+
+const deckSafetyEquipmentAvailable =
+    finalMaritimeReview.deckSafetyEquipmentAvailable === true;
+
+
+/* =========================================================
+   ENGINE ROOM STORES
+========================================================= */
+
+const engineRoomStoresAvailable =
+    finalMaritimeReview.engineRoomStoresAvailable === true;
+
+const criticalMachinerySparesAvailable =
+    finalMaritimeReview.criticalMachinerySparesAvailable === true;
+
+const filtersBeltsSealsAndConsumablesAvailable =
+    finalMaritimeReview.filtersBeltsSealsAndConsumablesAvailable === true;
+
+const lubricantsAndApprovedConsumablesAvailable =
+    finalMaritimeReview.lubricantsAndApprovedConsumablesAvailable === true;
+
+const emergencyMachinerySparesAvailable =
+    finalMaritimeReview.emergencyMachinerySparesAvailable === true;
+
+
+/* =========================================================
+   FUEL / LUBE OIL / WATER — OPERATIONAL RESERVE
+========================================================= */
+
+const fuelCapacityAdequate =
+    finalMaritimeReview.fuelCapacityAdequate === true;
+
+const fuelReserveAdequate =
+    finalMaritimeReview.fuelReserveAdequate === true;
+
+const freshwaterCapacityAdequate =
+    finalMaritimeReview.freshwaterCapacityAdequate === true;
+
+const freshwaterReserveAdequate =
+    finalMaritimeReview.freshwaterReserveAdequate === true;
+
+const provisionsCapacityAdequate =
+    finalMaritimeReview.provisionsCapacityAdequate === true;
+
+const provisionsReserveAdequate =
+    finalMaritimeReview.provisionsReserveAdequate === true;
+
+
+/*
+ * Planning allowance:
+ * Food / water / fuel and other consumables may be assessed
+ * with an additional 10% planning reserve where required
+ * by the vessel/company operational plan.
+ *
+ * This is NOT a substitute for statutory minimums.
+ */
+
+const reservePlanningFactor =
+    1.10;
+
+const plannedFuelRequirementWithReserve =
+    Number(finalMaritimeReview.plannedFuelRequirement || 0) *
+    reservePlanningFactor;
+
+const plannedWaterRequirementWithReserve =
+    Number(finalMaritimeReview.plannedWaterRequirement || 0) *
+    reservePlanningFactor;
+
+const plannedFoodRequirementWithReserve =
+    Number(finalMaritimeReview.plannedFoodRequirement || 0) *
+    reservePlanningFactor;
+
+
+/* =========================================================
+   CATERING / GALLEY / ACCOMMODATION
+========================================================= */
+
+const galleyEquipmentOperational =
+    finalMaritimeReview.galleyEquipmentOperational === true;
+
+const foodStoresAdequate =
+    finalMaritimeReview.foodStoresAdequate === true;
+
+const potableWaterAvailable =
+    finalMaritimeReview.potableWaterAvailable === true;
+
+const refrigerationAvailable =
+    finalMaritimeReview.refrigerationAvailable === true;
+
+const foodHygieneControlsAvailable =
+    finalMaritimeReview.foodHygieneControlsAvailable === true;
+
+const accommodationSafetyReviewed =
+    finalMaritimeReview.accommodationSafetyReviewed === true;
+
+const cabinSafetyReviewed =
+    finalMaritimeReview.cabinSafetyReviewed === true;
+
+const sanitaryFacilitiesOperational =
+    finalMaritimeReview.sanitaryFacilitiesOperational === true;
+
+
+/* =========================================================
+   GARBAGE / WASTE OIL / SEWAGE
+========================================================= */
+
+const garbageManagementCompliant =
+    finalMaritimeReview.garbageManagementCompliant === true;
+
+const wasteOilManagementCompliant =
+    finalMaritimeReview.wasteOilManagementCompliant === true;
+
+const sewageManagementCompliant =
+    finalMaritimeReview.sewageManagementCompliant === true;
+
+const disposalRecordsCurrent =
+    finalMaritimeReview.disposalRecordsCurrent === true;
+
+
+/* =========================================================
+   EMERGENCY ESCAPE / LIGHTING / POWER
+========================================================= */
+
+const escapeRoutesMarked =
+    finalMaritimeReview.escapeRoutesMarked === true;
+
+const escapeRoutesClear =
+    finalMaritimeReview.escapeRoutesClear === true;
+
+const emergencyLightingOperational =
+    finalMaritimeReview.emergencyLightingOperational === true;
+
+const emergencyPowerAvailable =
+    finalMaritimeReview.emergencyPowerAvailable === true;
+
+const emergencyGeneratorTestCurrent =
+    finalMaritimeReview.emergencyGeneratorTestCurrent === true;
+
+const emergencyBatteryTestCurrent =
+    finalMaritimeReview.emergencyBatteryTestCurrent === true;
+
+
+/* =========================================================
+   VESSEL IDENTIFICATION / FUNNEL LOGO
+========================================================= */
+
+const vesselNameMarkingCurrent =
+    finalMaritimeReview.vesselNameMarkingCurrent === true;
+
+const imoNumberMarkingCurrent =
+    finalMaritimeReview.imoNumberMarkingCurrent === true;
+
+const portOfRegistryMarkingCurrent =
+    finalMaritimeReview.portOfRegistryMarkingCurrent === true;
+
+const funnelLogoMarkingCurrent =
+    finalMaritimeReview.funnelLogoMarkingCurrent === true;
+
+
+/* =========================================================
+   NDT / HULL / MACHINERY
+========================================================= */
+
+const hullNdtCurrent =
+    finalMaritimeReview.hullNdtCurrent === true;
+
+const machineryNdtCurrent =
+    finalMaritimeReview.machineryNdtCurrent === true;
+
+const structuralInspectionCurrent =
+    finalMaritimeReview.structuralInspectionCurrent === true;
+
+const machineryInspectionCurrent =
+    finalMaritimeReview.machineryInspectionCurrent === true;
+
+
+/* =========================================================
+   CLASS / DP / ICE CLASS
+========================================================= */
+
+const classCertificateCurrent =
+    finalMaritimeReview.classCertificateCurrent === true;
+
+const classNotationCurrent =
+    finalMaritimeReview.classNotationCurrent === true;
+
+const dpClassNotationCurrent =
+    finalMaritimeReview.dpClassNotationCurrent === true;
+
+const iceClassNotationCurrent =
+    finalMaritimeReview.iceClassNotationCurrent === true;
+
+
+/* =========================================================
+   CORRECTIVE ACTION / RE-TEST / LATENCY
+========================================================= */
+
+const correctiveActionTestingCompleted =
+    finalMaritimeReview.correctiveActionTestingCompleted === true;
+
+const reTestValidationCompleted =
+    finalMaritimeReview.reTestValidationCompleted === true;
+
+const assessmentLatencyMeasured =
+    finalMaritimeReview.assessmentLatencyMeasured === true;
+
+const deterministicScenarioRepeatabilityConfirmed =
+    finalMaritimeReview.deterministicScenarioRepeatabilityConfirmed === true;
+
+
+/* =========================================================
+   MARIN V&V RESEARCH BOUNDARY
+========================================================= */
+
+/*
+ * The Sextant Protocol demonstrators are research and
+ * validation environments.
+ *
+ * They do not replace:
+ * - statutory certification;
+ * - Flag State authority;
+ * - Classification Society;
+ * - ISM/company procedures;
+ * - SOLAS/MARPOL/Load Line requirements;
+ * - COLREG requirements;
+ * - Port/Coastal State requirements;
+ * - approved navigation systems;
+ * - approved DP/autonomy systems.
+ *
+ * They are intended to support structured failure-mode,
+ * resilience, verification, tuning, latency, audit and
+ * human-authority evaluation.
+ */
+
+const marinResearchBoundary =
+    "RESEARCH_AND_VALIDATION_ONLY";
+
+
+/* =========================================================
+   OVERALL FINAL REVIEW
+========================================================= */
+
+const resiliencePriorityPass =
+    sextantResiliencePlanAvailable &&
+    sextantInitialRiskReviewCompleted &&
+    sextantFailureModeReviewCompleted &&
+    sextantRecoveryPathwaysReviewed &&
+    sextantHumanAuthorityConfirmed &&
+    sextantAuditTrailAvailable;
+
+
+const navigationClearancePass =
+    draftLimitDeclared &&
+    actualDraftMeasured &&
+    trimConditionReviewed &&
+    operatingZoneDeclared &&
+    zoneDraftRequirementReviewed &&
+    portDraftRestrictionReviewed &&
+    underKeelClearancePositive &&
+    highestPointHeightDeclared &&
+    overheadClearanceHazardReviewed &&
+    bridgeClearanceReviewed &&
+    cableClearanceReviewed &&
+    verticalClearancePositive;
+
+
+const certificationPass =
+    safeManningCertificateAvailable &&
+    safeManningCertificateCurrent &&
+    minimumCrewRequirementReviewed &&
+    classCertificateCurrent &&
+    classNotationCurrent &&
+    (
+        !umvCertificateApplicable ||
+        umvCertificateCurrent
+    );
+
+
+const dangerousGoodsPass =
+    !dangerousGoodsOnboard ||
+    (
+        dangerousGoodsDeclared &&
+        dangerousGoodsManifestCurrent &&
+        dangerousGoodsSegregationCompliant &&
+        dangerousGoodsStowagePlanAvailable &&
+        dangerousGoodsLabelsAndPlacardsCurrent &&
+        dangerousGoodsEmergencyInformationAvailable
+    );
+
+
+const publicationsPass =
+    requiredPublicationsInventoryAvailable &&
+    nauticalChartsCurrent &&
+    electronicNavigationPublicationsCurrent &&
+    sailingDirectionsAvailable &&
+    noticesToMarinersCurrent &&
+    tideTablesOrApprovedTidalInformationAvailable &&
+    applicableRegulationsAvailable &&
+    emergencyPublicationsAvailable;
+
+
+const electronicStoresPass =
+    electronicStoresAvailable &&
+    criticalElectronicSparesAvailable &&
+    navigationSensorSparesAvailable &&
+    communicationSparesAvailable &&
+    networkAndComputerSparesAvailable &&
+    powerSupplyElectronicSparesAvailable &&
+    approvedReplacementPartsAvailable &&
+    electronicStoresInventoryCurrent;
+
+
+const operationalReservePass =
+    fuelCapacityAdequate &&
+    fuelReserveAdequate &&
+    freshwaterCapacityAdequate &&
+    freshwaterReserveAdequate &&
+    provisionsCapacityAdequate &&
+    provisionsReserveAdequate;
+
+
+const accommodationCateringPass =
+    galleyEquipmentOperational &&
+    foodStoresAdequate &&
+    potableWaterAvailable &&
+    refrigerationAvailable &&
+    foodHygieneControlsAvailable &&
+    accommodationSafetyReviewed &&
+    cabinSafetyReviewed &&
+    sanitaryFacilitiesOperational;
+
+
+const environmentalPass =
+    garbageManagementCompliant &&
+    wasteOilManagementCompliant &&
+    sewageManagementCompliant &&
+    disposalRecordsCurrent;
+
+
+const emergencyPass =
+    escapeRoutesMarked &&
+    escapeRoutesClear &&
+    emergencyLightingOperational &&
+    emergencyPowerAvailable &&
+    emergencyGeneratorTestCurrent &&
+    emergencyBatteryTestCurrent;
+
+
+const identificationPass =
+    vesselNameMarkingCurrent &&
+    imoNumberMarkingCurrent &&
+    portOfRegistryMarkingCurrent &&
+    funnelLogoMarkingCurrent;
+
+
+const machineryInspectionPass =
+    hullNdtCurrent &&
+    machineryNdtCurrent &&
+    structuralInspectionCurrent &&
+    machineryInspectionCurrent;
+
+
+const validationPass =
+    correctiveActionTestingCompleted &&
+    reTestValidationCompleted &&
+    assessmentLatencyMeasured &&
+    deterministicScenarioRepeatabilityConfirmed;
+
+
+/* =========================================================
+   FINAL STATUS
+========================================================= */
+
+const finalMaritimeReviewPass =
+    resiliencePriorityPass &&
+    navigationClearancePass &&
+    certificationPass &&
+    dangerousGoodsPass &&
+    publicationsPass &&
+    electronicStoresPass &&
+    operationalReservePass &&
+    accommodationCateringPass &&
+    environmentalPass &&
+    emergencyPass &&
+    identificationPass &&
+    machineryInspectionPass &&
+    validationPass;
+
+
+const finalMaritimeReviewStatus =
+    finalMaritimeReviewPass
+        ? "SIMULATED_MARITIME_READINESS_REVIEW_PASS"
+        : "SIMULATED_MARITIME_READINESS_REVIEW_REQUIRED";
+
+
+/* =========================================================
+   HUMAN AUTHORITY / NO AUTOMATIC EXECUTION
+========================================================= */
+
+const maritimeExecutionGate =
+    "HUMAN AUTHORIZATION REQUIRED";
+
+const operationalCommand =
+    false;
+
+const physicalVesselControl =
+    false;
+
+
+/* =========================================================
+   COMPLETE TRACEABLE RESULT
+========================================================= */
+
+const finalMaritimeReviewResult = {
+
+    priority: {
+
+        firstAction:
+            "SEXTANT RESILIENCE PLAN",
+
+        priorityNumber:
+            1,
+
+        principle:
+            "RESILIENCE REVIEW FIRST — NOT LAST",
+
+        resiliencePriorityPass
+    },
+
+
+    dangerousGoods: {
+
+        dangerousGoodsOnboard,
+        dangerousGoodsDeclared,
+        dangerousGoodsManifestCurrent,
+        dangerousGoodsSegregationCompliant,
+        dangerousGoodsStowagePlanAvailable,
+        dangerousGoodsLabelsAndPlacardsCurrent,
+        dangerousGoodsEmergencyInformationAvailable,
+
+        status:
+            dangerousGoodsPass
+                ? "SIMULATED_DANGEROUS_GOODS_REVIEW_COMPLETE"
+                : "SIMULATED_DANGEROUS_GOODS_REVIEW_REQUIRED"
+    },
+
+
+    loadLineAndZones: {
+
+        loadLineCertificateCurrent,
+        loadLineMarkingsVerified,
+        loadLineConditionsReviewed,
+        freeboardRequirementReviewed,
+        seasonalOrZoneLoadLineRequirementsReviewed,
+
+        draftLimitDeclared,
+        actualDraftMeasured,
+        trimConditionReviewed,
+        operatingZoneDeclared,
+        zoneDraftRequirementReviewed,
+        portDraftRestrictionReviewed,
+
+        status:
+            navigationClearancePass
+                ? "SIMULATED_LOADLINE_ZONE_REVIEW_COMPLETE"
+                : "SIMULATED_LOADLINE_ZONE_REVIEW_REQUIRED"
+    },
+
+
+    underKeelClearance: {
+
+        chartedDepthAboveChartDatum,
+        tideHeightAboveChartDatum,
+        calculatedWaterDepth,
+
+        vesselDraft,
+        trimAllowance,
+        squatAllowance,
+        safetyMargin,
+
+        calculatedUnderKeelClearance,
+
+        formula:
+            "DEPTH OF WATER = CHARTED DEPTH ABOVE CHART DATUM + HEIGHT OF TIDE ABOVE CHART DATUM",
+
+        ukcFormula:
+            "UKC = DEPTH OF WATER - DRAFT - TRIM ALLOWANCE - SQUAT ALLOWANCE - SAFETY MARGIN",
+
+        status:
+            underKeelClearancePositive
+                ? "SIMULATED_UKC_POSITIVE"
+                : "SIMULATED_UKC_REVIEW_REQUIRED"
+    },
+
+
+    verticalClearance: {
+
+        vesselHeightAboveKeel,
+        overheadClearanceValue,
+        calculatedVerticalClearance,
+
+        highestPointHeightDeclared,
+        overheadClearanceHazardReviewed,
+        bridgeClearanceReviewed,
+        cableClearanceReviewed,
+
+        status:
+            verticalClearancePositive
+                ? "SIMULATED_VERTICAL_CLEARANCE_POSITIVE"
+                : "SIMULATED_VERTICAL_CLEARANCE_REVIEW_REQUIRED"
+    },
+
+
+    manningAndCertification: {
+
+        safeManningCertificateAvailable,
+        safeManningCertificateCurrent,
+
+        umvCertificateApplicable,
+        umvCertificateCurrent,
+
+        minimumCrewRequirementReviewed,
+
+        classCertificateCurrent,
+        classNotationCurrent,
+        dpClassNotationCurrent,
+        iceClassNotationCurrent,
+
+        status:
+            certificationPass
+                ? "SIMULATED_CERTIFICATION_REVIEW_COMPLETE"
+                : "SIMULATED_CERTIFICATION_REVIEW_REQUIRED"
+    },
+
+
+    publications: {
+
+        requiredPublicationsInventoryAvailable,
+        nauticalChartsCurrent,
+        electronicNavigationPublicationsCurrent,
+        sailingDirectionsAvailable,
+        noticesToMarinersCurrent,
+        tideTablesOrApprovedTidalInformationAvailable,
+        applicableRegulationsAvailable,
+        emergencyPublicationsAvailable,
+
+        status:
+            publicationsPass
+                ? "SIMULATED_PUBLICATIONS_REVIEW_COMPLETE"
+                : "SIMULATED_PUBLICATIONS_REVIEW_REQUIRED"
+    },
+
+
+    electronicStores: {
+
+        electronicStoresAvailable,
+        criticalElectronicSparesAvailable,
+        navigationSensorSparesAvailable,
+        communicationSparesAvailable,
+        networkAndComputerSparesAvailable,
+        powerSupplyElectronicSparesAvailable,
+        approvedReplacementPartsAvailable,
+        electronicStoresInventoryCurrent,
+
+        status:
+            electronicStoresPass
+                ? "SIMULATED_ELECTRONIC_STORES_REVIEW_COMPLETE"
+                : "SIMULATED_ELECTRONIC_STORES_REVIEW_REQUIRED"
+    },
+
+
+    operationalReserves: {
+
+        fuelCapacityAdequate,
+        fuelReserveAdequate,
+        freshwaterCapacityAdequate,
+        freshwaterReserveAdequate,
+        provisionsCapacityAdequate,
+        provisionsReserveAdequate,
+
+        reservePlanningFactor,
+
+        plannedFuelRequirementWithReserve,
+        plannedWaterRequirementWithReserve,
+        plannedFoodRequirementWithReserve,
+
+        status:
+            operationalReservePass
+                ? "SIMULATED_OPERATIONAL_RESERVE_REVIEW_COMPLETE"
+                : "SIMULATED_OPERATIONAL_RESERVE_REVIEW_REQUIRED"
+    },
+
+
+    cateringAndAccommodation: {
+
+        galleyEquipmentOperational,
+        foodStoresAdequate,
+        potableWaterAvailable,
+        refrigerationAvailable,
+        foodHygieneControlsAvailable,
+        accommodationSafetyReviewed,
+        cabinSafetyReviewed,
+        sanitaryFacilitiesOperational,
+
+        status:
+            accommodationCateringPass
+                ? "SIMULATED_CATERING_ACCOMMODATION_REVIEW_COMPLETE"
+                : "SIMULATED_CATERING_ACCOMMODATION_REVIEW_REQUIRED"
+    },
+
+
+    environmental: {
+
+        garbageManagementCompliant,
+        wasteOilManagementCompliant,
+        sewageManagementCompliant,
+        disposalRecordsCurrent,
+
+        status:
+            environmentalPass
+                ? "SIMULATED_ENVIRONMENTAL_REVIEW_COMPLETE"
+                : "SIMULATED_ENVIRONMENTAL_REVIEW_REQUIRED"
+    },
+
+
+    emergencySystems: {
+
+        escapeRoutesMarked,
+        escapeRoutesClear,
+        emergencyLightingOperational,
+        emergencyPowerAvailable,
+        emergencyGeneratorTestCurrent,
+        emergencyBatteryTestCurrent,
+
+        status:
+            emergencyPass
+                ? "SIMULATED_EMERGENCY_REVIEW_COMPLETE"
+                : "SIMULATED_EMERGENCY_REVIEW_REQUIRED"
+    },
+
+
+    identification: {
+
+        vesselNameMarkingCurrent,
+        imoNumberMarkingCurrent,
+        portOfRegistryMarkingCurrent,
+        funnelLogoMarkingCurrent,
+
+        status:
+            identificationPass
+                ? "SIMULATED_IDENTIFICATION_REVIEW_COMPLETE"
+                : "SIMULATED_IDENTIFICATION_REVIEW_REQUIRED"
+    },
+
+
+    hullAndMachinery: {
+
+        hullNdtCurrent,
+        machineryNdtCurrent,
+        structuralInspectionCurrent,
+        machineryInspectionCurrent,
+
+        status:
+            machineryInspectionPass
+                ? "SIMULATED_HULL_MACHINERY_REVIEW_COMPLETE"
+                : "SIMULATED_HULL_MACHINERY_REVIEW_REQUIRED"
+    },
+
+
+    validation: {
+
+        correctiveActionTestingCompleted,
+        reTestValidationCompleted,
+        assessmentLatencyMeasured,
+        deterministicScenarioRepeatabilityConfirmed,
+
+        status:
+            validationPass
+                ? "SIMULATED_VALIDATION_REVIEW_COMPLETE"
+                : "SIMULATED_VALIDATION_REVIEW_REQUIRED"
+    },
+
+
+    researchBoundary: {
+
+        purpose:
+            "EVALUATE AND VALIDATE THE SOFTWARE STACK SUPPORTING AUTONOMY",
+
+        marinResearchBoundary,
+
+        replacesAutonomySystem:
+            false,
+
+        commandsPhysicalVessel:
+            false
+    },
+
+
+    overallAssessment: {
+
+        finalMaritimeReviewPass,
+
+        status:
+            finalMaritimeReviewStatus,
+
+        recommendedAction:
+            finalMaritimeReviewPass
+                ? "MAINTAIN REVIEW AND HUMAN OVERSIGHT"
+                : "ESCALATE / CORRECT / RE-TEST / HUMAN REVIEW"
+    },
+
+
+    execution: {
+
+        gate:
+            maritimeExecutionGate,
+
+        operationalCommand,
+        physicalVesselControl
+    }
+};
+
+
+/* =========================================================
+   GLOBAL ACCESS
+========================================================= */
+
+if (
+    typeof window !== "undefined"
+) {
+
+    window.SextantMaritimeFinalReviewV1 =
+        finalMaritimeReviewResult;
+
+}
 
 /* =========================================================
    END OF MARITIME SAFETY / VESSEL SUITABILITY EXTENSION
