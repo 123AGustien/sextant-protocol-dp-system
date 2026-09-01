@@ -8017,6 +8017,2011 @@ PRINCIPLE 15 — MARIN GOVERNANCE
 
 The proposed scenarios remain subject to MARIN technical review and agreement before being adopted as formal test or acceptance criteria.
 
+FINAL COLREG V&V MATRIX
+
+SEXTANT PROTOCOL — MARITIME COLLISION-REGULATION RESEARCH EXTENSION
+
+STATUS
+
+Research / V&V only
+
+COLREG regulatory reference structure = established
+
+MARIN review status = proposed research extension
+
+Not final MARIN acceptance criteria
+
+Not a certification claim
+
+Not an autonomous navigation system
+
+Operational command = FALSE
+
+Physical vessel connection = NONE
+
+Human authority = FINAL
+
+---
+
+1. PURPOSE OF THE COLREG V&V MATRIX
+
+The purpose of this matrix is to establish a structured research framework for testing whether the Sextant Protocol resilience architecture can support human decision-making in collision-risk situations while maintaining traceability to the International Regulations for Preventing Collisions at Sea, 1972 (COLREG).
+
+The IMO identifies COLREG as containing:
+
+- Part A — General;
+- Part B — Steering and Sailing;
+- Part C — Lights and Shapes;
+- Part D — Sound and Light Signals;
+- Part E — Exemptions;
+- Part F — Verification of Compliance;
+
+with four technical Annexes.
+
+The V&V architecture therefore follows the regulatory structure rather than creating an unrelated classification system.
+
+The objective is:
+
+COLREG RULE
+
+↓
+
+SIMULATED MARITIME CONDITION
+
+↓
+
+OBSERVE
+
+↓
+
+VERIFY
+
+↓
+
+ASSESS
+
+↓
+
+DECIDE
+
+↓
+
+HUMAN AUTHORITY
+
+↓
+
+SIMULATED RESPONSE
+
+↓
+
+AUDIT
+
+---
+
+2. FUNDAMENTAL AI DECISION ARCHITECTURE
+
+Every COLREG research scenario uses the same AI hierarchy.
+
+PRIMARY AI
+
+The Primary AI receives the simulated observations.
+
+Its role is:
+
+- observe;
+- identify relevant information;
+- identify potential collision conditions;
+- identify applicable regulatory context;
+- prepare information for verification.
+
+The Primary AI does not command the vessel.
+
+---
+
+SECONDARY AI
+
+The Secondary AI independently checks the Primary AI interpretation.
+
+Its role includes:
+
+- verification;
+- contradiction detection;
+- consistency checking;
+- regulatory-rule cross-checking;
+- uncertainty identification;
+- anomaly detection.
+
+The Secondary AI does not command the vessel.
+
+---
+
+STABILIZER
+
+The Stabilizer checks the decision pathway for:
+
+- unstable classifications;
+- conflicting AI outputs;
+- insufficient evidence;
+- rapidly changing risk;
+- inappropriate escalation;
+- premature decision-making.
+
+The Stabilizer does not command the vessel.
+
+---
+
+CAPTAIN AI LENA
+
+Captain AI Lena receives the verified information and produces the final AI decision-support assessment.
+
+Captain AI Lena may identify:
+
+- applicable COLREG context;
+- collision-risk condition;
+- relative vessel situation;
+- recommended action;
+- need for additional observation;
+- need for escalation;
+- need for conservative simulated response.
+
+Captain AI Lena remains advisory.
+
+---
+
+3. HUMAN AUTHORITY PRINCIPLE
+
+The final decision remains with the human.
+
+Therefore:
+
+AI recommendation ≠ authorization
+
+AI assessment ≠ command
+
+AI prediction ≠ execution
+
+The human operator remains the final decision authority.
+
+---
+
+4. COLREG PART A — GENERAL
+
+RULES 1–3
+
+The IMO identifies Part A as Rules 1–3.
+
+---
+
+RULE 1 — APPLICATION
+
+V&V PURPOSE
+
+Test whether the system correctly identifies whether the simulated scenario falls within the applicable COLREG context.
+
+OBSERVE
+
+The simulator provides:
+
+- vessel type;
+- operating area;
+- simulated waters;
+- visibility;
+- traffic environment;
+- navigation circumstances.
+
+VERIFY
+
+Secondary AI checks:
+
+- applicability information;
+- vessel classification;
+- environmental circumstances;
+- scenario configuration.
+
+ASSESS
+
+Captain AI Lena determines the relevant COLREG context for the simulated situation.
+
+DECIDE
+
+The system identifies the applicable regulatory pathway.
+
+HUMAN AUTHORITY
+
+Human verifies the interpretation.
+
+SIMULATED RESPONSE
+
+Simulator records the selected regulatory context.
+
+AUDIT
+
+Record:
+
+- scenario;
+- Rule 1 applicability;
+- evidence;
+- verification;
+- assessment;
+- human decision;
+- final simulated state.
+
+---
+
+RULE 2 — RESPONSIBILITY
+
+V&V PURPOSE
+
+Ensure that the AI architecture does not reinterpret COLREG responsibility as autonomous AI authority.
+
+Rule 2 concerns responsibility for compliance with the rules.
+
+CORE RESEARCH PRINCIPLE
+
+The AI system supports the person responsible for navigation.
+
+It does not assume the legal responsibility of:
+
+- master;
+- officer of the watch;
+- navigator;
+- operator;
+- vessel owner;
+- other responsible human authority.
+
+V&V TEST
+
+The system should demonstrate:
+
+AI recommendation
+
+→
+
+Human review
+
+→
+
+Human decision
+
+not:
+
+AI recommendation
+
+→
+
+automatic command
+
+ACCEPTANCE PRINCIPLE
+
+A system that bypasses the human authority layer fails this architectural requirement.
+
+---
+
+RULE 3 — GENERAL DEFINITIONS
+
+V&V PURPOSE
+
+Test whether the system correctly interprets relevant COLREG terminology.
+
+Potential simulated classifications include:
+
+- vessel;
+- power-driven vessel;
+- sailing vessel;
+- fishing vessel;
+- vessel not under command;
+- vessel restricted in ability to manoeuvre;
+- vessel constrained by draught;
+- underway;
+- restricted visibility;
+- vessels in sight of one another;
+- relevant navigational conditions.
+
+OBSERVE
+
+The simulator establishes the vessel state.
+
+VERIFY
+
+Secondary AI independently verifies classification.
+
+ASSESS
+
+Captain AI Lena identifies the applicable vessel relationship.
+
+HUMAN AUTHORITY
+
+Human confirms the classification where required.
+
+AUDIT
+
+The exact classification used by the decision process must be retained.
+
+---
+
+5. PART B — STEERING AND SAILING
+
+RULES 4–19
+
+Part B is the principal collision-avoidance research section.
+
+The IMO divides it into:
+
+Section I — Rules 4–10
+
+and
+
+Section II — Rules 11–18
+
+and
+
+Section III — Rule 19.
+
+---
+
+SECTION I
+
+CONDUCT OF VESSELS IN ANY CONDITION OF VISIBILITY
+
+RULES 4–10
+
+---
+
+RULE 4 — APPLICATION
+
+V&V PURPOSE
+
+Confirm that Rules 4–10 are treated as applicable to the simulated visibility condition where appropriate.
+
+TEST
+
+Normal visibility.
+
+Reduced visibility.
+
+Changing visibility.
+
+Night/day transitions where relevant to the simulation.
+
+AUDIT
+
+Record:
+
+- visibility state;
+- applicable rules;
+- AI interpretation;
+- human confirmation;
+- final simulated state.
+
+---
+
+RULE 5 — LOOK-OUT
+
+The IMO identifies Rule 5 as requiring a proper look-out by sight, hearing and all appropriate available means in the prevailing circumstances and conditions.
+
+V&V PURPOSE
+
+Test whether the architecture recognises the requirement for adequate situational awareness.
+
+OBSERVE
+
+Simulated information may include:
+
+- visual target;
+- radar target;
+- AIS information;
+- bearing;
+- range;
+- relative motion;
+- sound information;
+- environmental conditions.
+
+VERIFY
+
+Secondary AI checks whether available evidence is sufficient.
+
+ASSESS
+
+Captain AI Lena determines whether the simulated lookout picture is adequate.
+
+DECIDE
+
+Possible recommendations:
+
+- maintain observation;
+- obtain further information;
+- increase monitoring;
+- assess collision risk;
+- escalate.
+
+HUMAN AUTHORITY
+
+Human decides the appropriate navigational response.
+
+SIMULATED RESPONSE
+
+Simulator models the selected response.
+
+AUDIT
+
+The evidence must show what information was available and whether the system identified information deficiencies.
+
+---
+
+RULE 6 — SAFE SPEED
+
+The IMO describes Rule 6 as requiring vessels to proceed at a safe speed and identifies factors relevant to determining safe speed.
+
+V&V PURPOSE
+
+Test whether the system can assess collision-risk conditions together with environmental and navigational factors.
+
+INPUTS
+
+Potential inputs:
+
+- visibility;
+- traffic density;
+- manoeuvrability;
+- stopping distance;
+- turning characteristics;
+- radar conditions;
+- background illumination;
+- sea/weather conditions;
+- hazards;
+- vessel characteristics.
+
+OBSERVE
+
+Primary AI observes the complete simulated condition.
+
+VERIFY
+
+Secondary AI checks the inputs.
+
+ASSESS
+
+Captain AI Lena assesses whether the simulated speed condition creates increased collision risk.
+
+DECIDE
+
+Possible recommendations:
+
+- maintain simulated speed;
+- reduce simulated speed;
+- increase monitoring;
+- request further information;
+- escalate.
+
+HUMAN AUTHORITY
+
+Final decision remains human.
+
+SIMULATED RESPONSE
+
+No real throttle, propulsion or navigation command is transmitted.
+
+---
+
+RULE 7 — RISK OF COLLISION
+
+V&V PURPOSE
+
+Test collision-risk identification.
+
+OBSERVE
+
+The system receives simulated:
+
+- bearing;
+- range;
+- bearing trend;
+- relative motion;
+- CPA/TCPA-type research parameters where used;
+- target movement;
+- environmental influence.
+
+VERIFY
+
+Secondary AI determines whether the collision-risk assessment is supported.
+
+ASSESS
+
+Captain AI Lena determines whether the simulated circumstances indicate risk of collision.
+
+DECIDE
+
+The AI provides decision support regarding the need for avoiding action.
+
+HUMAN AUTHORITY
+
+Human authority remains FINAL.
+
+SIMULATED RESPONSE
+
+The simulator records the human-selected avoiding-action pathway.
+
+AUDIT
+
+Must preserve:
+
+target data → verification → collision-risk assessment → recommendation → human decision → simulated result.
+
+---
+
+RULE 8 — ACTION TO AVOID COLLISION
+
+V&V PURPOSE
+
+Test whether proposed avoiding action is evaluated for clarity, effectiveness and timeliness.
+
+OBSERVE
+
+Inputs include:
+
+- relative movement;
+- available sea room;
+- vessel characteristics;
+- developing risk;
+- current course/speed;
+- target response.
+
+VERIFY
+
+Secondary AI checks the developing situation.
+
+ASSESS
+
+Captain AI Lena evaluates possible simulated avoiding-action alternatives.
+
+DECIDE
+
+The system provides a recommendation.
+
+HUMAN AUTHORITY
+
+The human selects the final simulated action.
+
+SIMULATED RESPONSE
+
+The simulator may model:
+
+- alteration of course;
+- speed change;
+- combination;
+- continued observation;
+- escalation.
+
+No physical manoeuvre occurs.
+
+AUDIT
+
+The system must show why the simulated recommendation was produced.
+
+---
+
+RULE 9 — NARROW CHANNELS
+
+V&V PURPOSE
+
+Test collision-risk assessment within restricted/narrow-channel conditions.
+
+OBSERVE
+
+Inputs:
+
+- channel geometry;
+- vessel position;
+- traffic;
+- vessel characteristics;
+- available manoeuvring room;
+- target movement.
+
+VERIFY
+
+Secondary AI confirms the simulated channel situation.
+
+ASSESS
+
+Captain AI Lena assesses the relationship between collision avoidance and channel constraints.
+
+DECIDE
+
+Recommendation is generated.
+
+HUMAN AUTHORITY
+
+Human remains final.
+
+SIMULATED RESPONSE
+
+The simulator models the selected response.
+
+AUDIT
+
+Record:
+
+- channel condition;
+- traffic;
+- risk;
+- recommendation;
+- human decision;
+- outcome.
+
+---
+
+RULE 10 — TRAFFIC SEPARATION SCHEMES
+
+The IMO specifically identifies Rule 10 as addressing conduct in or near traffic separation schemes and notes its relationship to safe speed, collision risk and vessel conduct.
+
+V&V PURPOSE
+
+Test the system's ability to recognise a simulated TSS environment.
+
+OBSERVE
+
+Inputs:
+
+- traffic lane;
+- separation zone;
+- crossing condition;
+- joining/leaving condition;
+- traffic direction;
+- target vessels.
+
+VERIFY
+
+Secondary AI validates the TSS context.
+
+ASSESS
+
+Captain AI Lena assesses the simulated navigational relationship.
+
+DECIDE
+
+Recommendation is generated.
+
+HUMAN AUTHORITY
+
+Human decides.
+
+SIMULATED RESPONSE
+
+The simulator models the selected navigational response.
+
+AUDIT
+
+TSS state and all relevant decision evidence are retained.
+
+---
+
+SECTION II
+
+CONDUCT OF VESSELS IN SIGHT OF ONE ANOTHER
+
+RULES 11–18
+
+---
+
+RULE 11 — APPLICATION
+
+V&V PURPOSE
+
+Confirm that the system recognises when vessels are in sight of one another for the purposes of the applicable Rule set.
+
+---
+
+RULE 12 — SAILING VESSELS
+
+V&V PURPOSE
+
+Test classification and interaction involving sailing vessels.
+
+OBSERVE
+
+- vessel type;
+- relative heading;
+- wind relationship;
+- target position.
+
+VERIFY
+
+Secondary AI validates vessel classification and situation.
+
+ASSESS
+
+Captain AI Lena identifies the applicable relationship.
+
+DECIDE
+
+Recommendation generated.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Simulator records the selected manoeuvre.
+
+AUDIT
+
+Full decision chain retained.
+
+---
+
+RULE 13 — OVERTAKING
+
+The IMO identifies Rule 13 as the overtaking rule, with the overtaking vessel required to keep out of the way of the vessel being overtaken.
+
+V&V PURPOSE
+
+Test whether the architecture correctly identifies an overtaking relationship.
+
+OBSERVE
+
+Inputs:
+
+- relative bearing;
+- relative course;
+- relative speed;
+- target geometry;
+- vessel characteristics.
+
+VERIFY
+
+Secondary AI checks the overtaking classification.
+
+ASSESS
+
+Captain AI Lena determines the applicable simulated responsibility.
+
+DECIDE
+
+Recommendation generated.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Simulator models the human-selected avoiding action.
+
+AUDIT
+
+Record target geometry and classification evidence.
+
+---
+
+RULE 14 — HEAD-ON SITUATION
+
+The IMO identifies Rule 14 as addressing head-on situations.
+
+V&V PURPOSE
+
+Test recognition of a simulated head-on situation.
+
+OBSERVE
+
+- relative heading;
+- relative bearing;
+- vessel type;
+- target movement.
+
+VERIFY
+
+Secondary AI validates the classification.
+
+ASSESS
+
+Captain AI Lena identifies the applicable Rule 14 pathway.
+
+DECIDE
+
+Decision-support recommendation generated.
+
+HUMAN AUTHORITY
+
+Human confirms the simulated response.
+
+SIMULATED RESPONSE
+
+The simulator models the selected action.
+
+AUDIT
+
+Record:
+
+OBSERVE → VERIFY → ASSESS → DECIDE → HUMAN AUTHORITY → SIMULATED RESPONSE → AUDIT
+
+---
+
+RULE 15 — CROSSING SITUATION
+
+The IMO identifies Rule 15 as covering crossing situations.
+
+V&V PURPOSE
+
+Test correct classification of a crossing situation and the associated responsibility.
+
+OBSERVE
+
+- relative bearing;
+- target movement;
+- vessel heading;
+- collision geometry.
+
+VERIFY
+
+Secondary AI confirms crossing classification.
+
+ASSESS
+
+Captain AI Lena determines the simulated give-way/stand-on relationship.
+
+DECIDE
+
+Recommendation generated.
+
+HUMAN AUTHORITY
+
+Human makes final decision.
+
+SIMULATED RESPONSE
+
+Simulator records the selected response.
+
+AUDIT
+
+Full classification evidence retained.
+
+---
+
+RULE 16 — ACTION BY GIVE-WAY VESSEL
+
+The IMO identifies Rule 16 as specifying action by the give-way vessel.
+
+V&V PURPOSE
+
+Test whether the system can identify the give-way responsibility and recommend appropriate simulated avoiding action.
+
+KEY TEST
+
+The architecture must not simply state:
+
+“Give way.”
+
+It must show:
+
+- why;
+- based on what evidence;
+- under what simulated geometry;
+- with what confidence;
+- what alternative actions were considered;
+- what the human authorized.
+
+---
+
+RULE 17 — ACTION BY STAND-ON VESSEL
+
+The IMO identifies Rule 17 as covering the action of the stand-on vessel, including circumstances where it may take action to avoid collision when it becomes apparent that the give-way vessel is not taking appropriate action.
+
+V&V PURPOSE
+
+This is a particularly important human-in-the-loop scenario.
+
+OBSERVE
+
+The system detects:
+
+- initial stand-on condition;
+- target behaviour;
+- developing collision risk;
+- lack of expected avoiding action.
+
+VERIFY
+
+Secondary AI verifies:
+
+- target movement;
+- persistence;
+- collision-risk trend;
+- whether the situation has materially changed.
+
+ASSESS
+
+Captain AI Lena reassesses the situation.
+
+DECIDE
+
+The system may recommend an appropriate simulated avoiding-action pathway.
+
+HUMAN AUTHORITY
+
+Human remains FINAL.
+
+SIMULATED RESPONSE
+
+The simulator models the human-authorized response.
+
+AUDIT
+
+The audit must show the transition:
+
+initial stand-on condition
+
+→
+
+target non-compliance/developing risk
+
+→
+
+reassessment
+
+→
+
+AI recommendation
+
+→
+
+human decision
+
+→
+
+simulated response
+
+---
+
+RULE 18 — RESPONSIBILITIES BETWEEN VESSELS
+
+The IMO describes Rule 18 as establishing responsibilities between vessels, including requirements concerning vessels that shall keep out of the way of others.
+
+V&V PURPOSE
+
+Test multi-vessel responsibility classification.
+
+OBSERVE
+
+- vessel types;
+- relative positions;
+- operational conditions;
+- manoeuvrability characteristics.
+
+VERIFY
+
+Secondary AI checks classification.
+
+ASSESS
+
+Captain AI Lena determines the applicable responsibility relationship.
+
+DECIDE
+
+Recommendation generated.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Simulator models the response.
+
+AUDIT
+
+Responsibility classification must be traceable.
+
+---
+
+SECTION III
+
+CONDUCT OF VESSELS IN RESTRICTED VISIBILITY
+
+RULE 19
+
+The IMO identifies Rule 19 as addressing conduct of vessels in restricted visibility, including safe speed and collision-risk assessment when another vessel is detected by radar.
+
+---
+
+RULE 19 — RESTRICTED VISIBILITY
+
+V&V PURPOSE
+
+Test the most demanding collision-assessment environment in Part B.
+
+OBSERVE
+
+Simulated inputs:
+
+- visibility;
+- radar target;
+- range;
+- bearing;
+- relative movement;
+- sound signal;
+- traffic density;
+- vessel speed;
+- environmental conditions.
+
+VERIFY
+
+Secondary AI checks whether the evidence supports the collision-risk assessment.
+
+ASSESS
+
+Captain AI Lena assesses:
+
+- collision risk;
+- uncertainty;
+- safe-speed considerations;
+- available information;
+- need for avoiding action.
+
+DECIDE
+
+Recommendation generated.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Simulator records:
+
+- speed reduction;
+- course alteration;
+- increased monitoring;
+- other simulated response;
+- escalation.
+
+AUDIT
+
+The entire restricted-visibility decision chain must be preserved.
+
+---
+
+6. PART C — LIGHTS AND SHAPES
+
+RULES 20–31
+
+The IMO identifies Rules 20–31 as the COLREG Lights and Shapes section.
+
+These rules should be represented in the V&V system primarily as a recognition and classification layer.
+
+---
+
+RULE 20 — APPLICATION
+
+Test simulated applicability of lights requirements.
+
+---
+
+RULE 21 — DEFINITIONS
+
+Test recognition of:
+
+- masthead light;
+- sidelights;
+- sternlight;
+- towing light;
+- all-round light;
+- flashing light.
+
+---
+
+RULE 22 — VISIBILITY OF LIGHTS
+
+Test whether the system recognises simulated visibility-range information.
+
+---
+
+RULE 23 — POWER-DRIVEN VESSELS UNDERWAY
+
+Test recognition of simulated power-driven vessel lights.
+
+---
+
+RULE 24 — TOWING AND PUSHING
+
+Test recognition of towing/pushing configurations and associated simulated light patterns.
+
+---
+
+RULE 25 — SAILING VESSELS / VESSELS UNDER OARS
+
+Test simulated classification.
+
+---
+
+RULE 26 — FISHING VESSELS
+
+Test simulated recognition and classification.
+
+---
+
+RULE 27 — VESSELS NOT UNDER COMMAND / RESTRICTED IN ABILITY TO MANOEUVRE
+
+Test recognition of special vessel status.
+
+This is particularly important for resilience research because vessel status can materially alter the collision-risk interpretation.
+
+---
+
+RULE 28 — VESSELS CONSTRAINED BY THEIR DRAUGHT
+
+Test simulated recognition of the relevant vessel condition.
+
+---
+
+RULE 29 — PILOT VESSELS
+
+Test recognition of pilot-vessel status.
+
+---
+
+RULE 30 — ANCHORED VESSELS AND VESSELS AGROUND
+
+Test recognition of:
+
+- anchored state;
+- aground state;
+- associated simulated lights/shapes.
+
+---
+
+RULE 31 — SEAPLANES
+
+Test recognition of relevant seaplane/WIG-related simulated conditions where included in the research envelope.
+
+---
+
+PART C COMMON V&V FLOW
+
+For Rules 20–31:
+
+OBSERVE
+
+→ simulated lights/shapes
+
+VERIFY
+
+→ classification check
+
+ASSESS
+
+→ vessel-state interpretation
+
+DECIDE
+
+→ relevant COLREG pathway
+
+HUMAN AUTHORITY
+
+→ human confirms final interpretation
+
+SIMULATED RESPONSE
+
+→ research-only response
+
+AUDIT
+
+→ classification and evidence retained
+
+---
+
+7. PART D — SOUND AND LIGHT SIGNALS
+
+RULES 32–37
+
+The IMO identifies Rules 32–37 as the Sound and Light Signals section.
+
+---
+
+RULE 32 — DEFINITIONS
+
+Test interpretation of:
+
+- whistle;
+- short blast;
+- prolonged blast.
+
+---
+
+RULE 33 — EQUIPMENT FOR SOUND SIGNALS
+
+Test simulated recognition of vessel requirements relating to sound-signalling equipment.
+
+---
+
+RULE 34 — MANOEUVRING AND WARNING SIGNALS
+
+Test recognition of simulated:
+
+- manoeuvring signals;
+- warning signals;
+- whistle signals;
+- associated light signals.
+
+---
+
+RULE 35 — SOUND SIGNALS IN RESTRICTED VISIBILITY
+
+Test simulated fog-signal interpretation.
+
+This scenario should connect with Rule 19 restricted-visibility assessment.
+
+---
+
+RULE 36 — SIGNALS TO ATTRACT ATTENTION
+
+Test recognition of attention signals.
+
+---
+
+RULE 37 — DISTRESS SIGNALS
+
+Test recognition of simulated distress signalling.
+
+This should remain clearly separated from collision-avoidance classification where appropriate.
+
+---
+
+PART D COMMON V&V FLOW
+
+OBSERVE
+
+Signal received.
+
+↓
+
+VERIFY
+
+Signal interpretation checked.
+
+↓
+
+ASSESS
+
+Navigational meaning assessed.
+
+↓
+
+DECIDE
+
+Recommended interpretation/action.
+
+↓
+
+HUMAN AUTHORITY
+
+Human final.
+
+↓
+
+SIMULATED RESPONSE
+
+Research simulation only.
+
+↓
+
+AUDIT
+
+Signal, interpretation and decision retained.
+
+---
+
+8. PART E — EXEMPTIONS
+
+RULE 38
+
+The IMO identifies Rule 38 as the Exemptions provision.
+
+V&V PURPOSE
+
+Test whether the architecture can identify an exemption condition without automatically treating the exemption as a general relaxation of COLREG requirements.
+
+PRINCIPLE
+
+An exemption must be:
+
+- explicitly identified;
+- properly classified;
+- traceable;
+- subject to appropriate authority.
+
+HUMAN AUTHORITY
+
+Final determination remains with the appropriate human/regulatory authority.
+
+The AI must not independently create an exemption.
+
+---
+
+9. PART F — VERIFICATION OF COMPLIANCE
+
+RULES 39–41
+
+The IMO identifies Part F as the Verification of Compliance section and notes that Rules 39–41 were added to support verification under the IMO Member State Audit Scheme.
+
+This section is particularly relevant to the audit philosophy of the Sextant Protocol research architecture.
+
+---
+
+RULE 39 — DEFINITIONS
+
+Test interpretation of Part F terminology.
+
+---
+
+RULE 40 — APPLICATION
+
+Test whether the simulated compliance-verification pathway is correctly identified.
+
+---
+
+RULE 41 — VERIFICATION OF COMPLIANCE
+
+V&V PURPOSE
+
+Demonstrate that the system can provide evidence supporting review rather than merely producing an answer.
+
+REQUIRED OUTPUT
+
+The system should be capable of showing:
+
+- scenario;
+- applicable rule;
+- observation;
+- verification;
+- assessment;
+- decision;
+- human authority;
+- simulated response;
+- audit evidence.
+
+The research architecture therefore treats compliance as an evidence chain, not merely a numerical score.
+
+---
+
+10. COLREG ANNEXES
+
+The IMO identifies four COLREG Annexes concerning technical requirements for lights/shapes, sound-signalling appliances, additional fishing-vessel signals and distress signals.
+
+---
+
+ANNEX I
+
+POSITIONING AND TECHNICAL DETAILS OF LIGHTS AND SHAPES
+
+V&V ROLE
+
+Technical reference layer.
+
+TEST
+
+Verify simulated light/shape positioning information where included.
+
+OUTPUT
+
+Classification evidence.
+
+---
+
+ANNEX II
+
+ADDITIONAL SIGNALS FOR FISHING VESSELS
+
+V&V ROLE
+
+Test additional fishing-vessel signal recognition.
+
+---
+
+ANNEX III
+
+TECHNICAL DETAILS OF SOUND-SIGNAL APPLIANCES
+
+V&V ROLE
+
+Test simulated sound-signal characteristics and classification.
+
+---
+
+ANNEX IV
+
+DISTRESS SIGNALS
+
+V&V ROLE
+
+Test recognition of simulated distress indicators.
+
+---
+
+11. COLLISION SCENARIO BUILD-UP MATRIX
+
+The regulatory rules are not treated as isolated events.
+
+The research build-up should progress from:
+
+LEVEL 1 — BASIC OBSERVATION
+
+Single target.
+
+Single vessel.
+
+Clear visibility.
+
+Stable course/speed.
+
+---
+
+LEVEL 2 — TARGET CLASSIFICATION
+
+Identify:
+
+- vessel type;
+- vessel status;
+- relative movement.
+
+---
+
+LEVEL 3 — COLLISION-RISK ASSESSMENT
+
+Add:
+
+- bearing;
+- range;
+- trend;
+- CPA/TCPA research indicators;
+- speed;
+- course.
+
+---
+
+LEVEL 4 — REGULATORY CLASSIFICATION
+
+Determine:
+
+- overtaking;
+- head-on;
+- crossing;
+- stand-on;
+- give-way;
+- restricted visibility;
+- special vessel status.
+
+---
+
+LEVEL 5 — MULTI-TARGET CONDITION
+
+Introduce:
+
+- multiple vessels;
+- crossing traffic;
+- conflicting targets;
+- changing target behaviour.
+
+---
+
+LEVEL 6 — ENVIRONMENTAL DEGRADATION
+
+Introduce:
+
+- wind;
+- current;
+- waves;
+- visibility degradation;
+- restricted manoeuvring room.
+
+---
+
+LEVEL 7 — INFORMATION DEGRADATION
+
+Introduce:
+
+- missing data;
+- conflicting sensor information;
+- delayed information;
+- uncertain classification.
+
+---
+
+LEVEL 8 — RAPIDLY DEVELOPING COLLISION RISK
+
+Introduce:
+
+- rapidly changing bearing;
+- target acceleration;
+- unexpected manoeuvre;
+- late risk recognition.
+
+---
+
+LEVEL 9 — HUMAN DECISION POINT
+
+AI produces recommendation.
+
+Human must decide.
+
+No automatic execution.
+
+---
+
+LEVEL 10 — SIMULATED CONSEQUENCE
+
+Simulator models:
+
+- successful avoidance;
+- delayed action;
+- insufficient action;
+- collision-risk escalation;
+- safe-state recovery;
+- escalation.
+
+---
+
+LEVEL 11 — AUDIT
+
+Entire event reconstructed.
+
+---
+
+12. FINAL COLLISION-REGULATION DECISION CHAIN
+
+Every collision scenario must use:
+
+OBSERVE
+
+What is happening?
+
+↓
+
+VERIFY
+
+Is the information reliable?
+
+↓
+
+ASSESS
+
+What COLREG situation exists?
+
+↓
+
+DECIDE
+
+What does Captain AI Lena recommend?
+
+↓
+
+HUMAN AUTHORITY
+
+What does the human decide?
+
+↓
+
+SIMULATED RESPONSE
+
+What would occur in the research model?
+
+↓
+
+AUDIT
+
+Can the entire event be reconstructed?
+
+---
+
+13. COLLISION-RISK STATE MODEL
+
+The research cockpit should distinguish:
+
+STATE 1 — NO IDENTIFIED COLLISION RISK
+
+Situation observed.
+
+No significant collision-risk condition identified.
+
+---
+
+STATE 2 — POTENTIAL RISK
+
+Evidence suggests developing risk.
+
+Additional verification may be required.
+
+---
+
+STATE 3 — IDENTIFIED RISK
+
+Collision risk is sufficiently supported by the simulated evidence.
+
+Decision-support recommendation required.
+
+---
+
+STATE 4 — DEVELOPING / ESCALATING RISK
+
+The situation is changing adversely.
+
+Reassessment is required.
+
+---
+
+STATE 5 — CRITICAL COLLISION-AVOIDANCE CONDITION
+
+Immediate human decision-support priority.
+
+The simulator may model urgent avoiding-action options.
+
+---
+
+STATE 6 — RESOLVED
+
+Collision risk reduced/resolved in the simulation.
+
+---
+
+STATE 7 — AUDIT CLOSED
+
+Complete evidence preserved.
+
+---
+
+14. CRITICAL HUMAN-AUTHORITY TEST
+
+A collision scenario is not a full PASS merely because the AI correctly identifies:
+
+“Rule 15 crossing situation.”
+
+The V&V test must additionally establish:
+
+1. Was the target correctly observed?
+2. Was the target classification verified?
+3. Was the Rule 15 relationship correctly assessed?
+4. Did Captain AI Lena provide a traceable recommendation?
+5. Was the human authority gate preserved?
+6. Did the simulator only respond after the simulated human decision?
+7. Was the entire sequence audited?
+
+---
+
+15. AI FAILURE TEST
+
+The matrix must deliberately test AI disagreement.
+
+Example:
+
+Primary AI: CROSSING
+
+Secondary AI: POSSIBLE CROSSING / INSUFFICIENT EVIDENCE
+
+Stabilizer: HOLD / REQUEST VERIFICATION
+
+Captain AI Lena: REQUEST_DIAGNOSTICS
+
+Human: FINAL DECISION
+
+This is an important V&V result.
+
+The system should not be rewarded merely for producing a confident answer.
+
+It should demonstrate safe uncertainty handling.
+
+---
+
+16. MULTI-VESSEL COLLISION TEST
+
+A higher-level research scenario should include:
+
+- own vessel;
+- target A;
+- target B;
+- target C;
+- different courses;
+- different speeds;
+- changing relative bearings;
+- potentially different COLREG relationships.
+
+The test evaluates whether the system can maintain separate target identities and relationships.
+
+The AI must not collapse all targets into a single generic collision-risk number without preserving the underlying evidence.
+
+---
+
+17. REGULATORY TRACEABILITY MATRIX
+
+For each scenario the V&V record should contain:
+
+Field| Required Evidence
+Scenario ID| Unique identifier
+COLREG Part| A–F
+COLREG Rule| Applicable Rule
+Annex| Where applicable
+Vessel condition| Simulated state
+Visibility| Simulated condition
+Target information| Bearing/range/movement
+Primary AI| Observation
+Secondary AI| Verification
+Stabilizer| Conflict/uncertainty control
+Captain AI Lena| Assessment/recommendation
+Human authority| Final decision
+Simulated response| Result
+Final state| Outcome
+Audit| Complete record
+V&V result| PASS / FAIL / REVIEW
+
+---
+
+18. PASS / FAIL PRINCIPLES
+
+PASS
+
+A scenario passes only when:
+
+- applicable COLREG context is correctly identified;
+- relevant evidence is observed;
+- evidence is verified;
+- collision situation is correctly assessed;
+- AI recommendation is traceable;
+- human authority remains final;
+- no physical command is issued;
+- simulated response is correctly recorded;
+- audit is complete.
+
+---
+
+FAIL
+
+A scenario fails if:
+
+- wrong Rule is identified;
+- important evidence is ignored;
+- conflicting evidence is concealed;
+- collision risk is incorrectly classified;
+- recommendation is not traceable;
+- human authority is bypassed;
+- physical control is attempted;
+- simulation acts without human authorization;
+- audit evidence is incomplete.
+
+---
+
+19. CRITICAL FAILURE
+
+The following should be treated as a critical architectural V&V failure:
+
+AI BYPASSES HUMAN AUTHORITY
+
+If the system:
+
+- automatically changes course;
+- automatically changes speed;
+- automatically commands DP;
+- automatically commands a USV;
+- automatically controls propulsion;
+- automatically executes a collision-avoidance manoeuvre;
+
+then the system has violated the defined research architecture.
+
+Required condition remains:
+
+HUMAN AUTHORITY = FINAL
+
+---
+
+20. REASSESSMENT PRINCIPLE
+
+Collision situations are dynamic.
+
+Therefore the V&V system must not assume that an earlier assessment remains valid indefinitely.
+
+Example:
+
+Rule 15 crossing
+
+↓
+
+target changes course
+
+↓
+
+relative bearing changes
+
+↓
+
+risk changes
+
+↓
+
+new verification
+
+↓
+
+new assessment
+
+↓
+
+new Captain AI Lena recommendation
+
+↓
+
+new human decision
+
+This demonstrates dynamic resilience rather than one-time classification.
+
+---
+
+21. AUDIT REQUIREMENT FOR EVERY COLREG TEST
+
+The final audit must answer:
+
+WHAT DID WE SEE?
+
+OBSERVE.
+
+WAS IT TRUSTWORTHY?
+
+VERIFY.
+
+WHAT COLREG SITUATION WAS PRESENT?
+
+ASSESS.
+
+WHAT DID CAPTAIN AI LENA RECOMMEND?
+
+DECIDE.
+
+WHO HAD FINAL AUTHORITY?
+
+HUMAN.
+
+WHAT DID THE SIMULATOR MODEL?
+
+SIMULATED RESPONSE.
+
+CAN THE EVENT BE RECONSTRUCTED?
+
+AUDIT.
+
+---
+
+22. FINAL COLREG V&V PRINCIPLE
+
+The Sextant Protocol research architecture does not attempt to replace COLREG.
+
+It tests whether AI decision-support can be structured around the established collision-regulation framework while preserving:
+
+regulatory traceability
+
+human responsibility
+
+human authority
+
+decision transparency
+
+simulation-only operation
+
+auditability
+
+and
+
+repeatability.
+
+The regulatory framework remains the reference.
+
+The AI is the decision-support layer.
+
+The human remains the final authority.
+
+---
+
+23. FINAL STATUS FOR MARIN REVIEW
+
+This COLREG matrix is therefore designated:
+
+PROPOSED MARIN RESEARCH / V&V EXTENSION
+
+It is intended to support discussion of:
+
+- research scenarios;
+- simulator development;
+- collision-risk testing;
+- AI decision-support evaluation;
+- human-in-the-loop testing;
+- auditability;
+- resilience assessment;
+- future testbed integration.
+
+It is not proposed as final MARIN acceptance criteria at this stage.
+
+MARIN may subsequently determine:
+
+- which Rules should be tested;
+- which scenarios are relevant;
+- what simulator fidelity is required;
+- what evidence is acceptable;
+- what KPIs should apply;
+- what pass/fail thresholds should be used;
+- what human factors requirements should be included;
+- whether additional maritime standards or operational procedures must be incorporated.
+
+---
+
+24. FINAL ARCHITECTURE — LOCKED FOR THIS RESEARCH MATRIX
+
+COLREG RULE / SCENARIO
+
+↓
+
+OBSERVE
+
+↓
+
+VERIFY
+
+↓
+
+ASSESS
+
+↓
+
+DECIDE — CAPTAIN AI LENA
+
+↓
+
+HUMAN AUTHORITY — FINAL
+
+↓
+
+SIMULATED RESPONSE
+
+↓
+
+AUDIT
+
+with:
+
+Primary AI
+
+→ Secondary AI
+
+→ Stabilizer
+
+→ Captain AI Lena
+
+→ Human Authority
+
+and permanent research constraints:
+
+OPERATIONAL COMMAND = FALSE
+
+PHYSICAL VESSEL CONNECTION = NONE
+
+RESEARCH / V&V ONLY
+
+MARIN REVIEW = PROPOSED RESEARCH EXTENSION
+
+NOT FINAL MARIN ACCEPTANCE CRITERIA
+
+---
+
+FINAL MATRIX STATUS
+
+The COLREG structure is now established as the regulatory backbone for the collision-regulation component.
+
+The next stage, if required, is not to rewrite the framework.
+
+It is to populate selected Rules with detailed executable V&V scenarios and measurable KPIs.
+
+The final research logic remains:
+
+RULE → SCENARIO → INPUT → OBSERVE → VERIFY → ASSESS → DECIDE → HUMAN AUTHORITY → SIMULATED RESPONSE → AUDIT → V&V RESULT
+
+This provides the clean regulatory-to-simulation traceability required for the MARIN research discussion.
+
 ---
 
 FINAL AUDIT GATE
