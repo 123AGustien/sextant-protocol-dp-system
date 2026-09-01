@@ -3906,9 +3906,664 @@ NEXT PART — VV-055 onward:
 - V&V audit format
 - Final human-authority principle
 - Final MARIN engineering-review boundary
+SEXTANT PROTOCOL™
+
+MARIN DP / USV RESILIENCE V&V RESEARCH
+
+PROPOSED SPECIAL OFFSHORE OPERATIONS — MD REVIEW VERSION
+
+VV-041 — ESCAPE ROUTE / PRE-PLANNED CONTINGENCY
+
+INPUT
+
+- Current vessel position
+- Intended route
+- Safe-water locations
+- Anchorage options
+- Shelter options
+- Port status
+- Weather forecast / current condition
+- Time available before deterioration
+- Vessel capability
+- Alternative route
+- Navigation / position confidence
+
+ASSESS
+
+- Primary escape route
+- Secondary escape route
+- Safe-water option
+- Shelter option
+- Time available
+- Route deterioration
+- Contingency readiness
+- Navigation confidence
+- Environmental deterioration
+
+EXPECTED DECISION
+
+CONTINUE / PREPARE / ALTER ROUTE / PROCEED TO SAFE WATER / SHELTER / ESCALATE
+
+PASS CRITERIA
+
+1. A contingency option is identified before the primary operating condition becomes unsafe.
+2. Primary and secondary options are traceable.
+3. Environmental deterioration is incorporated into the assessment.
+4. Human authority remains FINAL.
+5. No autonomous navigation command is generated.
+
+---
+
+VV-042 — INTEGRATED CONTINGENCY CASCADE
+
+INPUT
+
+Any combination of:
+
+- Environmental deterioration
+- Wind gust / squall
+- Heavy swell
+- Heel / list
+- UKC deterioration
+- Position degradation
+- DP degradation
+- Machinery failure
+- Fire
+- Deck movement
+- Anchor dragging
+- Loss of propulsion
+- Towing requirement
+- Port closure
+- Navigation hazard
+- Security threat
+- Vessel capability
+- Human operator availability
+
+ASSESSMENT CHAIN
+
+OBSERVE → VERIFY → ASSESS → PRIMARY AI → SECONDARY AI → STABILIZER → RECOMMENDATION → CAPTAIN AI LENA → HUMAN AUTHORITY → SIMULATED RESPONSE → AUDIT → UPDATE
+
+ASSESS
+
+- Multiple simultaneous conditions
+- Critical-condition priority
+- Position confidence
+- Environmental stress
+- Equipment condition
+- Operational margin
+- Contingency options
+- Safe-state condition
+- Primary AI assessment
+- Secondary AI verification
+- Stabilizer arbitration
+- Captain AI Lena recommendation
+- Human-authority status
+
+EXPECTED DECISION
+
+DYNAMIC RESILIENCE ASSESSMENT / SAFE STATE / ESCALATION / HUMAN REVIEW
+
+PASS CRITERIA
+
+1. Multiple simultaneous conditions are detected.
+2. Critical conditions are not hidden by lower-priority conditions.
+3. Secondary AI can identify safety-critical degradation.
+4. Stabilizer provides deterministic arbitration.
+5. Captain AI Lena provides decision support.
+6. Human authority remains FINAL.
+7. No autonomous operational command is generated.
+8. Simulated responses remain inside the research environment.
+9. Relevant KPIs are recorded.
+10. The complete decision chain is auditable.
+
+---
+
+VV-043 — TRAFFIC SEPARATION SCHEME / SINGAPORE STRAIT
+
+INPUT
+
+- Vessel position
+- Traffic Separation Scheme status
+- General direction of traffic flow
+- Vessel heading
+- Course over ground
+- Speed over ground
+- Traffic density
+- Joining / leaving / crossing / following condition
+- Nearby vessels
+- Relative bearing
+- CPA
+- TCPA
+- Navigational constraints
+- Port / terminal departure or arrival condition
+- Local VTS / navigation requirements where applicable
+
+ASSESS
+
+- Traffic-lane status
+- General direction of traffic flow
+- Vessel relationship to the traffic lane
+- Joining condition
+- Leaving condition
+- Crossing condition
+- Following condition
+- Relative traffic movement
+- CPA / TCPA
+- Collision risk
+- Available sea room
+- Safe speed
+- Applicable COLREG / TSS considerations
+- Local port / VTS restrictions
+- Human-authority requirement
+
+SINGAPORE STRAIT RESEARCH CONDITION
+
+A vessel departing a port or terminal, including the Tanjong Pagar area, shall be assessed against the applicable TSS, COLREG and local navigation requirements before entering or crossing a traffic lane.
+
+The simulator shall not assume that a vessel departing port automatically has priority merely because it intends to proceed in the general direction of traffic flow.
+
+A vessel already established in a traffic lane shall be treated as existing traffic requiring appropriate collision-risk assessment.
+
+OPPOSITE / BATAM-SIDE TRAFFIC CONDITION
+
+For vessels following the general direction of an established traffic lane, the simulator shall assess:
+
+- Course
+- Speed
+- Relative bearing
+- CPA
+- TCPA
+- Applicable COLREG obligations
+- Applicable TSS requirements
+- Vessel status
+- Collision-risk condition
+
+The simulator shall not implement a blanket rule that a vessel always has priority over every vessel on its starboard side.
+
+CROSSING A TRAFFIC LANE
+
+The simulator shall distinguish between:
+
+- Following a traffic lane
+- Joining a traffic lane
+- Leaving a traffic lane
+- Crossing a traffic lane
+
+Crossing shall be treated as a separate manoeuvre requiring assessment of the applicable TSS and COLREG requirements.
+
+EXPECTED DECISION
+
+SAFE / CAUTION / ALTER MANOEUVRE / REDUCE SPEED / WAIT / ESCALATE FOR HUMAN REVIEW
+
+PASS CRITERIA
+
+1. Traffic-lane status is correctly identified.
+2. Vessel course and speed are recorded.
+3. Joining, leaving, crossing and following are distinguished.
+4. Collision risk is assessed using the simulated traffic situation.
+5. Applicable COLREG / TSS considerations are identified.
+6. No blanket right-of-way assumption is made.
+7. Human authority remains FINAL.
+8. No autonomous navigational command is generated.
+
+SIMULATED RESPONSE
+
+Decision-support recommendation only.
+
+OPERATIONAL CONNECTION
+
+NONE
+
+---
+
+VV-044 — TSS / PORT DEPARTURE CONFLICT
+
+SCENARIO
+
+Vessel departing port approaches a traffic separation scheme while another vessel is already established in the traffic lane.
+
+INPUT
+
+- Departure track
+- Traffic-flow direction
+- Vessel heading
+- Vessel speed
+- Relative bearing
+- CPA
+- TCPA
+- Available sea room
+- Traffic density
+- Local traffic restrictions
+- TSS geometry
+- Vessel status
+
+ASSESS
+
+- Departure track
+- Traffic-flow direction
+- Existing traffic
+- Relative movement
+- Collision risk
+- Available manoeuvring space
+- TSS compliance
+- Local restrictions
+- Safe-speed condition
+
+EXPECTED RESPONSE
+
+IDENTIFY POTENTIAL CONFLICT → PROVIDE HUMAN-REVIEW RECOMMENDATION → AWAIT HUMAN AUTHORITY
+
+PASS CRITERIA
+
+1. Established traffic is recognised.
+2. Port-departure status is recorded.
+3. TSS geometry is considered.
+4. Collision risk is assessed.
+5. No automatic priority rule is applied.
+6. Human authority remains FINAL.
+7. No autonomous manoeuvre is generated.
+
+---
+
+VV-045 — ALTERNATIVE ROUTE / HAZARD AVOIDANCE
+
+SCENARIO
+
+Piracy warning, sea-mine warning, navigational hazard or other route restriction.
+
+INPUT
+
+- Vessel position
+- Original route
+- Hazard position
+- Hazard type
+- Hazard proximity
+- Alternative route
+- Safe-water option
+- TSS implications
+- Traffic density
+- Weather
+- Port / coastal restrictions
+- Navigation confidence
+- Human-authority status
+
+ASSESS
+
+- Original route risk
+- Hazard proximity
+- Alternative-route availability
+- Safe-water availability
+- TSS implications
+- Traffic implications
+- Environmental conditions
+- Route deterioration
+- Human decision requirement
+
+EXPECTED DECISION
+
+MAINTAIN ROUTE / ALTER ROUTE / HOLD POSITION / ESCALATE
+
+PASS CRITERIA
+
+1. Hazard is identified.
+2. Original route is assessed.
+3. Alternative route is evaluated.
+4. Relevant restrictions are considered.
+5. Human authorization is required before any simulated route change.
+6. No autonomous navigation command is generated.
+
+---
+
+VV-046 — INLAND WATERWAY / LOCAL RULES
+
+SCENARIO
+
+Proposed transit through an inland waterway, restricted channel or port approach.
+
+INPUT
+
+- Vessel position
+- Vessel dimensions
+- Vessel length
+- Vessel beam
+- Draft
+- Trim
+- UKC
+- Charted depth
+- Tide
+- Channel restrictions
+- Local navigation rules
+- TSS / traffic restrictions
+- Bridge / overhead clearance where applicable
+- Vessel capabilities
+- Pilotage requirements
+- Required clearance / authorization
+- Human-authority status
+
+ASSESS
+
+- Vessel suitability
+- Vessel dimensions
+- Draft
+- UKC
+- Channel clearance
+- Overhead clearance
+- Local navigation requirements
+- TSS / traffic restrictions
+- Pilotage requirement
+- Required authorization
+- Human decision requirement
+
+EXPECTED DECISION
+
+PROCEED / RESTRICTED / ALTERNATIVE ROUTE / ESCALATE
+
+PASS CRITERIA
+
+1. Vessel suitability is assessed.
+2. Draft and UKC are traceable.
+3. Applicable channel restrictions are identified.
+4. Local rules are considered.
+5. Required authorization is identified.
+6. Pilotage requirements are considered where applicable.
+7. The simulator does not assume access without applicable requirements being satisfied.
+8. Human authority remains FINAL.
+
+---
+
+VV-047 — SOUND SIGNALS / FISHING VESSEL ALERT
+
+SCENARIO
+
+Own vessel operates in an area containing fishing vessels, small craft or vessels with restricted manoeuvrability.
+
+INPUT
+
+- Own-vessel status
+- Other-vessel status
+- Fishing-vessel status
+- Restricted-manoeuvrability status
+- Relative bearing
+- Range
+- Course
+- Speed
+- CPA
+- TCPA
+- Visibility
+- Traffic density
+- Navigation lights
+- Sound-signal capability
+- Radar / ARPA information where available
+- AIS information where available
+- Applicable COLREG / local requirements
+
+ASSESS
+
+- Other-vessel status
+- Fishing activity
+- Manoeuvrability condition
+- Collision risk
+- Relative movement
+- CPA / TCPA
+- Visibility
+- Sound-signal consideration
+- Additional lookout requirement
+- Responsibilities of both vessels
+- Applicable COLREG requirements
+- Local navigation requirements
+
+EXPECTED DECISION
+
+MONITOR / SOUND SIGNAL / ALTER COURSE / REDUCE SPEED / STOP / ESCALATE FOR HUMAN REVIEW
+
+PASS CRITERIA
+
+1. Vessel status is correctly identified.
+2. Responsibilities between vessels are assessed.
+3. Sound-signal requirements are considered.
+4. Visibility is considered.
+5. Collision risk is considered.
+6. Human authority remains FINAL.
+7. No automatic navigational command is generated.
+
+---
+
+VV-048 — RESPONSIBILITIES BETWEEN VESSELS
+
+SCENARIO
+
+Two or more vessels are in a developing close-quarters or collision-risk situation.
+
+INPUT
+
+- Own-vessel status
+- Other-vessel status
+- Number of vessels
+- Relative bearing
+- Range
+- Course
+- Speed
+- CPA
+- TCPA
+- Available sea room
+- Visibility
+- Navigation constraints
+- Fishing status
+- Restricted-manoeuvrability status
+- Constrained-by-draft condition where applicable
+- Towing condition where applicable
+- Applicable COLREG rules
+- Applicable local navigation requirements
+
+ASSESS
+
+- Own-vessel status
+- Other-vessel status
+- Give-way / stand-on obligations where applicable
+- Special vessel conditions
+- Relative bearing
+- CPA / TCPA
+- Speed
+- Available sea room
+- Visibility
+- Collision risk
+- Applicable COLREG requirements
+- Local navigation requirements
+
+V&V REQUIREMENT
+
+The simulator shall not determine responsibility from a single factor such as vessel position alone.
+
+It shall assess the complete navigational situation and identify the applicable rules and responsibilities before producing a recommendation.
+
+EXPECTED DECISION
+
+MAINTAIN SAFE COURSE / ALTER COURSE / REDUCE SPEED / STOP / ESCALATE
+
+PASS CRITERIA
+
+1. Relevant vessel statuses are identified.
+2. Applicable responsibilities are identified.
+3. Collision risk is assessed.
+4. CPA / TCPA are traceable.
+5. Applicable COLREG / local requirements are considered.
+6. The complete decision-support trace is retained.
+7. Human authority remains FINAL.
+8. No autonomous navigational command is generated.
+
+---
+
+VV-049 — RESTRICTED VISIBILITY
+
+SCENARIO
+
+Fog, heavy rain, haze, smoke, darkness or another condition materially reducing visibility.
+
+INPUT
+
+- Visibility condition
+- Estimated visibility range
+- Day / night condition
+- Radar availability
+- ARPA availability
+- AIS availability
+- GNSS / position status
+- Navigation lights
+- Sound-signalling capability
+- Traffic density
+- Vessel speed
+- Relative contacts
+- Relative bearing
+- Range
+- CPA
+- TCPA
+
+ASSESS
+
+- Restricted-visibility condition
+- Safe-speed condition
+- Radar availability
+- ARPA availability
+- AIS availability
+- Other available detection means
+- Collision risk
+- Enhanced lookout requirement
+- Sound-signal consideration
+- CPA / TCPA
+- Navigation-information reliability
+- Position confidence
+
+EXPECTED DECISION
+
+REDUCE SPEED / ENHANCE LOOKOUT / SOUND SIGNAL / ALTER MANOEUVRE / STOP / ESCALATE
+
+PASS CRITERIA
+
+1. Restricted visibility is correctly detected.
+2. Increased caution is demonstrated.
+3. Safe speed is assessed.
+4. Radar and available detection means are considered.
+5. Collision risk is assessed.
+6. Sound-signal requirements are considered.
+7. Decision-support chain is recorded.
+8. Human authority remains FINAL.
+9. No autonomous navigation command is generated.
+
+---
+
+VV-050 — VESSEL APPROACHING A BEND / BLIND AREA
+
+SCENARIO
+
+Vessel approaches a bend, river turn, restricted channel, narrow passage or other location where another vessel may be obscured from direct visual observation.
+
+CONDITIONS
+
+A. GOOD / CLEAR VISIBILITY
+
+B. RESTRICTED VISIBILITY
+
+INPUT
+
+- Vessel position
+- Vessel heading
+- Course
+- Speed
+- Channel geometry
+- Bend / blind sector
+- Available sea room
+- Possible opposing traffic
+- Visibility
+- Radar information
+- ARPA information where available
+- AIS information where available
+- Sound-signalling capability
+- Navigation lights where applicable
+- Local waterway / port rules
+- Water depth
+- UKC
+
+ASSESS
+
+- Bend / blind-area condition
+- Channel geometry
+- Available manoeuvring space
+- Own-vessel speed
+- Possible concealed traffic
+- Visibility condition
+- Radar / detection information
+- Sound-signal consideration
+- Navigation-light condition
+- UKC
+- Collision risk
+- Local requirements
+
+EXPECTED DECISION
+
+REDUCE SPEED / SOUND SIGNAL / ENHANCE LOOKOUT / MAINTAIN SAFE STATE / ESCALATE
+
+V&V REQUIREMENT
+
+The simulator shall recognise that a bend or blind area can conceal approaching traffic even when visibility is otherwise clear.
+
+Where visibility is restricted, the simulator shall apply the additional restricted-visibility assessment rather than treating the situation as ordinary clear-weather navigation.
+
+PASS CRITERIA
+
+1. Bend / blind-area condition is detected.
+2. Visibility condition is correctly classified.
+3. Speed is considered.
+4. Lookout requirement is considered.
+5. Sound-signal consideration is recorded.
+6. Radar / available detection information is considered.
+7. Collision risk is assessed.
+8. Human authority remains FINAL.
+9. No autonomous navigation command is generated.
+
+---
+
+NAVIGATION SAFETY PRINCIPLE
+
+The V&V system shall distinguish between:
+
+CLEAR VISIBILITY → RESTRICTED VISIBILITY → BEND / BLIND AREA → RESTRICTED WATER → TRAFFIC SEPARATION SCHEME → FISHING VESSEL → VESSEL WITH RESTRICTED MANOEUVRABILITY → CLOSE-QUARTERS SITUATION → COLLISION RISK → SPECIAL LOCAL NAVIGATION CONDITION
+
+The system shall then apply:
+
+OBSERVE → VERIFY → IDENTIFY VESSEL STATUS → IDENTIFY VISIBILITY → ASSESS COLLISION RISK → CONSIDER COLREG / LOCAL RULES → CONSIDER SOUND SIGNALS → RECOMMEND → CAPTAIN AI LENA → HUMAN AUTHORITY → SIMULATED RESPONSE → AUDIT
+
+IMPORTANT
+
+The simulator provides research decision support only.
+
+It shall not claim to replace:
+
+- Master
+- DPO
+- Navigator
+- COLREG requirements
+- VTS instructions
+- Local regulations
+- Vessel SMS procedures
+- Flag State requirements
+- Class requirements
+- Statutory requirements
+
+HUMAN AUTHORITY
+
+FINAL
+
+AUTONOMOUS NAVIGATION COMMAND
+
+FALSE
+
+OPERATIONAL CONNECTION
+
+NONE
 
 The next part will continue with the remaining navigation, navigation lights/sound signals, vessel status, escape routes, dangerous goods, safe manning/UMV, contingency, buoyage/AtoN, TSS/COLREG, restricted visibility, fire, deck cargo, storm/safe-haven, piracy/hazard avoidance, integrated contingency, heavy-lift and pipelaying scenarios.
 
 All will remain under one continuous numbering system.
+
 
 
