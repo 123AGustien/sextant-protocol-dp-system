@@ -1160,3 +1160,841 @@ No duplicate VV numbers.
 No autonomous operational command.
 
 Human authority remains FINAL.
+SEXTANT PROTOCOL™
+
+MARIN DP / USV RESILIENCE V&V SCENARIO TEST MATRIX
+
+MASTER SEQUENTIAL V&V CATALOGUE — PART 2
+
+Sequential range: VV-029 → VV-044
+Status: Research / V&V Proposal Development
+Operational DP Connection: NONE
+Physical Vessel Connection: NONE
+Autonomous Command: FALSE
+Human Authority: FINAL
+
+---
+
+VV-029 — POSITION / DEPTH DATA INTEGRITY
+
+PURPOSE
+
+Verify the integrity and confidence of position and depth information before relying upon UKC or navigation assessments.
+
+INPUT
+
+- GNSS / DGPS position
+- Position timestamp
+- Position source
+- Charted depth
+- Chart / ENC data
+- Tide information
+- Echo-sounder / depth information where applicable
+- Vessel draft
+- Trim
+- Vessel position
+
+ASSESS
+
+- Position accuracy
+- Position integrity
+- Position-source consistency
+- Chart-data integrity
+- Tide-data validity
+- Depth-data consistency
+- Position/depth mismatch
+- Anomalous depth condition
+- Position confidence
+
+EXPECTED DECISION
+
+VALID / REVIEW REQUIRED / POSITION CONFIDENCE INSUFFICIENT / HUMAN ESCALATION
+
+PASS CRITERIA
+
+1. Position and depth sources are identified.
+2. Source consistency is assessed.
+3. Loss of confidence is detected.
+4. UKC is not relied upon without adequate position/depth confidence.
+5. The result is traceable in the audit record.
+6. Human authority remains final.
+
+---
+
+VV-030 — UNDER-KEEL CLEARANCE / TIDAL CALCULATION
+
+PURPOSE
+
+Assess available water depth and UKC using vessel-specific draft and tidal information.
+
+INPUT
+
+- Charted depth below Chart Datum
+- Height of tide above Chart Datum
+- Forward draft
+- Aft draft
+- Mean draft
+- Trim
+- Dynamic draft / squat where applicable
+- Position
+- Position confidence
+- Vessel speed
+
+CALCULATION
+
+Water Depth = Charted Depth + Height of Tide
+
+UKC = Water Depth − Applicable Actual / Dynamic Draft
+
+Where trim is relevant:
+
+Forward Draft = Reference Draft + Trim Component
+
+Aft Draft = Reference Draft − Trim Component
+
+ASSESS
+
+- Charted depth
+- Tide
+- Actual draft
+- Trim
+- Dynamic draft
+- UKC
+- Position accuracy
+- Depth-data integrity
+- Shallow-water exposure
+
+EXPECTED DECISION
+
+ADEQUATE UKC / REVIEW REQUIRED / ESCALATE
+
+PASS CRITERIA
+
+All depth, tide and draft inputs are recorded and the UKC calculation is reproducible.
+
+---
+
+VV-031 — RAPID SHALLOW-WATER TRANSITION
+
+PURPOSE
+
+Detect a rapid reduction in available water depth during approach to shoal water, coastal areas or restricted channels.
+
+INPUT
+
+- Approach position
+- Charted depth
+- Height of tide
+- Vessel draft
+- Trim
+- Speed
+- Position confidence
+- Chart-data integrity
+- Tide-data validity
+- Squat where applicable
+
+CALCULATION
+
+Water Depth = Charted Depth + Height of Tide
+
+UKC = Water Depth − Applicable Vessel Draft
+
+ASSESS
+
+- Rapid depth reduction
+- UKC
+- Squat
+- Trim effect
+- Speed effect
+- Position uncertainty
+- Chart-data integrity
+- Tide-data validity
+- Safe approach condition
+
+EXPECTED DECISION
+
+SAFE DEPTH / REDUCED UKC / SHALLOW-WATER WARNING / HUMAN REVIEW / SAFE-STATE ESCALATION
+
+PASS CRITERIA
+
+The system detects the reduction in available depth and records the resulting UKC assessment.
+
+---
+
+VV-032 — UNDER-KEEL CLEARANCE / WORKING TIDAL WINDOW
+
+PURPOSE
+
+Determine whether a vessel's planned passage remains within the applicable working tidal window.
+
+INPUT
+
+- Departure draft
+- Forward draft
+- Aft draft
+- Mean draft
+- Trim
+- Charted depth
+- Chart Datum
+- Height of tide
+- Working tidal window
+- Current / tidal stream
+- Squat
+- Dynamic draft
+- Required UKC
+- Safety margin
+
+PROCESS
+
+DEPARTURE DRAFT
+↓
+CHARTED DEPTH
+↓
+TIDE
+↓
+AVAILABLE WATER DEPTH
+↓
+DYNAMIC / ACTUAL DRAFT
+↓
+UKC
+↓
+TIDAL WINDOW
+↓
+HUMAN REVIEW
+
+ASSESS
+
+- Departure draft
+- Changing tide
+- Available water depth
+- UKC
+- Environmental margin
+- Vessel-motion margin
+- Safe / restricted / unsuitable window
+
+EXPECTED DECISION
+
+SAFE WINDOW / RESTRICTED WINDOW / WAIT FOR TIDE / ALTERNATIVE ROUTE / HUMAN REVIEW
+
+PASS CRITERIA
+
+Departure draft is explicitly incorporated and the changing UKC throughout the working tidal window is traceable.
+
+IMPORTANT: No universal UKC margin shall be assumed. Applicable vessel, port, waterway, company, flag-state and other requirements remain controlling.
+
+---
+
+VV-033 — ZONE / SEASONAL MAXIMUM DRAFT & LOADING-PORT DRAFT
+
+PURPOSE
+
+Assess the vessel-specific maximum permissible draft for the applicable load-line zone/season and determine the corresponding loading-port draft after planned voyage consumption.
+
+INPUT
+
+- Applicable load-line zone
+- Seasonal zone where applicable
+- Vessel-specific assigned maximum draft
+- Summer draft / applicable assigned draft
+- Loading-port water density
+- Reference seawater density
+- Distance / steaming days
+- Daily fuel consumption
+- Daily fresh-water consumption
+- Other voyage consumables
+- TPC
+- FWA / DWA where applicable
+- Vessel trim
+- Initial displacement
+- Planned cargo weight
+
+PROCESS
+
+ZONE / SEASON
+↓
+MAXIMUM PERMITTED DRAFT
+↓
+VOYAGE CONSUMPTION
+↓
+WEIGHT LOSS
+↓
+TPC CONVERSION
+↓
+LOADING-PORT DRAFT
+↓
+DENSITY / DWA CORRECTION
+↓
+EQUIVALENT SEAWATER DRAFT
+↓
+UKC CROSS-CHECK
+↓
+HUMAN REVIEW
+
+CALCULATION
+
+Voyage Consumption = Steaming Days × Daily Consumption
+
+Where applicable:
+
+Total Voyage Consumption = Fuel + Fresh Water + Other Consumables
+
+Draft Reduction (cm) = Voyage Consumption ÷ TPC
+
+Draft Reduction (mm) = (Voyage Consumption ÷ TPC) × 10
+
+Loading-Port Draft Allowance = Maximum Zone Draft + Expected Voyage Draft Reduction
+
+For density correction:
+
+DWA_mm = FWA_mm × ((1.025 − Water Density) / 0.025)
+
+For water density below 1.025:
+
+Draft in Dock Water = Draft in Seawater + DWA
+
+Equivalent seawater draft:
+
+Draft in Seawater = Draft in Dock Water − DWA
+
+ASSESS
+
+- Zone
+- Seasonal limitation
+- Maximum permitted draft
+- Voyage consumption
+- TPC conversion
+- Loading-port draft
+- Water density
+- DWA / FWA
+- Forward draft
+- Aft draft
+- Mean draft
+- Trim
+- UKC
+- Applicable load-line condition
+
+EXPECTED DECISION
+
+DRAFT CONDITION TRACEABLE / REVIEW REQUIRED / HUMAN ESCALATION
+
+PASS CRITERIA
+
+1. Applicable zone/season identified.
+2. Vessel-specific maximum draft identified.
+3. Voyage consumption calculated.
+4. TPC conversion completed.
+5. Loading-port draft allowance calculated.
+6. Loading-water density recorded.
+7. Density correction calculated.
+8. Equivalent seawater draft traceable.
+9. Forward and aft drafts recorded.
+10. Trim recorded.
+11. UKC cross-check completed.
+12. Applicable load-line condition traceable.
+13. Limiting conditions escalated for human review.
+14. No autonomous loading or navigation command generated.
+
+---
+
+VV-034 — DENSITY / DRAFT CONVERSION VALIDATION
+
+PURPOSE
+
+Validate the direction and consistency of draft changes under different water densities.
+
+INPUT
+
+Run identical displacement conditions using:
+
+- Seawater density = 1.025
+- Dock water density < 1.025
+- Density approaching fresh water
+- Density greater than 1.025 where applicable
+
+ASSESS
+
+- Calculated DWA
+- Direction of draft change
+- Equivalent seawater draft
+- Mean draft
+- Forward draft
+- Aft draft
+- Trim
+- TPC conversion
+- Audit calculation
+
+EXPECTED RESULT
+
+Lower-density water → greater draft
+
+Higher-density water → lesser draft
+
+PASS CRITERIA
+
+The sign and direction of the density correction remain consistent throughout calculation, display and audit records.
+
+---
+
+VV-035 — ZONE DRAFT + CONSUMPTION + UKC INTEGRATION
+
+PURPOSE
+
+Validate the complete relationship between load-line limitation, voyage consumption, loading-port draft, density and UKC.
+
+INPUT
+
+- Zone maximum draft
+- Seasonal limitation
+- Loading-port density
+- Steaming days
+- Daily consumption
+- TPC
+- Initial draft
+- Trim
+- Charted depth
+- Tide height
+- UKC requirement
+- Squat / dynamic allowance
+
+PROCESS
+
+ZONE LIMIT
+↓
+VOYAGE CONSUMPTION
+↓
+WEIGHT LOSS
+↓
+TPC DRAFT CONVERSION
+↓
+LOADING-PORT DRAFT
+↓
+DENSITY / DWA CORRECTION
+↓
+EQUIVALENT SEAWATER DRAFT
+↓
+WATER DEPTH
+↓
+UKC
+↓
+STABILITY / STRUCTURAL REVIEW
+↓
+HUMAN AUTHORITY
+↓
+AUDIT
+
+PASS CRITERIA
+
+The relationship:
+
+ZONE → MAXIMUM DRAFT → CONSUMPTION → TPC → LOADING-PORT DRAFT → DENSITY → SEAWATER EQUIVALENT → WATER DEPTH → UKC
+
+is deterministic, reproducible and auditable.
+
+---
+
+VV-036 — HULL STRESS / STRUCTURAL RESPONSE
+
+INPUT
+
+- Vessel loading
+- Draft
+- Trim
+- Displacement
+- Wave condition
+- Sea state
+- Vessel heading
+- Speed
+- Structural condition
+
+ASSESS
+
+- Hull stress
+- Longitudinal bending moment
+- Shearing force
+- Torsional / twisting moment
+- Local structural loading
+- Deck loading
+- Bottom loading
+- Structural inspection status
+- Loading condition
+- Heavy-weather structural exposure
+
+EXPECTED DECISION
+
+STRUCTURAL CONDITION ACCEPTABLE / SIMULATED STRUCTURAL REVIEW REQUIRED / ESCALATE FOR HUMAN / CLASS / ENGINEERING REVIEW
+
+PASS CRITERIA
+
+Hull-stress indicators and structural-response parameters are recorded and traceable.
+
+IMPORTANT: Research/V&V assessment only. It does not replace class-approved structural calculations, loading manuals, approved stability information or structural surveys.
+
+---
+
+VV-037 — HEAVY-SEA HULL LOADING / POUNDING
+
+INPUT
+
+- Heavy swell
+- Wave height
+- Wave period
+- Wave direction
+- Vessel heading
+- Vessel speed
+- Draft
+- Trim
+
+ASSESS
+
+- Hull stress
+- Bending moment
+- Shearing force
+- Torsional loading
+- Bow/stern response
+- Slamming / pounding
+- Green-water exposure where applicable
+- Structural response
+- Speed/heading suitability
+
+EXPECTED DECISION
+
+MAINTAIN / REDUCE EXPOSURE / CHANGE SIMULATED HEADING / REDUCE SIMULATED SPEED / ESCALATE
+
+PASS CRITERIA
+
+Heavy-sea loading produces a traceable structural-risk assessment without generating an autonomous operational command.
+
+---
+
+VV-038 — HEAVY SWELL / WAVE-INDUCED HEEL
+
+INPUT
+
+- Swell height
+- Wave height
+- Wave direction
+- Wave period
+- Vessel heading
+- Vessel speed
+- Loading condition
+- CG condition
+
+ASSESS
+
+- Dynamic heel
+- Roll response
+- Persistent list
+- GZ / righting response where applicable
+- Stability index
+- CG condition
+- Hull loading
+- Bending moment
+- Shearing force
+- Torsional response
+
+EXPECTED DECISION
+
+MONITOR / ALTER SIMULATED CONDITION / REDUCE EXPOSURE / ESCALATE / SAFE STATE
+
+PASS CRITERIA
+
+Dynamic heel is distinguished from persistent list and the stability/structural response is recorded.
+
+---
+
+VV-039 — COMPLETE VESSEL GEOMETRY / CLEARANCE
+
+INPUT
+
+- Vessel length
+- Beam
+- Draft
+- Air draft
+- Highest point above keel
+- Trim
+- Heel / list
+- Turning circle
+- Charted depth
+- Tide height
+- UKC
+- Overhead clearance
+
+ASSESS
+
+- Horizontal clearance
+- Vertical clearance
+- Depth clearance
+- UKC
+- Turning envelope
+- Heel/list effect
+- Trim effect
+- Air-draft limitation
+- Bridge clearance
+- Cable clearance
+- Safe approach/departure corridor
+
+EXPECTED DECISION
+
+CLEARANCE ACCEPTABLE / REVIEW REQUIRED / HUMAN AUTHORITY ESCALATION
+
+PASS CRITERIA
+
+Height, depth, length and width clearances are assessed as an integrated vessel-geometry condition.
+
+---
+
+VV-040 — VESSEL AIR-DRAFT / OVERHEAD CLEARANCE
+
+INPUT
+
+- Height of highest fixed point above keel
+- Vessel air draft
+- Bridge clearance
+- Cable clearance
+- Overhead obstruction
+- Height of tide where relevant
+- Vessel position
+- Vessel trim
+
+CALCULATION
+
+Available Vertical Clearance = Overhead Clearance − Applicable Vessel Air Draft
+
+ASSESS
+
+- Vessel air draft
+- Highest point
+- Bridge clearance
+- Cable clearance
+- Other overhead restrictions
+- Trim effect
+- Tidal/environmental effect
+- Navigation-data integrity
+
+EXPECTED DECISION
+
+CLEAR / REDUCED CLEARANCE / REVIEW REQUIRED / HUMAN ESCALATION
+
+PASS CRITERIA
+
+The vessel's highest point and applicable overhead clearance are explicitly recorded.
+
+---
+
+VV-041 — TURNING CIRCLE / MANOEUVRING INFORMATION
+
+INPUT
+
+- Turning-circle data
+- Manoeuvring characteristics
+- Stopping distance
+- Turning information
+- Vessel particulars
+- Loading condition
+- Draft
+- Trim
+- Environmental conditions
+
+ASSESS
+
+- Turning circle
+- Advance
+- Transfer
+- Tactical diameter
+- Rate of turn
+- Stopping characteristics
+- Draft/loading condition
+- Environmental influence
+- Available manoeuvring area
+
+EXPECTED DECISION
+
+MANOEUVRING INFORMATION AVAILABLE / REVIEW REQUIRED
+
+PASS CRITERIA
+
+Relevant manoeuvring information is available, traceable and linked to the applicable vessel condition.
+
+---
+
+VV-042 — TRIAL MANOEUVRE / CONTROLLED MANOEUVRE VALIDATION
+
+PURPOSE
+
+Conduct a controlled simulated trial manoeuvre to evaluate vessel/system response before relying on the assessed condition.
+
+INPUT
+
+- Vessel position
+- Heading
+- Speed
+- Draft
+- Trim
+- Heel / list
+- CG condition
+- Wind
+- Current
+- Wave / swell
+- Tide
+- Water depth
+- UKC
+- Turning-circle information
+- Rate of turn
+- Manoeuvring information
+- Navigation / position-source status
+
+PROCESS
+
+PRE-MANOEUVRE CHECK
+↓
+OBSERVE
+↓
+VERIFY
+↓
+ASSESS
+↓
+SIMULATED TRIAL MANOEUVRE
+↓
+MONITOR RESPONSE
+↓
+COMPARE EXPECTED / ACTUAL SIMULATED RESPONSE
+↓
+REASSESS
+↓
+HUMAN AUTHORITY
+↓
+AUDIT
+
+ASSESS
+
+- Position response
+- Heading response
+- Speed response
+- Rate of turn
+- Heel
+- List
+- Trim
+- Environmental effect
+- Turning envelope
+- Clearance
+- UKC
+- Structural loading where applicable
+- Position integrity
+- Primary / Secondary agreement
+- Stabilizer response
+- Captain AI Lena recommendation
+- Human-authority gate
+- Assessment latency
+
+EXPECTED DECISION
+
+TRIAL MANOEUVRE ACCEPTABLE / REPEAT WITH CORRECTIVE ACTION / ESCALATE / MAINTAIN SAFE STATE
+
+PASS CRITERIA
+
+1. Trial manoeuvre is controlled and repeatable.
+2. Initial conditions are recorded.
+3. Vessel response is recorded.
+4. Position and heading response are traceable.
+5. Rate of turn is recorded.
+6. Clearance and UKC remain visible.
+7. Heel/list/trim response is recorded.
+8. Unexpected response triggers reassessment.
+9. Corrective action can be tested.
+10. Re-test can reproduce the scenario.
+11. Human authority remains final.
+12. No physical vessel is commanded.
+13. No autonomous operational command is generated.
+14. Complete audit trail is retained.
+
+---
+
+VV-043 — EMERGENCY LIGHTING
+
+INPUT
+
+- Emergency-lighting system
+- Emergency-light locations
+- Battery supply
+- Emergency generator
+- Lighting-test records
+- Escape-route lighting
+
+ASSESS
+
+- Emergency-light availability
+- Emergency-light coverage
+- Battery availability
+- Emergency-generator supply
+- Test status
+- Escape-route illumination
+- Loss-of-main-power response
+- Duration / capacity where applicable
+
+EXPECTED DECISION
+
+EMERGENCY LIGHTING READY / REVIEW REQUIRED
+
+PASS CRITERIA
+
+Emergency lighting remains available under the simulated loss-of-main-power condition and its test status is traceable.
+
+---
+
+VV-044 — EMERGENCY POWER / DEAD-SHIP CONDITION
+
+SCENARIO
+
+SIMULATED DEAD-SHIP / LOSS-OF-MAIN-POWER CONDITION
+
+INPUT
+
+- Main power failure
+- Emergency generator
+- Emergency batteries
+- Emergency switchboard
+- Emergency lighting
+- Navigation equipment
+- Communication equipment
+- Steering arrangements
+- Alarm systems
+
+ASSESS
+
+- Loss of main electrical power
+- Emergency-power availability
+- Emergency-generator start
+- Battery-supported equipment
+- Emergency lighting
+- Navigation lights where applicable
+- Required alarms
+- Communication capability
+- Steering / propulsion recovery status
+- Recovery sequence
+- Human decision authority
+
+EXPECTED DECISION
+
+EMERGENCY POWER AVAILABLE / RECOVERY REQUIRED / ESCALATE
+
+PASS CRITERIA
+
+1. Main-power loss is detected.
+2. Emergency-power status is identified.
+3. Critical emergency systems are assessed.
+4. Recovery is validated before any simulated return to normal operation.
+5. Human authority remains FINAL.
+6. No physical command is generated.
+7. No autonomous operational command is generated.
+
+---
+
+END PART 2
+
+Sequential range completed: VV-029 → VV-044
+
+Next sequence: VV-045
+
+The next part will continue with the remaining navigation, navigation lights/sound signals, vessel status, escape routes, dangerous goods, safe manning/UMV, contingency, buoyage/AtoN, TSS/COLREG, restricted visibility, fire, deck cargo, storm/safe-haven, piracy/hazard avoidance, integrated contingency, heavy-lift and pipelaying scenarios.
+
+All will remain under one continuous numbering system.
