@@ -573,3 +573,193 @@ Potential future scenarios include:
 10. Human-authorized simulated recovery
 
 These scenarios shall be introduced only after the underlying model and assumptions have been reviewed.
+## 25. Heel and List — Combined Stability Model
+
+The research simulator shall distinguish between heel and list while allowing both conditions to contribute to the overall simulated vessel attitude.
+
+### Heel
+
+Heel represents a dynamic or transient transverse inclination associated with changing forces and moments.
+
+Potential contributors include:
+
+- Wind loading;
+- Wave loading;
+- Current;
+- Thrust;
+- Turning;
+- Rate of turn;
+- Transient manoeuvring forces;
+- Changing environmental conditions.
+
+### List
+
+List represents a persistent or quasi-static transverse inclination associated primarily with an asymmetric vessel condition.
+
+Potential contributors include:
+
+- Transverse CG shift;
+- Uneven loading;
+- Ballast condition;
+- Tank condition;
+- Cargo distribution;
+- Simulated flooding or load asymmetry, where specifically modelled.
+
+The simulator shall not assume that heel and list are the same physical condition.
+
+---
+
+## 26. Combined Vessel Attitude
+
+The research vessel attitude shall consider:
+
+**HEEL / LIST**
++
+**TRIM**
++
+**YAW / RATE OF TURN**
+
+The resulting attitude may be represented conceptually as:
+
+**TRANSVERSE CONDITION + LONGITUDINAL CONDITION + ROTATIONAL CONDITION**
+
+→ **DYNAMIC VESSEL STATE**
+
+---
+
+## 27. Heel/List and CG
+
+The model shall examine the relationship between transverse CG position and vessel inclination.
+
+Conceptually:
+
+**TCG SHIFT**
+→ **LISTING MOMENT**
+→ **HEEL / LIST**
+→ **GZ**
+→ **RIGHTING MOMENT**
+→ **RECOVERY RESPONSE**
+
+The model shall also account for the fact that a changing vessel attitude can alter the instantaneous geometric relationship between the centre of gravity, centre of buoyancy and righting arm.
+
+---
+
+## 28. Heel/List and Dynamic Recovery
+
+A vessel experiencing dynamic heel shall not automatically be treated as unstable.
+
+The research model shall examine:
+
+- Magnitude of heel;
+- Rate of heel;
+- Direction of heel;
+- Duration;
+- Rate of recovery;
+- Available GZ;
+- Righting moment;
+- Environmental loading;
+- Trim;
+- CG position;
+- Rate of turn;
+- Recovery margin.
+
+The objective is to distinguish:
+
+**CONTROLLED DYNAMIC HEEL**
+
+from
+
+**PROGRESSIVE LOSS OF STABILITY**
+
+and from
+
+**PERSISTENT LIST CONDITION**.
+
+---
+
+## 29. Controlled Swing
+
+Heel/list shall be evaluated together with controlled swing behaviour.
+
+Conceptually:
+
+**RATE OF TURN**
+→ **LATERAL ACCELERATION**
+→ **HEEL RESPONSE**
+→ **GZ / RIGHTING RESPONSE**
+→ **RECOVERY**
+
+The stabilizer shall therefore evaluate not only the magnitude of vessel attitude but also the rate at which that attitude is changing.
+
+A controlled response should avoid unnecessary abrupt corrections that could increase oscillation or transient loading.
+
+---
+
+## 30. Combined Stability State
+
+The future research state may therefore include:
+
+**Heel**
+**List**
+**Trim**
+**Heel Rate**
+**Trim Rate**
+**GZ**
+**Righting Moment**
+**VCG**
+**TCG**
+**LCG**
+**Rate of Turn**
+**Position Error**
+**Recovery Margin**
+
+This creates a multidimensional research representation of vessel stability and controlled recovery.
+
+---
+
+## 31. Stabilizer Principle
+
+The SEXTANT stabilizer shall conceptually operate as a controlled arbitration layer.
+
+It does not simply ask:
+
+**"Is the vessel upright?"**
+
+It asks:
+
+**"What is the current vessel state, how is that state changing, what restoring capability remains available, and what is the safest controlled simulated response?"**
+
+The stabilizer therefore considers:
+
+**PRIMARY AI**
++
+**SECONDARY AI**
++
+**VESSEL STABILITY STATE**
++
+**DYNAMIC TREND**
+
+→ **STABILIZER ARBITRATION**
+
+→ **CAPTAIN AI LENA**
+
+→ **HUMAN AUTHORITY**
+
+→ **SIMULATED RESPONSE**
+
+---
+
+## 32. Research Boundary
+
+Heel, list, trim, GZ, righting moment and CG-related calculations in this framework are research representations.
+
+They shall not be interpreted as:
+
+- Certified stability calculations;
+- Intact stability approval;
+- Damage stability approval;
+- Operational DP capability;
+- Vessel-specific class compliance;
+- Safe operating limits.
+
+Vessel-specific validation would require appropriate hydrostatic, stability, loading, environmental and manoeuvring data and independent engineering review.
