@@ -409,3 +409,167 @@ After engineering review of this stability framework, map the individual cockpit
 using:
 
 **SCENARIO → INPUT → DECISION → KPI → HUMAN AUTHORITY → AUDIT RESULT**
+## 18. Trim and Longitudinal Stability
+
+The research stability model shall also account for vessel trim.
+
+Trim shall be treated as a dynamic vessel-state variable rather than as a static descriptive parameter.
+
+The model may evaluate:
+
+- Forward draft;
+- Aft draft;
+- Mean draft;
+- Trim angle;
+- Trim by bow;
+- Trim by stern;
+- Longitudinal centre of gravity (LCG);
+- Longitudinal centre of buoyancy (LCB);
+- Longitudinal load distribution;
+- Propulsor immersion;
+- Environmental force distribution;
+- Interaction between trim and heel;
+- Effect of trim on simulated manoeuvring response.
+
+Conceptually:
+
+**LCG → LCB → TRIM → HYDROSTATIC RESPONSE → DYNAMIC RESPONSE**
+
+Trim shall also be evaluated together with heel:
+
+**TRIM + HEEL → 3D VESSEL ATTITUDE → GZ / RESTORING RESPONSE → CONTROLLED RECOVERY**
+
+---
+
+## 19. Trim–CG Interaction
+
+A simulated longitudinal movement of mass may change the vessel's LCG.
+
+Examples include:
+
+- Cargo movement;
+- Ballast transfer;
+- Tank condition;
+- Equipment movement;
+- Load redistribution.
+
+The research model shall therefore distinguish:
+
+**Vertical CG movement**
+
+from
+
+**Longitudinal CG movement**
+
+and, where relevant,
+
+**Transverse CG movement**.
+
+The resulting vessel condition may be represented as:
+
+**CG POSITION → TRIM / HEEL → RESTORING RESPONSE → DYNAMIC STABILITY**
+
+---
+
+## 20. Trim–DP Interaction
+
+Trim may influence the simulated DP resilience response through changes in:
+
+- Propulsor immersion;
+- Effective environmental loading;
+- Longitudinal and transverse force distribution;
+- Vessel manoeuvring characteristics;
+- Heading response;
+- Position error;
+- Rate of turn;
+- Controlled swing behaviour.
+
+The simulator shall therefore examine whether a changing trim condition modifies the simulated DP resilience envelope.
+
+No conclusion regarding actual vessel DP capability shall be made without vessel-specific engineering data and appropriate validation.
+
+---
+
+## 21. Combined Vessel Attitude
+
+The research stability state should ultimately consider the combined vessel attitude:
+
+**ROLL / HEEL**
++
+**PITCH / TRIM**
++
+**YAW / RATE OF TURN**
+
+This creates a more complete representation of the vessel's simulated dynamic state.
+
+The conceptual control relationship is:
+
+**ENVIRONMENT**
+→ **VESSEL ATTITUDE**
+→ **STABILITY / RESTORING RESPONSE**
+→ **PRIMARY AI**
+→ **SECONDARY AI**
+→ **STABILIZER**
+→ **CAPTAIN AI LENA**
+→ **HUMAN AUTHORITY**
+→ **SIMULATED RESPONSE**
+
+---
+
+## 22. Stability State Vector
+
+Future versions may represent vessel stability using a multidimensional state vector:
+
+**S = {Heel, Trim, Heel Rate, Trim Rate, GZ, Righting Moment, CG, LCG, Rate of Turn, Position Error, Recovery Margin}**
+
+This provides a foundation for deterministic scenario testing.
+
+The state vector shall remain research-oriented and shall not be interpreted as a certified vessel stability model.
+
+---
+
+## 23. Research Principle
+
+The objective is not to determine whether:
+
+**GM = SAFE**
+
+or
+
+**GM = UNSAFE**
+
+in isolation.
+
+The research objective is to examine the interaction between:
+
+**GM**
+**GZ**
+**Righting Moment**
+**CG**
+**LCG**
+**Trim**
+**Heel**
+**Rate of Turn**
+**Environmental Loading**
+**Recovery Margin**
+
+and determine how these variables influence the simulated controlled-recovery behaviour.
+
+---
+
+## 24. Future V&V Scenario Examples
+
+Potential future scenarios include:
+
+1. Normal trim — low environmental loading
+2. Stern trim — increasing current
+3. Bow trim — increasing wind
+4. Trim change during environmental loading
+5. CG shift with simultaneous heel
+6. CG shift with trim change
+7. Combined trim + heel + rate-of-turn disturbance
+8. Severe environmental loading with reduced recovery margin
+9. Stabilizer arbitration during changing trim
+10. Human-authorized simulated recovery
+
+These scenarios shall be introduced only after the underlying model and assumptions have been reviewed.
