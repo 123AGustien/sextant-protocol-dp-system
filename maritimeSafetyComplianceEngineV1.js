@@ -2279,7 +2279,257 @@ return {
 };
 
 
+/*
+
 /* =========================================================
+   DECK / ENGINE / CATERING / BRIDGE STORES
+   INVENTORY & READINESS V&V
+========================================================= */
+
+const stores =
+    condition.stores || {};
+
+
+/* =========================================================
+   DECK STORES
+========================================================= */
+
+const deckStores =
+    stores.deck || {};
+
+const deckMaintenanceStoresAvailable =
+    deckStores.maintenanceStoresAvailable === true;
+
+const deckMooringStoresAvailable =
+    deckStores.mooringStoresAvailable === true;
+
+const deckLashingStoresAvailable =
+    deckStores.lashingStoresAvailable === true;
+
+const deckSafetyStoresAvailable =
+    deckStores.safetyStoresAvailable === true;
+
+const deckCleaningStoresAvailable =
+    deckStores.cleaningStoresAvailable === true;
+
+const deckSpareEquipmentAvailable =
+    deckStores.spareEquipmentAvailable === true;
+
+
+let deckStoresStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    deckMaintenanceStoresAvailable &&
+    deckMooringStoresAvailable &&
+    deckLashingStoresAvailable &&
+    deckSafetyStoresAvailable &&
+    deckCleaningStoresAvailable &&
+    deckSpareEquipmentAvailable
+) {
+
+    deckStoresStatus =
+        "SIMULATED_DECK_STORES_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   ENGINE ROOM / ENGINE STORES
+========================================================= */
+
+const engineStores =
+    stores.engine || {};
+
+const engineSparePartsAvailable =
+    engineStores.sparePartsAvailable === true;
+
+const filtersAvailable =
+    engineStores.filtersAvailable === true;
+
+const lubricantsAvailable =
+    engineStores.lubricantsAvailable === true;
+
+const engineMaintenanceToolsAvailable =
+    engineStores.maintenanceToolsAvailable === true;
+
+const emergencyRepairMaterialsAvailable =
+    engineStores.emergencyRepairMaterialsAvailable === true;
+
+const engineeringConsumablesAvailable =
+    engineStores.consumablesAvailable === true;
+
+
+let engineStoresStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    engineSparePartsAvailable &&
+    filtersAvailable &&
+    lubricantsAvailable &&
+    engineMaintenanceToolsAvailable &&
+    emergencyRepairMaterialsAvailable &&
+    engineeringConsumablesAvailable
+) {
+
+    engineStoresStatus =
+        "SIMULATED_ENGINE_STORES_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   CATERING / GALLEY STORES
+========================================================= */
+
+const cateringStores =
+    stores.catering || {};
+
+const dryFoodStoresAvailable =
+    cateringStores.dryFoodStoresAvailable === true;
+
+const refrigeratedFoodStoresAvailable =
+    cateringStores.refrigeratedFoodStoresAvailable === true;
+
+const frozenFoodStoresAvailable =
+    cateringStores.frozenFoodStoresAvailable === true;
+
+const galleyConsumablesAvailable =
+    cateringStores.galleyConsumablesAvailable === true;
+
+const cookingGasOrFuelStoresAvailable =
+    cateringStores.cookingFuelStoresAvailable === true;
+
+const cleaningAndHygieneStoresAvailable =
+    cateringStores.cleaningHygieneStoresAvailable === true;
+
+
+let cateringStoresStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    dryFoodStoresAvailable &&
+    refrigeratedFoodStoresAvailable &&
+    frozenFoodStoresAvailable &&
+    galleyConsumablesAvailable &&
+    cookingGasOrFuelStoresAvailable &&
+    cleaningAndHygieneStoresAvailable
+) {
+
+    cateringStoresStatus =
+        "SIMULATED_CATERING_STORES_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   BRIDGE / NAVIGATION STORES
+========================================================= */
+
+const bridgeStores =
+    stores.bridge || {};
+
+const navigationChartsAvailable =
+    bridgeStores.navigationChartsAvailable === true;
+
+const nauticalPublicationsAvailable =
+    bridgeStores.nauticalPublicationsAvailable === true;
+
+const navigationSparePartsAvailable =
+    bridgeStores.navigationSparePartsAvailable === true;
+
+const signalEquipmentStoresAvailable =
+    bridgeStores.signalEquipmentStoresAvailable === true;
+
+const bridgeConsumablesAvailable =
+    bridgeStores.consumablesAvailable === true;
+
+const bridgeEmergencyStoresAvailable =
+    bridgeStores.emergencyStoresAvailable === true;
+
+
+let bridgeStoresStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    navigationChartsAvailable &&
+    nauticalPublicationsAvailable &&
+    navigationSparePartsAvailable &&
+    signalEquipmentStoresAvailable &&
+    bridgeConsumablesAvailable &&
+    bridgeEmergencyStoresAvailable
+) {
+
+    bridgeStoresStatus =
+        "SIMULATED_BRIDGE_STORES_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   STORES INVENTORY RECORDS
+========================================================= */
+
+const storesInventory =
+    stores.inventory || {};
+
+const inventoryVerified =
+    storesInventory.verified === true;
+
+const expiryDatesReviewed =
+    storesInventory.expiryDatesReviewed === true;
+
+const quantitiesReviewed =
+    storesInventory.quantitiesReviewed === true;
+
+const storageLocationsReviewed =
+    storesInventory.storageLocationsReviewed === true;
+
+const replenishmentPlanAvailable =
+    storesInventory.replenishmentPlanAvailable === true;
+
+
+let storesInventoryStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    inventoryVerified &&
+    expiryDatesReviewed &&
+    quantitiesReviewed &&
+    storageLocationsReviewed &&
+    replenishmentPlanAvailable
+) {
+
+    storesInventoryStatus =
+        "SIMULATED_STORES_INVENTORY_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   OVERALL STORES ASSESSMENT
+========================================================= */
+
+const storesPass =
+    deckStoresStatus ===
+        "SIMULATED_DECK_STORES_REVIEW_COMPLETE" &&
+
+    engineStoresStatus ===
+        "SIMULATED_ENGINE_STORES_REVIEW_COMPLETE" &&
+
+    cateringStoresStatus ===
+        "SIMULATED_CATERING_STORES_REVIEW_COMPLETE" &&
+
+    bridgeStoresStatus ===
+        "SIMULATED_BRIDGE_STORES_REVIEW_COMPLETE" &&
+
+    storesInventoryStatus ===
+        "SIMULATED_STORES_INVENTORY_REVIEW_COMPLETE"; =========================================================
    END OF assess()
 ========================================================= */
 
