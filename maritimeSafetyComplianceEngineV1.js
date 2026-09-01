@@ -2792,3 +2792,243 @@ if (
         finalMaritimeReview;
 
 }
+
+/* =========================================================
+   SEXTANT PROTOCOL™ — RESILIENCE PLAN / PRE-JOB PRIORITY
+========================================================= */
+
+/*
+   IMPORTANT RESEARCH PRINCIPLE:
+
+   The Sextant Protocol™ Resilience Plan is intended to be
+   initiated at the BEGINNING of the vessel / project /
+   operational planning process.
+
+   It is NOT intended to be a final checklist item after
+   deficiencies, operational restrictions or safety risks
+   have already developed.
+
+   The resilience assessment should therefore support:
+
+   1. PRE-JOB RESILIENCE REVIEW
+   2. VESSEL SUITABILITY REVIEW
+   3. STATUTORY / FLAG-STATE REVIEW
+   4. CLASS / NOTATION REVIEW
+   5. DP / NAVIGATION / MACHINERY READINESS REVIEW
+   6. LSA / FFA / GMDSS READINESS REVIEW
+   7. HULL / STRUCTURAL / NDT REVIEW
+   8. ENVIRONMENTAL / WASTE MANAGEMENT REVIEW
+   9. CREW / ACCOMMODATION / GALLEY / WELFARE REVIEW
+   10. STORES / SPARES / CONSUMABLES REVIEW
+   11. CONTINGENCY / EMERGENCY RESPONSE REVIEW
+   12. OPERATIONAL AREA / WEATHER / DRAFT / LOADLINE REVIEW
+
+   The objective is early identification of conditions that
+   could reduce vessel resilience, safety margin, operational
+   capability or regulatory readiness.
+
+   The resilience plan should remain a LIVE REVIEW throughout
+   the planned operation and should be reassessed following:
+
+   - significant environmental changes;
+   - equipment degradation;
+   - machinery defects;
+   - DP capability changes;
+   - changes in vessel loading;
+   - changes in trim, heel or list;
+   - changes in draft or under-keel clearance;
+   - changes in operating area;
+   - changes in statutory or class status;
+   - safety equipment deficiencies;
+   - emergency events;
+   - crew or operational changes;
+   - material changes to the vessel condition.
+*/
+
+
+/* =========================================================
+   RESILIENCE-FIRST OPERATING PRINCIPLE
+========================================================= */
+
+const resiliencePlan =
+    condition.resiliencePlan || {};
+
+const resiliencePlanInitiatedPreJob =
+    resiliencePlan.initiatedPreJob === true;
+
+const vesselSuitabilityReviewedBeforeOperation =
+    resiliencePlan.vesselSuitabilityReviewedBeforeOperation === true;
+
+const statutoryStatusReviewedBeforeOperation =
+    resiliencePlan.statutoryStatusReviewedBeforeOperation === true;
+
+const classStatusReviewedBeforeOperation =
+    resiliencePlan.classStatusReviewedBeforeOperation === true;
+
+const operationalLimitationsReviewedBeforeOperation =
+    resiliencePlan.operationalLimitationsReviewedBeforeOperation === true;
+
+const contingencyPlansReviewedBeforeOperation =
+    resiliencePlan.contingencyPlansReviewedBeforeOperation === true;
+
+const resilienceMonitoringActive =
+    resiliencePlan.resilienceMonitoringActive === true;
+
+
+/* =========================================================
+   RESILIENCE-FIRST STATUS
+========================================================= */
+
+let resiliencePlanStatus =
+    "SIMULATED_RESILIENCE_PLAN_REVIEW_REQUIRED";
+
+
+const resiliencePlanPass =
+    resiliencePlanInitiatedPreJob &&
+    vesselSuitabilityReviewedBeforeOperation &&
+    statutoryStatusReviewedBeforeOperation &&
+    classStatusReviewedBeforeOperation &&
+    operationalLimitationsReviewedBeforeOperation &&
+    contingencyPlansReviewedBeforeOperation &&
+    resilienceMonitoringActive;
+
+
+if (resiliencePlanPass) {
+
+    resiliencePlanStatus =
+        "SIMULATED_RESILIENCE_PLAN_ACTIVE";
+
+}
+
+
+/* =========================================================
+   RESILIENCE PRIORITY
+========================================================= */
+
+const resiliencePriority =
+    "FIRST_STAGE_PRE_JOB_REVIEW";
+
+
+const resiliencePrinciple =
+    "RESILIENCE PLANNING BEFORE OPERATIONAL EXECUTION";
+
+
+/* =========================================================
+   SUBSTANDARD / UNSAFE CONDITION PREVENTION
+========================================================= */
+
+/*
+   The simulator does NOT determine whether a vessel is
+   legally "substandard".
+
+   Instead, it identifies conditions requiring early review,
+   escalation or corrective action before the vessel is
+   considered suitable for the planned simulated operation.
+
+   Final determination remains with the appropriate:
+
+   - Flag State;
+   - Recognized Organization / Class;
+   - statutory authority;
+   - Company / DOC holder;
+   - Master;
+   - DPO / authorized operator;
+   - applicable coastal / port authority.
+*/
+
+const deteriorationPreventionStatus =
+    resiliencePlanPass
+        ? "SIMULATED_EARLY_RESILIENCE_CONTROL_ACTIVE"
+        : "SIMULATED_EARLY_RESILIENCE_REVIEW_REQUIRED";
+
+
+/* =========================================================
+   CONTINUOUS REVIEW
+========================================================= */
+
+const resilienceContinuousReview =
+    {
+
+        preJob:
+            resiliencePlanInitiatedPreJob,
+
+        vesselSuitability:
+            vesselSuitabilityReviewedBeforeOperation,
+
+        statutory:
+            statutoryStatusReviewedBeforeOperation,
+
+        class:
+            classStatusReviewedBeforeOperation,
+
+        operationalLimitations:
+            operationalLimitationsReviewedBeforeOperation,
+
+        contingency:
+            contingencyPlansReviewedBeforeOperation,
+
+        continuousMonitoring:
+            resilienceMonitoringActive,
+
+        status:
+            resiliencePlanStatus
+
+    };
+
+
+/* =========================================================
+   TRACEABLE RESILIENCE RESULT
+========================================================= */
+
+const sextantResiliencePlanResult = {
+
+    priority:
+        resiliencePriority,
+
+    principle:
+        resiliencePrinciple,
+
+    status:
+        resiliencePlanStatus,
+
+    deteriorationPrevention:
+        deteriorationPreventionStatus,
+
+    continuousReview:
+        resilienceContinuousReview,
+
+    humanAuthority:
+        true,
+
+    autonomousCommand:
+        false,
+
+    operationalConnection:
+        false,
+
+    executionGate:
+        "HUMAN AUTHORIZATION REQUIRED",
+
+    note:
+        "SEXTANT PROTOCOL™ resilience planning is intended as an early pre-job and continuous review layer, not a final checklist item. The simulator identifies conditions for human, company, class, flag-state or statutory review and does not determine legal vessel compliance or class status."
+
+};
+
+
+/* =========================================================
+   GLOBAL ACCESS
+========================================================= */
+
+if (
+    typeof window !== "undefined"
+) {
+
+    window.SextantResiliencePlanResult =
+        sextantResiliencePlanResult;
+
+}
+
+
+/* =========================================================
+   END OF MARITIME SAFETY / VESSEL SUITABILITY EXTENSION
+========================================================= */
