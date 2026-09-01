@@ -4251,6 +4251,333 @@ OBSERVE
 IMPORTANT:
 The simulator provides research decision support only. It shall not claim to replace the Master, DPO, navigator, COLREG requirements, VTS instructions, local regulations or vessel SMS procedures.
 
+VV-038 — BUOYAGE / NAVIGATIONAL MARK IDENTIFICATION
+
+SCENARIO:
+Vessel encounters a navigational mark, buoy or beacon during coastal, port, restricted-water or offshore operations.
+
+INPUT:
+
+- Vessel position
+- Charted buoy position
+- Buoy type
+- Buoy colour
+- Topmark
+- Light characteristic
+- Light colour
+- Sound signal where applicable
+- Radar response
+- AIS/AtoN information where available
+- GNSS position
+- Chart / ENC information
+- Vessel heading and COG
+- Speed
+- Visibility
+- Tidal condition
+- Water depth
+- Local navigation requirements
+
+ASSESS:
+
+- Correct identification of the navigational mark.
+- Agreement between charted position and observed position.
+- Mark identification against available navigation information.
+- Whether the vessel is approaching, passing or deviating from the mark.
+- Safe passing distance.
+- Water depth and under-keel clearance.
+- Whether the mark indicates a channel, hazard, safe water or special area.
+- Whether the mark's light characteristic is consistent with the expected information.
+
+EXPECTED DECISION:
+CONFIRM MARK / MONITOR / ALTER COURSE / REDUCE SPEED / ESCALATE
+
+PASS CRITERIA:
+The navigational mark is correctly identified and its information is incorporated into the simulated navigation assessment.
+
+============================================================
+
+VV-039 — LATERAL MARK / CHANNEL
+
+SCENARIO:
+Vessel enters, follows or leaves a marked channel.
+
+ASSESS:
+
+- Applicable buoyage system.
+- Port / starboard lateral marks.
+- Channel direction.
+- Vessel heading.
+- Charted channel limits.
+- Position relative to the channel.
+- Water depth.
+- UKC.
+- Tidal height.
+- Draft.
+- Safe passing distance.
+
+EXPECTED DECISION:
+FOLLOW CHANNEL / CORRECT TRACK / REDUCE SPEED / ESCALATE
+
+PASS CRITERIA:
+The simulator records the vessel's relationship to the marked channel and does not rely solely on visual buoy recognition.
+
+============================================================
+
+VV-040 — CARDINAL MARK
+
+SCENARIO:
+Vessel approaches a cardinal mark indicating the safe side on which to pass a navigational danger.
+
+ASSESS:
+
+- Cardinal mark type.
+- Vessel position.
+- Bearing to mark.
+- Charted danger.
+- Safe passing side.
+- Water depth.
+- UKC.
+- Visibility.
+- Weather and sea condition.
+
+EXPECTED DECISION:
+PASS ON INDICATED SAFE SIDE / MONITOR / ALTER COURSE / ESCALATE
+
+PASS CRITERIA:
+The correct cardinal-mark meaning is identified and the recommended simulated track remains clear of the associated danger.
+
+============================================================
+
+VV-041 — ISOLATED DANGER MARK
+
+SCENARIO:
+Vessel approaches an isolated danger mark.
+
+ASSESS:
+
+- Mark identification.
+- Charted danger position.
+- Vessel position.
+- Safe passing distance.
+- Draft.
+- Water depth.
+- UKC.
+- Tide.
+- Sea state.
+
+EXPECTED DECISION:
+PASS CLEAR / ALTER COURSE / REDUCE SPEED / ESCALATE
+
+PASS CRITERIA:
+The system recognises the mark as indicating a localised navigational danger and maintains an appropriate safety margin.
+
+============================================================
+
+VV-042 — SAFE WATER MARK
+
+SCENARIO:
+Vessel uses a safe-water mark to assist with navigation through a fairway, approach or channel.
+
+ASSESS:
+
+- Mark position.
+- Vessel position.
+- Fairway / channel relationship.
+- Course.
+- Speed.
+- Water depth.
+- UKC.
+- Other traffic.
+
+EXPECTED DECISION:
+FOLLOW FAIRWAY / MONITOR / ESCALATE
+
+PASS CRITERIA:
+Safe-water information is correctly incorporated into the navigation assessment.
+
+============================================================
+
+VV-043 — SPECIAL MARK / RESTRICTED AREA
+
+SCENARIO:
+Vessel approaches a special mark identifying a designated area or feature.
+
+ASSESS:
+
+- Mark identification.
+- Charted area.
+- Purpose of the mark.
+- Navigation restrictions.
+- Local port / waterway requirements.
+- Vessel status.
+- Proposed route.
+
+EXPECTED DECISION:
+PROCEED / AVOID AREA / ALTER ROUTE / ESCALATE
+
+PASS CRITERIA:
+The simulator identifies the special-area condition and does not assume unrestricted passage.
+
+============================================================
+
+VV-044 — BUOY / ATO N POSITION DISCREPANCY
+
+SCENARIO:
+Observed buoy position differs materially from the charted position.
+
+ASSESS:
+
+- GNSS position.
+- Charted position.
+- Observed position.
+- Radar position.
+- Visual identification.
+- AIS/AtoN information where available.
+- Timestamp.
+- Tidal/current conditions.
+- Possible buoy displacement.
+- Navigation confidence.
+
+EXPECTED DECISION:
+VERIFY / REDUCE SPEED / INCREASE CLEARANCE / ALTER ROUTE / ESCALATE
+
+PASS CRITERIA:
+A position discrepancy is detected rather than blindly accepting a single navigation source.
+
+============================================================
+
+VV-045 — BUOY LIGHT / SOUND CHARACTERISTIC FAILURE
+
+SCENARIO:
+Expected buoy light or sound characteristic is absent, degraded or inconsistent with available navigation information.
+
+ASSESS:
+
+- Expected characteristic.
+- Observed characteristic.
+- Visibility.
+- Radar response.
+- GNSS position.
+- Chart / ENC information.
+- Alternative navigation source.
+- Navigation confidence.
+
+EXPECTED DECISION:
+VERIFY / REDUCE SPEED / USE ALTERNATIVE NAVIGATION SOURCE / ESCALATE
+
+PASS CRITERIA:
+Failure or uncertainty of an aid to navigation causes an appropriate reduction in navigation confidence.
+
+============================================================
+
+VV-046 — BUOYAGE + DRAFT + UKC + TIDAL WINDOW
+
+SCENARIO:
+Vessel approaches a buoyed channel with a limited under-keel-clearance window.
+
+INPUT:
+
+- Departure draft
+- Forward draft
+- Aft draft
+- Mean draft
+- Trim
+- Water density
+- Charted depth
+- Chart datum
+- Height of tide above chart datum
+- Depth under keel requirement
+- Safety margin
+- Vessel speed
+- Tidal current
+
+CALCULATION:
+
+Water depth =
+Charted depth at chart datum + height of tide above chart datum
+
+Under-keel clearance =
+Water depth − vessel draft
+
+Working tidal window shall be assessed against:
+
+- departure draft;
+- actual/forecast tide;
+- charted depth;
+- required UKC;
+- vessel trim;
+- squat where applicable;
+- safety margin.
+
+EXPECTED DECISION:
+TIDAL WINDOW ADEQUATE / WAIT FOR TIDE / REDUCE DRAFT / ALTER ROUTE / ESCALATE
+
+PASS CRITERIA:
+The simulator does not treat charted depth alone as available water depth.
+
+============================================================
+
+VV-047 — BUOYAGE / RESTRICTED VISIBILITY
+
+SCENARIO:
+Vessel navigates a buoyed channel in fog, heavy rain, haze or other restricted visibility.
+
+ASSESS:
+
+- Buoy identification.
+- Radar response.
+- GNSS position.
+- Chart / ENC.
+- Sound signals.
+- Safe speed.
+- Traffic.
+- Channel limits.
+- UKC.
+- Position confidence.
+
+EXPECTED DECISION:
+REDUCE SPEED / ENHANCE LOOKOUT / SOUND SIGNAL / VERIFY POSITION / ESCALATE
+
+PASS CRITERIA:
+The system recognises that visual identification of buoys may be degraded and increases reliance on appropriate alternative navigation information.
+
+============================================================
+
+BUOYAGE V&V PRINCIPLE
+
+NAVIGATIONAL MARK
+→ IDENTIFY
+→ VERIFY
+→ CORRELATE WITH CHART / ENC
+→ CONFIRM POSITION
+→ ASSESS WATER DEPTH / UKC
+→ ASSESS TRAFFIC
+→ ASSESS VISIBILITY
+→ RECOMMEND
+→ CAPTAIN AI LENA
+→ HUMAN AUTHORITY
+→ SIMULATED RESPONSE
+→ AUDIT
+
+IMPORTANT:
+The simulator shall not infer a safe route solely from the presence of a buoy.
+
+Buoyage information must be assessed together with:
+
+- chart / ENC information;
+- vessel position;
+- draft;
+- water depth;
+- tide;
+- UKC;
+- vessel manoeuvring characteristics;
+- traffic;
+- visibility;
+- applicable local navigation requirements.
+
+NO AUTONOMOUS NAVIGATION COMMAND.
+
+
 
 
 NO AUTONOMOUS NAVIGATION COMMAND.
