@@ -1,3 +1,10 @@
+
+the clean file set is:
+dp_resilience_cockpit.html
+dp_cockpit.js
+dp_simulation_engine.js
+dp_recommended_actions.js
+
 SEXTANT PROTOCOL™
 
 DP RESILIENCE RESEARCH SIMULATOR
