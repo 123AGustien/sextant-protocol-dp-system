@@ -883,6 +883,388 @@ PASS CRITERIA:
 9. Simulated response remains gated.
 
 10. Audit record is complete.
+# ============================================================
+# VV-029 — VESSEL POSITION / DGPS / GNSS INTEGRITY
+# ============================================================
+
+INPUT:
+Vessel position
+DGPS availability
+GNSS availability
+Position source
+Position accuracy
+Position integrity status
+Correction status
+Alternative positioning source
+
+ASSESS:
+• Vessel position availability
+• DGPS availability
+• GNSS availability
+• Position accuracy
+• Position integrity monitoring
+• Position-source identification
+• DGPS correction status
+• Position-data timestamp
+• Position-data recording
+• Primary position-source failure
+• DGPS correction loss
+• GNSS degradation
+• GNSS loss
+• Position jump / anomalous position
+• Position-data corruption
+• Alternative positioning source
+• Position redundancy
+• Position-loss detection
+• Position-recovery validation
+• Position integrity after recovery
+• Safe-state response when position confidence is insufficient
+• Human-authority escalation
+
+EXPECTED DECISION:
+POSITION VALID / DEGRADED / LOST / RECOVERY REQUIRED
+
+PASS CRITERIA:
+1. Position source is identified.
+2. Position integrity is continuously assessable within the simulation.
+3. Loss or degradation of the primary position source is detected.
+4. Anomalous position information is identified.
+5. Alternative positioning information can be assessed where available.
+6. Position recovery is independently re-validated.
+7. Insufficient position confidence causes escalation rather than an assumed valid position.
+8. Human authority remains FINAL.
+9. No autonomous operational command is generated.
+
+
+# ============================================================
+# VV-030 — DANGEROUS GOODS / CARGO STOWAGE
+# ============================================================
+
+INPUT:
+Dangerous-goods declaration
+Cargo manifest
+IMDG classification where applicable
+Quantity
+Package condition
+Segregation requirements
+Stowage location
+Securing arrangements
+Emergency information
+Relevant cargo documentation
+
+ASSESS:
+• Dangerous-goods identification
+• Cargo classification
+• Quantity and location
+• Required segregation
+• Stowage compatibility
+• Cargo securing
+• Access to emergency information
+• Fire / pollution response considerations
+• Documentation status
+• Changes to cargo manifest
+• Unexpected or undeclared dangerous goods
+
+EXPECTED DECISION:
+DANGEROUS GOODS REVIEW COMPLETE / REVIEW REQUIRED
+
+PASS CRITERIA:
+Dangerous-goods information, stowage and applicable segregation requirements are traceable within the research assessment.
+
+IMPORTANT:
+The simulator does not replace the vessel's approved cargo procedures, IMDG requirements, Master’s authority, Flag State requirements, Class requirements or statutory documentation.
+
+
+# ============================================================
+# VV-031 — REQUIRED PUBLICATIONS / DOCUMENTS ONBOARD
+# ============================================================
+
+INPUT:
+Applicable nautical publications
+Charts / electronic charts
+Sailing directions
+Notices to Mariners
+List of Lights
+Tide tables
+Radio / communication publications
+Pilot information
+Safety publications
+Company procedures
+Emergency procedures
+Vessel-specific manuals
+Required certificates and documents
+
+ASSESS:
+• Required publication identification
+• Current / valid edition
+• Updates incorporated
+• Charts / electronic chart status
+• Notices to Mariners status
+• Navigation-reference availability
+• Emergency publication availability
+• Communication-reference availability
+• Vessel-specific documentation
+• Certificate/document validity
+• Missing or expired publication detection
+
+EXPECTED DECISION:
+PUBLICATION / DOCUMENTATION STATUS CURRENT / REVIEW REQUIRED
+
+PASS CRITERIA:
+Applicable publications and vessel documentation are identified and their review status is traceable.
+
+
+# ============================================================
+# VV-032 — SAFE MANNING / UMV CERTIFICATION
+# ============================================================
+
+INPUT:
+Safe Manning Certificate
+UMV certificate / applicable unmanned-vessel documentation
+Persons onboard
+Crew composition
+Required qualifications
+Watchkeeping requirements
+Operational mode
+Voyage / operating area
+
+ASSESS:
+• Applicable safe-manning requirement
+• Certificate status
+• Required personnel
+• Actual personnel
+• Qualification requirements
+• Watchkeeping requirements
+• Operating-mode limitations
+• Unmanned / remotely operated vessel requirements where applicable
+
+EXPECTED DECISION:
+MANNING / UMV DOCUMENTATION REVIEW COMPLETE / REVIEW REQUIRED
+
+PASS CRITERIA:
+The applicable vessel-specific manning or UMV documentation is identified and assessed without assuming a universal manning requirement.
+
+
+# ============================================================
+# VV-033 — VESSEL CLASS / ICE CLASS / NOTATION
+# ============================================================
+
+INPUT:
+Vessel class
+Classification society
+Class notation
+DP notation
+Ice Class
+Additional class notations
+Class status
+Operating limitations
+
+ASSESS:
+• Class identity
+• Class notation
+• DP notation where applicable
+• Ice Class where applicable
+• Additional notation requirements
+• Current class status
+• Survey status
+• Operating restrictions
+• Conditions of class / recommendations where applicable
+
+EXPECTED DECISION:
+CLASS REVIEW COMPLETE / REVIEW REQUIRED
+
+PASS CRITERIA:
+Applicable class and notation information is explicitly identified and traceable.
+
+
+# ============================================================
+# VV-034 — OPERATING AREA / DISTANCE FROM SHORE
+# ============================================================
+
+INPUT:
+Operating area
+Voyage area
+Distance from shore
+Coastal State jurisdiction
+Vessel type
+Vessel class
+Operating restrictions
+Weather limitations
+Emergency-response capability
+
+ASSESS:
+• Declared operating area
+• Permitted operating area
+• Distance from shore
+• Coastal-State requirements
+• Vessel-specific restrictions
+• Emergency access
+• Weather limitations
+• Safe refuge / shelter availability
+
+EXPECTED DECISION:
+OPERATING AREA ACCEPTABLE FOR SIMULATED REVIEW / REVIEW REQUIRED
+
+PASS CRITERIA:
+Operating-area assumptions and distance-from-shore parameters are explicitly recorded and checked against applicable vessel-specific requirements.
+
+
+# ============================================================
+# VV-035 — VERTICAL CLEARANCE / AIR DRAUGHT
+# ============================================================
+
+INPUT:
+Height of highest point of vessel
+Height of bridge / superstructure
+Masts / antennas
+Funnel
+Cranes / booms
+Cable-wire clearance
+Bridge clearance
+Water level
+Tide above Chart Datum
+Safety margin
+
+CALCULATE / ASSESS:
+
+AIR DRAUGHT =
+HEIGHT OF HIGHEST RELEVANT POINT ABOVE KEEL
+
+AVAILABLE VERTICAL CLEARANCE =
+STRUCTURE / BRIDGE / CABLE HEIGHT ABOVE REFERENCE WATER LEVEL
+-
+VESSEL AIR DRAUGHT
+
+TIDE ABOVE CHART DATUM =
+CURRENT WATER LEVEL ABOVE CHART DATUM
+
+ASSESS:
+• Highest point of vessel
+• Air draught
+• Bridge clearance
+• Cable clearance
+• Tide above Chart Datum
+• Vertical safety margin
+• Change in clearance caused by tide
+• Vessel trim where relevant
+• Dynamic effects where relevant
+
+EXPECTED DECISION:
+VERTICAL CLEARANCE ADEQUATE / REVIEW REQUIRED
+
+PASS CRITERIA:
+The highest relevant point and available vertical clearance are explicitly calculated and traceable.
+
+
+# ============================================================
+# VV-036 — UNDER-KEEL CLEARANCE / CHART DATUM
+# ============================================================
+
+INPUT:
+Charted depth
+Tide above Chart Datum
+Vessel draft
+Trim
+Under-keel safety allowance
+Water density
+Dock-water allowance where applicable
+
+CALCULATE:
+
+DEPTH OF WATER =
+DEPTH ABOVE CHART DATUM
++
+DEPTH OF TIDE ABOVE CHART DATUM
+
+BASIC UNDER-KEEL CLEARANCE =
+DEPTH OF WATER
+-
+VESSEL DRAFT
+
+TRIM EFFECT:
+Draft at the relevant end of the vessel shall be considered rather than relying only on mean draft.
+
+RELEVANT DRAFT =
+VESSEL DRAFT
++
+APPLICABLE TRIM / DYNAMIC / SAFETY CONSIDERATIONS
+
+ASSESS:
+• Charted depth
+• Tide above Chart Datum
+• Actual vessel draft
+• Forward draft
+• Aft draft
+• Trim
+• Squat / dynamic effects where applicable
+• Safety clearance
+• Under-keel clearance
+• Shallow-water condition
+• Rapid reduction in available depth
+
+EXPECTED DECISION:
+UKC ADEQUATE / REDUCED / REVIEW REQUIRED
+
+PASS CRITERIA:
+The calculation remains vessel-, location- and condition-specific and does not assume a universal UKC value.
+
+
+# ============================================================
+# VV-037 — DOCK WATER / FRESH WATER DRAFT CORRECTION
+# ============================================================
+
+PURPOSE:
+Assess the change in vessel draft caused by water density.
+
+FRESH WATER ALLOWANCE:
+
+FWA_mm =
+FWA specified for the vessel in millimetres
+
+DOCK WATER ALLOWANCE:
+
+DWA_mm =
+FWA_mm *
+((1.025 - WaterDensity) / 0.025)
+
+WHERE:
+
+WaterDensity =
+dock-water density in tonnes/m³
+
+REFERENCE:
+Standard seawater density =
+1.025 tonnes/m³
+
+INTERPRETATION:
+
+IF DOCK WATER DENSITY IS LOWER THAN SEAWATER:
+→ VESSEL DRAFT INCREASES
+→ DWA IS POSITIVE
+
+IF DOCK WATER DENSITY IS HIGHER THAN SEAWATER:
+→ VESSEL DRAFT DECREASES
+→ DWA IS NEGATIVE
+
+ALL DRAFT / DWA VALUES:
+→ recorded in millimetres where applicable.
+
+ASSESS:
+• Seawater density
+• Dock-water density
+• FWA
+• Calculated DWA
+• Forward draft
+• Aft draft
+• Mean draft
+• Trim
+• Resulting UKC
+
+PASS CRITERIA:
+The density correction is calculated transparently and the resulting draft change is included in the UKC assessment.
+
+IMPORTANT:
+The calculation is an engineering/research calculation and must be checked against the vessel's approved hydrostatic, stability and loading information before operational use.
 
 ============================================================
 AUDIT FORMAT
