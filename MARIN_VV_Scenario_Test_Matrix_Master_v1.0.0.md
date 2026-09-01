@@ -4565,5 +4565,741 @@ The next part will continue with the remaining navigation, navigation lights/sou
 
 All will remain under one continuous numbering system.
 
+SEXTANT PROTOCOL™
+
+MARIN DP / USV RESILIENCE V&V RESEARCH
+
+PROPOSED SPECIAL OFFSHORE OPERATIONS — MD REVIEW VERSION
+
+VV-051 — BUOYAGE / NAVIGATIONAL MARK IDENTIFICATION
+
+SCENARIO
+
+Vessel encounters a navigational mark, buoy or beacon during coastal, port, restricted-water or offshore operations.
+
+INPUT
+
+- Vessel position
+- Vessel heading
+- Course over ground
+- Speed over ground
+- Charted buoy position
+- Buoy / beacon type
+- Buoy colour
+- Topmark
+- Light characteristic
+- Light colour
+- Sound signal where applicable
+- Radar response
+- AIS / AtoN information where available
+- GNSS position
+- Chart / ENC information
+- Visibility
+- Tidal condition
+- Water depth
+- Applicable local navigation requirements
+
+ASSESS
+
+- Correct identification of the navigational mark
+- Agreement between charted and observed position
+- Mark identification against available navigation information
+- Vessel approach / passing / deviation condition
+- Safe passing distance
+- Water depth
+- UKC
+- Channel / hazard / safe-water / special-area indication
+- Light-characteristic consistency
+- Navigation confidence
+
+EXPECTED DECISION
+
+CONFIRM MARK / MONITOR / ALTER COURSE / REDUCE SPEED / ESCALATE
+
+PASS CRITERIA
+
+1. The navigational mark is correctly identified.
+2. Chart / ENC information is correlated with available observations.
+3. Vessel position is recorded.
+4. Water depth and UKC are considered.
+5. Navigation confidence is recorded.
+6. The information is incorporated into the simulated navigation assessment.
+7. Human authority remains FINAL.
+8. No autonomous navigation command is generated.
+
+---
+
+VV-052 — LATERAL MARK / CHANNEL
+
+SCENARIO
+
+Vessel enters, follows or leaves a marked channel.
+
+INPUT
+
+- Vessel position
+- Vessel heading
+- Course
+- Speed
+- Applicable buoyage system
+- Port / starboard lateral-mark information
+- Channel direction
+- Charted channel limits
+- Charted depth
+- Tide height
+- Vessel draft
+- Trim
+- UKC
+- Safe passing distance
+- Traffic condition
+- Visibility
+- Local navigation requirements
+
+ASSESS
+
+- Applicable buoyage system
+- Lateral-mark identification
+- Channel direction
+- Vessel relationship to channel
+- Position relative to channel limits
+- Water depth
+- UKC
+- Tidal condition
+- Draft and trim
+- Safe passing distance
+- Traffic
+- Navigation confidence
+
+EXPECTED DECISION
+
+FOLLOW CHANNEL / CORRECT TRACK / REDUCE SPEED / ESCALATE
+
+PASS CRITERIA
+
+1. Vessel relationship to the marked channel is recorded.
+2. Applicable buoyage information is identified.
+3. Chart / ENC information is considered.
+4. Draft, tide and UKC are incorporated.
+5. The simulator does not rely solely on visual buoy recognition.
+6. Human authority remains FINAL.
+7. No autonomous navigation command is generated.
+
+---
+
+VV-053 — CARDINAL MARK
+
+SCENARIO
+
+Vessel approaches a cardinal mark indicating the safe side on which to pass a navigational danger.
+
+INPUT
+
+- Vessel position
+- Vessel heading
+- Bearing to mark
+- Cardinal-mark type
+- Charted danger position
+- Charted danger extent
+- Water depth
+- Vessel draft
+- Trim
+- UKC
+- Tide
+- Visibility
+- Weather
+- Sea condition
+
+ASSESS
+
+- Cardinal-mark identification
+- Correct meaning of the mark
+- Vessel position
+- Bearing to mark
+- Associated charted danger
+- Safe passing side
+- Water depth
+- UKC
+- Visibility
+- Environmental conditions
+- Navigation confidence
+
+EXPECTED DECISION
+
+PASS ON INDICATED SAFE SIDE / MONITOR / ALTER COURSE / ESCALATE
+
+PASS CRITERIA
+
+1. Correct cardinal-mark meaning is identified.
+2. Associated navigational danger is identified.
+3. Safe passing side is recorded.
+4. UKC is assessed.
+5. Environmental conditions are considered.
+6. Recommended simulated track remains clear of the associated danger.
+7. Human authority remains FINAL.
+
+---
+
+VV-054 — ISOLATED DANGER MARK
+
+SCENARIO
+
+Vessel approaches an isolated danger mark.
+
+INPUT
+
+- Vessel position
+- Vessel heading
+- Bearing to mark
+- Mark identification
+- Charted danger position
+- Charted danger extent
+- Safe passing distance
+- Vessel draft
+- Trim
+- Water depth
+- Tide
+- UKC
+- Sea state
+- Visibility
+- Vessel speed
+
+ASSESS
+
+- Mark identification
+- Charted danger position
+- Vessel position
+- Safe passing distance
+- Draft
+- Water depth
+- UKC
+- Tidal condition
+- Sea state
+- Visibility
+- Speed
+- Navigation confidence
+
+EXPECTED DECISION
+
+PASS CLEAR / ALTER COURSE / REDUCE SPEED / ESCALATE
+
+PASS CRITERIA
+
+1. The mark is correctly identified.
+2. The associated localised danger is recognised.
+3. Safe passing distance is assessed.
+4. Draft, water depth and UKC are recorded.
+5. Environmental conditions are considered.
+6. Human authority remains FINAL.
+7. No autonomous navigation command is generated.
+
+---
+
+VV-055 — SAFE WATER MARK
+
+SCENARIO
+
+Vessel uses a safe-water mark to assist with navigation through a fairway, approach or channel.
+
+INPUT
+
+- Vessel position
+- Vessel heading
+- Course
+- Speed
+- Mark position
+- Mark identification
+- Fairway / channel relationship
+- Chart / ENC information
+- Water depth
+- Vessel draft
+- Trim
+- UKC
+- Tide
+- Other traffic
+- Visibility
+- Navigation confidence
+
+ASSESS
+
+- Mark position
+- Vessel position
+- Fairway / channel relationship
+- Course
+- Speed
+- Water depth
+- UKC
+- Tide
+- Traffic
+- Visibility
+- Navigation confidence
+
+EXPECTED DECISION
+
+FOLLOW FAIRWAY / MONITOR / ESCALATE
+
+PASS CRITERIA
+
+1. Safe-water information is correctly identified.
+2. Mark position is correlated with chart / ENC data.
+3. Vessel position is recorded.
+4. Water depth and UKC are considered.
+5. Traffic and visibility are assessed.
+6. Human authority remains FINAL.
+
+---
+
+VV-056 — SPECIAL MARK / RESTRICTED AREA
+
+SCENARIO
+
+Vessel approaches a special mark identifying a designated area or feature.
+
+INPUT
+
+- Vessel position
+- Vessel heading
+- Proposed route
+- Mark identification
+- Charted area
+- Purpose of mark
+- Navigation restrictions
+- Local port / waterway requirements
+- Vessel status
+- Vessel dimensions
+- Draft
+- UKC
+- Traffic
+- Environmental conditions
+
+ASSESS
+
+- Special-mark identification
+- Charted-area relationship
+- Purpose of the mark
+- Applicable navigation restrictions
+- Local requirements
+- Vessel status
+- Proposed route
+- Draft / UKC where applicable
+- Traffic condition
+- Environmental condition
+
+EXPECTED DECISION
+
+PROCEED / AVOID AREA / ALTER ROUTE / ESCALATE
+
+PASS CRITERIA
+
+1. Special-area condition is identified.
+2. Applicable restrictions are considered.
+3. Vessel relationship to the area is recorded.
+4. The simulator does not assume unrestricted passage.
+5. Human authority remains FINAL.
+6. No autonomous route change is generated.
+
+---
+
+VV-057 — BUOY / ATO N POSITION DISCREPANCY
+
+SCENARIO
+
+Observed buoy or AtoN position differs materially from the charted position.
+
+INPUT
+
+- Vessel position
+- Charted buoy position
+- Observed buoy position
+- GNSS position
+- Radar position
+- Visual identification
+- AIS / AtoN information where available
+- Chart / ENC information
+- Timestamp
+- Tidal condition
+- Current
+- Visibility
+- Vessel heading
+- Speed
+- Navigation confidence
+
+ASSESS
+
+- GNSS position
+- Charted position
+- Observed position
+- Radar correlation
+- Visual identification
+- AIS / AtoN information
+- Timestamp integrity
+- Tidal / current influence
+- Possible buoy displacement
+- Position confidence
+- Navigation-data consistency
+
+EXPECTED DECISION
+
+VERIFY / REDUCE SPEED / INCREASE CLEARANCE / ALTER ROUTE / ESCALATE
+
+PASS CRITERIA
+
+1. Position discrepancy is detected.
+2. Multiple available navigation sources are compared.
+3. Timestamp is recorded.
+4. Possible AtoN displacement is identified as an uncertainty.
+5. Navigation confidence is reduced where appropriate.
+6. The simulator does not blindly accept a single navigation source.
+7. Human authority remains FINAL.
+
+---
+
+VV-058 — BUOY LIGHT / SOUND CHARACTERISTIC FAILURE
+
+SCENARIO
+
+Expected buoy light or sound characteristic is absent, degraded or inconsistent with available navigation information.
+
+INPUT
+
+- Vessel position
+- Expected mark identification
+- Expected light characteristic
+- Expected light colour
+- Expected sound characteristic
+- Observed light characteristic
+- Observed light colour
+- Observed sound characteristic
+- Visibility
+- Radar response
+- GNSS position
+- Chart / ENC information
+- AIS / AtoN information where available
+- Alternative navigation source
+- Timestamp
+
+ASSESS
+
+- Expected characteristic
+- Observed characteristic
+- Light failure / degradation
+- Sound-signal failure / degradation
+- Visibility
+- Radar response
+- GNSS position
+- Chart / ENC correlation
+- Alternative navigation source
+- Navigation confidence
+
+EXPECTED DECISION
+
+VERIFY / REDUCE SPEED / USE ALTERNATIVE NAVIGATION SOURCE / ESCALATE
+
+PASS CRITERIA
+
+1. Expected and observed characteristics are compared.
+2. Failure or uncertainty is detected.
+3. Alternative navigation information is considered.
+4. Navigation confidence is reassessed.
+5. Human authority remains FINAL.
+6. No autonomous navigation command is generated.
+
+---
+
+VV-059 — BUOYAGE + DRAFT + UKC + TIDAL WINDOW
+
+SCENARIO
+
+Vessel approaches a buoyed channel with a limited under-keel-clearance window.
+
+INPUT
+
+- Departure draft
+- Forward draft
+- Aft draft
+- Mean draft
+- Trim
+- Water density
+- Charted depth
+- Chart datum
+- Height of tide above chart datum
+- Required UKC
+- Safety margin
+- Vessel speed
+- Tidal current
+- Squat / dynamic-draft allowance where applicable
+- Position confidence
+- Chart-data confidence
+
+CALCULATION
+
+Water Depth = Charted Depth at Chart Datum + Height of Tide
+
+UKC = Water Depth − Applicable Dynamic / Actual Draft
+
+Where applicable, the assessment shall consider:
+
+- Departure draft
+- Forward draft
+- Aft draft
+- Trim
+- Squat
+- Vessel motion
+- Heel
+- Wave response
+- Tidal variation
+- Safety margin
+- Position uncertainty
+- Chart-data uncertainty
+
+ASSESS
+
+- Departure draft
+- Water depth
+- Tide
+- Applicable vessel draft
+- UKC
+- Working tidal window
+- Environmental conditions
+- Dynamic draft
+- Position confidence
+- Chart-data integrity
+
+EXPECTED DECISION
+
+TIDAL WINDOW ADEQUATE / WAIT FOR TIDE / REDUCE DRAFT / ALTER ROUTE / ESCALATE
+
+PASS CRITERIA
+
+1. Departure draft is explicitly incorporated.
+2. Charted depth is not treated as the complete available water depth.
+3. Tide height is recorded.
+4. UKC is reproducible.
+5. The changing tidal window is traceable.
+6. Applicable vessel-specific UKC criteria remain controlling.
+7. Human authority remains FINAL.
+
+---
+
+VV-060 — BUOYAGE / RESTRICTED VISIBILITY
+
+SCENARIO
+
+Vessel navigates a buoyed channel in fog, heavy rain, haze or another restricted-visibility condition.
+
+INPUT
+
+- Vessel position
+- Vessel heading
+- Course
+- Speed
+- Buoy identification
+- Chart / ENC information
+- Radar response
+- GNSS position
+- AIS / AtoN information where available
+- Sound-signalling capability
+- Visibility
+- Traffic
+- Channel limits
+- Water depth
+- Vessel draft
+- UKC
+- Position confidence
+
+ASSESS
+
+- Buoy identification
+- Radar correlation
+- GNSS position
+- Chart / ENC correlation
+- Sound-signal consideration
+- Safe speed
+- Traffic
+- Channel limits
+- UKC
+- Position confidence
+- Navigation-data reliability
+
+EXPECTED DECISION
+
+REDUCE SPEED / ENHANCE LOOKOUT / SOUND SIGNAL / VERIFY POSITION / ESCALATE
+
+PASS CRITERIA
+
+1. Restricted visibility is correctly identified.
+2. Visual buoy recognition limitations are considered.
+3. Radar and other appropriate navigation information are considered.
+4. Safe speed is assessed.
+5. Sound-signal requirements are considered.
+6. UKC remains visible.
+7. Navigation confidence is recorded.
+8. Human authority remains FINAL.
+9. No autonomous navigation command is generated.
+
+---
+
+BUOYAGE V&V PRINCIPLE
+
+NAVIGATIONAL MARK → IDENTIFY → VERIFY → CORRELATE WITH CHART / ENC → CONFIRM POSITION → ASSESS WATER DEPTH / UKC → ASSESS TRAFFIC → ASSESS VISIBILITY → RECOMMEND → CAPTAIN AI LENA → HUMAN AUTHORITY → SIMULATED RESPONSE → AUDIT
+
+The simulator shall not infer a safe route solely from the presence of a buoy.
+
+Buoyage information shall be assessed together with:
+
+- Chart / ENC information
+- Vessel position
+- Vessel draft
+- Water depth
+- Tide
+- UKC
+- Vessel manoeuvring characteristics
+- Traffic
+- Visibility
+- Applicable local navigation requirements
+
+---
+
+SPECIAL OFFSHORE OPERATIONS
+
+VV-061 — HEAVY-LIFT LOADING IN SEAWAY
+
+PURPOSE
+
+Assess the simulated resilience response during heavy-lift loading operations conducted in environmental conditions representative of offshore / seaway operations.
+
+INPUT
+
+- Vessel position
+- Vessel heading
+- Lift weight
+- Crane radius
+- Crane load
+- Boom angle
+- Hook load
+- Vessel displacement
+- Vessel draft
+- Vessel trim
+- Vessel heel / list
+- KG / CG condition
+- Free-surface effects
+- GM / GZ and stability response
+- Wind
+- Wave
+- Swell
+- Current
+- Vessel motions
+- Dynamic amplification / suspended-load movement
+- Deck securing
+- Load-transfer condition
+- DP position error
+- Environmental loading
+- Lift suspension criteria
+- Abort criteria
+- Human-authority status
+
+ASSESS
+
+- Changing displacement
+- CG movement
+- Stability response
+- Heel / list
+- Trim
+- Environmental loading
+- Vessel motion
+- DP position response
+- Load-transfer condition
+- Suspended-load condition
+- Safe-state condition
+- Lift suspension / abort condition
+- Residual risk
+
+EXPECTED DECISION
+
+CONTINUE SIMULATED LIFT / MONITOR / SUSPEND / ABORT / ESCALATE
+
+EXPECTED V&V EVIDENCE
+
+The system should demonstrate traceable assessment of changing stability, environmental loading, vessel position and operational risk throughout the simulated lift.
+
+HUMAN AUTHORITY
+
+FINAL
+
+SIMULATED EXECUTION
+
+HUMAN AUTHORIZATION REQUIRED
+
+OPERATIONAL DP CONNECTION
+
+NONE
+
+---
+
+VV-062 — HEAVY-LIFT DISCHARGE / OFFLOADING
+
+PURPOSE
+
+Assess the simulated resilience response during heavy-lift discharge where vessel displacement, centre of gravity and stability conditions change throughout the operation.
+
+INPUT
+
+- Initial displacement
+- Remaining displacement
+- Cargo weight
+- Lifted load
+- Changing KG / CG
+- Longitudinal CG movement
+- Transverse CG movement
+- Heel / list
+- Trim
+- GM / GZ and stability response
+- Crane condition
+- Suspended-load condition
+- Seaway
+- Vessel-motion response
+- Wind
+- Wave
+- Current
+- DP capability / resilience
+- Position stability
+- Heading stability
+- Safe-state condition
+- Emergency / lift-suspension condition
+- Human-authority status
+
+ASSESS
+
+- Displacement change
+- CG shift
+- Stability response
+- Heel / list
+- Trim
+- Crane condition
+- Suspended-load condition
+- Environmental loading
+- DP response
+- Position / heading stability
+- Safe-state condition
+- Residual risk
+
+EXPECTED DECISION
+
+CONTINUE / MONITOR / SUSPEND LIFT / ABORT / ESCALATE
+
+EXPECTED V&V EVIDENCE
+
+The system should demonstrate that changing loading conditions trigger reassessment of vessel stability, environmental stress, position resilience and operational status.
+
+HUMAN AUTHORITY
+
+FINAL
+
+SIMULATED EXECUTION
+
+HUMAN AUTHORIZATION REQUIRED
+
+OPERATIONAL DP CONNECTION
+
+NONE
 
 
