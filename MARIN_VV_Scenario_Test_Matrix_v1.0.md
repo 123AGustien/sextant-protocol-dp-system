@@ -2047,6 +2047,735 @@ PHYSICAL VESSEL CONNECTION:
 FALSE
 
 ============================================================
+VV-029 — HULL STRESS / STRUCTURAL RESPONSE
+============================================================
+
+INPUT:
+Vessel loading
+Draft
+Trim
+Displacement
+Wave condition
+Sea state
+Vessel heading
+Speed
+Structural condition
+
+ASSESS:
+• Hull stress
+• Longitudinal bending moment
+• Shearing force
+• Torsional / twisting moment
+• Local structural loading
+• Deck and bottom loading
+• Structural inspection status
+• Loading condition
+• Heavy-weather structural exposure
+
+EXPECTED DECISION:
+STRUCTURAL CONDITION ACCEPTABLE /
+SIMULATED STRUCTURAL REVIEW REQUIRED /
+ESCALATE FOR HUMAN / CLASS / ENGINEERING REVIEW
+
+PASS CRITERIA:
+Hull-stress indicators and structural-response parameters are
+recorded and traceable.
+
+IMPORTANT:
+This is a research/V&V assessment and does not replace
+class-approved structural calculations, loading manuals,
+approved stability information or structural surveys.
+
+
+============================================================
+VV-030 — HEAVY-SEA HULL LOADING / POUNDING
+============================================================
+
+INPUT:
+Heavy swell
+Wave height
+Wave period
+Wave direction
+Vessel heading
+Vessel speed
+Draft
+Trim
+
+ASSESS:
+• Hull stress
+• Bending moment
+• Shearing force
+• Torsional loading
+• Bow/stern response
+• Slamming / pounding exposure
+• Green-water exposure where applicable
+• Structural response
+• Speed/heading suitability
+
+EXPECTED DECISION:
+MAINTAIN / REDUCE EXPOSURE / CHANGE HEADING /
+REDUCE SPEED / ESCALATE FOR HUMAN REVIEW
+
+PASS CRITERIA:
+Heavy-sea loading produces a traceable structural-risk
+assessment without generating an autonomous operational command.
+
+
+============================================================
+VV-031 — RAPID SHALLOW-WATER TRANSITION
+============================================================
+
+INPUT:
+Approach toward shoal water / coastal area
+Charted depth
+Height of tide
+Vessel draft
+Trim
+Speed
+Vessel position
+Position confidence
+
+CALCULATION:
+
+Water Depth =
+Charted Depth below Chart Datum
++
+Height of Tide above Chart Datum
+
+Under-Keel Clearance (UKC) =
+Water Depth
+−
+Vessel Draft
+
+Equivalent relationship:
+
+Vessel Draft + UKC = Water Depth
+
+ASSESS:
+• Rapid reduction in available depth
+• UKC
+• Squat risk where applicable
+• Trim effect
+• Speed effect
+• Position uncertainty
+• Chart-data integrity
+• Tide-data validity
+• Safe approach condition
+
+EXPECTED DECISION:
+SAFE DEPTH / REDUCED UKC / SHALLOW-WATER WARNING /
+HUMAN REVIEW / SAFE-STATE ESCALATION
+
+PASS CRITERIA:
+The system detects a rapid reduction in available water depth
+and records the resulting UKC assessment.
+
+
+============================================================
+VV-032 — UNDER-KEEL CLEARANCE / TIDAL CALCULATION
+============================================================
+
+INPUT:
+Charted depth below Chart Datum
+Height of tide above Chart Datum
+Vessel draft
+Trim
+Dynamic draft / squat parameter where applicable
+
+CALCULATION:
+
+Water Depth =
+Charted Depth + Height of Tide
+
+UKC =
+Water Depth − Actual Applicable Draft
+
+Where trim is relevant:
+
+Forward Draft =
+Reference Draft + Trim Component
+
+Aft Draft =
+Reference Draft − Trim Component
+
+The applicable vessel draft must reflect the actual
+loading and trim condition used in the scenario.
+
+ASSESS:
+• Charted depth
+• Tide height
+• Actual draft
+• Trim
+• UKC
+• Position accuracy
+• Depth-data integrity
+• Shallow-water exposure
+
+EXPECTED DECISION:
+ADEQUATE UKC / REVIEW REQUIRED / ESCALATE
+
+PASS CRITERIA:
+All depth inputs are recorded in the audit trail and the
+calculated UKC is reproducible.
+
+
+============================================================
+VV-033 — HEAVY SWELL / WAVE-INDUCED HEEL
+============================================================
+
+INPUT:
+Swell height
+Wave height
+Wave direction
+Wave period
+Vessel heading
+Vessel speed
+Loading condition
+CG condition
+
+ASSESS:
+• Dynamic heel
+• Roll response
+• List
+• GZ / righting response where applicable
+• Stability index
+• CG condition
+• Hull loading
+• Bending moment
+• Shearing force
+• Torsional response
+
+EXPECTED DECISION:
+MONITOR / ALTER SIMULATED HEADING OR SPEED /
+ESCALATE / SAFE-STATE AS APPROPRIATE
+
+PASS CRITERIA:
+Dynamic heel is distinguished from persistent list and the
+stability/structural response is recorded.
+
+
+============================================================
+VV-034 — COMBINED HEAVY WEATHER / HULL RESPONSE
+============================================================
+
+INPUT:
+High wind
+High swell
+High waves
+Tidal condition
+Vessel heading
+Vessel speed
+Draft
+Trim
+CG
+Loading condition
+Water depth
+
+ASSESS:
+• Environmental stress
+• Heel
+• List
+• Trim
+• Hull stress
+• Bending moment
+• Shearing force
+• Torque / torsional loading
+• Pounding/slamming exposure
+• UKC
+• Stability response
+• Position confidence
+
+EXPECTED DECISION:
+HIGH-STRESS CONDITION /
+MAINTAIN SAFE STATE /
+ESCALATE FOR HUMAN REVIEW
+
+PASS CRITERIA:
+The combined scenario produces a complete and traceable
+resilience assessment across environmental, stability,
+structural and navigational parameters.
+
+NO AUTONOMOUS OPERATIONAL COMMAND.
+
+
+============================================================
+VV-035 — POSITION / DEPTH DATA INTEGRITY
+============================================================
+
+INPUT:
+GNSS / DGPS position
+Charted depth
+Tide information
+Echo-sounder/depth information where applicable
+Position timestamp
+Navigation-data source
+
+ASSESS:
+• Position accuracy
+• Position integrity
+• Position-source consistency
+• Chart-data integrity
+• Tide-data validity
+• Depth-data consistency
+• Position/depth mismatch
+• Anomalous depth condition
+
+EXPECTED DECISION:
+VALID / REVIEW REQUIRED / POSITION CONFIDENCE
+INSUFFICIENT / HUMAN ESCALATION
+
+PASS CRITERIA:
+A loss of confidence in position or depth information
+is detected and recorded before relying on the calculated
+UKC assessment.
+
+
+============================================================
+VV-036 — DEADSHIP / VESSEL NOT UNDER COMMAND / GROUNDED
+============================================================
+
+INPUT:
+Vessel status
+Power availability
+Propulsion availability
+Steering availability
+Navigation lights
+Sound-signalling equipment
+Emergency power
+GMDSS/radio status
+Vessel position
+Vessel heading
+Traffic/environmental conditions
+
+ASSESS:
+• Deadship condition
+• Not-under-command condition
+• Grounded condition
+• Required navigation/safety signalling
+• Emergency lighting
+• Sound signals
+• Position reporting
+• Human response
+• Nearby traffic / collision risk
+• Safe-state condition
+
+EXPECTED DECISION:
+IDENTIFY STATUS / ALERT / HUMAN AUTHORITY /
+EMERGENCY PROCEDURE REVIEW
+
+PASS CRITERIA:
+The scenario identifies the applicable vessel condition and
+records the required safety-signalling and emergency-system
+review indicators.
+
+IMPORTANT:
+The simulator does not determine legal signalling requirements
+for a particular vessel or situation; applicable COLREG,
+SOLAS, flag-state and vessel-specific requirements remain
+authoritative.
+
+
+============================================================
+VV-037 — DANGEROUS GOODS / STOWAGE PLAN
+============================================================
+
+INPUT:
+Dangerous goods onboard
+Cargo classification
+Quantity
+Stowage location
+Segregation requirements
+Cargo securing
+Dangerous Goods Manifest
+Stowage Plan
+Emergency information
+
+ASSESS:
+• DG declaration
+• Cargo classification
+• Stowage location
+• Segregation
+• Securing
+• Manifest availability
+• Emergency response information
+• Compatibility with vessel condition
+
+EXPECTED DECISION:
+DOCUMENTATION / STOWAGE REVIEW COMPLETE /
+REVIEW REQUIRED / HUMAN ESCALATION
+
+PASS CRITERIA:
+Dangerous-goods information and stowage-plan status are
+traceable in the V&V audit.
+
+
+============================================================
+VV-038 — SAFE MANNING / UMV CERTIFICATION
+============================================================
+
+INPUT:
+Safe Manning Certificate where applicable
+UMV / Unmanned Vessel Certificate or applicable authorization
+Crew/personnel requirement
+Operating mode
+Operating area
+Watchkeeping requirements
+Remote-operation requirements
+
+ASSESS:
+• Applicable certification
+• Manning requirement
+• Operating mode
+• Personnel availability
+• Remote-operation capability
+• Operational-area applicability
+• Documentation currency
+
+EXPECTED DECISION:
+DOCUMENTATION CURRENT / REVIEW REQUIRED /
+HUMAN / FLAG / CLASS REVIEW
+
+PASS CRITERIA:
+The applicable safe-manning or UMV certification status is
+explicitly recorded.
+
+IMPORTANT:
+The system does not declare statutory or class compliance.
+
+
+============================================================
+VV-039 — VESSEL AIR-DRAFT / OVERHEAD CLEARANCE
+============================================================
+
+INPUT:
+Height of highest fixed point of vessel above keel
+Bridge clearance
+Cable clearance
+Overhead obstruction
+Height of tide where relevant
+Vessel position
+Vessel trim
+
+ASSESS:
+• Vessel air draft
+• Highest point above keel
+• Bridge clearance
+• Cable clearance
+• Other overhead restrictions
+• Trim effect
+• Tidal/environmental effect
+• Navigation-data integrity
+
+CALCULATION:
+
+Available Vertical Clearance =
+Overhead Clearance
+−
+Applicable Vessel Air Draft
+
+EXPECTED DECISION:
+CLEAR / REDUCED CLEARANCE / REVIEW REQUIRED /
+HUMAN ESCALATION
+
+PASS CRITERIA:
+The highest point of the vessel and the applicable overhead
+clearance are explicitly recorded.
+
+
+============================================================
+VV-040 — COMPLETE VESSEL GEOMETRY / CLEARANCE
+============================================================
+
+INPUT:
+Vessel length
+Vessel beam
+Draft
+Air draft
+Highest point above keel
+Trim
+Heel/list
+Turning circle
+Charted depth
+Tide height
+UKC
+Overhead clearance
+
+ASSESS:
+• Horizontal clearance
+• Vertical clearance
+• Depth clearance
+• UKC
+• Turning envelope
+• Heel/list effect
+• Trim effect
+• Air-draft limitation
+• Bridge/cable clearance
+• Safe approach/departure corridor
+
+EXPECTED DECISION:
+CLEARANCE ACCEPTABLE /
+REVIEW REQUIRED /
+HUMAN AUTHORITY ESCALATION
+
+PASS CRITERIA:
+Height, depth, length and width clearances are assessed
+as an integrated vessel-geometry condition.
+
+
+============================================================
+VV-041 — CORRECTIVE-ACTION TESTING
+============================================================
+
+INPUT:
+Failed or degraded scenario
+Identified failure
+Proposed corrective action
+
+PROCESS:
+
+FAILURE
+→
+ASSESS
+→
+CORRECTIVE ACTION
+→
+RE-TEST
+→
+COMPARE RESULTS
+→
+VALIDATE
+→
+AUDIT
+
+ASSESS:
+• Pre-correction result
+• Corrective action
+• Post-correction result
+• Residual risk
+• Resilience improvement
+• Human authorization status
+
+PASS CRITERIA:
+Corrective action produces a traceable before/after result.
+
+
+============================================================
+VV-042 — RE-TEST VALIDATION
+============================================================
+
+INPUT:
+Previously failed scenario
+Corrective action completed
+Original scenario parameters
+
+PROCESS:
+
+REPEAT IDENTICAL SCENARIO
+→
+COMPARE ORIGINAL RESULT
+→
+COMPARE CORRECTED RESULT
+→
+VALIDATE
+→
+AUDIT
+
+PASS CRITERIA:
+
+1. Original scenario is reproducible.
+2. Corrective action is recorded.
+3. Re-test is independently identifiable.
+4. Results are comparable.
+5. Residual failure is identified if present.
+6. Human authority remains final.
+
+
+============================================================
+VV-043 — ASSESSMENT LATENCY
+============================================================
+
+INPUT:
+Scenario timestamp
+Observation timestamp
+Verification timestamp
+Assessment timestamp
+Decision-support timestamp
+Simulated-response timestamp
+Update timestamp
+
+ASSESS:
+
+INPUT
+→ OBSERVE
+→ VERIFY
+→ ASSESS
+→ DECIDE
+→ HUMAN AUTHORITY
+→ SIMULATED RESPONSE
+→ UPDATE
+
+RECORD:
+• Stage latency
+• End-to-end assessment latency
+• Processing consistency
+• Re-test latency
+• Outlier latency
+• Timestamp integrity
+
+PASS CRITERIA:
+Latency is measured and recorded without changing the
+operational architecture or bypassing human authority.
+
+IMPORTANT:
+Latency measurement is a V&V performance indicator and does
+not by itself establish safety, certification or operational
+fitness.
+
+
+============================================================
+VV-044 — FULL MARIN V&V RESILIENCE SCENARIO
+============================================================
+
+INPUT:
+
+Position
+DGPS/GNSS
+Environment
+Wind
+Swell
+Wave
+Tide
+Charted depth
+UKC
+Draft
+Trim
+Heel
+List
+CG
+Hull stress
+Bending moment
+Shearing force
+Torque
+Pounding/slamming
+Air draft
+Bridge/cable clearance
+Vessel class
+DP notation
+Operating area
+Dangerous goods
+Stowage plan
+GMDSS
+Navigation systems
+LSA
+FFA
+Emergency lighting
+Sound signals
+Emergency power
+Safe Manning / UMV certification
+Stores
+Spare parts
+Contingency plans
+Survey status
+Corrective action
+Re-test
+Assessment latency
+
+PROCESS:
+
+OBSERVE
+→
+VERIFY
+→
+ASSESS
+→
+PRIMARY AI
+→
+SECONDARY AI
+→
+STABILIZER
+→
+RECOMMENDATION
+→
+CAPTAIN AI LENA
+→
+HUMAN AUTHORITY
+→
+SIMULATED RESPONSE
+→
+RE-TEST
+→
+AUDIT
+→
+UPDATE
+
+PASS CRITERIA:
+
+1. All applicable scenario inputs are recorded.
+2. Position integrity is assessed.
+3. Environmental stress is assessed.
+4. Stability and structural response are assessed.
+5. Depth and UKC are reproducible.
+6. Air-draft and overhead clearance are assessed.
+7. Vessel documentation indicators are traceable.
+8. Dangerous-goods/stowage information is traceable.
+9. Primary AI produces an assessment.
+10. Secondary AI provides an independent safety assessment.
+11. Stabilizer arbitrates between assessment layers.
+12. Captain AI Lena provides decision support.
+13. Corrective-action testing can be performed.
+14. Re-test validation can be performed.
+15. Assessment latency is recorded.
+16. Human authority remains FINAL.
+17. No autonomous operational command is generated.
+18. No physical-vessel connection exists.
+19. Complete audit trace is maintained.
+
+
+============================================================
+MARIN V&V PRIORITY PRINCIPLE
+============================================================
+
+The Sextant Protocol™ resilience assessment should be treated
+as an EARLY / FIRST-LINE REVIEW ACTIVITY within the research
+and V&V workflow, not as a final item after operational
+decisions have already been made.
+
+The intended sequence is:
+
+IDENTIFY
+→
+OBSERVE
+→
+VERIFY
+→
+SEXTANT RESILIENCE ASSESSMENT
+→
+FAILURE / RISK IDENTIFICATION
+→
+CORRECTIVE ACTION
+→
+RE-TEST
+→
+VALIDATE
+→
+HUMAN AUTHORITY
+→
+OPERATIONAL / ENGINEERING DECISION
+
+The purpose is to identify resilience, safety, structural,
+navigational and operational concerns early enough for
+engineering or operational teams to address them.
+
+It is NOT a mechanism for declaring a vessel "substandard",
+nor does it replace Flag State, Class, statutory, ISM/SMS,
+Master or DPO authority.
+
+============================================================
+END OF ADDITIONAL MARIN V&V SCENARIOS
+============================================================
+
+
+============================================================
 AUDIT FORMAT
 ============================================================
 
