@@ -2770,6 +2770,347 @@ It is NOT a mechanism for declaring a vessel "substandard",
 nor does it replace Flag State, Class, statutory, ISM/SMS,
 Master or DPO authority.
 
+
+============================================================
+VV-045 — ZONE / SEASONAL MAXIMUM DRAFT & LOAD-PORT DRAFT
+============================================================
+
+PURPOSE:
+
+Assess the maximum permitted draft for the applicable
+load-line / geographical zone and determine the corresponding
+permitted loading-port draft after allowing for the vessel's
+planned consumption during the voyage.
+
+INPUT:
+
+• Applicable load-line zone
+• Seasonal zone where applicable
+• Maximum permitted draft at destination/zone
+• Summer Draft / applicable assigned draft
+• Water density at loading port
+• Water density used for applicable load-line condition
+• Distance / steaming days
+• Daily fuel consumption
+• Daily fresh-water consumption where applicable
+• Other voyage consumables
+• TPC (Tonnes per Centimetre immersion)
+• Vessel trim
+• Initial displacement
+• Planned cargo weight
+
+
+------------------------------------------------------------
+STEP 1 — MAXIMUM DRAFT ALLOWED BY ZONE
+------------------------------------------------------------
+
+Determine the applicable maximum permitted draft from the
+vessel's assigned load-line information for the geographical
+and seasonal zone.
+
+MAXIMUM ZONE DRAFT =
+Applicable Assigned Maximum Draft
+for the relevant Load-Line Zone / Season
+
+The value must be vessel-specific.
+
+No universal maximum draft is assumed.
+
+
+------------------------------------------------------------
+STEP 2 — VOYAGE CONSUMPTION
+------------------------------------------------------------
+
+STEAMING CONSUMPTION (tonnes) =
+
+Steaming Days × Daily Consumption
+
+Where required:
+
+TOTAL VOYAGE CONSUMPTION =
+
+Fuel Consumption
++
+Fresh Water Consumption
++
+Other Applicable Consumables
+
+
+------------------------------------------------------------
+STEP 3 — CONVERT CONSUMPTION TO DRAFT
+------------------------------------------------------------
+
+DRAFT REDUCTION (cm) =
+
+Voyage Consumption (tonnes)
+÷
+TPC (tonnes/cm)
+
+
+DRAFT REDUCTION (mm) =
+
+(Voyage Consumption ÷ TPC) × 10
+
+
+Therefore:
+
+LOADING-PORT DRAFT ALLOWANCE =
+
+MAXIMUM ALLOWABLE ZONE DRAFT
++
+EXPECTED VOYAGE DRAFT REDUCTION
+
+
+This allows the vessel to consume the planned weight while
+remaining within the applicable maximum draft at the
+specified limiting condition.
+
+
+------------------------------------------------------------
+STEP 4 — FRESH-WATER / DOCK-WATER ALLOWANCE
+------------------------------------------------------------
+
+FWA / DWA adjustment shall be calculated according to the
+vessel's applicable Fresh Water Allowance and water density.
+
+DWA_mm =
+
+FWA_mm ×
+((1.025 − WaterDensity) / 0.025)
+
+
+SIGN CONVENTION:
+
+If Dock Water Density < 1.025:
+
+DWA is POSITIVE.
+
+The vessel will sink deeper in dock water than in seawater
+for the same displacement.
+
+Therefore:
+
+DRAFT IN DOCK WATER =
+DRAFT IN SEAWATER + DWA
+
+
+If the vessel is being converted from an observed
+dock-water draft to the equivalent seawater draft:
+
+DRAFT IN SEAWATER =
+DRAFT IN DOCK WATER − DWA
+
+
+If the water density is greater than seawater reference
+density (1.025):
+
+The calculated correction becomes NEGATIVE.
+
+Therefore the vessel's draft is reduced relative to the
+1.025 seawater reference for the same displacement.
+
+
+------------------------------------------------------------
+STEP 5 — COMPLETE LOADING-PORT CALCULATION
+------------------------------------------------------------
+
+The assessment should therefore distinguish:
+
+A. Maximum permitted draft in the applicable zone
+
+B. Planned voyage consumption
+
+C. Draft reduction resulting from consumption
+
+D. Loading-port maximum draft
+
+E. Loading-port water density
+
+F. Dock-water allowance / density correction
+
+G. Equivalent seawater draft
+
+H. Actual forward draft
+
+I. Actual aft draft
+
+J. Mean draft
+
+K. Trim
+
+L. Remaining UKC
+
+M. Applicable load-line condition
+
+
+------------------------------------------------------------
+STEP 6 — UKC CROSS-CHECK
+------------------------------------------------------------
+
+WATER DEPTH =
+
+CHARTED DEPTH BELOW CHART DATUM
++
+HEIGHT OF TIDE ABOVE CHART DATUM
+
+
+UKC =
+
+WATER DEPTH
+−
+APPLICABLE VESSEL DRAFT
+
+
+Therefore:
+
+VESSEL DRAFT + UKC = WATER DEPTH
+
+
+The UKC assessment must also consider, where applicable:
+
+• Trim
+• Squat
+• Wave response
+• Heel
+• Tidal variation
+• Position uncertainty
+• Chart-data uncertainty
+• Dynamic draft
+• Shallow-water effects
+
+
+------------------------------------------------------------
+VV-045 PASS CRITERIA
+------------------------------------------------------------
+
+PASS when:
+
+1. Applicable zone/season is identified.
+2. Vessel-specific maximum permitted draft is identified.
+3. Voyage consumption is calculated.
+4. Consumption is converted using the applicable TPC.
+5. Loading-port draft allowance is calculated.
+6. Loading-water density is recorded.
+7. DWA/FWA correction is calculated.
+8. Equivalent seawater draft is traceable.
+9. Forward and aft drafts are recorded.
+10. Trim is recorded.
+11. UKC is calculated.
+12. Applicable load-line condition remains traceable.
+13. Position and chart/depth data are traceable.
+14. Any limiting condition is escalated for human review.
+15. No autonomous loading or navigation command is generated.
+
+
+============================================================
+VV-046 — DENSITY / DRAFT CONVERSION VALIDATION
+============================================================
+
+TEST:
+
+Run identical displacement conditions using:
+
+A. Seawater density = 1.025
+B. Dock water density < 1.025
+C. Water density approaching fresh water
+D. Density greater than 1.025 where applicable
+
+VERIFY:
+
+• Calculated DWA
+• Direction of draft change
+• Equivalent seawater draft
+• Mean draft
+• Forward draft
+• Aft draft
+• Trim
+• TPC conversion
+• Audit calculation
+
+EXPECTED RESULT:
+
+Lower-density water → greater draft.
+
+Higher-density water → lesser draft.
+
+The sign and direction of the density correction must be
+consistent throughout the calculation and audit record.
+
+
+============================================================
+VV-047 — ZONE DRAFT + CONSUMPTION + UKC INTEGRATION
+============================================================
+
+INPUT:
+
+Zone maximum draft
+Seasonal limitation
+Loading-port density
+Steaming days
+Daily consumption
+TPC
+Initial draft
+Trim
+Charted depth
+Tide height
+UKC requirement
+Squat / dynamic allowance where applicable
+
+PROCESS:
+
+ZONE LIMIT
+↓
+VOYAGE CONSUMPTION
+↓
+WEIGHT LOSS
+↓
+TPC DRAFT CONVERSION
+↓
+LOADING-PORT DRAFT
+↓
+DENSITY / DWA CORRECTION
+↓
+EQUIVALENT SW DRAFT
+↓
+CHARTED DEPTH + TIDE
+↓
+UKC
+↓
+STABILITY / STRUCTURAL REVIEW
+↓
+HUMAN AUTHORITY
+↓
+AUDIT
+
+
+PASS CRITERIA:
+
+The complete relationship between:
+
+ZONE
+→
+MAXIMUM DRAFT
+→
+VOYAGE CONSUMPTION
+→
+TPC
+→
+LOADING-PORT DRAFT
+→
+WATER DENSITY
+→
+SEAWATER EQUIVALENT
+→
+WATER DEPTH
+→
+UKC
+
+is deterministic, reproducible and auditable.
+
+============================================================
+END VV-045 TO VV-047
+============================================================
+
 ============================================================
 END OF ADDITIONAL MARIN V&V SCENARIOS
 ============================================================
