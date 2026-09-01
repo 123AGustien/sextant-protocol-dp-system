@@ -5301,5 +5301,483 @@ HUMAN AUTHORIZATION REQUIRED
 OPERATIONAL DP CONNECTION
 
 NONE
+# ============================================================
+# VV-031 — DANGEROUS GOODS / CARGO STOWAGE
+# ============================================================
+
+INPUT:
+1. Dangerous-goods declaration
+2. Cargo classification
+3. UN number where applicable
+4. Quantity
+5. Cargo description
+6. Stowage location
+7. Segregation requirements
+8. Cargo securing arrangements
+9. Dangerous-goods manifest
+10. Stowage plan
+11. Emergency information
+12. Vessel loading condition
+13. Environmental condition
+14. Applicable vessel / port requirements
+
+OBSERVE:
+- Cargo and dangerous-goods information.
+- Declared cargo status.
+- Stowage location.
+- Securing condition.
+- Required segregation.
+- Availability of emergency information.
+
+VERIFY:
+- Manifest against stowage plan.
+- Cargo classification.
+- Required segregation.
+- Securing information.
+- Applicable vessel-specific requirements.
+
+ASSESS:
+- Dangerous-goods documentation status.
+- Stowage suitability.
+- Segregation condition.
+- Cargo securing condition.
+- Emergency-response information.
+- Compatibility with vessel condition.
+- Potential stability / structural implications.
+- Potential operational restrictions.
+
+EXPECTED DECISION:
+DG / STOWAGE INFORMATION AVAILABLE
+/
+REVIEW REQUIRED
+/
+HUMAN ESCALATION
+
+PASS CRITERIA:
+1. Dangerous-goods information is traceable.
+2. Cargo classification is recorded.
+3. Stowage location is identifiable.
+4. Segregation requirements are visible.
+5. Securing status is recorded.
+6. Manifest and stowage-plan status are traceable.
+7. Emergency information is available where applicable.
+8. Any deficiency is escalated for human review.
+9. No autonomous cargo-handling command is generated.
+
+# ============================================================
+# VV-032 — SAFE MANNING / UMV CERTIFICATION
+# ============================================================
+
+INPUT:
+1. Safe Manning Certificate where applicable
+2. UMV / unmanned-vessel certification where applicable
+3. Applicable authorization
+4. Vessel operating mode
+5. Operating area
+6. Manning requirement
+7. Personnel availability
+8. Watchkeeping requirements
+9. Remote-operation requirements
+10. Remote-control capability
+11. Documentation issue date
+12. Documentation validity / status
+13. Flag State requirements
+14. Class requirements where applicable
+
+OBSERVE:
+- Current operating mode.
+- Manning / personnel status.
+- Applicable documentation.
+- Remote-operation arrangements.
+
+VERIFY:
+- Applicable certification.
+- Manning requirement.
+- Operating-area applicability.
+- Operating-mode applicability.
+- Documentation status.
+
+ASSESS:
+- Safe-manning requirement.
+- Personnel availability.
+- Remote-operation capability.
+- Watchkeeping capability.
+- UMV authorization where applicable.
+- Documentation completeness.
+- Operational-area compatibility.
+
+EXPECTED DECISION:
+DOCUMENTATION CURRENT
+/
+REVIEW REQUIRED
+/
+HUMAN / FLAG / CLASS REVIEW
+
+PASS CRITERIA:
+1. Applicable certification is identified.
+2. Manning requirement is recorded.
+3. Operating mode is recorded.
+4. Operating area is recorded.
+5. Personnel / remote-operation capability is traceable.
+6. Documentation status is traceable.
+7. Any uncertainty is escalated.
+8. Sextant does not declare statutory or Class compliance.
+
+# ============================================================
+# VV-033 — VESSEL AIR-DRAFT / OVERHEAD CLEARANCE
+# ============================================================
+
+INPUT:
+1. Vessel highest fixed point
+2. Highest point above keel
+3. Vessel air draft
+4. Bridge clearance
+5. Cable clearance
+6. Other overhead obstruction
+7. Overhead clearance
+8. Vessel draft
+9. Vessel trim
+10. Vessel heel / list where applicable
+11. Vessel position
+12. Tide where relevant
+13. Navigation-data source
+14. Clearance-data source
+
+CALCULATION:
+
+AVAILABLE VERTICAL CLEARANCE
+=
+OVERHEAD CLEARANCE
+−
+APPLICABLE VESSEL AIR DRAFT
+
+OBSERVE:
+- Vessel geometry.
+- Highest fixed point.
+- Overhead restriction.
+- Position.
+- Trim / heel condition.
+
+VERIFY:
+- Vessel air-draft data.
+- Bridge / cable clearance.
+- Applicable tide or environmental correction.
+- Navigation-data integrity.
+
+ASSESS:
+- Air draft.
+- Highest point above keel.
+- Bridge clearance.
+- Cable clearance.
+- Other overhead restrictions.
+- Trim / heel effect.
+- Data confidence.
+
+EXPECTED DECISION:
+CLEAR
+/
+REDUCED CLEARANCE
+/
+REVIEW REQUIRED
+/
+HUMAN ESCALATION
+
+PASS CRITERIA:
+1. Highest vessel point is explicitly recorded.
+2. Applicable overhead clearance is recorded.
+3. Available vertical clearance is reproducible.
+4. Vessel trim / heel is considered where applicable.
+5. Navigation-data integrity is assessed.
+6. Any limiting clearance is escalated.
+7. No autonomous navigation command is generated.
+
+# ============================================================
+# VV-034 — COMPLETE VESSEL GEOMETRY / CLEARANCE
+# ============================================================
+
+INPUT:
+1. Vessel length
+2. Vessel beam
+3. Vessel draft
+4. Forward draft
+5. Aft draft
+6. Mean draft
+7. Air draft
+8. Highest point above keel
+9. Trim
+10. Heel / list
+11. Turning-circle information
+12. Charted depth
+13. Tide height
+14. Water depth
+15. UKC
+16. Overhead clearance
+17. Bridge / cable clearance
+18. Channel width
+19. Available manoeuvring area
+20. Vessel position confidence
+
+OBSERVE:
+- Horizontal vessel dimensions.
+- Vertical dimensions.
+- Depth condition.
+- Overhead restrictions.
+- Manoeuvring envelope.
+
+VERIFY:
+- Vessel particulars.
+- Draft / trim.
+- Charted depth.
+- Tide.
+- Overhead-clearance data.
+- Turning information.
+- Position integrity.
+
+ASSESS:
+- Horizontal clearance.
+- Vertical clearance.
+- Depth clearance.
+- UKC.
+- Turning envelope.
+- Heel / list effect.
+- Trim effect.
+- Air-draft limitation.
+- Bridge / cable clearance.
+- Safe approach / departure corridor.
+
+EXPECTED DECISION:
+CLEARANCE ACCEPTABLE
+/
+REVIEW REQUIRED
+/
+HUMAN AUTHORITY ESCALATION
+
+PASS CRITERIA:
+1. Vessel dimensions are traceable.
+2. Draft and trim are recorded.
+3. Depth and UKC are reproducible.
+4. Air draft is recorded.
+5. Overhead clearance is assessed.
+6. Turning envelope is assessed.
+7. Horizontal and vertical clearances are integrated.
+8. Limiting conditions are visible.
+9. Human authority remains FINAL.
+10. No autonomous operational command is generated.
+
+# ============================================================
+# VV-035 — TRAFFIC SEPARATION SCHEME / NAVIGATION CONDITION
+# ============================================================
+
+INPUT:
+1. Vessel position
+2. Vessel heading
+3. Course over ground
+4. Speed over ground
+5. Traffic Separation Scheme status
+6. Traffic-lane geometry
+7. General traffic-flow direction
+8. Traffic density
+9. Nearby vessels
+10. Relative bearing
+11. CPA
+12. TCPA
+13. Joining / leaving / crossing / following status
+14. Navigation status
+15. Port / terminal condition
+16. Local VTS requirements
+17. Applicable COLREG considerations
+18. Navigational constraints
+
+OBSERVE:
+- Own-vessel position and movement.
+- Traffic-lane condition.
+- Nearby traffic.
+- Port-departure / arrival condition.
+
+VERIFY:
+- TSS geometry.
+- Traffic direction.
+- Vessel movement.
+- Relative traffic situation.
+- Applicable navigation requirements.
+
+ASSESS:
+- Following a traffic lane.
+- Joining a traffic lane.
+- Leaving a traffic lane.
+- Crossing a traffic lane.
+- Collision risk.
+- CPA / TCPA.
+- Available sea room.
+- Safe speed.
+- Local restrictions.
+- TSS / COLREG considerations.
+
+EXPECTED DECISION:
+SAFE
+/
+CAUTION
+/
+ALTER MANOEUVRE
+/
+REDUCE SPEED
+/
+WAIT
+/
+ESCALATE FOR HUMAN REVIEW
+
+PASS CRITERIA:
+1. Traffic-lane status is identified.
+2. Vessel course and speed are recorded.
+3. Following / joining / leaving / crossing are distinguished.
+4. Collision risk is assessed.
+5. Applicable TSS / COLREG considerations are identified.
+6. No blanket right-of-way assumption is used.
+7. Human authority remains FINAL.
+8. No autonomous navigational command is generated.
+
+# ============================================================
+# VV-036 — TSS / PORT-DEPARTURE CONFLICT
+# ============================================================
+
+SCENARIO:
+Vessel departing a port or terminal approaches a traffic
+separation scheme while another vessel is already established
+within the traffic lane.
+
+INPUT:
+1. Departure position
+2. Departure track
+3. Vessel heading
+4. Vessel speed
+5. Traffic-flow direction
+6. Established traffic position
+7. Relative bearing
+8. CPA
+9. TCPA
+10. Available sea room
+11. TSS geometry
+12. Local traffic restrictions
+13. VTS requirements
+14. Navigation status
+
+ASSESS:
+- Departure track.
+- Established traffic.
+- Traffic-flow direction.
+- Relative movement.
+- Collision risk.
+- Available manoeuvring room.
+- TSS compliance.
+- Applicable COLREG responsibilities.
+
+EXPECTED DECISION:
+MAINTAIN SAFE STATE
+/
+WAIT
+/
+ALTER MANOEUVRE
+/
+REDUCE SPEED
+/
+ESCALATE
+
+PASS CRITERIA:
+1. Established traffic is recognised.
+2. Port-departure status is not treated as automatic priority.
+3. TSS geometry is considered.
+4. CPA / TCPA are assessed.
+5. Collision risk is identified.
+6. Applicable navigation responsibilities are traceable.
+7. Human authority remains FINAL.
+8. No autonomous navigation command is generated.
+
+# ============================================================
+# VV-037 — RESTRICTED VISIBILITY
+# ============================================================
+
+SCENARIO:
+Fog, heavy rain, haze, smoke, darkness or another condition
+materially reducing effective visibility.
+
+INPUT:
+1. Visibility condition
+2. Estimated visibility range
+3. Radar availability
+4. ARPA availability
+5. AIS availability
+6. GNSS / position status
+7. Navigation-light status
+8. Sound-signal capability
+9. Traffic density
+10. Vessel speed
+11. Relative contacts
+12. CPA
+13. TCPA
+14. Navigation-data confidence
+
+ASSESS:
+- Restricted-visibility condition.
+- Safe speed.
+- Radar availability.
+- Available means of detection.
+- Collision risk.
+- Enhanced lookout requirement.
+- Sound-signal consideration.
+- CPA / TCPA.
+- Navigation-information reliability.
+
+EXPECTED DECISION:
+REDUCE SPEED
+/
+ENHANCE LOOKOUT
+/
+SOUND SIGNAL
+/
+ALTER MANOEUVRE
+/
+STOP
+/
+ESCALATE
+
+PASS CRITERIA:
+1. Restricted visibility is detected.
+2. Safe speed is considered.
+3. Radar / available detection means are considered.
+4. Collision risk is assessed.
+5. Sound-signal consideration is recorded.
+6. Navigation confidence is recorded.
+7. Decision-support chain is traceable.
+8. Human authority remains FINAL.
+9. No autonomous navigational command is generated.
+
+# ============================================================
+# VV-038 — BEND / BLIND-AREA NAVIGATION
+# ============================================================
+
+SCENARIO:
+Vessel approaches a bend, river turn, restricted channel,
+narrow passage or other location where approaching traffic
+may be obscured.
+
+CONDITIONS:
+A. CLEAR VISIBILITY
+B. RESTRICTED VISIBILITY
+
+INPUT:
+1. Vessel position
+2. Channel geometry
+3. Bend geometry
+4. Blind sector
+5. Available sea room
+6. Vessel speed
+7. Other possible traffic
+8. Visibility
+9. Radar information
+10. Sound-signal capability
+11. Navigation-light status where applicable
+12. Local waterway / port requirements
+13. Water depth
+14.
 
 
