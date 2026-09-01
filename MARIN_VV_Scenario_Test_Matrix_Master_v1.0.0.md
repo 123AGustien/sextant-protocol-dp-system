@@ -9342,6 +9342,1140 @@ The research scenario can progressively introduce:
 
 This creates a progressive resilience test rather than a single static collision scenario.
 
+
+COLREG V&V — RADAR, RELATIVE MOTION, CPA/TCPA, SPEED VECTOR AND TRIAL MANOEUVRE
+
+1. PURPOSE
+
+The collision-resilience simulator shall not limit the V&V exercise to identifying the applicable COLREG Rule.
+
+The simulator should also test the practical decision-support sequence used by a navigator to determine whether a developing encounter can be safely resolved.
+
+The proposed research sequence is:
+
+OBSERVE
+
+→ radar / visual traffic picture
+
+↓
+
+VERIFY
+
+→ target identity, bearing, range, movement and data quality
+
+↓
+
+ASSESS
+
+→ collision risk
+
+↓
+
+TRIAL MANOEUVRE
+
+→ evaluate possible course/speed alternatives
+
+↓
+
+SPEED VECTOR
+
+→ evaluate future movement
+
+↓
+
+CPA / TCPA
+
+→ determine predicted closest approach and time to closest approach
+
+↓
+
+SAFE ANTI-COLLISION COURSE
+
+→ identify candidate course/speed solution
+
+↓
+
+DECIDE
+
+→ Captain AI Lena recommendation
+
+↓
+
+HUMAN AUTHORITY
+
+→ final human decision
+
+↓
+
+SIMULATED RESPONSE
+
+→ simulated manoeuvre
+
+↓
+
+AUDIT
+
+→ complete evidence trail
+
+---
+
+2. RADAR RELATIVE-MOTION MODE
+
+The simulator should provide a research representation of radar in:
+
+RELATIVE-MOTION MODE
+
+The own vessel is treated as the reference platform.
+
+Other vessels are represented by their relative movement.
+
+The research display should be capable of representing:
+
+- relative bearing;
+- relative range;
+- bearing trend;
+- target track;
+- relative speed;
+- target vector;
+- own-vessel vector;
+- predicted movement;
+- CPA;
+- TCPA;
+- safe passing-distance threshold;
+- trial manoeuvre result.
+
+The purpose is not to reproduce every feature of a certified marine radar.
+
+The purpose is to provide sufficient functionality to test the collision-risk decision-support architecture.
+
+---
+
+3. GOOD VISIBILITY TRIAL
+
+INITIAL CONDITION
+
+The simulator begins with:
+
+- good visibility;
+- normal environmental conditions;
+- own vessel underway;
+- one or more target vessels;
+- known target movement;
+- sufficient radar information;
+- sufficient visual information.
+
+The first test establishes the baseline.
+
+---
+
+4. TARGET OBSERVATION
+
+The Primary AI observes:
+
+- target bearing;
+- target range;
+- target direction;
+- target speed;
+- target vector;
+- own-vessel course;
+- own-vessel speed.
+
+The system establishes the initial traffic picture.
+
+---
+
+5. RELATIVE-MOTION ASSESSMENT
+
+The simulator calculates or represents the relative motion of the target.
+
+The purpose is to determine whether the target's relative track indicates:
+
+- opening;
+- steady passing;
+- closing;
+- uncertain movement;
+- potentially dangerous convergence.
+
+A stable relative bearing combined with decreasing range should trigger collision-risk assessment rather than being treated as an ordinary passing situation.
+
+---
+
+6. CPA
+
+CLOSEST POINT OF APPROACH
+
+The simulator shall provide a research CPA value.
+
+CPA represents the predicted closest separation between own vessel and the target under the simulated movement assumptions.
+
+The simulator should allow the research user to establish a minimum acceptable CPA threshold.
+
+For example:
+
+CPA LIMIT = USER-DEFINED RESEARCH PARAMETER
+
+The exact threshold should remain configurable rather than being presented as a universal COLREG value.
+
+This is important because a particular CPA value is not itself a complete definition of safe navigation.
+
+CPA is one decision-support parameter.
+
+---
+
+7. TCPA
+
+TIME TO CLOSEST POINT OF APPROACH
+
+The simulator should also display TCPA.
+
+TCPA allows the system to distinguish:
+
+distant potential risk
+
+from
+
+imminent developing risk.
+
+A small CPA with a long TCPA may provide substantially more decision time than the same CPA with a very short TCPA.
+
+Therefore:
+
+CPA + TCPA + relative motion
+
+should be assessed together.
+
+---
+
+8. SPEED VECTOR
+
+CRITICAL SIMULATOR FUNCTION
+
+The simulator should display the predicted movement vector of:
+
+OWN VESSEL
+
+and
+
+TARGET VESSEL.
+
+The speed vector provides the navigator with an intuitive representation of where the vessel is expected to move if the present course and speed are maintained.
+
+The simulator should therefore show:
+
+CURRENT POSITION
+
++ 
+
+COURSE
+
++ 
+
+SPEED
+
++ 
+
+VECTOR
+
+=
+
+PREDICTED FUTURE POSITION
+
+---
+
+9. WHY SPEED MATTERS
+
+A collision-risk assessment cannot rely solely on course.
+
+Speed determines how quickly the vessels move toward the predicted encounter.
+
+Increasing speed can:
+
+- reduce available decision time;
+- increase stopping distance;
+- increase the consequences of delayed action;
+- reduce the time available for another vessel to respond;
+- change TCPA;
+- alter the available manoeuvring envelope.
+
+Therefore the simulator should explicitly represent speed as a resilience variable.
+
+---
+
+10. SPEED REDUCTION TEST
+
+A specific research test should be included.
+
+INITIAL CONDITION
+
+Own vessel has a speed producing an undesirably close predicted CPA.
+
+OBSERVE
+
+Primary AI identifies:
+
+- target;
+- relative motion;
+- CPA;
+- TCPA;
+- speed vectors.
+
+VERIFY
+
+Secondary AI confirms the target movement and calculated collision-risk condition.
+
+ASSESS
+
+Captain AI Lena assesses whether the current speed contributes materially to the developing risk.
+
+TRIAL MANOEUVRE
+
+The simulator evaluates a reduced-speed condition.
+
+RESULT
+
+The system compares:
+
+ORIGINAL SPEED
+
+versus
+
+REDUCED SPEED
+
+and records changes in:
+
+- CPA;
+- TCPA;
+- relative movement;
+- decision time;
+- predicted passing distance.
+
+---
+
+11. COURSE TRIAL MANOEUVRE
+
+The simulator should allow the research operator to perform a trial manoeuvre before committing to the simulated response.
+
+The purpose is to answer:
+
+«If own vessel changes course or speed, what happens to the predicted collision geometry?»
+
+The trial manoeuvre should not change the actual simulated vessel state until the human decision stage.
+
+It is a decision-support experiment.
+
+---
+
+12. TRIAL MANOEUVRE EXAMPLE
+
+CURRENT STATE
+
+Own vessel:
+
+Course A
+
+Speed A
+
+Target:
+
+Course B
+
+Speed B
+
+Predicted CPA:
+
+Below selected research safety threshold
+
+---
+
+TRIAL 1
+
+Alter own-vessel course.
+
+The simulator calculates:
+
+- new vector;
+- new relative track;
+- new CPA;
+- new TCPA.
+
+---
+
+TRIAL 2
+
+Reduce own-vessel speed.
+
+The simulator calculates:
+
+- new vector;
+- new relative track;
+- new CPA;
+- new TCPA.
+
+---
+
+TRIAL 3
+
+Combined course and speed change.
+
+The simulator calculates:
+
+- new vector;
+- new CPA;
+- new TCPA;
+- predicted passing geometry.
+
+---
+
+DECISION SUPPORT
+
+Captain AI Lena compares the simulated alternatives.
+
+The output should identify:
+
+- current condition;
+- trial manoeuvre;
+- predicted consequence;
+- confidence;
+- unresolved uncertainty.
+
+---
+
+13. SAFE ANTI-COLLISION COURSE
+
+The simulator should provide a research function for identifying a candidate safe anti-collision course.
+
+The term candidate is important.
+
+The simulator must not state that a mathematically acceptable vector automatically constitutes the legally correct navigational action.
+
+The candidate course is decision support.
+
+The human remains responsible for the final decision.
+
+---
+
+14. SAFE COURSE SEARCH
+
+The simulator may evaluate a range of possible:
+
+- course alterations;
+- speed reductions;
+- combined course/speed changes.
+
+For each candidate solution it can calculate:
+
+- CPA;
+- TCPA;
+- predicted passing side;
+- predicted separation;
+- time available;
+- vector relationship;
+- whether the selected research CPA threshold is achieved.
+
+The simulator can then rank candidate solutions according to the defined research criteria.
+
+---
+
+15. IMPORTANT — NO “CPA ONLY” DECISION
+
+The system must not use:
+
+CPA alone
+
+as the complete collision-avoidance decision.
+
+The research assessment should consider:
+
+CPA
+
++ 
+
+TCPA
+
++ 
+
+relative bearing
+
++ 
+
+relative motion
+
++ 
+
+speed
+
++ 
+
+course
+
++ 
+
+vessel characteristics
+
++ 
+
+traffic density
+
++ 
+
+visibility
+
++ 
+
+available manoeuvring room
+
++ 
+
+COLREG situation
+
++ 
+
+human judgement
+
+---
+
+16. GOOD VISIBILITY → FOG BUILD-UP
+
+The simulator should deliberately use the same collision scenario twice.
+
+TEST A — GOOD VISIBILITY
+
+The navigator has:
+
+- visual information;
+- radar information;
+- target movement;
+- speed vectors;
+- CPA;
+- TCPA.
+
+The system performs the collision-risk assessment.
+
+---
+
+TEST B — RESTRICTED VISIBILITY / FOG
+
+The same or equivalent encounter is then repeated under restricted visibility.
+
+Visual information is degraded or unavailable.
+
+Radar becomes increasingly important to the simulated information picture.
+
+The system must reassess rather than simply reuse the good-visibility decision.
+
+---
+
+17. FOG SCENARIO
+
+STAGE 1
+
+Good visibility.
+
+Traffic identified visually and by radar.
+
+---
+
+STAGE 2
+
+Visibility decreases.
+
+The simulator progressively reduces visual information.
+
+---
+
+STAGE 3
+
+Restricted visibility established.
+
+The system enters the Rule 19 research condition.
+
+---
+
+STAGE 4
+
+Radar target remains available.
+
+The system must continue to assess:
+
+- bearing;
+- range;
+- relative motion;
+- CPA;
+- TCPA;
+- speed vector.
+
+---
+
+STAGE 5
+
+Multiple targets appear.
+
+The system must maintain individual target tracks.
+
+---
+
+STAGE 6
+
+One target develops a close CPA.
+
+The system identifies the developing risk.
+
+---
+
+STAGE 7
+
+Own-vessel speed is reduced in a trial manoeuvre.
+
+The simulator recalculates:
+
+- vector;
+- CPA;
+- TCPA;
+- predicted passing distance.
+
+---
+
+STAGE 8
+
+A candidate course alteration is trialled.
+
+The simulator calculates the new predicted geometry.
+
+---
+
+STAGE 9
+
+Captain AI Lena assesses the alternatives.
+
+---
+
+STAGE 10
+
+Human authority makes the final simulated decision.
+
+---
+
+STAGE 11
+
+The simulator models the authorized response.
+
+---
+
+STAGE 12
+
+The complete event is audited.
+
+---
+
+18. TSS → FOG BUILD-UP
+
+This should become a major research scenario.
+
+STAGE 1
+
+Open-water baseline.
+
+STAGE 2
+
+Traffic density increases.
+
+STAGE 3
+
+Vessel enters/approaches a Traffic Separation Scheme.
+
+STAGE 4
+
+Crossing traffic develops.
+
+STAGE 5
+
+Overtaking traffic develops.
+
+STAGE 6
+
+Multiple targets develop.
+
+STAGE 7
+
+Visibility begins to deteriorate.
+
+STAGE 8
+
+Fog/restricted visibility condition established.
+
+STAGE 9
+
+Visual target information decreases.
+
+STAGE 10
+
+Radar relative-motion assessment becomes increasingly important.
+
+STAGE 11
+
+CPA/TCPA indicate a close approach.
+
+STAGE 12
+
+Speed-vector analysis is performed.
+
+STAGE 13
+
+Trial course/speed manoeuvres are evaluated.
+
+STAGE 14
+
+Candidate safe anti-collision solution identified.
+
+STAGE 15
+
+Captain AI Lena produces recommendation.
+
+STAGE 16
+
+Human authority makes final decision.
+
+STAGE 17
+
+Simulator models response.
+
+STAGE 18
+
+Audit closes the scenario.
+
+---
+
+19. MULTIPLE-VESSEL SPEED-VECTOR TEST
+
+The simulator should also test a condition where several vessels have intersecting vectors.
+
+Example:
+
+OWN VESSEL
+
+→ vector A
+
+TARGET 1
+
+→ vector B
+
+TARGET 2
+
+→ vector C
+
+TARGET 3
+
+→ vector D
+
+The system must determine which target presents:
+
+- immediate risk;
+- developing risk;
+- low risk;
+- no identified risk.
+
+Each target must remain individually traceable.
+
+---
+
+20. CLOSE-CPA PREVENTION TEST
+
+OBJECTIVE
+
+The simulator should test whether a developing close CPA can be identified early enough for a human decision.
+
+The research objective is not merely:
+
+“Did the vessel collide?”
+
+The stronger question is:
+
+«Did the system identify the developing close-CPA condition early enough to support a meaningful human decision?»
+
+This makes time-to-decision an important V&V parameter.
+
+---
+
+21. SPEED-REDUCTION RESILIENCE TEST
+
+The simulator should deliberately create a condition where maintaining speed produces an increasingly close CPA.
+
+Then:
+
+RUN A
+
+Maintain speed.
+
+Record:
+
+- CPA;
+- TCPA;
+- vector;
+- risk state.
+
+RUN B
+
+Reduce speed.
+
+Record:
+
+- new CPA;
+- new TCPA;
+- vector;
+- risk state.
+
+RUN C
+
+Trial course alteration.
+
+Record:
+
+- new CPA;
+- new TCPA;
+- passing geometry.
+
+RUN D
+
+Combined course/speed trial.
+
+Record:
+
+- CPA;
+- TCPA;
+- passing distance;
+- available decision time.
+
+The purpose is to demonstrate how speed and manoeuvre selection influence the simulated collision envelope.
+
+---
+
+22. HUMAN AUTHORITY REQUIREMENT
+
+The trial manoeuvre function is not an autonomous navigation function.
+
+The simulator may calculate:
+
+“If course changes by X…”
+
+or:
+
+“If speed reduces to Y…”
+
+but this remains a trial calculation.
+
+It does not mean:
+
+“Execute X.”
+
+The correct architecture remains:
+
+TRIAL MANOEUVRE
+
+→
+
+PREDICTED RESULT
+
+→
+
+CAPTAIN AI LENA RECOMMENDATION
+
+→
+
+HUMAN AUTHORITY
+
+→
+
+SIMULATED RESPONSE
+
+---
+
+23. COLLISION-RESILIENCE KPI SET
+
+The proposed research KPIs should include:
+
+KPI-01 — Target Detection
+
+Was the relevant target identified?
+
+KPI-02 — Classification Accuracy
+
+Was the target relationship correctly classified?
+
+KPI-03 — CPA Accuracy
+
+Was CPA calculated/reproduced correctly under the defined simulator assumptions?
+
+KPI-04 — TCPA Accuracy
+
+Was TCPA correctly determined?
+
+KPI-05 — Vector Accuracy
+
+Was predicted relative movement correctly represented?
+
+KPI-06 — Risk Detection Latency
+
+How quickly was the developing collision risk identified?
+
+KPI-07 — Reassessment Latency
+
+How quickly did the system reassess following a significant change?
+
+KPI-08 — Trial-Manoeuvre Response
+
+Did the simulator correctly predict the consequence of the trial manoeuvre?
+
+KPI-09 — Safe-Candidate Identification
+
+Could the simulator identify candidate course/speed solutions meeting the defined research criteria?
+
+KPI-10 — Speed-Reduction Effect
+
+Did the simulator correctly demonstrate the effect of speed reduction on the predicted collision geometry?
+
+KPI-11 — Human Decision Gate
+
+Was human authority preserved?
+
+KPI-12 — Audit Completeness
+
+Could the complete decision chain be reconstructed?
+
+---
+
+24. FINAL RADAR / COLLISION V&V CHAIN
+
+The detailed research sequence becomes:
+
+RADAR / VISUAL OBSERVATION
+
+↓
+
+RELATIVE MOTION
+
+↓
+
+TARGET VERIFICATION
+
+↓
+
+BEARING / RANGE
+
+↓
+
+SPEED VECTOR
+
+↓
+
+CPA
+
+↓
+
+TCPA
+
+↓
+
+COLREG CLASSIFICATION
+
+↓
+
+COLLISION-RISK ASSESSMENT
+
+↓
+
+TRIAL MANOEUVRE
+
+↓
+
+COURSE / SPEED ALTERNATIVE
+
+↓
+
+PREDICTED CPA / TCPA
+
+↓
+
+CAPTAIN AI LENA
+
+↓
+
+HUMAN AUTHORITY
+
+↓
+
+SIMULATED RESPONSE
+
+↓
+
+REASSESSMENT
+
+↓
+
+AUDIT
+
+---
+
+25. FINAL RESEARCH PRINCIPLE
+
+The purpose of the simulator is not to find a mathematical manoeuvre and automatically apply it.
+
+The purpose is to allow the navigator and the AI decision-support architecture to examine:
+
+Where am I going?
+
+Where is the other vessel going?
+
+What is our relative movement?
+
+Where will we pass if nothing changes?
+
+How much time is available?
+
+What happens if speed is reduced?
+
+What happens if course is altered?
+
+Does the trial manoeuvre produce adequate predicted separation?
+
+What COLREG situation applies?
+
+What does Captain AI Lena recommend?
+
+What does the human decide?
+
+What did the simulation demonstrate?
+
+Can the entire decision be audited?
+
+---
+
+26. LOCKED ARCHITECTURAL BOUNDARY
+
+The simulator may:
+
+OBSERVE
+
+CALCULATE
+
+VERIFY
+
+PREDICT
+
+TRIAL
+
+ASSESS
+
+RECOMMEND
+
+RECORD
+
+It may not:
+
+COMMAND
+
+STEER
+
+CONTROL
+
+ACTUATE
+
+TRANSMIT A VESSEL COMMAND
+
+Therefore:
+
+OPERATIONAL COMMAND = FALSE
+
+PHYSICAL VESSEL CONNECTION = NONE
+
+HUMAN AUTHORITY = FINAL
+
+RESEARCH / V&V ONLY
+
+MARIN STATUS = PROPOSED RESEARCH EXTENSION
+
+NOT FINAL MARIN ACCEPTANCE CRITERIA
+
+---
+
+FINAL COLLISION-SIMULATOR RESEARCH MODEL
+
+The final concept is therefore:
+
+COLREG
+
+↓
+
+TRAFFIC ENVIRONMENT
+
+↓
+
+TSS / OPEN WATER
+
+↓
+
+GOOD VISIBILITY
+
+↓
+
+RADAR + VISUAL OBSERVATION
+
+↓
+
+RELATIVE MOTION
+
+↓
+
+SPEED VECTOR
+
+↓
+
+CPA / TCPA
+
+↓
+
+COLREG SITUATION
+
+↓
+
+TRIAL MANOEUVRE
+
+↓
+
+COURSE / SPEED TEST
+
+↓
+
+SAFE-CANDIDATE IDENTIFICATION
+
+↓
+
+FOG / RESTRICTED VISIBILITY
+
+↓
+
+RADAR-DEPENDENT ASSESSMENT
+
+↓
+
+REASSESSMENT
+
+↓
+
+CAPTAIN AI LENA
+
+↓
+
+HUMAN AUTHORITY
+
+↓
+
+SIMULATED RESPONSE
+
+↓
+
+AUDIT
+
+This provides the proposed research bridge between practical radar collision-avoidance technique, COLREG rule interpretation, TSS, restricted visibility and the Sextant Protocol human-authority V&V architecture.
 ---
 
 3. REGULATORY BUILD-UP
