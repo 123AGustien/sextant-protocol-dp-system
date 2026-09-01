@@ -6205,5 +6205,347 @@ HUMAN AUTHORITY: FINAL.
 # ============================================================
 # END OF VV-039
 # ============================================================
+# ============================================================
+# VV-040 — INTEGRATED NAVIGATION SAFETY SCENARIO
+# ============================================================
+
+SCENARIO:
+Own vessel encounters multiple simultaneous navigation hazards,
+including fishing traffic, restricted visibility and a bend,
+blind area, restricted channel or narrow passage.
+
+PURPOSE:
+Determine whether the Sextant Protocol™ V&V architecture can
+identify and integrate multiple simultaneous navigation risks
+without allowing one lower-priority condition to conceal a
+safety-critical condition.
+
+INPUT:
+1. Own-vessel position
+2. Own-vessel heading
+3. Own-vessel course over ground
+4. Own-vessel speed
+5. Own-vessel navigation status
+6. Other-vessel position
+7. Other-vessel heading
+8. Other-vessel course
+9. Other-vessel speed
+10. Other-vessel status
+11. Fishing-vessel status
+12. Restricted-manoeuvrability status where applicable
+13. Relative bearing
+14. Range
+15. CPA
+16. TCPA
+17. Visibility condition
+18. Estimated visibility range
+19. Traffic density
+20. Channel geometry
+21. Bend geometry
+22. Blind sector
+23. Available sea room
+24. Radar status
+25. ARPA status
+26. AIS status
+27. GNSS / position status
+28. Navigation-light status
+29. Sound-signal capability
+30. Water depth
+31. Vessel draft
+32. Trim
+33. UKC
+34. Current / tidal stream
+35. Environmental condition
+36. Applicable TSS condition where relevant
+37. Applicable COLREG considerations
+38. Local port / waterway requirements
+39. VTS requirements where applicable
+40. Position-confidence level
+
+OBSERVE:
+- Own-vessel condition.
+- Traffic condition.
+- Fishing-vessel presence.
+- Restricted-manoeuvrability condition.
+- Visibility.
+- Bend / blind-area condition.
+- Channel geometry.
+- Available sea room.
+- Navigation-system status.
+- Water-depth condition.
+- Environmental condition.
+
+VERIFY:
+- Own-vessel status.
+- Other-vessel status.
+- Fishing status.
+- Restricted-manoeuvrability status.
+- Position and movement data.
+- CPA / TCPA.
+- Visibility classification.
+- Bend / blind-area geometry.
+- Radar / ARPA / AIS consistency.
+- GNSS position confidence.
+- Navigation-light status.
+- Sound-signal availability.
+- Water depth / UKC.
+- Applicable TSS / COLREG / local requirements.
+
+ASSESS:
+1. Collision risk.
+2. Fishing-vessel interaction.
+3. Restricted-manoeuvrability interaction.
+4. Restricted-visibility risk.
+5. Bend / blind-area risk.
+6. Restricted-channel risk.
+7. Safe-speed condition.
+8. CPA / TCPA.
+9. Available sea room.
+10. Radar / ARPA detection capability.
+11. Navigation-information reliability.
+12. Sound-signal requirement.
+13. Navigation-light condition.
+14. Position confidence.
+15. Water depth.
+16. UKC.
+17. Current / tidal effect.
+18. Environmental influence.
+19. Local navigation restrictions.
+20. Need for enhanced lookout.
+21. Need for safe-state escalation.
+22. Interaction between simultaneous hazards.
+
+HAZARD PRIORITISATION:
+The system shall identify safety-critical conditions before
+lower-priority information is allowed to influence the final
+research assessment.
+
+The architecture shall not:
+- Assume that one hazard cancels another.
+- Assume automatic right-of-way.
+- Assume clear visibility because visual contact is possible.
+- Assume that a buoy, channel or traffic lane automatically
+  establishes a safe route.
+- Assume that port-departure status creates automatic priority.
+
+PRIMARY AI:
+Produces the initial integrated navigation-risk assessment.
+
+SECONDARY AI:
+Independently verifies:
+- Vessel statuses.
+- Visibility.
+- Traffic.
+- Collision risk.
+- CPA / TCPA.
+- Bend / blind-area condition.
+- Navigation-data confidence.
+- UKC / clearance.
+- Applicable navigation requirements.
+
+STABILIZER:
+Arbitrates conflicts between assessment layers.
+
+STABILIZER CHECK:
+- Safety-critical disagreement.
+- Missing information.
+- Contradictory vessel status.
+- Position uncertainty.
+- Collision-risk uncertainty.
+- Visibility uncertainty.
+- Navigation-data degradation.
+
+Where material uncertainty exists, the research system shall
+prefer escalation / review rather than presenting uncertain
+information as a confirmed safe condition.
+
+CAPTAIN AI LENA:
+Provides structured decision support based on:
+- Primary AI assessment.
+- Secondary AI verification.
+- Stabilizer result.
+- Vessel condition.
+- Traffic condition.
+- Environmental condition.
+- Navigation confidence.
+- Available contingency options.
+
+HUMAN AUTHORITY:
+FINAL
+
+No consequential simulated navigation response is considered
+authorized without explicit human authorization.
+
+EXPECTED DECISION:
+SAFE MONITORING
+/
+ENHANCE LOOKOUT
+/
+REDUCE SPEED
+/
+SOUND SIGNAL
+/
+ALTER SIMULATED MANOEUVRE
+/
+WAIT
+/
+MAINTAIN SAFE STATE
+/
+ESCALATE FOR HUMAN REVIEW
+
+SIMULATED RESPONSE:
+Decision-support simulation only.
+
+EXECUTED:
+FALSE
+
+PASS CRITERIA:
+1. Multiple simultaneous hazards are detected.
+2. Safety-critical hazards are not hidden by lower-priority
+   conditions.
+3. Own-vessel status is identified.
+4. Other-vessel status is identified.
+5. Fishing-vessel status is identified where applicable.
+6. Restricted-manoeuvrability status is identified where
+   applicable.
+7. Visibility is correctly classified.
+8. Bend / blind-area condition is detected.
+9. Safe speed is considered.
+10. CPA / TCPA are assessed where data permits.
+11. Available sea room is assessed.
+12. Radar / ARPA / AIS information is considered.
+13. GNSS / position confidence is assessed.
+14. Navigation-light status is considered where applicable.
+15. Sound-signal requirements are considered.
+16. Water depth and UKC are assessed where applicable.
+17. Applicable TSS / COLREG / local requirements are identified.
+18. No blanket right-of-way assumption is applied.
+19. Primary AI assessment is recorded.
+20. Secondary AI verification is recorded.
+21. Stabilizer result is recorded.
+22. Captain AI Lena recommendation is recorded.
+23. Human authority remains FINAL.
+24. Any material uncertainty is visible.
+25. Corrective action can be simulated.
+26. Re-test can reproduce the scenario.
+27. No autonomous navigation command is generated.
+28. No physical vessel connection exists.
+29. Complete audit trail is maintained.
+
+AUDIT RECORD:
+
+TEST ID:
+DATE / TIME:
+SOFTWARE VERSION:
+SCENARIO:
+SCENARIO CONDITION:
+
+OWN VESSEL:
+POSITION:
+HEADING:
+COG:
+SPEED:
+NAVIGATION STATUS:
+
+OTHER TRAFFIC:
+VESSEL STATUS:
+FISHING STATUS:
+RESTRICTED-MANOEUVRABILITY STATUS:
+RELATIVE BEARING:
+RANGE:
+CPA:
+TCPA:
+
+ENVIRONMENT:
+VISIBILITY:
+WIND:
+CURRENT:
+WAVE / SWELL:
+TIDE:
+
+NAVIGATION:
+CHANNEL:
+BEND / BLIND AREA:
+SEA ROOM:
+RADAR:
+ARPA:
+AIS:
+GNSS:
+NAVIGATION LIGHTS:
+SOUND SIGNALS:
+TSS:
+LOCAL REQUIREMENTS:
+VTS:
+
+UNDERWATER / CLEARANCE:
+WATER DEPTH:
+DRAFT:
+TRIM:
+UKC:
+POSITION CONFIDENCE:
+
+PRIMARY AI:
+SECONDARY AI:
+STABILIZER:
+CAPTAIN AI LENA:
+
+HUMAN AUTHORITY:
+PENDING / AUTHORIZED / REJECTED
+
+SIMULATED RESPONSE:
+EXECUTED: FALSE
+
+KPI RESULTS:
+COLLISION RISK:
+CPA:
+TCPA:
+POSITION CONFIDENCE:
+VISIBILITY:
+SPEED:
+SEA ROOM:
+UKC:
+NAVIGATION CONFIDENCE:
+ASSESSMENT LATENCY:
+DECISION LATENCY:
+TOTAL END-TO-END LATENCY:
+
+CONTINGENCY STATUS:
+NONE REQUIRED
+/
+PREPARE
+/
+ALTERNATIVE REQUIRED
+/
+SAFE STATE
+/
+ESCALATE
+
+AUDIT:
+PASS / REVIEW REQUIRED / ESCALATE
+
+COMMENTS:
+
+IMPORTANT:
+The simulator provides research and V&V decision support only.
+
+It does not replace:
+- Master authority;
+- DPO / navigator authority;
+- COLREG requirements;
+- VTS instructions;
+- local navigation regulations;
+- vessel SMS procedures;
+- Flag State requirements;
+- Class requirements; or
+- statutory requirements.
+
+NO AUTONOMOUS NAVIGATION COMMAND.
+OPERATIONAL CONNECTION: NONE.
+PHYSICAL VESSEL CONNECTION: NONE.
+HUMAN AUTHORITY: FINAL.
+
+# ============================================================
+# END OF VV-040
+# ============================================================
 
 
