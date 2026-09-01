@@ -851,3 +851,864 @@ const MaritimeSafetyComplianceEngineV1 = {
         /* =================================================
            CONTINUE WITH PART 2
         ================================================= */
+/* =========================================================
+   PART 2
+   SEXTANT PROTOCOL™
+   MARITIME SAFETY & VESSEL READINESS V&V
+   DECK • ENGINE • BRIDGE • ACCOMMODATION • CATERING • STORES
+
+   RESEARCH / SIMULATION ONLY
+========================================================= */
+
+
+/* =========================================================
+   HULL / DECK / VESSEL SUITABILITY
+========================================================= */
+
+const hull =
+    condition.hull || {};
+
+const hullSurveyCurrent =
+    hull.surveyCurrent === true;
+
+const hullIntegrityReviewed =
+    hull.integrityReviewed === true;
+
+const watertightIntegrityReviewed =
+    hull.watertightIntegrityReviewed === true;
+
+const deckConditionReviewed =
+    hull.deckConditionReviewed === true;
+
+const vesselSuitabilitySurveyCurrent =
+    hull.vesselSuitabilitySurveyCurrent === true;
+
+const loadLineConditionReviewed =
+    hull.loadLineConditionReviewed === true;
+
+const draftConditionReviewed =
+    hull.draftConditionReviewed === true;
+
+const trimConditionReviewed =
+    hull.trimConditionReviewed === true;
+
+
+let hullStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    hullSurveyCurrent &&
+    hullIntegrityReviewed &&
+    watertightIntegrityReviewed &&
+    deckConditionReviewed &&
+    vesselSuitabilitySurveyCurrent &&
+    loadLineConditionReviewed &&
+    draftConditionReviewed &&
+    trimConditionReviewed
+) {
+
+    hullStatus =
+        "SIMULATED_HULL_SUITABILITY_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   STABILITY / HEEL / LIST / TRIM
+========================================================= */
+
+const stability =
+    condition.stability || {};
+
+const gmReviewed =
+    stability.gmReviewed === true;
+
+const gzCurveReviewed =
+    stability.gzCurveReviewed === true;
+
+const rightingMomentReviewed =
+    stability.rightingMomentReviewed === true;
+
+const dynamicStabilityReviewed =
+    stability.dynamicStabilityReviewed === true;
+
+const heelReviewed =
+    stability.heelReviewed === true;
+
+const listReviewed =
+    stability.listReviewed === true;
+
+const trimReviewed =
+    stability.trimReviewed === true;
+
+const cgShiftReviewed =
+    stability.cgShiftReviewed === true;
+
+const rateOfTurnReviewed =
+    stability.rateOfTurnReviewed === true;
+
+const controlledSwingReviewed =
+    stability.controlledSwingReviewed === true;
+
+
+let stabilityStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    gmReviewed &&
+    gzCurveReviewed &&
+    rightingMomentReviewed &&
+    dynamicStabilityReviewed &&
+    heelReviewed &&
+    listReviewed &&
+    trimReviewed &&
+    cgShiftReviewed &&
+    rateOfTurnReviewed &&
+    controlledSwingReviewed
+) {
+
+    stabilityStatus =
+        "SIMULATED_DYNAMIC_STABILITY_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   LOAD LINE / ZONE / DRAFT
+========================================================= */
+
+const loadLine =
+    condition.loadLine || {};
+
+const loadLineCertificateCurrent =
+    loadLine.certificateCurrent === true;
+
+const assignedLoadLineReviewed =
+    loadLine.assignedLoadLineReviewed === true;
+
+const seasonalZoneReviewed =
+    loadLine.seasonalZoneReviewed === true;
+
+const geographicalZoneReviewed =
+    loadLine.geographicalZoneReviewed === true;
+
+const permittedDraftReviewed =
+    loadLine.permittedDraftReviewed === true;
+
+const freeboardReviewed =
+    loadLine.freeboardReviewed === true;
+
+
+let loadLineStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    loadLineCertificateCurrent &&
+    assignedLoadLineReviewed &&
+    seasonalZoneReviewed &&
+    geographicalZoneReviewed &&
+    permittedDraftReviewed &&
+    freeboardReviewed
+) {
+
+    loadLineStatus =
+        "SIMULATED_LOADLINE_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   BRIDGE / NAVIGATION
+========================================================= */
+
+const bridge =
+    condition.bridge || {};
+
+const navigationEquipmentAvailable =
+    bridge.navigationEquipmentAvailable === true;
+
+const navigationEquipmentTested =
+    bridge.navigationEquipmentTested === true;
+
+const navigationLightsCurrent =
+    bridge.navigationLightsCurrent === true;
+
+const soundSignalsCurrent =
+    bridge.soundSignalsCurrent === true;
+
+const compassReviewed =
+    bridge.compassReviewed === true;
+
+const radarReviewed =
+    bridge.radarReviewed === true;
+
+const ecdisReviewed =
+    bridge.ecdisReviewed === true;
+
+const aisReviewed =
+    bridge.aisReviewed === true;
+
+const gpsGnssReviewed =
+    bridge.gpsGnssReviewed === true;
+
+const navEquipmentCertificatesCurrent =
+    bridge.certificatesCurrent === true;
+
+
+let bridgeStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    navigationEquipmentAvailable &&
+    navigationEquipmentTested &&
+    navigationLightsCurrent &&
+    soundSignalsCurrent &&
+    compassReviewed &&
+    radarReviewed &&
+    ecdisReviewed &&
+    aisReviewed &&
+    gpsGnssReviewed &&
+    navEquipmentCertificatesCurrent
+) {
+
+    bridgeStatus =
+        "SIMULATED_BRIDGE_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   GMDSS / RADIO
+========================================================= */
+
+const gmdss =
+    condition.gmdss || {};
+
+const gmdssRequired =
+    gmdss.required === true;
+
+const gmdssEquipmentAvailable =
+    gmdss.equipmentAvailable === true;
+
+const gmdssInspectionCurrent =
+    gmdss.inspectionCurrent === true;
+
+const gmdssRadioSurveyCurrent =
+    gmdss.radioSurveyCurrent === true;
+
+const gmdssCertificatesCurrent =
+    gmdss.certificatesCurrent === true;
+
+
+let gmdssStatus =
+    "NOT_ASSESSED";
+
+
+if (
+    gmdssRequired &&
+    gmdssEquipmentAvailable &&
+    gmdssInspectionCurrent &&
+    gmdssRadioSurveyCurrent &&
+    gmdssCertificatesCurrent
+) {
+
+    gmdssStatus =
+        "SIMULATED_GMDSS_REVIEW_COMPLETE";
+
+}
+else if (
+    gmdssRequired
+) {
+
+    gmdssStatus =
+        "SIMULATED_GMDSS_REVIEW_REQUIRED";
+
+}
+else {
+
+    gmdssStatus =
+        "SIMULATED_NOT_REQUIRED";
+
+}
+
+
+/* =========================================================
+   ELECTRONIC / RADIO / NAVIGATION STORES
+========================================================= */
+
+const electronicStores =
+    condition.electronicStores || {};
+
+const electronicStoresInventoryCurrent =
+    electronicStores.inventoryCurrent === true;
+
+const navigationSparePartsAvailable =
+    electronicStores.navigationSparePartsAvailable === true;
+
+const gmdssSparePartsAvailable =
+    electronicStores.gmdssSparePartsAvailable === true;
+
+const communicationSparePartsAvailable =
+    electronicStores.communicationSparePartsAvailable === true;
+
+const antennaSparePartsAvailable =
+    electronicStores.antennaSparePartsAvailable === true;
+
+const cablesConnectorsAvailable =
+    electronicStores.cablesConnectorsAvailable === true;
+
+const fusesBreakersAvailable =
+    electronicStores.fusesBreakersAvailable === true;
+
+const batteriesAvailable =
+    electronicStores.batteriesAvailable === true;
+
+const lampsIndicatorsAvailable =
+    electronicStores.lampsIndicatorsAvailable === true;
+
+const electronicTestEquipmentAvailable =
+    electronicStores.testEquipmentAvailable === true;
+
+const criticalElectronicSparesIdentified =
+    electronicStores.criticalSparesIdentified === true;
+
+const electronicStoresProtected =
+    electronicStores.storageProtected === true;
+
+
+let electronicStoresStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    electronicStoresInventoryCurrent &&
+    navigationSparePartsAvailable &&
+    gmdssSparePartsAvailable &&
+    communicationSparePartsAvailable &&
+    antennaSparePartsAvailable &&
+    cablesConnectorsAvailable &&
+    fusesBreakersAvailable &&
+    batteriesAvailable &&
+    lampsIndicatorsAvailable &&
+    electronicTestEquipmentAvailable &&
+    criticalElectronicSparesIdentified &&
+    electronicStoresProtected
+) {
+
+    electronicStoresStatus =
+        "SIMULATED_ELECTRONIC_STORES_READY";
+
+}
+
+
+/* =========================================================
+   DECK STORES / CARGO / MOORING
+========================================================= */
+
+const deckStores =
+    condition.deckStores || {};
+
+const deckInventoryCurrent =
+    deckStores.inventoryCurrent === true;
+
+const mooringEquipmentAvailable =
+    deckStores.mooringEquipmentAvailable === true;
+
+const towingEquipmentAvailable =
+    deckStores.towingEquipmentAvailable === true;
+
+const liftingEquipmentAvailable =
+    deckStores.liftingEquipmentAvailable === true;
+
+const deckSafetyEquipmentAvailable =
+    deckStores.safetyEquipmentAvailable === true;
+
+const anchorsAndCablesReviewed =
+    deckStores.anchorsAndCablesReviewed === true;
+
+const deckMachineryReviewed =
+    deckStores.deckMachineryReviewed === true;
+
+const cargoSecuringEquipmentAvailable =
+    deckStores.cargoSecuringEquipmentAvailable === true;
+
+
+let deckStoresStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    deckInventoryCurrent &&
+    mooringEquipmentAvailable &&
+    towingEquipmentAvailable &&
+    liftingEquipmentAvailable &&
+    deckSafetyEquipmentAvailable &&
+    anchorsAndCablesReviewed &&
+    deckMachineryReviewed &&
+    cargoSecuringEquipmentAvailable
+) {
+
+    deckStoresStatus =
+        "SIMULATED_DECK_STORES_READY";
+
+}
+
+
+/* =========================================================
+   ENGINE ROOM / MACHINERY SPACE
+========================================================= */
+
+const machinery =
+    condition.machinery || {};
+
+const machinerySurveyCurrent =
+    machinery.surveyCurrent === true;
+
+const mainEngineInspectionCurrent =
+    machinery.mainEngineInspectionCurrent === true;
+
+const auxiliaryEngineInspectionCurrent =
+    machinery.auxiliaryEngineInspectionCurrent === true;
+
+const emergencyGeneratorInspectionCurrent =
+    machinery.emergencyGeneratorInspectionCurrent === true;
+
+const steeringGearInspectionCurrent =
+    machinery.steeringGearInspectionCurrent === true;
+
+const propulsionSystemsInspectionCurrent =
+    machinery.propulsionSystemsInspectionCurrent === true;
+
+const machinerySpaceConditionReviewed =
+    machinery.machinerySpaceConditionReviewed === true;
+
+const bilgeConditionReviewed =
+    machinery.bilgeConditionReviewed === true;
+
+const fuelSystemsReviewed =
+    machinery.fuelSystemsReviewed === true;
+
+const coolingSystemsReviewed =
+    machinery.coolingSystemsReviewed === true;
+
+const electricalSystemsReviewed =
+    machinery.electricalSystemsReviewed === true;
+
+const emergencySystemsReviewed =
+    machinery.emergencySystemsReviewed === true;
+
+
+let machineryStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    machinerySurveyCurrent &&
+    mainEngineInspectionCurrent &&
+    auxiliaryEngineInspectionCurrent &&
+    emergencyGeneratorInspectionCurrent &&
+    steeringGearInspectionCurrent &&
+    propulsionSystemsInspectionCurrent &&
+    machinerySpaceConditionReviewed &&
+    bilgeConditionReviewed &&
+    fuelSystemsReviewed &&
+    coolingSystemsReviewed &&
+    electricalSystemsReviewed &&
+    emergencySystemsReviewed
+) {
+
+    machineryStatus =
+        "SIMULATED_MACHINERY_SURVEY_COMPLETE";
+
+}
+
+
+/* =========================================================
+   ENGINE ROOM STORES / SPARES
+========================================================= */
+
+const engineStores =
+    condition.engineStores || {};
+
+const engineStoresInventoryCurrent =
+    engineStores.inventoryCurrent === true;
+
+const criticalEngineSparesAvailable =
+    engineStores.criticalSparesAvailable === true;
+
+const generatorSparesAvailable =
+    engineStores.generatorSparesAvailable === true;
+
+const pumpSparesAvailable =
+    engineStores.pumpSparesAvailable === true;
+
+const electricalSparesAvailable =
+    engineStores.electricalSparesAvailable === true;
+
+const filtersLubricantsAvailable =
+    engineStores.filtersLubricantsAvailable === true;
+
+const emergencyRepairMaterialsAvailable =
+    engineStores.emergencyRepairMaterialsAvailable === true;
+
+
+let engineStoresStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    engineStoresInventoryCurrent &&
+    criticalEngineSparesAvailable &&
+    generatorSparesAvailable &&
+    pumpSparesAvailable &&
+    electricalSparesAvailable &&
+    filtersLubricantsAvailable &&
+    emergencyRepairMaterialsAvailable
+) {
+
+    engineStoresStatus =
+        "SIMULATED_ENGINE_STORES_READY";
+
+}
+
+
+/* =========================================================
+   FUEL / FRESH WATER / FOOD — RESERVE MARGIN
+========================================================= */
+
+const resources =
+    condition.resources || {};
+
+const fuelRequired =
+    this.number(resources.fuelRequired, 0);
+
+const fuelAvailable =
+    this.number(resources.fuelAvailable, 0);
+
+const waterRequired =
+    this.number(resources.waterRequired, 0);
+
+const waterAvailable =
+    this.number(resources.waterAvailable, 0);
+
+const foodRequired =
+    this.number(resources.foodRequired, 0);
+
+const foodAvailable =
+    this.number(resources.foodAvailable, 0);
+
+
+/*
+   Research planning margin:
+   available quantity should cover calculated requirement
+   plus an additional 10% reserve.
+
+   This is NOT a statutory minimum.
+*/
+
+const fuelReserveRequired =
+    fuelRequired * 1.10;
+
+const waterReserveRequired =
+    waterRequired * 1.10;
+
+const foodReserveRequired =
+    foodRequired * 1.10;
+
+
+const fuelReserveAdequate =
+    fuelAvailable >= fuelReserveRequired;
+
+const waterReserveAdequate =
+    waterAvailable >= waterReserveRequired;
+
+const foodReserveAdequate =
+    foodAvailable >= foodReserveRequired;
+
+
+let resourceStatus =
+    "SIMULATED_RESOURCE_REVIEW_REQUIRED";
+
+
+if (
+    fuelReserveAdequate &&
+    waterReserveAdequate &&
+    foodReserveAdequate
+) {
+
+    resourceStatus =
+        "SIMULATED_RESOURCE_RESERVE_ADEQUATE";
+
+}
+
+
+/* =========================================================
+   CATERING / GALLEY / FOOD HYGIENE
+========================================================= */
+
+const catering =
+    condition.catering || {};
+
+const cateringInspectionCurrent =
+    catering.inspectionCurrent === true;
+
+const galleyInspectionCurrent =
+    catering.galleyInspectionCurrent === true;
+
+const foodHygieneInspectionCurrent =
+    catering.foodHygieneInspectionCurrent === true;
+
+const provisionsStorageInspectionCurrent =
+    catering.provisionsStorageInspectionCurrent === true;
+
+const potableWaterInspectionCurrent =
+    catering.potableWaterInspectionCurrent === true;
+
+const crewAccommodationInspectionCurrent =
+    catering.crewAccommodationInspectionCurrent === true;
+
+const foodStoresAvailable =
+    catering.foodStoresAvailable === true;
+
+const freshWaterAvailable =
+    catering.freshWaterAvailable === true;
+
+const galleyEquipmentReady =
+    catering.galleyEquipmentReady === true;
+
+
+let cateringStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    cateringInspectionCurrent &&
+    galleyInspectionCurrent &&
+    foodHygieneInspectionCurrent &&
+    provisionsStorageInspectionCurrent &&
+    potableWaterInspectionCurrent &&
+    crewAccommodationInspectionCurrent &&
+    foodStoresAvailable &&
+    freshWaterAvailable &&
+    galleyEquipmentReady
+) {
+
+    cateringStatus =
+        "SIMULATED_CATERING_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   ACCOMMODATION / CABINS / CREW WELFARE
+========================================================= */
+
+const accommodation =
+    condition.accommodation || {};
+
+const cabinsReviewed =
+    accommodation.cabinsReviewed === true;
+
+const accommodationConditionReviewed =
+    accommodation.conditionReviewed === true;
+
+const sanitationReviewed =
+    accommodation.sanitationReviewed === true;
+
+const ventilationReviewed =
+    accommodation.ventilationReviewed === true;
+
+const lightingReviewed =
+    accommodation.lightingReviewed === true;
+
+const emergencyEscapeRoutesReviewed =
+    accommodation.emergencyEscapeRoutesReviewed === true;
+
+const crewWelfareFacilitiesReviewed =
+    accommodation.crewWelfareFacilitiesReviewed === true;
+
+
+let accommodationStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    cabinsReviewed &&
+    accommodationConditionReviewed &&
+    sanitationReviewed &&
+    ventilationReviewed &&
+    lightingReviewed &&
+    emergencyEscapeRoutesReviewed &&
+    crewWelfareFacilitiesReviewed
+) {
+
+    accommodationStatus =
+        "SIMULATED_ACCOMMODATION_REVIEW_COMPLETE";
+
+}
+
+
+/* =========================================================
+   OVERALL VESSEL READINESS V&V
+========================================================= */
+
+const vesselReadinessPass =
+    hullStatus ===
+        "SIMULATED_HULL_SUITABILITY_REVIEW_COMPLETE" &&
+
+    stabilityStatus ===
+        "SIMULATED_DYNAMIC_STABILITY_REVIEW_COMPLETE" &&
+
+    loadLineStatus ===
+        "SIMULATED_LOADLINE_REVIEW_COMPLETE" &&
+
+    bridgeStatus ===
+        "SIMULATED_BRIDGE_REVIEW_COMPLETE" &&
+
+    (
+        gmdssStatus ===
+            "SIMULATED_GMDSS_REVIEW_COMPLETE" ||
+        gmdssStatus ===
+            "SIMULATED_NOT_REQUIRED"
+    ) &&
+
+    electronicStoresStatus ===
+        "SIMULATED_ELECTRONIC_STORES_READY" &&
+
+    deckStoresStatus ===
+        "SIMULATED_DECK_STORES_READY" &&
+
+    machineryStatus ===
+        "SIMULATED_MACHINERY_SURVEY_COMPLETE" &&
+
+    engineStoresStatus ===
+        "SIMULATED_ENGINE_STORES_READY" &&
+
+    resourceStatus ===
+        "SIMULATED_RESOURCE_RESERVE_ADEQUATE" &&
+
+    cateringStatus ===
+        "SIMULATED_CATERING_REVIEW_COMPLETE" &&
+
+    accommodationStatus ===
+        "SIMULATED_ACCOMMODATION_REVIEW_COMPLETE";
+
+
+const vesselReadinessAction =
+    vesselReadinessPass
+        ? "MAINTAIN READINESS STATUS"
+        : "ESCALATE / HUMAN REVIEW";
+
+
+/* =========================================================
+   TRACEABLE PART 2 RESULT
+========================================================= */
+
+const vesselReadinessVAndV = {
+
+    hull: {
+        status: hullStatus
+    },
+
+    stability: {
+        status: stabilityStatus
+    },
+
+    loadLine: {
+        status: loadLineStatus
+    },
+
+    bridge: {
+        status: bridgeStatus
+    },
+
+    GMDSS: {
+        status: gmdssStatus
+    },
+
+    electronicStores: {
+        status: electronicStoresStatus
+    },
+
+    deckStores: {
+        status: deckStoresStatus
+    },
+
+    machinery: {
+        status: machineryStatus
+    },
+
+    engineStores: {
+        status: engineStoresStatus
+    },
+
+    resources: {
+
+        fuelRequired,
+        fuelAvailable,
+        fuelReserveRequired,
+        fuelReserveAdequate,
+
+        waterRequired,
+        waterAvailable,
+        waterReserveRequired,
+        waterReserveAdequate,
+
+        foodRequired,
+        foodAvailable,
+        foodReserveRequired,
+        foodReserveAdequate,
+
+        status:
+            resourceStatus
+
+    },
+
+    catering: {
+        status: cateringStatus
+    },
+
+    accommodation: {
+        status: accommodationStatus
+    },
+
+    overall: {
+
+        vesselReadinessPass,
+
+        recommendedAction:
+            vesselReadinessAction,
+
+        humanAuthority:
+            true,
+
+        autonomousCommand:
+            false,
+
+        operationalConnection:
+            false,
+
+        executionGate:
+            "HUMAN AUTHORIZATION REQUIRED"
+
+    }
+
+};
+
+
+/* =========================================================
+   GLOBAL ACCESS
+========================================================= */
+
+if (
+    typeof window !== "undefined"
+) {
+
+    window.vesselReadinessVAndV =
+        vesselReadinessVAndV;
+
+}
