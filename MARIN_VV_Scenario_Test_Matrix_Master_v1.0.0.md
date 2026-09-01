@@ -2931,8 +2931,984 @@ PART 3 END
 NEXT PART: Offshore operations, contingency cascade, heavy-lift, pipelaying, corrective-action testing, re-test validation, assessment latency and final integrated MARIN V&V scenario.
 
 Next sequence: VV-045
+SEXTANT PROTOCOL™
+
+MARIN DP / USV RESILIENCE V&V RESEARCH
+
+PROPOSED SPECIAL OFFSHORE OPERATIONS — MD REVIEW VERSION
+
+FILE: "MARIN_VV_SCENARIO_TEST_MATRIX_V2.md"
+PART 4
+STATUS: Research / V&V Proposal
+OPERATIONAL CONNECTION: NONE
+AUTONOMOUS COMMAND: FALSE
+HUMAN AUTHORITY: FINAL
+
+---
+
+VV-040 — HEAVY-LIFT LOADING IN SEAWAY
+
+PURPOSE
+
+Assess the simulated resilience response during heavy-lift loading operations conducted in environmental conditions representative of offshore/seaway operations.
+
+INPUT
+
+A. VESSEL / LOADING CONDITION
+
+- Vessel displacement
+- Draft
+- Trim
+- Heel / list
+- GM / GZ
+- KG / CG
+- Free-surface condition
+- Deck loading condition
+- Load-transfer condition
+
+B. LIFT / CRANE CONDITION
+
+- Lift weight
+- Crane load
+- Crane radius
+- Boom angle
+- Hook load
+- Suspended-load condition
+- Crane operating condition
+- Load-transfer status
+- Lift suspension / abort criteria
+
+C. ENVIRONMENT
+
+- Wind speed
+- Wind direction
+- Wave height
+- Wave period
+- Wave direction
+- Swell
+- Current
+- Sea state
+
+D. VESSEL / DP RESPONSE
+
+- Vessel motions
+- Vessel position
+- Heading
+- DP position error
+- DP environmental loading
+- Position confidence
+
+E. SAFETY / HUMAN AUTHORITY
+
+- Operational contingency
+- Emergency condition
+- Human-authority status
+
+ASSESS
+
+- Changing vessel stability
+- Heel / list
+- Trim
+- CG movement
+- GM / GZ response
+- Free-surface effect
+- Crane / suspended-load condition
+- Environmental loading
+- Vessel motion
+- DP position response
+- Structural loading where applicable
+- Lift suspension condition
+- Abort condition
+- Safe-state condition
+
+EXPECTED DECISION
+
+CONTINUE SIMULATED ASSESSMENT / HOLD / SUSPEND LIFT / REASSESS / SAFE STATE / ESCALATE
+
+PASS CRITERIA
+
+1. Initial loading condition is recorded.
+2. Lift parameters are traceable.
+3. Environmental conditions are recorded.
+4. Stability response is assessed.
+5. CG movement is identified.
+6. Vessel motion is assessed.
+7. DP position response is assessed.
+8. Changing conditions trigger reassessment.
+9. Lift-suspension / abort criteria are visible.
+10. Human authority remains FINAL.
+11. No physical crane or vessel command is generated.
+12. Complete audit trace is maintained.
+
+HUMAN AUTHORITY: FINAL
+SIMULATED EXECUTION: HUMAN AUTHORIZATION REQUIRED
+OPERATIONAL DP CONNECTION: NONE
+
+---
+
+VV-041 — HEAVY-LIFT DISCHARGE / OFFLOADING
+
+PURPOSE
+
+Assess the simulated resilience response during heavy-lift discharge where vessel displacement, centre of gravity and stability conditions change throughout the operation.
+
+INPUT
+
+A. VESSEL CONDITION
+
+- Initial displacement
+- Remaining displacement
+- Draft
+- Trim
+- Heel / list
+- Initial KG / CG
+- Changing KG / CG
+- Longitudinal CG movement
+- Transverse CG movement
+- GM / GZ
+
+B. LIFT CONDITION
+
+- Load weight
+- Suspended-load condition
+- Crane radius
+- Boom angle
+- Hook load
+- Load-transfer condition
+- Crane condition
+
+C. ENVIRONMENT
+
+- Wind
+- Wave
+- Swell
+- Current
+- Sea state
+
+D. DP / VESSEL RESPONSE
+
+- Vessel position
+- Heading
+- DP capability
+- DP resilience
+- Position error
+- Vessel-motion response
+
+E. CONTINGENCY
+
+- Safe-state condition
+- Emergency condition
+- Lift-suspension condition
+- Human-authority status
+
+ASSESS
+
+- Changing displacement
+- KG / CG movement
+- Heel / list
+- Trim
+- GM / GZ
+- Suspended-load effect
+- Crane condition
+- Seaway response
+- Environmental loading
+- DP resilience
+- Position and heading stability
+- Emergency / lift-suspension condition
+
+EXPECTED DECISION
+
+CONTINUE / HOLD / SUSPEND OFFLOADING / REASSESS / SAFE STATE / ESCALATE
+
+PASS CRITERIA
+
+1. Initial and changing loading states are recorded.
+2. CG movement is traceable.
+3. Stability response is reassessed.
+4. Environmental conditions remain visible.
+5. DP response is assessed where applicable.
+6. Position and heading stability are recorded.
+7. Emergency conditions trigger reassessment.
+8. Human authority remains FINAL.
+9. No physical operational command is generated.
+
+---
+
+VV-042 — PIPELAYING OPERATION
+
+PURPOSE
+
+Assess the simulated resilience response during pipelaying operations involving DP, pipe-handling equipment, tension management, seabed interaction and changing environmental conditions.
+
+INPUT
+
+A. VESSEL / POSITION
+
+- Vessel position
+- Vessel heading
+- Vessel speed
+- Draft
+- Trim
+- Heel / list
+- Position confidence
+
+B. DP / CONTROL
+
+- DP status
+- DP environmental loading
+- Position error
+- Heading error
+- Position-reference status
+- Primary control status
+- Secondary control availability
+- Human operator availability
+
+C. PIPE / HANDLING SYSTEM
+
+- Pipe tension
+- Tensioner status
+- Stinger / overboarding arrangement
+- Pipe departure angle
+- Layback
+- Touchdown position
+- Pipe condition
+- Abnormal pipe condition
+
+D. SEABED / NAVIGATION
+
+- Water depth
+- Charted depth
+- Tide
+- UKC
+- Seabed condition
+- Seabed interaction
+- Current
+
+E. ENVIRONMENT
+
+- Wind
+- Wave height
+- Wave period
+- Wave direction
+- Swell
+- Current
+- Sea state
+
+F. CONTINGENCY
+
+- Loss of DP capability
+- Loss / degradation of pipe tension
+- Abnormal pipe condition
+- Emergency recovery
+- Abandonment scenario
+- Safe-state condition
+- Human-authority status
+
+ASSESS
+
+- Vessel position
+- Vessel heading
+- DP capability
+- Position confidence
+- Pipe tension
+- Tensioner status
+- Stinger condition
+- Pipe departure angle
+- Layback
+- Touchdown position
+- Seabed interaction
+- Water depth
+- UKC
+- Environmental loading
+- Loss of DP capability
+- Loss / degradation of tension
+- Abnormal pipe condition
+- Recovery / abandonment condition
+
+EXPECTED DECISION
+
+CONTINUE / MONITOR / HOLD / REASSESS / RECOVER / ABORT / SAFE STATE / ESCALATE
+
+PASS CRITERIA
+
+1. Initial pipelaying condition is recorded.
+2. DP status is traceable.
+3. Pipe tension is recorded.
+4. Tensioner condition is recorded.
+5. Stinger / overboarding condition is recorded.
+6. Layback and touchdown information are traceable.
+7. Seabed interaction is assessed.
+8. Water depth and UKC are reproducible.
+9. Environmental deterioration triggers reassessment.
+10. Loss or degradation of DP triggers a resilience assessment.
+11. Loss or degradation of pipe tension triggers reassessment.
+12. Emergency recovery / abandonment conditions can be simulated.
+13. Human authority remains FINAL.
+14. No operational DP command is generated.
+
+---
+
+ENGINEERING BOUNDARY — VV-040 TO VV-042
+
+These scenarios are PROPOSED RESEARCH AND V&V SCENARIOS for technical review.
+
+They do not constitute:
+
+- Operational heavy-lift procedures
+- Operational pipelaying procedures
+- Vessel-specific stability criteria
+- Crane acceptance criteria
+- DP acceptance criteria
+- Structural acceptance criteria
+- Regulatory acceptance criteria
+
+MARIN may define or revise:
+
+- Test objectives
+- Vessel/testbed parameters
+- Environmental conditions
+- Failure cases
+- Acceptance criteria
+- Measurement requirements
+- Instrumentation requirements
+- V&V methodology
+- Evidence requirements
+- Human-factors requirements
+
+The Sextant Protocol™ matrix may subsequently be extended through controlled module integration and V&V traceability mapping.
+
+---
+
+VV-043 — DEAD SHIP / TOWING CONTINGENCY
+
+SCENARIO
+
+Vessel loses propulsion and/or electrical power and requires assessment of available recovery options.
+
+INPUT
+
+A. VESSEL CONDITION
+
+- Propulsion availability
+- Electrical-power status
+- Steering capability
+- Emergency-power status
+- Navigation-system status
+- Vessel position
+- Vessel heading
+- Vessel speed
+
+B. ENVIRONMENT
+
+- Wind
+- Wind direction
+- Current
+- Sea state
+- Wave condition
+- Visibility
+
+C. NAVIGATION / CLEARANCE
+
+- Water depth
+- UKC
+- Traffic
+- Nearby hazards
+- Safe-water destination
+- Available sea room
+
+D. CONTINGENCY RESOURCES
+
+- Available towing capability
+- Tug availability where applicable
+- Emergency-anchor option where applicable
+- Shelter option
+- Safe-water destination
+
+E. HUMAN AUTHORITY
+
+- Operator availability
+- Human decision status
+
+ASSESS
+
+- Dead-ship condition
+- Loss of manoeuvrability
+- Drift trajectory
+- Position confidence
+- Towing requirement
+- Safe-water destination
+- Emergency anchoring option
+- Traffic / hazard exposure
+- Recovery options
+
+EXPECTED DECISION
+
+TOW / ANCHOR / SHELTER / SAFE-WATER TRANSIT / MAINTAIN SAFE STATE / ESCALATE
+
+PASS CRITERIA
+
+1. Dead-ship condition is detected.
+2. Propulsion and power status are recorded.
+3. Drift condition is assessed.
+4. Available contingency options are identified.
+5. Safe-water destination is assessed.
+6. Human-authorized recovery decision is required.
+7. No autonomous recovery command is generated.
+
+---
+
+VV-044 — ANCHORING / ANCHOR DRAGGING / SWING CLEARANCE
+
+INPUT
+
+A. VESSEL / ANCHOR CONDITION
+
+- Vessel position
+- Vessel heading
+- Vessel draft
+- Anchor position
+- Anchor status
+- Chain length
+- Chain scope
+- Anchor holding condition
+
+B. ENVIRONMENT
+
+- Water depth
+- Tide
+- Wind
+- Wind direction
+- Current
+- Current direction
+- Gust condition
+- Sea state
+
+C. CLEARANCE
+
+- Swing circle
+- Nearby hazards
+- Safe clearance
+- Traffic
+- Depth / UKC
+
+D. MOVEMENT
+
+- Speed over ground
+- Position change
+- Heading change
+- Anchor-dragging indicators
+- Position confidence
+
+ASSESS
+
+- Anchor deployment condition
+- Available scope
+- Swing-clearance circle
+- Dragging-anchor indicators
+- Wind / gust effect
+- Tidal / current effect
+- Vessel movement
+- Clearance from hazards
+- Safe-state condition
+
+EXPECTED DECISION
+
+ANCHOR / INCREASE SCOPE / MONITOR / RE-ANCHOR / ESCALATE / SAFE-WATER OPTION
+
+PASS CRITERIA
+
+1. Anchor status is recorded.
+2. Water depth is recorded.
+3. Scope is traceable.
+4. Swing clearance is calculated.
+5. Environmental loading is assessed.
+6. Vessel movement is monitored.
+7. Dragging indicators are recorded.
+8. Hazard clearance is assessed.
+9. Human authority remains FINAL.
+10. No autonomous anchoring command is generated.
+
+RESEARCH CHECK
+
+Before a simulated transition to anchoring or another control condition, vessel movement and position confidence shall be assessed.
+
+A zero or near-zero speed-over-ground condition may be used as a research verification parameter where appropriate to the manoeuvre.
+
+---
+
+VV-045 — WIND GUST / SQUALL / RAPID ENVIRONMENTAL CHANGE
+
+INPUT
+
+- Mean wind speed
+- Gust speed
+- Wind direction
+- Rate of environmental change
+- Current
+- Current direction
+- Wave height
+- Wave period
+- Swell
+- Vessel heading
+- Vessel speed
+- Position confidence
+
+ASSESS
+
+- Mean environmental condition
+- Gust condition
+- Squall condition
+- Rate of deterioration
+- DP load response
+- Heel response
+- Position error
+- Heading response
+- Safe-state requirement
+
+EXPECTED DECISION
+
+CONTINUE / INCREASE MONITORING / REDUCE EXPOSURE / SAFE STATE / ESCALATE
+
+PASS CRITERIA
+
+The architecture detects changing environmental conditions and reassesses the vessel state.
+
+---
+
+VV-046 — HEAVY SWELL / WAVE-INDUCED HEEL
+
+INPUT
+
+- Wave height
+- Wave period
+- Wave direction
+- Swell height
+- Swell direction
+- Vessel heading
+- Vessel speed
+- Loading condition
+- Stability condition
+- CG condition
+
+ASSESS
+
+- Transient heel
+- Repeated heel response
+- Persistent list
+- Position response
+- Stability response
+- Structural loading indicators
+- Environmental loading
+
+EXPECTED DECISION
+
+MONITOR / CHANGE SIMULATED CONDITION / REDUCE EXPOSURE / ESCALATE
+
+PASS CRITERIA
+
+Heel response is distinguished from persistent list and is recorded against the applicable environmental condition.
+
+---
+
+VV-047 — DECK SECURITY / WATERTIGHT INTEGRITY
+
+INPUT
+
+A. ENVIRONMENT
+
+- Weather condition
+- Wave condition
+- Sea state
+
+B. DECK / CARGO
+
+- Deck equipment
+- Cargo
+- Stores
+- Loose equipment
+- Securing arrangements
+- Deck loading
+
+C. WATERTIGHT INTEGRITY
+
+- Watertight doors
+- Watertight openings
+- Bulkhead condition
+- Emergency closures
+- Closure status
+
+ASSESS
+
+- Loose-object risk
+- Equipment movement
+- Stores movement
+- Cargo movement
+- Securing status
+- Watertight integrity
+- Required closure status
+- Adverse-weather readiness
+
+EXPECTED DECISION
+
+READY / SECURE / RESTRICT DECK ACCESS / CLOSE REQUIRED OPENINGS / ESCALATE
+
+PASS CRITERIA
+
+Critical deck equipment and stores are identified and securing status is traceable.
+
+---
+
+VV-048 — FIRE / MUSTER / FIRE-FIGHTING RESPONSE
+
+INPUT
+
+A. FIRE CONDITION
+
+- Fire indication
+- Fire location
+- Fire type where known
+- Fire detection status
+- Alarm status
+
+B. PERSONNEL
+
+- Personnel status
+- Muster status
+- Personnel location
+- Missing-person indication where applicable
+
+C. FIRE PROTECTION
+
+- Fire doors / boundaries
+- Fixed fire-extinguishing arrangements
+- Portable fire appliances
+- Firefighting equipment status
+
+D. ESCAPE
+
+- Escape routes
+- Emergency exits
+- Emergency lighting
+- Muster access
+
+ASSESS
+
+- Fire detection
+- General alarm
+- Muster
+- Fire containment
+- Closure of applicable fire boundaries
+- Availability of firefighting equipment
+- Initial firefighting response where safe
+- Escape-route availability
+- Escalation requirement
+
+EXPECTED DECISION
+
+ALARM / MUSTER / CONTAIN / ATTEMPT FIREFIGHTING WHERE SAFE / ESCALATE / ABANDONMENT PREPARATION
+
+PASS CRITERIA
+
+1. Fire detection is recorded.
+2. Alarm status is recorded.
+3. Muster condition is assessed.
+4. Fire containment is assessed.
+5. Firefighting capability is recorded.
+6. Escape routes are assessed.
+7. Escalation conditions are visible.
+8. Human authority remains FINAL.
+9. No autonomous firefighting or vessel command is generated.
+
+IMPORTANT
+
+Firefighting action remains subject to vessel SMS procedures, training, equipment limitations and human authority.
+
+---
+
+VV-049 — DECK CARGO / STORES MOVEMENT
+
+INPUT
+
+- Cargo condition
+- Stores condition
+- Securing arrangements
+- Deck loading
+- Vessel draft
+- Trim
+- Heel / list
+- Weather
+- Wave condition
+- Vessel motion
+- CG condition
+
+ASSESS
+
+- Movement risk
+- Loss of securing
+- Shifting weight
+- Potential CG shift
+- Heel / list consequence
+- Trim consequence
+- Stability consequence
+- Structural-loading consequence
+
+EXPECTED DECISION
+
+SECURE / REASSESS / RESTRICT OPERATION / ESCALATE
+
+PASS CRITERIA
+
+Movement risk is connected to the stability and structural assessment.
+
+---
+
+VV-050 — STORM / ANCHORAGE / SAFE-HAVEN CONTINGENCY
+
+INPUT
+
+A. ENVIRONMENT
+
+- Storm forecast / condition
+- Wind
+- Wind direction
+- Waves
+- Swell
+- Current
+- Expected deterioration
+- Time to deterioration
+
+B. VESSEL CONDITION
+
+- Vessel capability
+- Draft
+- Manoeuvring capability
+- Propulsion status
+- DP capability where applicable
+
+C. LOCATION / OPTIONS
+
+- Current position
+- Anchorage condition
+- Port status
+- Port closure
+- Safe-water locations
+- Sheltered-water locations
+- Escape route
+- Alternative safe location
+
+ASSESS
+
+- Remain in port
+- Depart port where appropriate and authorized
+- Proceed to designated storm anchorage
+- Shelter at suitable protected location
+- Safe-water option
+- Escape-route availability
+- Time remaining before deterioration
+- Vessel capability
+- Port closure implications
+
+EXPECTED DECISION
+
+REMAIN / DEPART / ANCHOR / SHELTER / ALTERNATIVE SAFE LOCATION / ESCALATE
+
+PASS CRITERIA
+
+A contingency route or shelter option is identified before environmental conditions exceed the defined research threshold.
+
+---
+
+VV-051 — PIRACY / SEA-MINE / HAZARD AVOIDANCE
+
+INPUT
+
+- Threat information
+- Threat type
+- Threat position
+- Vessel position
+- Intended route
+- Alternative route
+- Navigational restrictions
+- Environmental conditions
+- Traffic density
+- Safe-water option
+- Human-authority status
+
+ASSESS
+
+- Threat proximity
+- Route risk
+- Alternative-route availability
+- Safe-distance considerations
+- Traffic implications
+- Environmental implications
+- Navigational restrictions
+- Human decision authority
+
+EXPECTED DECISION
+
+CONTINUE / ALTER ROUTE / AVOID AREA / HOLD / ESCALATE
+
+PASS CRITERIA
+
+The system identifies the hazard, evaluates an alternative route and requires human authorization before any simulated route change.
+
+---
+
+VV-052 — ESCAPE ROUTE / PRE-PLANNED CONTINGENCY
+
+INPUT
+
+- Current vessel position
+- Intended route
+- Primary escape route
+- Secondary escape route
+- Safe-water locations
+- Anchorage
+- Shelter
+- Port status
+- Weather forecast / condition
+- Time to deterioration
+- Vessel capability
+- Alternative route
+
+ASSESS
+
+- Primary escape route
+- Secondary escape route
+- Safe-water option
+- Shelter option
+- Time available
+- Route deterioration
+- Contingency readiness
+- Position confidence
+
+EXPECTED DECISION
+
+CONTINUE / PREPARE / ALTER ROUTE / PROCEED TO SAFE WATER / SHELTER / ESCALATE
+
+PASS CRITERIA
+
+A contingency option is identified before the primary operating condition becomes unsafe.
+
+---
+
+VV-053 — INTEGRATED CONTINGENCY CASCADE
+
+INPUT
+
+Any combination of:
+
+- Environmental deterioration
+- Wind gust / squall
+- Heavy swell
+- Heel / list
+- UKC deterioration
+- Position degradation
+- DP degradation
+- Machinery failure
+- Fire
+- Deck movement
+- Anchor dragging
+- Loss of propulsion
+- Towing requirement
+- Port closure
+- Navigation hazard
+- Security threat
+
+ASSESSMENT CHAIN
+
+OBSERVE → VERIFY → ASSESS → PRIMARY AI → SECONDARY AI → STABILIZER → RECOMMENDATION → CAPTAIN AI LENA → HUMAN AUTHORITY → SIMULATED RESPONSE → AUDIT → UPDATE
+
+EXPECTED DECISION
+
+DYNAMIC RESILIENCE ASSESSMENT / SAFE STATE / ESCALATION / HUMAN REVIEW
+
+PASS CRITERIA
+
+1. Multiple simultaneous conditions are detected.
+2. Critical conditions are not hidden by lower-priority conditions.
+3. Secondary AI identifies safety-critical degradation.
+4. Stabilizer provides deterministic arbitration.
+5. Captain AI Lena provides decision support.
+6. Human authority remains FINAL.
+7. No autonomous operational command is generated.
+8. Simulated responses remain inside the research environment.
+9. Relevant KPIs are recorded.
+10. Complete decision chain is auditable.
+
+---
+
+OPERATIONAL CONTINGENCY PRINCIPLE
+
+The V&V framework should investigate whether the system can identify developing hazards early enough to support a planned contingency rather than waiting for a complete loss of control.
+
+RESEARCH SEQUENCE
+
+OBSERVE EARLY → VERIFY → ASSESS MARGIN → IDENTIFY CONTINGENCY → ESCALATE → HUMAN DECISION → SIMULATED RESPONSE → VERIFY RECOVERY
+
+---
+
+VV-054 — INLAND WATERWAY / PORT ENTRY CLEARANCE
+
+INPUT
+
+- Vessel dimensions
+- Vessel length
+- Vessel beam
+- Draft
+- Air draft
+- UKC
+- Waterway depth
+- Channel width
+- Bridge / overhead clearance
+- Vessel type
+- Port requirements
+- Waterway requirements
+- Required clearance / authorization
+- Applicable local rules
+- Traffic restrictions
+- Pilotage requirements
+- Human authorization
+
+ASSESS
+
+- Entry requirements
+- Draft / UKC
+- Air-draft clearance
+- Vessel suitability
+- Required permission
+- Pilotage
+- Local rules
+- Traffic restrictions
+- Clearance status
+
+EXPECTED DECISION
+
+PERMITTED FOR RESEARCH SCENARIO / REVIEW REQUIRED / DO NOT PROCEED
+
+PASS CRITERIA
+
+The system does not assume that an inland waterway or port is available without the applicable clearance, authorization and vessel-specific requirements being satisfied.
+
+---
+
+PART 4 END
+
+NEXT PART — VV-055 onward:
+
+- Pre-job resilience readiness
+- Full pre-job resilience integration
+- Corrective-action testing
+- Re-test validation
+- Assessment latency
+- Full MARIN V&V resilience scenario
+- V&V audit format
+- Final human-authority principle
+- Final MARIN engineering-review boundary
 
 The next part will continue with the remaining navigation, navigation lights/sound signals, vessel status, escape routes, dangerous goods, safe manning/UMV, contingency, buoyage/AtoN, TSS/COLREG, restricted visibility, fire, deck cargo, storm/safe-haven, piracy/hazard avoidance, integrated contingency, heavy-lift and pipelaying scenarios.
 
 All will remain under one continuous numbering system.
+
 
