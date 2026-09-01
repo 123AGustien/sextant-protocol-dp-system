@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Sextant Protocol™ – DP Resilience V&V Research Cockpit
+</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #08111f;
+    color: #e8f0f7;
+}
+
+.header {
+    padding: 18px;
+    text-align: center;
+    background: #0d1b2a;
+    border-bottom: 2px solid #29445f;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header p {
+    margin: 8px 0 0;
+    color: #9fb3c8;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.branch-label {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 6px 10px;
+    border: 1px solid #46627d;
+    border-radius: 5px;
+    background: #091827;
+    color: #8fc7ff;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.panel {
+    background: #0e1c2c;
+    border: 1px solid #29445f;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 1px solid #29445f;
+    padding-bottom: 8px;
+}
+
+.vessel-data {
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.input-row {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    gap: 10px;
+    align-items: center;
+    margin: 10px 0;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #46627d;
+    background: #07111d;
+    color: white;
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.run {
+    background: #1f8f5f;
+    color: white;
+}
+
+.reset {
+    background: #46586d;
+    color: white;
+}
+
+.scenario {
+    background: #315a7d;
+    color: white;
+}
+
+.controls {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.architecture {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.node {
+    padding: 10px;
+    border: 1px solid #587590;
+    border-radius: 6px;
+    background: #13283b;
+    text-align: center;
+    min-width: 125px;
+    font-size: 12px;
+}
+
+.arrow {
+    color: #8faac0;
+    font-size: 20px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.status-card {
+    padding: 12px;
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+}
+
+.status-title {
+    font-size: 11px;
+    color: #91a8bd;
+}
+
+.status-value {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.output {
+    white-space: pre-wrap;
+    background: #050c14;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    padding: 15px;
+    min-height: 320px;
+    font-family: monospace;
+    font-size: 13px;
+    overflow-x: auto;
+}
+
+.footer {
+    text-align: center;
+    padding: 18px;
+    color: #8799aa;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.engine-status {
+    text-align: center;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    background: #091827;
+    border: 1px solid #29445f;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+/* =========================================================
+   CAPTAIN AI LENA
+========================================================= */
+
+.lena-panel {
+    background: #0e1c2c;
+    border: 1px solid #587590;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.lena-panel h2 {
+    margin-top: 0;
+    font-size: 17px;
+    border-bottom: 1px solid #587590;
+    padding-bottom: 8px;
+}
+
+.lena-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.lena-card {
+    padding: 12px;
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+}
+
+.lena-title {
+    font-size: 11px;
+    color: #91a8bd;
+}
+
+.lena-value {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.lena-message {
+    margin-top: 12px;
+    padding: 12px;
+    background: #050c14;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.human-panel {
+    background: #0e1c2c;
+    border: 1px solid #587590;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.human-panel h2 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 1px solid #587590;
+    padding-bottom: 8px;
+}
+
+.boundary {
+    background: #091827;
+    border: 1px solid #29445f;
+    border-radius: 6px;
+    padding: 15px;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.warning {
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid #705f32;
+    background: #181509;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.vv-panel {
+    background: #0e1c2c;
+    border: 1px solid #46627d;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.vv-panel h2 {
+    margin-top: 0;
+    font-size: 16px;
+    border-bottom: 1px solid #46627d;
+    padding-bottom: 8px;
+}
+
+.vv-badge {
+    display: inline-block;
+    padding: 5px 8px;
+    margin-bottom: 10px;
+    border: 1px solid #587590;
+    border-radius: 5px;
+    background: #091827;
+    color: #9fc9eb;
+    font-family: monospace;
+    font-size: 11px;
+}
+
+@media (max-width: 600px) {
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .architecture {
+        flex-direction: column;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+    }
+
+    button {
+        width: 90%;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- ======================================================
+     MARIN V&V RESEARCH HEADER
+======================================================= -->
+
+<div class="header">
+
+    <h1>
+        SEXTANT PROTOCOL™ –
+        DP RESILIENCE V&amp;V RESEARCH COCKPIT
+    </h1>
+
+    <p>
+        MARIN / USV V&amp;V RESEARCH FRAMEWORK
+        <br>
+        MPSV SIMULATION • PRIMARY AI →
+        SECONDARY AI → STABILIZER →
+        CAPTAIN AI LENA → HUMAN-IN-THE-LOOP
+    </p>
+
+    <div class="branch-label">
+        BRANCH:
+        feature/marin-usv-vv-research
+    </div>
+
+</div>
+
+<div class="container">
+
+<!-- ======================================================
+     ENGINE STATUS
+======================================================= -->
+
+<div class="engine-status">
+
+    ENGINE:
+
+    <span id="engineStatus">
+        INITIALISING...
+    </span>
+
+</div>
+
+
+<!-- ======================================================
+     V&V RESEARCH FRAMEWORK
+======================================================= -->
+
+<div class="vv-panel">
+
+    <div class="vv-badge">
+        MARIN / USV V&amp;V RESEARCH FRAMEWORK
+    </div>
+
+    <h2>
+        Verification &amp; Validation Research Framework
+    </h2>
+
+    <div class="boundary">
+
+        This cockpit provides a reusable deterministic
+        DP resilience simulation framework for research,
+        verification and validation activities.
+
+        <br><br>
+
+        The framework is designed so that external
+        research partners may provide their own:
+
+        <br>
+        • scenarios
+        <br>
+        • operating conditions
+        <br>
+        • resilience metrics
+        <br>
+        • evaluation criteria
+        <br>
+        • verification conditions
+        <br>
+        • validation requirements
+
+        <br><br>
+
+        These requirements can subsequently be mapped
+        into the existing Sextant Protocol™ simulation
+        architecture without changing the underlying
+        layered decision-support framework.
+
+        <br><br>
+
+        <strong>
+            MARIN SCENARIOS / METRICS / CONDITIONS
+        </strong>
+
+        <br>
+
+        ↓
+
+        <br>
+
+        <strong>
+            EXISTING SEXTANT PROTOCOL™ V&amp;V FRAMEWORK
+        </strong>
+
+        <br>
+
+        ↓
+
+        <br>
+
+        <strong>
+            REPEATABLE SIMULATION / TRACE / ASSESSMENT
+        </strong>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     PRINCIPAL ARCHITECTURE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Principal Architecture
+    </h2>
+
+    <div class="architecture">
+
+        <div class="node">
+            ENVIRONMENT
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            PRIMARY AI<br>
+            Normal Control
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            SECONDARY AI<br>
+            Safety Layer
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            STABILIZER<br>
+            Arbitration
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            CAPTAIN AI LENA<br>
+            Decision Support
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            HUMAN-IN-THE-LOOP<br>
+            Final Authority
+        </div>
+
+        <div class="arrow">→</div>
+
+        <div class="node">
+            SIMULATED DP ACTION
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     VESSEL + ENVIRONMENT
+======================================================= -->
+
+<div class="grid">
+
+<div class="panel">
+
+    <h2>
+        Simulated Vessel Profile
+    </h2>
+
+    <div class="vessel-data">
+
+        <strong>Name:</strong>
+        SEXTANT-MPSV-01
+        <br>
+
+        <strong>Type:</strong>
+        Multi-Purpose Support Vessel
+        <br>
+
+        <strong>DP Class:</strong>
+        DP2-SIMULATED
+        <br>
+
+        <strong>Length:</strong>
+        85 m
+        <br>
+
+        <strong>Beam:</strong>
+        20 m
+        <br>
+
+        <strong>Draft:</strong>
+        6 m
+        <br>
+
+        <strong>Main Thrusters:</strong>
+        2
+        <br>
+
+        <strong>Tunnel Thrusters:</strong>
+        2
+        <br>
+
+        <strong>Total Thrusters:</strong>
+        4
+        <br>
+
+        <strong>Nominal Simulated Thrust:</strong>
+        100 units
+
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <h2>
+        Environmental Simulation Inputs
+    </h2>
+
+    <div class="input-row">
+
+        <label>
+            Wind Stress (0–100)
+        </label>
+
+        <input
+            id="wind"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+    <div class="input-row">
+
+        <label>
+            Current Stress (0–100)
+        </label>
+
+        <input
+            id="current"
+            type="number"
+            min="0"
+            max="100"
+            value="25"
+        >
+
+    </div>
+
+    <div class="input-row">
+
+        <label>
+            Wave Stress (0–100)
+        </label>
+
+        <input
+            id="wave"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+    <div class="input-row">
+
+        <label>
+            Tidal Stress (0–100)
+        </label>
+
+        <input
+            id="tidal"
+            type="number"
+            min="0"
+            max="100"
+            value="20"
+        >
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- ======================================================
+     SCENARIO CONTROLS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Scenario Controls
+    </h2>
+
+    <div class="controls">
+
+        <button
+            class="scenario"
+            onclick="normalScenario()"
+        >
+            NORMAL
+        </button>
+
+        <button
+            class="scenario"
+            onclick="moderateWeatherScenario()"
+        >
+            MODERATE
+        </button>
+
+        <button
+            class="scenario"
+            onclick="heavyWeatherScenario()"
+        >
+            HEAVY WEATHER
+        </button>
+
+        <button
+            class="scenario"
+            onclick="criticalScenario()"
+        >
+            CRITICAL
+        </button>
+
+        <button
+            class="scenario"
+            onclick="currentSurgeScenario()"
+        >
+            CURRENT SURGE
+        </button>
+
+        <button
+            class="scenario"
+            onclick="heavySeaStateScenario()"
+        >
+            HEAVY SEA
+        </button>
+
+        <button
+            class="scenario"
+            onclick="windGustScenario()"
+        >
+            WIND GUST
+        </button>
+
+        <button
+            class="scenario"
+            onclick="combinedDisturbanceScenario()"
+        >
+            COMBINED
+        </button>
+
+        <button
+            class="scenario"
+            onclick="randomScenario()"
+        >
+            RANDOM
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     MAIN CONTROL
+======================================================= -->
+
+<div class="controls">
+
+    <button
+        class="run"
+        onclick="runSimulation()"
+    >
+        ▶ RUN DP SIMULATION
+    </button>
+
+    <button
+        class="reset"
+        onclick="resetSimulation()"
+    >
+        RESET
+    </button>
+
+</div>
+
+
+<!-- ======================================================
+     LIVE SYSTEM STATUS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Live System Status
+    </h2>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                ENVIRONMENT
+            </div>
+
+            <div
+                class="status-value"
+                id="liveEnvironment"
+            >
+                26.25 / LOW
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                PRIMARY AI
+            </div>
+
+            <div
+                class="status-value"
+                id="livePrimary"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                SECONDARY AI
+            </div>
+
+            <div
+                class="status-value"
+                id="liveSecondary"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                STABILIZER
+            </div>
+
+            <div
+                class="status-value"
+                id="liveStabilizer"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                HUMAN AUTHORITY
+            </div>
+
+            <div
+                class="status-value"
+                id="liveHuman"
+            >
+                FINAL
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                SYSTEM
+            </div>
+
+            <div
+                class="status-value"
+                id="liveSystem"
+            >
+                SYSTEM READY
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     CAPTAIN AI LENA
+======================================================= -->
+
+<div class="lena-panel">
+
+    <h2>
+        Captain AI Lena — Decision Support
+    </h2>
+
+    <div class="lena-grid">
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                LENA STATUS
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaStatus"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                AI ROLE
+            </div>
+
+            <div class="lena-value">
+                DECISION SUPPORT
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                RECOMMENDATION
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaRecommendation"
+            >
+                NO SIMULATED RECOMMENDATION
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                URGENCY
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaUrgency"
+            >
+                NORMAL
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                RESPONSE MODE
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaResponseMode"
+            >
+                MONITORING
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                HUMAN AUTHORITY
+            </div>
+
+            <div class="lena-value">
+                FINAL
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                AUTONOMOUS COMMAND
+            </div>
+
+            <div class="lena-value">
+                FALSE
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                SIMULATED ACTION
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaAction"
+            >
+                NOT EXECUTED
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="lena-message"
+        id="lenaMessage"
+    >
+        Captain AI Lena is awaiting simulated environmental
+        assessment. No simulated actions recommended.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     DP SIMULATION ASSESSMENT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        DP Simulation Assessment
+    </h2>
+
+    <div
+        id="simulationOutput"
+        class="output"
+    >
+System ready. Select environmental conditions or a scenario,
+then press RUN DP SIMULATION.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     RECOMMENDED ACTIONS
+======================================================= -->
+
+<div class="lena-panel">
+
+    <h2>
+        Captain AI Lena — Recommended Actions
+    </h2>
+
+    <div class="boundary">
+
+        <strong>
+            CAPTAIN AI LENA
+        </strong>
+
+        <br>
+
+        ROLE:
+        <strong>
+            DP RESILIENCE DECISION-SUPPORT LAYER
+        </strong>
+
+        <br>
+
+        AUTHORITY:
+        <strong>
+            HUMAN-IN-THE-LOOP
+        </strong>
+
+        <br>
+
+        AUTONOMOUS COMMAND:
+        <strong>
+            FALSE
+        </strong>
+
+        <br><br>
+
+        Captain AI Lena evaluates the simulated resilience
+        assessment and presents recommended actions for human
+        consideration.
+
+    </div>
+
+
+    <div class="lena-grid">
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                LENA STATUS
+            </div>
+
+            <div
+                class="lena-value"
+                id="actionLenaStatus"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                CONTROL MODE
+            </div>
+
+            <div class="lena-value">
+                HUMAN AUTHORITY
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                RECOMMENDED ACTION
+            </div>
+
+            <div
+                class="lena-value"
+                id="recommendedAction"
+            >
+                NO ACTION
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                URGENCY
+            </div>
+
+            <div
+                class="lena-value"
+                id="recommendedUrgency"
+            >
+                NORMAL
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="lena-message"
+        id="recommendedMessage"
+    >
+        Captain AI Lena awaiting simulated assessment.
+        No DP action recommendation available.
+        Human authority remains FINAL.
+    </div>
+
+</div>
