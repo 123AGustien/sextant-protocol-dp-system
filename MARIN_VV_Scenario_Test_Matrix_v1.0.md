@@ -3853,7 +3853,178 @@ END OF ADDITIONAL MARIN V&V SCENARIO CATEGORIES
 END OF ADDITIONAL MARIN V&V SCENARIOS
 ============================================================
 
+VV-029 — TRAFFIC SEPARATION SCHEME / SINGAPORE STRAIT
 
+INPUT:
+
+- Vessel position
+- Traffic Separation Scheme (TSS) status
+- General direction of traffic flow
+- Vessel heading and course over ground
+- Speed over ground
+- Traffic density
+- Crossing / joining / leaving / following traffic lane
+- Nearby vessels
+- Navigational constraints
+- Port / terminal departure or arrival condition
+
+ASSESS:
+
+- Whether the vessel is following the appropriate traffic lane and general direction of traffic flow.
+- Whether the vessel is joining, leaving, crossing or proceeding within a traffic lane.
+- Whether the proposed manoeuvre is consistent with the applicable TSS and COLREG requirements.
+- Whether adequate sea room and safe speed are maintained.
+- Whether the manoeuvre creates a collision risk with vessels already following the traffic flow.
+- Whether port departure restrictions or local VTS requirements apply.
+- Whether the vessel must wait, alter course, reduce speed or otherwise maintain a safe condition before entering the traffic lane.
+
+SINGAPORE STRAIT RESEARCH CONDITION:
+
+A vessel departing a port or terminal, including the Tanjong Pagar area, shall be assessed against the applicable TSS, COLREG and local navigation requirements before entering or crossing a traffic lane.
+
+The simulator shall NOT assume that a vessel departing port automatically has priority merely because it intends to proceed in the general direction of traffic flow.
+
+A vessel already established in a traffic lane shall be treated as existing traffic requiring appropriate collision-risk assessment.
+
+OPPOSITE / BATAM-SIDE TRAFFIC CONDITION:
+
+For vessels following the general direction of an established traffic lane, the simulator shall assess course, speed, relative bearing, CPA/TCPA and applicable COLREG/TSS obligations.
+
+The simulator shall NOT implement a blanket rule that a vessel always has priority over every vessel on its starboard side.
+
+The applicable COLREG rule, TSS requirement, vessel status and collision-risk situation must determine the simulated assessment.
+
+CROSSING A TRAFFIC LANE:
+
+The simulator shall distinguish between:
+
+- following a traffic lane;
+- joining a traffic lane;
+- leaving a traffic lane; and
+- crossing a traffic lane.
+
+Crossing shall be treated as a separate manoeuvre requiring assessment of the applicable TSS and COLREG requirements.
+
+The simulator shall identify whether a proposed crossing creates an unacceptable collision risk or interferes with vessels following the traffic flow.
+
+EXPECTED DECISION:
+SAFE / CAUTION / ALTER MANOEUVRE / REDUCE SPEED / WAIT / ESCALATE FOR HUMAN REVIEW
+
+PASS CRITERIA:
+
+1. Traffic-lane status is correctly identified.
+2. Vessel course and speed are recorded.
+3. Joining, leaving, crossing and following are distinguished.
+4. Collision risk is assessed using the simulated traffic situation.
+5. Applicable COLREG/TSS considerations are identified.
+6. No blanket right-of-way assumption is made.
+7. Human authority remains FINAL.
+8. No autonomous navigational command is generated.
+
+SIMULATED RESPONSE:
+Decision-support recommendation only.
+
+OPERATIONAL CONNECTION:
+NONE.
+
+============================================================
+
+VV-030 — TSS / PORT DEPARTURE CONFLICT
+
+SCENARIO:
+Vessel departing port approaches a traffic separation scheme while another vessel is already established in the traffic lane.
+
+ASSESS:
+
+- Departure track
+- Traffic flow direction
+- Relative bearing
+- CPA
+- TCPA
+- Speed
+- Available sea room
+- Local traffic restrictions
+- TSS compliance
+
+EXPECTED RESPONSE:
+Identify potential conflict and provide a human-review recommendation before the simulated manoeuvre.
+
+PASS CRITERIA:
+The system demonstrates that established traffic, port departure status, TSS geometry and collision risk are considered together rather than applying a simple priority rule.
+
+============================================================
+
+VV-031 — ALTERNATIVE ROUTE / HAZARD AVOIDANCE
+
+SCENARIO:
+Piracy warning, sea-mine warning, navigational hazard or other route restriction.
+
+ASSESS:
+
+- Original route
+- Hazard position
+- Alternative route
+- Safe water
+- TSS implications
+- Traffic density
+- Weather
+- Port / coastal restrictions
+- Human-authority decision
+
+EXPECTED DECISION:
+MAINTAIN ROUTE / ALTER ROUTE / HOLD POSITION / ESCALATE
+
+PASS CRITERIA:
+The system identifies the hazard, evaluates an alternative route and requires human authorization before any simulated route change.
+
+============================================================
+
+VV-032 — INLAND WATERWAY / LOCAL RULES
+
+SCENARIO:
+Proposed transit through an inland waterway, restricted channel or port approach.
+
+ASSESS:
+
+- Vessel clearance
+- Draft
+- UKC
+- Channel restrictions
+- Local navigation rules
+- TSS / traffic restrictions
+- Bridge / overhead clearance where applicable
+- Vessel dimensions
+- Pilotage requirements
+- Human authorization
+
+EXPECTED DECISION:
+PROCEED / RESTRICTED / ALTERNATIVE ROUTE / ESCALATE
+
+PASS CRITERIA:
+The simulator does not assume inland-waterway access without confirming the applicable vessel, waterway and local requirements.
+
+============================================================
+
+V&V PRINCIPLE
+
+NAVIGATION DECISION SUPPORT MUST BE CONTEXTUAL.
+
+The simulator shall not encode a universal "right-of-way" assumption.
+
+It shall instead:
+
+OBSERVE
+→ VERIFY
+→ IDENTIFY NAVIGATION CONDITION
+→ ASSESS COLLISION / NAVIGATION RISK
+→ APPLY RELEVANT TSS / COLREG LOGIC
+→ RECOMMEND
+→ CAPTAIN AI LENA
+→ HUMAN AUTHORITY
+→ SIMULATED RESPONSE
+→ AUDIT
+
+NO AUTONOMOUS NAVIGATION COMMAND.
 ============================================================
 AUDIT FORMAT
 ============================================================
