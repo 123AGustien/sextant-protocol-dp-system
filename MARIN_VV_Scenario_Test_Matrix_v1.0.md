@@ -1266,6 +1266,786 @@ The density correction is calculated transparently and the resulting draft chang
 IMPORTANT:
 The calculation is an engineering/research calculation and must be checked against the vessel's approved hydrostatic, stability and loading information before operational use.
 
+# ============================================================
+# VV-038 — GARBAGE / WASTE MANAGEMENT
+# ============================================================
+
+INPUT:
+Garbage Management Plan
+Garbage segregation arrangements
+Garbage storage
+Garbage disposal arrangements
+Garbage Record Book / applicable records
+Shore reception arrangements
+Operating area restrictions
+
+ASSESS:
+• Garbage Management Plan availability
+• Garbage segregation
+• Storage capacity
+• Disposal arrangements
+• Disposal records
+• Reception-facility arrangements
+• Prohibited discharge conditions
+• Accumulation / capacity risk
+• Record integrity
+
+EXPECTED DECISION:
+GARBAGE MANAGEMENT REVIEW COMPLETE / REVIEW REQUIRED
+
+PASS CRITERIA:
+Garbage handling, segregation, storage and disposal arrangements are identified and traceable.
+
+IMPORTANT:
+The simulator does not determine MARPOL compliance. Applicable MARPOL, Flag State, Port State and company requirements remain controlling.
+
+
+# ============================================================
+# VV-039 — WASTE OIL / OILY WATER / SLUDGE
+# ============================================================
+
+INPUT:
+Fuel and lubricating-oil systems
+Bilge arrangements
+Sludge storage
+Oily-water treatment equipment
+Waste-oil storage
+Disposal arrangements
+Applicable records
+
+ASSESS:
+• Waste-oil management
+• Sludge capacity
+• Bilge management
+• Oily-water treatment availability
+• Oily-waste storage
+• Disposal arrangements
+• Disposal records
+• Equipment status
+• Pollution-risk escalation
+
+EXPECTED DECISION:
+OILY-WASTE MANAGEMENT REVIEW COMPLETE / REVIEW REQUIRED
+
+PASS CRITERIA:
+Oily-water, sludge and waste-oil arrangements are recorded and traceable.
+
+
+# ============================================================
+# VV-040 — SEWAGE MANAGEMENT / DISPOSAL
+# ============================================================
+
+INPUT:
+Sewage system
+Sewage treatment plant
+Holding tank
+Storage capacity
+Discharge arrangements
+Applicable records
+Operating area
+
+ASSESS:
+• Sewage-management arrangements
+• Treatment-system availability
+• Holding capacity
+• Disposal arrangements
+• Disposal records
+• Equipment condition
+• Operating-area restrictions
+• Pollution-risk conditions
+
+EXPECTED DECISION:
+SEWAGE MANAGEMENT REVIEW COMPLETE / REVIEW REQUIRED
+
+PASS CRITERIA:
+Sewage treatment, holding and disposal arrangements are identifiable and auditable.
+
+
+# ============================================================
+# VV-041 — HULL / MACHINERY NDT & INSPECTION
+# ============================================================
+
+INPUT:
+Hull inspection records
+Structural inspection records
+NDT records
+Machinery inspection records
+Class survey information
+Thickness measurements
+Repair history
+Outstanding recommendations
+
+ASSESS:
+• Hull structural condition
+• Applicable NDT requirements
+• NDT status
+• Thickness measurements
+• Weld / structural inspection where applicable
+• Machinery inspection
+• Critical machinery condition
+• Defects / recommendations
+• Survey status
+• Repair status
+
+EXPECTED DECISION:
+INSPECTION STATUS CURRENT / REVIEW REQUIRED
+
+PASS CRITERIA:
+Applicable inspection and NDT requirements are identified and their status is traceable.
+
+IMPORTANT:
+The simulator does not certify hull or machinery condition and does not replace Class survey or statutory inspection.
+
+
+# ============================================================
+# VV-042 — SAFETY PLACARDS / SIGNAGE
+# ============================================================
+
+INPUT:
+Safety placards
+Emergency signs
+Muster information
+Fire-control plans
+Escape-route markings
+Machinery warnings
+Mandatory operating notices
+
+ASSESS:
+• Safety placards present
+• Placards legible
+• Correct location
+• Emergency signage
+• Muster information
+• Fire-safety information
+• Machinery warning signs
+• Escape-route markings
+• Damaged / missing signage
+
+EXPECTED DECISION:
+SIGNAGE STATUS COMPLETE / REVIEW REQUIRED
+
+PASS CRITERIA:
+Required vessel-specific safety signage is identified and its review status is recorded.
+
+
+# ============================================================
+# VV-043 — TURNING CIRCLE / MANOEUVRING INFORMATION
+# ============================================================
+
+INPUT:
+Turning-circle data
+Manoeuvring characteristics
+Stopping distance
+Turning information
+Vessel particulars
+Loading condition
+Draft
+Trim
+Environmental conditions
+
+ASSESS:
+• Turning circle
+• Advance
+• Transfer
+• Tactical diameter
+• Rate of turn
+• Stopping characteristics
+• Draft/loading condition
+• Environmental influence
+• Available manoeuvring area
+
+EXPECTED DECISION:
+MANOEUVRING INFORMATION AVAILABLE / REVIEW REQUIRED
+
+PASS CRITERIA:
+Relevant manoeuvring information is available, traceable and linked to the applicable vessel condition.
+
+
+# ============================================================
+# VV-044 — EMERGENCY LIGHTING
+# ============================================================
+
+INPUT:
+Emergency lighting system
+Emergency-light locations
+Battery supply
+Emergency generator
+Lighting-test records
+Escape-route lighting
+
+ASSESS:
+• Emergency-light availability
+• Emergency-light coverage
+• Battery availability
+• Emergency-generator supply
+• Test status
+• Escape-route illumination
+• Loss-of-main-power response
+• Duration / capacity where applicable
+
+EXPECTED DECISION:
+EMERGENCY LIGHTING READY / REVIEW REQUIRED
+
+PASS CRITERIA:
+Emergency lighting remains available under the simulated loss-of-main-power condition and the test status is traceable.
+
+
+# ============================================================
+# VV-045 — EMERGENCY POWER / DEAD-SHIP CONDITION
+# ============================================================
+
+INPUT:
+Main power failure
+Emergency generator
+Emergency batteries
+Emergency switchboard
+Emergency lighting
+Navigation equipment
+Communication equipment
+Steering arrangements
+Alarm systems
+
+SCENARIO:
+SIMULATED DEAD-SHIP / LOSS-OF-MAIN-POWER CONDITION
+
+ASSESS:
+• Loss of main electrical power
+• Emergency-power availability
+• Emergency-generator start
+• Battery-supported equipment
+• Emergency lighting
+• Navigation lights where applicable
+• Required alarms
+• Communication capability
+• Steering / propulsion recovery status
+• Recovery sequence
+• Human decision authority
+
+EXPECTED DECISION:
+EMERGENCY POWER AVAILABLE / RECOVERY REQUIRED / ESCALATE
+
+PASS CRITERIA:
+1. Main-power loss is detected.
+2. Emergency power status is identified.
+3. Critical emergency systems are assessed.
+4. Recovery is validated before any simulated return to normal operation.
+5. Human authority remains FINAL.
+6. No physical command is generated.
+
+
+# ============================================================
+# VV-046 — NAVIGATION LIGHTS / SOUND SIGNALS
+#           NUC / AGROUND / DEAD-SHIP SCENARIOS
+# ============================================================
+
+SCENARIOS:
+A. VESSEL NOT UNDER COMMAND
+B. VESSEL AGROUND
+C. DEAD-SHIP / LOSS OF MAIN POWER
+D. LOSS OF NORMAL NAVIGATION SYSTEMS
+
+INPUT:
+Vessel status
+Day / night condition
+Visibility
+Position
+Navigation-light status
+Sound-signal equipment
+Emergency power
+Emergency batteries
+Main-power status
+Applicable COLREG requirements
+
+ASSESS:
+• Correct simulated vessel-status condition
+• Required navigation-light status
+• Sound-signal availability
+• Emergency power availability
+• Battery support
+• Visibility condition
+• Day/night condition
+• Equipment failure
+• Ability to communicate vessel status
+• Human escalation
+
+EXPECTED DECISION:
+STATUS SIGNAL AVAILABLE / DEGRADED / REVIEW REQUIRED
+
+PASS CRITERIA:
+The simulator identifies the applicable vessel-status scenario and records whether the relevant signalling capability is available.
+
+IMPORTANT:
+The exact light, shape and sound-signal requirements are determined by the applicable COLREG / Flag State / vessel-specific requirements. The simulator must not assume one universal configuration.
+
+
+# ============================================================
+# VV-047 — ESCAPE ROUTES / EMERGENCY EXITS
+# ============================================================
+
+INPUT:
+Escape routes
+Emergency exits
+Muster stations
+Emergency lighting
+Obstructions
+Watertight doors
+Fire boundaries
+Accommodation layout
+Machinery-space escape arrangements
+
+ASSESS:
+• Escape-route availability
+• Route obstruction
+• Emergency-exit availability
+• Escape-route lighting
+• Muster access
+• Alternative escape route
+• Machinery-space escape
+• Emergency conditions affecting routes
+
+EXPECTED DECISION:
+ESCAPE ROUTE AVAILABLE / ALTERNATIVE REQUIRED / ESCALATE
+
+PASS CRITERIA:
+Primary and applicable alternative escape routes are identifiable and their simulated availability is recorded.
+
+
+# ============================================================
+# VV-048 — VESSEL IDENTIFICATION / FUNNEL MARKINGS
+# ============================================================
+
+INPUT:
+Vessel name
+IMO number
+Port of registry
+Call sign where applicable
+Funnel markings
+Company / owner logo
+Identification markings
+Visibility condition
+
+ASSESS:
+• Vessel-name marking
+• IMO-number marking
+• Port-of-registry marking
+• Applicable identification markings
+• Funnel logo / company identification
+• Marking condition
+• Legibility
+• Visibility
+
+EXPECTED DECISION:
+IDENTIFICATION REVIEW COMPLETE / REVIEW REQUIRED
+
+PASS CRITERIA:
+Required vessel-identification information is recorded and the status of applicable markings is traceable.
+
+IMPORTANT:
+A funnel logo is treated as an identification / branding element unless a specific applicable requirement makes a particular marking mandatory.
+
+
+# ============================================================
+# VV-049 — HUMAN-AUTHORITY / EMERGENCY ESCALATION
+# ============================================================
+
+INPUT:
+Detected failure
+Risk level
+Resilience assessment
+Position confidence
+Environmental condition
+Equipment status
+Emergency-system status
+Operator availability
+
+DECISION OPTIONS:
+
+AUTHORIZE_RECOVERY
+MAINTAIN_SAFE_STATE
+REQUEST_DIAGNOSTICS
+ABORT_RECOVERY
+ESCALATE
+
+ASSESS:
+• Failure severity
+• Confidence level
+• Primary recommendation
+• Secondary verification
+• Stabilizer arbitration
+• Captain AI Lena recommendation
+• Human decision
+• Simulated response
+
+PASS CRITERIA:
+No consequential simulated recovery is considered authorized without explicit human authorization.
+
+
+# ============================================================
+# VV-050 — CORRECTIVE-ACTION TESTING
+# ============================================================
+
+INPUT:
+Initial failure condition
+Initial assessment
+Corrective action
+Post-correction system state
+
+PROCESS:
+
+1. INTRODUCE CONTROLLED FAILURE
+2. OBSERVE FAILURE
+3. VERIFY FAILURE
+4. ASSESS IMPACT
+5. PROPOSE CORRECTIVE ACTION
+6. HUMAN AUTHORITY REVIEW
+7. SIMULATE CORRECTIVE ACTION
+8. REASSESS SYSTEM
+9. RECORD RESULT
+
+ASSESS:
+• Pre-correction state
+• Corrective-action recommendation
+• Human authorization
+• Post-correction state
+• Residual risk
+• Resilience improvement
+• Remaining failure condition
+
+PASS CRITERIA:
+The corrective action produces a traceable change in the simulated condition and the result is independently reassessed.
+
+
+# ============================================================
+# VV-051 — RE-TEST VALIDATION
+# ============================================================
+
+PURPOSE:
+Determine whether the system remains stable after corrective action.
+
+PROCESS:
+
+INITIAL TEST
+↓
+FAILURE IDENTIFIED
+↓
+CORRECTIVE ACTION
+↓
+RE-TEST
+↓
+INDEPENDENT ASSESSMENT
+↓
+VALIDATION RESULT
+↓
+AUDIT RECORD
+
+ASSESS:
+• Same scenario reproducibility
+• Corrective-action result
+• Residual failure
+• Primary AI response
+• Secondary AI response
+• Stabilizer response
+• Lena recommendation
+• Human authorization state
+• Final simulated result
+
+EXPECTED DECISION:
+RE-TEST PASS / RE-TEST FAILED / REVIEW REQUIRED
+
+PASS CRITERIA:
+A corrective action is not considered validated merely because the first result improves. The scenario must be re-tested and the result recorded.
+
+
+# ============================================================
+# VV-052 — ASSESSMENT LATENCY
+# ============================================================
+
+INPUT:
+Scenario timestamp
+Observation timestamp
+Verification timestamp
+Assessment timestamp
+Decision timestamp
+Simulated-action timestamp
+Update timestamp
+
+MEASURE:
+
+T_INPUT
+T_OBSERVE
+T_VERIFY
+T_ASSESS
+T_DECIDE
+T_ACTION
+T_UPDATE
+
+CALCULATE:
+
+OBSERVATION LATENCY =
+T_OBSERVE - T_INPUT
+
+VERIFICATION LATENCY =
+T_VERIFY - T_OBSERVE
+
+ASSESSMENT LATENCY =
+T_ASSESS - T_VERIFY
+
+DECISION LATENCY =
+T_DECIDE - T_ASSESS
+
+SIMULATED ACTION LATENCY =
+T_ACTION - T_DECIDE
+
+UPDATE LATENCY =
+T_UPDATE - T_ACTION
+
+END-TO-END LATENCY =
+T_UPDATE - T_INPUT
+
+ASSESS:
+• Individual processing stages
+• Total end-to-end latency
+• Repeatability
+• Worst-case latency
+• Failure-condition latency
+• Corrective-action latency
+• Re-test latency
+
+PASS CRITERIA:
+Latency is measured and recorded as a validation metric.
+
+IMPORTANT:
+Latency measurement does not by itself establish operational safety or certification.
+
+
+# ============================================================
+# VV-053 — SEXTANT RESILIENCE PLAN / PRE-JOB READINESS GATE
+# ============================================================
+
+PURPOSE:
+
+The Sextant Protocol™ resilience assessment should be considered as an
+EARLY PRE-JOB / PRE-OPERATIONAL PLANNING AND V&V ACTIVITY,
+
+not as an inspection that is left until the end of the job after vessel
+condition or operational suitability has already deteriorated.
+
+SEQUENCE:
+
+VESSEL / JOB REQUIREMENTS
+↓
+SEXTANT RESILIENCE PRE-ASSESSMENT
+↓
+IDENTIFY FAILURE MODES / HAZARDS
+↓
+VERIFY VESSEL / EQUIPMENT / CREW / DOCUMENTATION STATUS
+↓
+ASSESS ENVIRONMENT / POSITION / CLEARANCES
+↓
+ASSESS CONTINGENCY OPTIONS
+↓
+IDENTIFY SAFE STATE
+↓
+HUMAN REVIEW / AUTHORIZATION
+↓
+JOB READINESS DECISION
+↓
+EXECUTION UNDER APPLICABLE VESSEL PROCEDURES
+↓
+CONTINUOUS MONITORING
+↓
+CORRECTIVE ACTION / RE-TEST WHEN REQUIRED
+↓
+POST-JOB AUDIT
+
+EARLY REVIEW CATEGORIES:
+
+[ ] Vessel suitability
+[ ] Class / notation
+[ ] Operating area
+[ ] Weather window
+[ ] Position integrity
+[ ] Navigation data
+[ ] DP / autonomy readiness
+[ ] Machinery readiness
+[ ] Hull condition
+[ ] LSA / FFA
+[ ] GMDSS
+[ ] Emergency power
+[ ] Emergency lighting
+[ ] Escape routes
+[ ] Environmental controls
+[ ] Dangerous goods
+[ ] Cargo / stowage
+[ ] Required publications
+[ ] Safe manning / UMV documentation
+[ ] Fuel
+[ ] Fresh water
+[ ] Food / provisions
+[ ] Critical spares
+[ ] Communications
+[ ] Contingency arrangements
+[ ] Emergency escape / safe-state options
+
+KEY PRINCIPLE:
+
+SEXTANT RESILIENCE REVIEW =
+EARLY PREVENTIVE / VALIDATION LAYER
+
+NOT:
+
+FINAL CHECK AFTER A VESSEL HAS ALREADY BECOME
+UNSUITABLE / NON-COMPLIANT / SUBSTANDARD.
+
+PASS CRITERIA:
+
+1. Resilience risks are identified before the relevant operation.
+2. Critical deficiencies are escalated before operational execution.
+3. Corrective actions can be assessed and re-tested.
+4. Vessel-specific statutory and class requirements remain controlling.
+5. Human authority remains FINAL.
+6. Sextant does not declare a vessel legally compliant.
+7. Sextant does not replace Class, Flag State, statutory survey,
+   ISM/SMS or Master’s authority.
+8. No autonomous operational command is generated.
+
+
+# ============================================================
+# VV-054 — FULL PRE-JOB RESILIENCE READINESS INTEGRATION
+# ============================================================
+
+INPUT:
+
+Vessel condition
+Job description
+Operating area
+Weather
+Position
+Navigation
+DP / autonomy
+Machinery
+Hull
+Stability
+Draft
+Trim
+Heel
+List
+CG
+Load line
+Vertical clearance
+Under-keel clearance
+Environmental compliance indicators
+Dangerous goods
+Cargo / stowage
+LSA
+FFA
+GMDSS
+Emergency power
+Emergency lighting
+Escape routes
+Manning / UMV documentation
+Publications
+Stores
+Fuel
+Water
+Food
+P&I documentation
+Contingency plans
+Class / Flag / statutory review status
+
+ASSESS:
+
+PRIMARY AI
+→ focused operational assessment
+
+SECONDARY AI
+→ independent wider-area verification
+
+STABILIZER
+→ conflict / safety arbitration
+
+CAPTAIN AI LENA
+→ structured decision support
+
+HUMAN AUTHORITY
+→ final decision
+
+EXPECTED DECISION:
+
+PRE-JOB RESILIENCE READY
+OR
+PRE-JOB REVIEW REQUIRED
+OR
+ESCALATE / DO NOT PROCEED UNTIL HUMAN REVIEW
+
+PASS CRITERIA:
+
+The complete pre-job assessment is traceable, deficiencies are visible,
+corrective actions are recorded, and the human authority gate remains active.
+
+
+# ============================================================
+# V&V MASTER PRINCIPLE
+# ============================================================
+
+The Sextant Protocol™ MARIN V&V research framework is intended to
+investigate resilience before, during and after controlled scenarios.
+
+It should therefore operate as:
+
+PREVENT
+↓
+PREPARE
+↓
+DETECT
+↓
+VERIFY
+↓
+ASSESS
+↓
+DECIDE
+↓
+HUMAN AUTHORIZE
+↓
+SIMULATE / VALIDATE
+↓
+RE-TEST
+↓
+AUDIT
+↓
+UPDATE
+
+The objective is not to wait until a vessel has reached a degraded,
+unsafe or potentially substandard condition.
+
+The objective is to identify resilience weaknesses early enough for
+human operators, vessel management, engineers, Class, Flag State and
+other appropriate authorities to address them through the applicable
+procedures.
+
+FINAL PRINCIPLE:
+
+SEXTANT PROTOCOL™
+= RESILIENCE / V&V / DECISION-SUPPORT LAYER
+
+NOT:
+
+CLASSIFICATION SOCIETY
+FLAG STATE
+STATUTORY SURVEYOR
+ISM / SMS REPLACEMENT
+AUTONOMOUS DP CONTROLLER
+AUTONOMOUS NAVIGATION COMMAND SYSTEM
+
+HUMAN AUTHORITY:
+FINAL
+
+OPERATIONAL COMMAND:
+FALSE
+
+PHYSICAL VESSEL CONNECTION:
+FALSE
+
 ============================================================
 AUDIT FORMAT
 ============================================================
