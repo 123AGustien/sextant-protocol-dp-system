@@ -576,7 +576,414 @@ const MaritimeSafetyComplianceEngineV1 = {
         }
 
 
-        /* =================================================
+        /*
+
+/* =========================================================
+   DRAFT / DOCK WATER DENSITY / FWA / DWA / UKC
+   ALL DRAFT CORRECTIONS IN MILLIMETRES
+========================================================= */
+
+/*
+   REFERENCE:
+
+   Standard seawater density = 1.025 t/m³
+
+   DENSITY LOWER THAN SEAWATER:
+   Dock water density < 1.025
+   → vessel sinks deeper
+   → draft INCREASES
+   → DWA is POSITIVE
+
+   DENSITY HIGHER THAN SEAWATER:
+   Dock water density > 1.025
+   → vessel floats higher
+   → draft DECREASES
+   → DWA is NEGATIVE
+
+   DENSITY EQUAL TO SEAWATER:
+   Dock water density = 1.025
+   → DWA = 0
+   → no density correction
+*/
+
+
+const draftCalculation =
+    condition.draftCalculation || {};
+
+
+/* =================================================
+   INPUTS
+================================================= */
+
+const WaterDensity =
+    Number(draftCalculation.waterDensity_t_m3);
+
+const Displacement =
+    Number(draftCalculation.displacement_t);
+
+const TPC =
+    Number(draftCalculation.tpc_t_per_cm);
+
+const ReferenceDraft_mm =
+    Number(draftCalculation.referenceDraft_mm);
+
+
+/* =================================================
+   FRESH WATER ALLOWANCE — MILLIMETRES
+================================================= */
+
+/*
+   FWA (mm) =
+   Displacement / (4 × TPC)
+
+   FWA is the change of draft between
+   seawater density 1.025 and fresh water density 1.000.
+*/
+
+const FWA_mm =
+    (Displacement > 0 && TPC > 0)
+        ? Displacement / (4 * TPC)
+        : 0;
+
+
+/* =================================================
+   DOCK WATER ALLOWANCE — MILLIMETRES
+================================================= */
+
+/*
+   DWA (mm) =
+   FWA × (1.025 - actual water density) / 0.025
+
+   Positive DWA  = draft increases
+   Negative DWA  = draft decreases
+*/
+
+const DWA_mm =
+    FWA_mm *
+    ((1.025 - WaterDensity) / 0.025);
+
+
+/* =================================================
+   CORRECTED DRAFT — MILLIMETRES
+================================================= */
+
+const CorrectedDraft_mm =
+    ReferenceDraft_mm +
+    DWA_mm;
+
+
+/* =================================================
+   DENSITY EFFECT
+================================================= */
+
+let DraftDensityEffect =
+    "NO_DRAFT_CHANGE";
+
+
+if (WaterDensity < 1.025) {
+
+    DraftDensityEffect =
+        "DOCK_WATER_DENSITY_LOWER_THAN_SEAWATER — DRAFT INCREASES";
+
+}
+
+
+if (WaterDensity > 1.025) {
+
+    DraftDensityEffect =
+        "DOCK_WATER_DENSITY_HIGHER_THAN_SEAWATER — DRAFT DECREASES";
+
+}
+
+
+if (WaterDensity === 1.025) {
+
+    DraftDensityEffect =
+        "DOCK_WATER_DENSITY_EQUAL_TO_SEAWATER — NO_DENSITY_CORRECTION";
+
+}
+
+
+/* =================================================
+   DRAFT CHANGE SIGN
+================================================= */
+
+const DraftIncrease_mm =
+    DWA_mm > 0
+        ? DWA_mm
+        : 0;
+
+
+const DraftDecrease_mm =
+    DWA_mm < 0
+        ? Math.abs(DWA_mm)
+        : 0;
+
+
+/* =================================================
+   TIDE / CHART DATUM
+================================================= */
+
+/*
+   Water Depth =
+   Chart Datum Depth + Height of Tide
+*/
+
+const ChartDatumDepth_mm =
+    Number(draftCalculation.chartDatumDepth_mm);
+
+const TideHeight_mm =
+    Number(draftCalculation.tideHeight_mm);
+
+
+const WaterDepth_mm =
+    ChartDatumDepth_mm +
+    TideHeight_mm;
+
+
+/* =================================================
+   BASIC UNDER-KEEL CLEARANCE — MILLIMETRES
+================================================= */
+
+const BasicUKC_mm =
+    WaterDepth_mm -
+    CorrectedDraft_mm;
+
+
+/* =================================================
+   TRIM
+================================================= */
+
+const ForwardDraft_mm =
+    Number(draftCalculation.forwardDraft_mm);
+
+const AftDraft_mm =
+    Number(draftCalculation.aftDraft_mm);
+
+
+const Trim_mm =
+    AftDraft_mm -
+    ForwardDraft_mm;
+
+
+/*
+   Mean draft based on forward and aft drafts.
+*/
+
+const MeanDraft_mm =
+    (
+        ForwardDraft_mm +
+        AftDraft_mm
+    ) / 2;
+
+
+/* =================================================
+   SQUAT / OTHER UKC ALLOWANCES
+================================================= */
+
+const Squat_mm =
+    Number(draftCalculation.squat_mm) || 0;
+
+const WaveAllowance_mm =
+    Number(draftCalculation.waveAllowance_mm) || 0;
+
+const OtherClearanceAllowance_mm =
+    Number(
+        draftCalculation.otherClearanceAllowance_mm
+    ) || 0;
+
+const RequiredUKC_mm =
+    Number(draftCalculation.requiredUKC_mm) || 0;
+
+
+/* =================================================
+   AVAILABLE OPERATIONAL UKC — MILLIMETRES
+================================================= */
+
+const AvailableUKC_mm =
+    WaterDepth_mm -
+    CorrectedDraft_mm -
+    Squat_mm -
+    WaveAllowance_mm -
+    OtherClearanceAllowance_mm;
+
+
+/* =================================================
+   UKC STATUS
+================================================= */
+
+const UKC_PASS =
+    AvailableUKC_mm >= RequiredUKC_mm;
+
+
+const UKCStatus =
+    UKC_PASS
+        ? "SIMULATED_UKC_REQUIREMENT_SATISFIED"
+        : "SIMULATED_UKC_REVIEW_REQUIRED";
+
+
+/* =================================================
+   DRAFT / DENSITY REVIEW STATUS
+================================================= */
+
+const draftDensityReviewStatus =
+    (
+        WaterDensity > 0 &&
+        TPC > 0 &&
+        Displacement > 0
+    )
+        ? "SIMULATED_DRAFT_DENSITY_REVIEW_COMPLETE"
+        : "SIMULATED_DRAFT_DENSITY_REVIEW_REQUIRED";
+
+
+/* =================================================
+   TRACEABLE RESULT
+================================================= */
+
+const draftDensityUKCResult = {
+
+    reference: {
+
+        seawaterDensity_t_m3:
+            1.025,
+
+        freshwaterDensity_t_m3:
+            1.000
+
+    },
+
+
+    inputs: {
+
+        waterDensity_t_m3:
+            WaterDensity,
+
+        displacement_t:
+            Displacement,
+
+        tpc_t_per_cm:
+            TPC,
+
+        referenceDraft_mm:
+            ReferenceDraft_mm
+
+    },
+
+
+    densityCorrection: {
+
+        FWA_mm,
+
+        DWA_mm,
+
+        DraftIncrease_mm,
+
+        DraftDecrease_mm,
+
+        CorrectedDraft_mm,
+
+        effect:
+            DraftDensityEffect
+
+    },
+
+
+    navigationDepth: {
+
+        chartDatumDepth_mm:
+            ChartDatumDepth_mm,
+
+        tideHeight_mm:
+            TideHeight_mm,
+
+        waterDepth_mm:
+            WaterDepth_mm
+
+    },
+
+
+    vesselDraft: {
+
+        forwardDraft_mm:
+            ForwardDraft_mm,
+
+        aftDraft_mm:
+            AftDraft_mm,
+
+        meanDraft_mm:
+            MeanDraft_mm,
+
+        trim_mm:
+            Trim_mm
+
+    },
+
+
+    underKeelClearance: {
+
+        basicUKC_mm:
+            BasicUKC_mm,
+
+        squat_mm:
+            Squat_mm,
+
+        waveAllowance_mm:
+            WaveAllowance_mm,
+
+        otherClearanceAllowance_mm:
+            OtherClearanceAllowance_mm,
+
+        availableUKC_mm:
+            AvailableUKC_mm,
+
+        requiredUKC_mm:
+            RequiredUKC_mm,
+
+        pass:
+            UKC_PASS,
+
+        status:
+            UKCStatus
+
+    },
+
+
+    assessment: {
+
+        status:
+            draftDensityReviewStatus
+
+    },
+
+
+    execution: {
+
+        gate:
+            "HUMAN AUTHORIZATION REQUIRED",
+
+        executed:
+            false,
+
+        operationalCommand:
+            false
+
+    }
+
+};
+
+
+/* =================================================
+   GLOBAL ACCESS
+================================================= */
+
+if (
+    typeof window !== "undefined"
+) {
+
+    window.MaritimeDraftDensityUKCReviewV1 =
+        draftDensityUKCResult;
+
+} =================================================
            DRAFT
         ================================================= */
 
