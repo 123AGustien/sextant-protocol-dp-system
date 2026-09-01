@@ -5778,7 +5778,205 @@ INPUT:
 11. Navigation-light status where applicable
 12. Local waterway / port requirements
 13. Water depth
-14.
+14. UKC
+15. Position confidence
+16. Vessel heading
+17. Course over ground
+18. Traffic density
+19. Relative bearing of detected / potential traffic
+20. CPA
+21. TCPA
+22. Navigation status
+23. TSS status where applicable
+24. Current / tidal stream
+25. Environmental condition
+26. Applicable COLREG considerations
 
+OBSERVE:
+- Vessel position and movement.
+- Channel / bend geometry.
+- Blind sector.
+- Visibility condition.
+- Available sea room.
+- Detected or potential traffic.
+- Radar and other available navigation information.
+
+VERIFY:
+- Position confidence.
+- Channel geometry.
+- Bend / blind-sector condition.
+- Water depth and UKC.
+- Traffic information.
+- Radar / AIS / GNSS consistency where available.
+- Applicable local waterway / port requirements.
+- Applicable COLREG considerations.
+
+ASSESS:
+- Bend / blind-area condition.
+- Clear versus restricted visibility.
+- Potential concealed traffic.
+- Vessel speed.
+- Safe manoeuvring margin.
+- Available sea room.
+- Collision risk.
+- CPA / TCPA.
+- Radar detection capability.
+- Sound-signal consideration.
+- Navigation-light status where applicable.
+- Water depth / UKC.
+- Position confidence.
+- Local navigation restrictions.
+- Need for enhanced lookout.
+- Need to maintain or establish a safe state.
+
+EXPECTED DECISION:
+REDUCE SPEED
+/
+SOUND SIGNAL
+/
+ENHANCE LOOKOUT
+/
+MAINTAIN SAFE STATE
+/
+ALTER SIMULATED MANOEUVRE
+/
+WAIT
+/
+ESCALATE FOR HUMAN REVIEW
+
+PRIMARY AI:
+Provides initial navigation-risk assessment.
+
+SECONDARY AI:
+Performs independent verification of:
+- Traffic condition
+- Position confidence
+- Visibility
+- Bend / blind-area risk
+- Collision-risk indicators
+- UKC / clearance where applicable
+
+STABILIZER:
+Checks for disagreement or safety-critical conflict between
+assessment layers and identifies the more conservative
+research condition where required.
+
+CAPTAIN AI LENA:
+Provides structured decision support based on:
+- Primary AI assessment
+- Secondary AI verification
+- Stabilizer result
+- Vessel condition
+- Environmental condition
+- Navigation risk
+- Available contingency options
+
+HUMAN AUTHORITY:
+FINAL
+
+No simulated consequential navigation response shall be
+treated as authorized without explicit human authorization.
+
+SIMULATED RESPONSE:
+Decision-support simulation only.
+
+EXECUTED:
+FALSE
+
+PASS CRITERIA:
+1. Bend / blind-area condition is detected.
+2. Clear or restricted visibility is correctly classified.
+3. Vessel position is recorded.
+4. Channel and bend geometry are recorded.
+5. Available sea room is assessed.
+6. Vessel speed is assessed.
+7. Potential concealed traffic is considered.
+8. Radar / available detection information is considered.
+9. Sound-signal consideration is recorded.
+10. Navigation-light status is considered where applicable.
+11. CPA / TCPA are assessed where traffic data is available.
+12. Water depth and UKC are traceable where applicable.
+13. Applicable COLREG / local navigation requirements are
+    identified.
+14. Enhanced lookout consideration is recorded.
+15. Any unexpected or conflicting condition triggers reassessment.
+16. Primary AI assessment is recorded.
+17. Secondary AI verification is recorded.
+18. Stabilizer result is recorded.
+19. Captain AI Lena recommendation is recorded.
+20. Human authority remains FINAL.
+21. No autonomous navigational command is generated.
+22. No physical vessel connection exists.
+23. Complete audit trail is maintained.
+
+AUDIT RECORD:
+TEST ID:
+DATE / TIME:
+SOFTWARE VERSION:
+SCENARIO:
+CONDITION: CLEAR / RESTRICTED VISIBILITY
+
+INPUT VALUES:
+POSITION:
+HEADING:
+COG:
+SPEED:
+VISIBILITY:
+CHANNEL GEOMETRY:
+BEND GEOMETRY:
+BLIND SECTOR:
+SEA ROOM:
+WATER DEPTH:
+UKC:
+TRAFFIC:
+CPA:
+TCPA:
+RADAR STATUS:
+AIS STATUS:
+GNSS STATUS:
+SOUND-SIGNAL STATUS:
+NAVIGATION-LIGHT STATUS:
+LOCAL REQUIREMENTS:
+COLREG CONDITION:
+
+PRIMARY AI:
+SECONDARY AI:
+STABILIZER:
+CAPTAIN AI LENA:
+HUMAN AUTHORITY:
+PENDING / AUTHORIZED / REJECTED
+
+SIMULATED RESPONSE:
+EXECUTED: FALSE
+
+KPI RESULTS:
+POSITION CONFIDENCE:
+COLLISION RISK:
+CPA:
+TCPA:
+SPEED:
+UKC:
+CLEARANCE:
+VISIBILITY:
+NAVIGATION CONFIDENCE:
+ASSESSMENT LATENCY:
+
+AUDIT:
+PASS / REVIEW REQUIRED / ESCALATE
+
+COMMENTS:
+
+IMPORTANT:
+The simulator provides research and V&V decision support only.
+It does not replace the Master, DPO, navigator, COLREG requirements,
+VTS instructions, local regulations or vessel SMS procedures.
+
+NO AUTONOMOUS NAVIGATION COMMAND.
+OPERATIONAL CONNECTION: NONE.
+HUMAN AUTHORITY: FINAL.
+
+# ============================================================
+# END OF VV-038
+# ============================================================
 
 
