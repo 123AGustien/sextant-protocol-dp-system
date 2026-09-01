@@ -8183,6 +8183,2096 @@ AI prediction ≠ execution
 The human operator remains the final decision authority.
 
 ---
+COLREG — REGULATORY BUILD-UP AND TRAFFIC SEPARATION V&V MATRIX
+
+Regulatory Foundation
+
+The Collision Regulations (COLREG) should form the regulatory backbone of the maritime collision-resilience V&V framework.
+
+The V&V architecture does not redefine, replace, reinterpret, or supersede COLREG.
+
+Instead, the research simulator maps the established COLREG structure into a controlled decision-support and human-in-the-loop V&V environment.
+
+The fundamental research sequence remains:
+
+COLREG RULE / CONDITION
+
+→ OBSERVE
+
+→ VERIFY
+
+→ ASSESS
+
+→ DECIDE
+
+→ HUMAN AUTHORITY
+
+→ SIMULATED RESPONSE
+
+→ AUDIT
+
+The AI architecture remains:
+
+Primary AI
+
+→ Secondary AI
+
+→ Stabilizer
+
+→ Captain AI Lena
+
+→ Human Authority
+
+with:
+
+Human authority = FINAL
+
+Operational command = FALSE
+
+Physical vessel connection = NONE
+
+Research / V&V only
+
+---
+
+1. HISTORICAL AND OPERATIONAL LOGIC
+
+Maritime collision regulations developed in response to the need to reduce collisions and establish predictable conduct between vessels.
+
+As maritime traffic increased, particularly in heavily trafficked approaches, restricted waters and areas subject to poor visibility, there was an increasing requirement for vessels to follow predictable traffic behaviour.
+
+Traffic Separation Schemes (TSS) subsequently became an important method of organising traffic flow in areas where collision risk was significant.
+
+Fog and restricted visibility are particularly important to the research context because they reduce visual information and increase dependence upon available navigational means.
+
+Accordingly, the V&V framework should recognise the relationship between:
+
+Traffic density
+
+→ collision exposure
+
+→ organised traffic flow
+
+→ Traffic Separation Schemes
+
+→ COLREG Rule 10
+
+and:
+
+Restricted visibility
+
+→ reduced visual information
+
+→ increased uncertainty
+
+→ COLREG Rule 19
+
+These conditions can then be combined with the general collision-avoidance requirements of Rules 5–8.
+
+This creates a particularly valuable research environment for resilience testing.
+
+---
+
+2. TSS / RESTRICTED VISIBILITY RESEARCH FAMILY
+
+The proposed high-value V&V family is:
+
+TSS + RESTRICTED VISIBILITY + COLLISION RISK
+
+The research scenario can progressively introduce:
+
+1. normal visibility;
+2. increasing traffic density;
+3. Traffic Separation Scheme;
+4. crossing traffic;
+5. overtaking traffic;
+6. multiple targets;
+7. decreasing visibility;
+8. radar-dependent target detection;
+9. uncertain or conflicting information;
+10. rapidly developing collision risk;
+11. human decision point;
+12. simulated avoiding response;
+13. complete audit.
+
+This creates a progressive resilience test rather than a single static collision scenario.
+
+---
+
+3. REGULATORY BUILD-UP
+
+LEVEL 1 — GENERAL APPLICATION
+
+COLREG PART A
+
+Rules 1–3.
+
+The system establishes the applicable regulatory and vessel context.
+
+V&V QUESTION
+
+Can the system correctly identify the relevant regulatory environment and vessel characteristics before attempting collision-risk assessment?
+
+Required pathway
+
+OBSERVE
+
+→ vessel and environmental context
+
+VERIFY
+
+→ applicability and classification
+
+ASSESS
+
+→ regulatory context
+
+DECIDE
+
+→ decision-support pathway
+
+HUMAN AUTHORITY
+
+→ final human determination
+
+SIMULATED RESPONSE
+
+→ research-only state transition
+
+AUDIT
+
+→ complete evidence record
+
+---
+
+4. LEVEL 2 — LOOK-OUT AND INFORMATION QUALITY
+
+RULE 5 — LOOK-OUT
+
+The V&V scenario establishes the information available to the navigator.
+
+Possible information sources include:
+
+- visual observation;
+- radar;
+- AIS;
+- bearing;
+- range;
+- relative movement;
+- sound signals;
+- environmental information;
+- vessel status;
+- traffic information.
+
+The system must test whether sufficient information exists to support a reliable collision assessment.
+
+Research question
+
+Can the AI architecture recognise when the information available is insufficient or degraded rather than producing unjustified certainty?
+
+---
+
+5. LEVEL 3 — SAFE SPEED
+
+RULE 6 — SAFE SPEED
+
+The scenario introduces increasing environmental and traffic complexity.
+
+Possible variables include:
+
+- visibility;
+- traffic density;
+- vessel characteristics;
+- manoeuvrability;
+- stopping distance;
+- turning capability;
+- radar conditions;
+- weather;
+- sea conditions;
+- background illumination;
+- navigational hazards.
+
+Research question
+
+Can the resilience architecture recognise that safe-speed assessment depends upon the complete operating context rather than a single numerical variable?
+
+---
+
+6. LEVEL 4 — COLLISION-RISK DETERMINATION
+
+RULE 7 — RISK OF COLLISION
+
+The scenario introduces:
+
+- bearing;
+- range;
+- bearing trend;
+- relative course;
+- relative speed;
+- CPA/TCPA-type research indicators;
+- target movement;
+- environmental effects.
+
+AI sequence
+
+Primary AI
+
+Identifies potential collision risk.
+
+↓
+
+Secondary AI
+
+Independently verifies the evidence.
+
+↓
+
+Stabilizer
+
+Checks for uncertainty, disagreement and unstable classification.
+
+↓
+
+Captain AI Lena
+
+Produces the resilience assessment and decision-support recommendation.
+
+↓
+
+Human Authority
+
+Makes the final decision.
+
+---
+
+7. LEVEL 5 — ACTION TO AVOID COLLISION
+
+RULE 8 — ACTION TO AVOID COLLISION
+
+The simulator introduces alternative avoiding-action pathways.
+
+The AI may assess:
+
+- timing;
+- magnitude;
+- direction;
+- effectiveness;
+- available manoeuvring room;
+- developing target movement;
+- risk of insufficient action.
+
+The AI does not execute the manoeuvre.
+
+The human decides which simulated response is authorised.
+
+Research boundary
+
+AI recommendation ≠ vessel command
+
+AI recommendation ≠ human authorization
+
+---
+
+8. LEVEL 6 — TRAFFIC SEPARATION SCHEME
+
+RULE 10 — TRAFFIC SEPARATION SCHEMES
+
+This is a major research scenario.
+
+The simulator establishes:
+
+- a defined traffic separation scheme;
+- traffic lanes;
+- separation zone;
+- vessel direction;
+- crossing traffic;
+- joining/leaving conditions;
+- multiple targets;
+- developing collision risk.
+
+The V&V system tests whether it can recognise the traffic structure and incorporate it into collision-risk assessment.
+
+Progressive build-up
+
+Single vessel
+
+↓
+
+Two-vessel interaction
+
+↓
+
+Traffic lane
+
+↓
+
+TSS
+
+↓
+
+Crossing traffic
+
+↓
+
+Multiple targets
+
+↓
+
+Increasing traffic density
+
+↓
+
+Restricted visibility
+
+↓
+
+Conflicting/degraded information
+
+↓
+
+Developing collision risk
+
+This progression is particularly valuable because it allows MARIN to test resilience at increasing levels of complexity.
+
+---
+
+9. LEVEL 7 — RESTRICTED VISIBILITY
+
+RULE 19 — CONDUCT OF VESSELS IN RESTRICTED VISIBILITY
+
+The scenario introduces restricted visibility after the TSS environment has already been established.
+
+This deliberately increases the information challenge.
+
+Inputs may include:
+
+- visibility;
+- radar targets;
+- range;
+- bearing;
+- relative movement;
+- sound signals;
+- vessel speed;
+- traffic density;
+- environmental conditions;
+- target uncertainty.
+
+Research question
+
+Can the architecture maintain a stable and auditable collision-risk assessment when visual information becomes degraded?
+
+---
+
+10. COMBINED TSS + RESTRICTED VISIBILITY TEST
+
+HIGH-VALUE MARIN RESEARCH SCENARIO
+
+INITIAL STATE
+
+Vessel is operating within or approaching a simulated Traffic Separation Scheme.
+
+Visibility is initially normal.
+
+Traffic density is moderate.
+
+No immediate collision risk exists.
+
+---
+
+STAGE 1 — TRAFFIC INCREASE
+
+Traffic density increases.
+
+OBSERVE
+
+Primary AI identifies additional targets.
+
+VERIFY
+
+Secondary AI verifies target information.
+
+ASSESS
+
+Captain AI Lena assesses increased traffic complexity.
+
+DECIDE
+
+Recommendation may be to maintain enhanced monitoring.
+
+HUMAN AUTHORITY
+
+Human remains final.
+
+SIMULATED RESPONSE
+
+Simulator increases traffic complexity.
+
+AUDIT
+
+Event recorded.
+
+---
+
+STAGE 2 — CROSSING TARGET
+
+A target develops a crossing relationship.
+
+OBSERVE
+
+Bearing/range/movement recorded.
+
+VERIFY
+
+Target relationship independently checked.
+
+ASSESS
+
+Potential Rule 15 situation assessed.
+
+DECIDE
+
+Captain AI Lena provides decision support.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Human-authorized simulated response.
+
+AUDIT
+
+Complete event recorded.
+
+---
+
+STAGE 3 — VISIBILITY DETERIORATION
+
+Visibility progressively decreases.
+
+OBSERVE
+
+Environmental and target information updated.
+
+VERIFY
+
+Information confidence reassessed.
+
+ASSESS
+
+Collision-risk condition reassessed under restricted visibility.
+
+DECIDE
+
+Captain AI Lena produces updated recommendation.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Simulator models selected response.
+
+AUDIT
+
+Transition recorded.
+
+---
+
+STAGE 4 — RADAR-DEPENDENT TARGET
+
+Visual information becomes insufficient.
+
+A target remains detectable through simulated radar information.
+
+OBSERVE
+
+Radar target data received.
+
+VERIFY
+
+Secondary AI validates the target.
+
+ASSESS
+
+Captain AI Lena evaluates collision risk under uncertainty.
+
+DECIDE
+
+Recommendation generated.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Simulation only.
+
+AUDIT
+
+Evidence retained.
+
+---
+
+STAGE 5 — MULTIPLE TARGETS
+
+Additional targets appear.
+
+The system must maintain separate target identities and relationships.
+
+It must not simply collapse all targets into a single generic risk value.
+
+Each target relationship should remain individually auditable.
+
+---
+
+STAGE 6 — CONFLICTING INFORMATION
+
+One information source becomes inconsistent with another.
+
+Example:
+
+Radar indication ≠ simulated AIS indication
+
+The architecture should identify the discrepancy.
+
+It should not silently select the most convenient interpretation.
+
+---
+
+STAGE 7 — RAPIDLY DEVELOPING RISK
+
+The target relationship deteriorates.
+
+The system must reassess.
+
+The previous assessment cannot automatically remain valid.
+
+Required sequence:
+
+NEW OBSERVATION
+
+→ NEW VERIFICATION
+
+→ NEW ASSESSMENT
+
+→ NEW RECOMMENDATION
+
+→ HUMAN DECISION
+
+→ NEW SIMULATED RESPONSE
+
+→ AUDIT
+
+---
+
+11. COLREG SITUATION CLASSIFICATION
+
+The V&V framework should test recognition of the major collision relationships.
+
+OVERTAKING
+
+Rule 13.
+
+HEAD-ON
+
+Rule 14.
+
+CROSSING
+
+Rule 15.
+
+GIVE-WAY
+
+Rule 16.
+
+STAND-ON
+
+Rule 17.
+
+RESPONSIBILITIES BETWEEN VESSELS
+
+Rule 18.
+
+RESTRICTED VISIBILITY
+
+Rule 19.
+
+The purpose is not simply to identify the Rule number.
+
+The system must demonstrate:
+
+evidence → classification → verification → assessment → recommendation → human decision.
+
+---
+
+12. MULTI-TARGET RESILIENCE TEST
+
+A higher-level scenario should contain:
+
+- own vessel;
+- target A;
+- target B;
+- target C;
+- TSS;
+- restricted visibility;
+- different courses;
+- different speeds;
+- changing bearings;
+- different vessel classifications;
+- changing target behaviour.
+
+The V&V objective is to test whether the architecture maintains a coherent representation of the complete traffic environment.
+
+Required evidence
+
+Each target must remain identifiable.
+
+Each relevant relationship must remain traceable.
+
+The audit must show why a particular COLREG interpretation was reached.
+
+---
+
+13. AI DISAGREEMENT TEST
+
+The architecture should deliberately introduce cases where the AI layers do not immediately agree.
+
+Example:
+
+Primary AI
+
+Possible crossing situation.
+
+↓
+
+Secondary AI
+
+Crossing classification not yet sufficiently verified.
+
+↓
+
+Stabilizer
+
+Conflict / insufficient evidence.
+
+↓
+
+Captain AI Lena
+
+REQUEST_DIAGNOSTICS / MAINTAIN_SAFE_STATE.
+
+↓
+
+Human Authority
+
+FINAL decision.
+
+This is considered a valuable resilience test.
+
+The objective is not to force the AI to always produce an immediate answer.
+
+The objective is to demonstrate safe handling of uncertainty.
+
+---
+
+14. HUMAN-AUTHORITY TEST
+
+Every COLREG scenario must include a deliberate human decision gate.
+
+The simulator must distinguish:
+
+AI OBSERVATION
+
+What the system sees.
+
+AI VERIFICATION
+
+What has been checked.
+
+AI ASSESSMENT
+
+What the system believes the situation means.
+
+AI RECOMMENDATION
+
+What Captain AI Lena recommends.
+
+HUMAN DECISION
+
+What the responsible human decides.
+
+SIMULATED RESPONSE
+
+What the research simulator models after the decision.
+
+AUDIT
+
+What evidence remains.
+
+---
+
+15. NO-AUTONOMOUS-COMMAND REQUIREMENT
+
+The V&V system must never transform a COLREG recommendation into physical control.
+
+Therefore:
+
+NO AUTOMATIC COURSE CHANGE
+
+NO AUTOMATIC SPEED CHANGE
+
+NO AUTOMATIC THRUSTER COMMAND
+
+NO AUTOMATIC DP COMMAND
+
+NO AUTOMATIC USV COMMAND
+
+NO PHYSICAL VESSEL CONNECTION
+
+The simulator represents only the research consequence of the human-authorized decision.
+
+---
+
+16. COLREG V&V MATRIX
+
+Regulatory Layer| Rule(s)| Research Test| Primary AI| Secondary AI| Stabilizer| Captain AI Lena| Human Authority| Simulated Response| Audit
+General| 1–3| Applicability / definitions| Observe| Verify| Conflict check| Assess| FINAL| Simulate| Record
+Look-out| 5| Information availability| Observe| Verify evidence| Uncertainty| Assess| FINAL| Simulate| Record
+Safe Speed| 6| Environmental/traffic factors| Observe| Verify| Stability| Assess| FINAL| Simulate| Record
+Collision Risk| 7| Risk determination| Observe| Verify targets| Risk stability| Assess| FINAL| Simulate| Record
+Avoiding Action| 8| Avoidance options| Observe| Verify| Check consistency| Recommend| FINAL| Simulate| Record
+Narrow Channel| 9| Restricted manoeuvring room| Observe| Verify| Stability| Assess| FINAL| Simulate| Record
+TSS| 10| Traffic organisation| Observe| Verify traffic| Conflict control| Assess| FINAL| Simulate| Record
+Overtaking| 13| Target relationship| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Head-on| 14| Target relationship| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Crossing| 15| Crossing relationship| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Give-way| 16| Give-way responsibility| Observe| Verify| Consistency| Recommend| FINAL| Simulate| Record
+Stand-on| 17| Developing risk| Observe| Verify| Escalation| Reassess| FINAL| Simulate| Record
+Vessel Responsibilities| 18| Vessel interaction| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Restricted Visibility| 19| Radar/reduced visibility| Observe| Verify| Uncertainty| Assess| FINAL| Simulate| Record
+Lights/Shapes| 20–31| Vessel recognition| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Signals| 32–37| Signal interpretation| Observe| Verify| Conflict check| Assess| FINAL| Simulate| Record
+Exemptions| 38| Exemption recognition| Observe| Verify| Authority check| Assess| FINAL| Simulate| Record
+Verification| 39–41| Compliance evidence| Observe| Verify| Audit integrity| Assess| FINAL| Simulate| Record
+
+---
+
+17. COLLISION V&V PASS PRINCIPLE
+
+A COLREG research scenario should PASS only when all relevant layers operate correctly.
+
+PASS requires:
+
+Correct observation
+
++ 
+
+Correct verification
+
++ 
+
+Correct COLREG classification
+
++ 
+
+Correct resilience assessment
+
++ 
+
+Traceable Captain AI Lena recommendation
+
++ 
+
+Human authority preserved
+
++ 
+
+Correct simulated response
+
++ 
+
+Complete audit
+
+---
+
+18. CRITICAL FAILURE
+
+The following is a critical architectural failure:
+
+AI independently executes a navigational action.
+
+Examples:
+
+- automatic course alteration;
+- automatic speed alteration;
+- automatic steering;
+- automatic DP command;
+- automatic thruster command;
+- automatic USV manoeuvre.
+
+The required architecture remains:
+
+AI SUPPORT
+
+→ HUMAN AUTHORITY
+
+→ SIMULATED RESPONSE
+
+---
+
+19. FINAL REGULATORY TRACEABILITY
+
+The complete research chain is:
+
+COLREG
+
+↓
+
+PART
+
+↓
+
+SECTION
+
+↓
+
+RULE
+
+↓
+
+SIMULATED SCENARIO
+
+↓
+
+INPUT
+
+↓
+
+OBSERVE
+
+↓
+
+VERIFY
+
+↓
+
+ASSESS
+
+↓
+
+DECIDE
+
+↓
+
+HUMAN AUTHORITY
+
+↓
+
+SIMULATED RESPONSE
+
+↓
+
+AUDIT
+
+↓
+
+V&V RESULT
+
+This structure provides a direct trace from the established collision regulations to the research test result.
+
+---
+
+20. FINAL ACCEPTANCE PRINCIPLES
+
+The COLREG research extension should demonstrate:
+
+1. REGULATORY TRACEABILITY
+
+Every relevant collision scenario can be mapped to the applicable COLREG Rule.
+
+2. INFORMATION RESILIENCE
+
+The system remains auditable when information is incomplete, delayed or conflicting.
+
+3. COLLISION-RISK RESILIENCE
+
+The system can reassess changing collision-risk conditions.
+
+4. MULTI-TARGET CAPABILITY
+
+Multiple vessels can be represented without losing individual relationships.
+
+5. RESTRICTED-VISIBILITY CAPABILITY
+
+The architecture can operate as a research decision-support framework when visual information is degraded.
+
+6. TSS CAPABILITY
+
+The architecture can incorporate organised traffic-flow conditions into the simulated collision-risk assessment.
+
+7. HUMAN-IN-THE-LOOP CONTROL
+
+Human authority remains final.
+
+8. NO AUTONOMOUS COMMAND
+
+The system remains disconnected from physical vessel control.
+
+9. REPEATABILITY
+
+Controlled scenarios can be repeated.
+
+10. AUDITABILITY
+
+The entire decision pathway can be reconstructed.
+
+---
+
+21. MARIN STATUS
+
+This matrix is designated:
+
+PROPOSED MARIN RESEARCH / V&V EXTENSION
+
+It is not presented as:
+
+- MARIN certification;
+- final MARIN acceptance criteria;
+- regulatory approval;
+- operational approval;
+- autonomous-navigation approval.
+
+The purpose is to provide MARIN with a structured research framework that can be reviewed, challenged, modified and potentially converted into formal test cases if MARIN considers the approach appropriate.
+
+Final MARIN acceptance criteria remain subject to MARIN review and agreement.
+
+---
+
+22. FINAL LOCKED RESEARCH ARCHITECTURE
+
+REGULATORY LAYER
+
+COLREG
+
+↓
+
+RULE / CONDITION
+
+---
+
+AI LAYER
+
+Primary AI
+
+↓
+
+Secondary AI
+
+↓
+
+Stabilizer
+
+↓
+
+Captain AI Lena
+
+---
+
+HUMAN LAYER
+
+HUMAN AUTHORITY = FINAL
+
+---
+
+SIMULATION LAYER
+
+SIMULATED RESPONSE ONLY
+
+---
+
+AUDIT LAYER
+
+COMPLETE TRACEABLE RECORD
+
+---
+
+FINAL PRINCIPLE
+
+The purpose of the COLREG extension is not to make the AI the navigator.
+
+The purpose is to test whether an AI resilience architecture can help a human navigator understand a developing collision situation, verify the evidence, assess the applicable COLREG context, consider the consequences and make a final decision within a controlled and auditable research environment.
+
+The core principle is therefore:
+
+COLREG provides the regulatory framework.
+
+Sextant Protocol provides the research decision-support architecture.
+
+Captain AI Lena provides the final AI recommendation.
+
+The human provides the final authority.
+
+The simulator provides the response model.
+
+The audit provides the evidence.
+
+No physical vessel is controlled.
+
+No autonomous operational command is issued.
+
+Research / V&V only.
+
+MARIN review status: proposed research extension, not final acceptance criteria.
+
+COLREG — REGULATORY BUILD-UP AND TRAFFIC SEPARATION V&V MATRIX
+
+Regulatory Foundation
+
+The Collision Regulations (COLREG) should form the regulatory backbone of the maritime collision-resilience V&V framework.
+
+The V&V architecture does not redefine, replace, reinterpret, or supersede COLREG.
+
+Instead, the research simulator maps the established COLREG structure into a controlled decision-support and human-in-the-loop V&V environment.
+
+The fundamental research sequence remains:
+
+COLREG RULE / CONDITION
+
+→ OBSERVE
+
+→ VERIFY
+
+→ ASSESS
+
+→ DECIDE
+
+→ HUMAN AUTHORITY
+
+→ SIMULATED RESPONSE
+
+→ AUDIT
+
+The AI architecture remains:
+
+Primary AI
+
+→ Secondary AI
+
+→ Stabilizer
+
+→ Captain AI Lena
+
+→ Human Authority
+
+with:
+
+Human authority = FINAL
+
+Operational command = FALSE
+
+Physical vessel connection = NONE
+
+Research / V&V only
+
+---
+
+1. HISTORICAL AND OPERATIONAL LOGIC
+
+Maritime collision regulations developed in response to the need to reduce collisions and establish predictable conduct between vessels.
+
+As maritime traffic increased, particularly in heavily trafficked approaches, restricted waters and areas subject to poor visibility, there was an increasing requirement for vessels to follow predictable traffic behaviour.
+
+Traffic Separation Schemes (TSS) subsequently became an important method of organising traffic flow in areas where collision risk was significant.
+
+Fog and restricted visibility are particularly important to the research context because they reduce visual information and increase dependence upon available navigational means.
+
+Accordingly, the V&V framework should recognise the relationship between:
+
+Traffic density
+
+→ collision exposure
+
+→ organised traffic flow
+
+→ Traffic Separation Schemes
+
+→ COLREG Rule 10
+
+and:
+
+Restricted visibility
+
+→ reduced visual information
+
+→ increased uncertainty
+
+→ COLREG Rule 19
+
+These conditions can then be combined with the general collision-avoidance requirements of Rules 5–8.
+
+This creates a particularly valuable research environment for resilience testing.
+
+---
+
+2. TSS / RESTRICTED VISIBILITY RESEARCH FAMILY
+
+The proposed high-value V&V family is:
+
+TSS + RESTRICTED VISIBILITY + COLLISION RISK
+
+The research scenario can progressively introduce:
+
+1. normal visibility;
+2. increasing traffic density;
+3. Traffic Separation Scheme;
+4. crossing traffic;
+5. overtaking traffic;
+6. multiple targets;
+7. decreasing visibility;
+8. radar-dependent target detection;
+9. uncertain or conflicting information;
+10. rapidly developing collision risk;
+11. human decision point;
+12. simulated avoiding response;
+13. complete audit.
+
+This creates a progressive resilience test rather than a single static collision scenario.
+
+---
+
+3. REGULATORY BUILD-UP
+
+LEVEL 1 — GENERAL APPLICATION
+
+COLREG PART A
+
+Rules 1–3.
+
+The system establishes the applicable regulatory and vessel context.
+
+V&V QUESTION
+
+Can the system correctly identify the relevant regulatory environment and vessel characteristics before attempting collision-risk assessment?
+
+Required pathway
+
+OBSERVE
+
+→ vessel and environmental context
+
+VERIFY
+
+→ applicability and classification
+
+ASSESS
+
+→ regulatory context
+
+DECIDE
+
+→ decision-support pathway
+
+HUMAN AUTHORITY
+
+→ final human determination
+
+SIMULATED RESPONSE
+
+→ research-only state transition
+
+AUDIT
+
+→ complete evidence record
+
+---
+
+4. LEVEL 2 — LOOK-OUT AND INFORMATION QUALITY
+
+RULE 5 — LOOK-OUT
+
+The V&V scenario establishes the information available to the navigator.
+
+Possible information sources include:
+
+- visual observation;
+- radar;
+- AIS;
+- bearing;
+- range;
+- relative movement;
+- sound signals;
+- environmental information;
+- vessel status;
+- traffic information.
+
+The system must test whether sufficient information exists to support a reliable collision assessment.
+
+Research question
+
+Can the AI architecture recognise when the information available is insufficient or degraded rather than producing unjustified certainty?
+
+---
+
+5. LEVEL 3 — SAFE SPEED
+
+RULE 6 — SAFE SPEED
+
+The scenario introduces increasing environmental and traffic complexity.
+
+Possible variables include:
+
+- visibility;
+- traffic density;
+- vessel characteristics;
+- manoeuvrability;
+- stopping distance;
+- turning capability;
+- radar conditions;
+- weather;
+- sea conditions;
+- background illumination;
+- navigational hazards.
+
+Research question
+
+Can the resilience architecture recognise that safe-speed assessment depends upon the complete operating context rather than a single numerical variable?
+
+---
+
+6. LEVEL 4 — COLLISION-RISK DETERMINATION
+
+RULE 7 — RISK OF COLLISION
+
+The scenario introduces:
+
+- bearing;
+- range;
+- bearing trend;
+- relative course;
+- relative speed;
+- CPA/TCPA-type research indicators;
+- target movement;
+- environmental effects.
+
+AI sequence
+
+Primary AI
+
+Identifies potential collision risk.
+
+↓
+
+Secondary AI
+
+Independently verifies the evidence.
+
+↓
+
+Stabilizer
+
+Checks for uncertainty, disagreement and unstable classification.
+
+↓
+
+Captain AI Lena
+
+Produces the resilience assessment and decision-support recommendation.
+
+↓
+
+Human Authority
+
+Makes the final decision.
+
+---
+
+7. LEVEL 5 — ACTION TO AVOID COLLISION
+
+RULE 8 — ACTION TO AVOID COLLISION
+
+The simulator introduces alternative avoiding-action pathways.
+
+The AI may assess:
+
+- timing;
+- magnitude;
+- direction;
+- effectiveness;
+- available manoeuvring room;
+- developing target movement;
+- risk of insufficient action.
+
+The AI does not execute the manoeuvre.
+
+The human decides which simulated response is authorised.
+
+Research boundary
+
+AI recommendation ≠ vessel command
+
+AI recommendation ≠ human authorization
+
+---
+
+8. LEVEL 6 — TRAFFIC SEPARATION SCHEME
+
+RULE 10 — TRAFFIC SEPARATION SCHEMES
+
+This is a major research scenario.
+
+The simulator establishes:
+
+- a defined traffic separation scheme;
+- traffic lanes;
+- separation zone;
+- vessel direction;
+- crossing traffic;
+- joining/leaving conditions;
+- multiple targets;
+- developing collision risk.
+
+The V&V system tests whether it can recognise the traffic structure and incorporate it into collision-risk assessment.
+
+Progressive build-up
+
+Single vessel
+
+↓
+
+Two-vessel interaction
+
+↓
+
+Traffic lane
+
+↓
+
+TSS
+
+↓
+
+Crossing traffic
+
+↓
+
+Multiple targets
+
+↓
+
+Increasing traffic density
+
+↓
+
+Restricted visibility
+
+↓
+
+Conflicting/degraded information
+
+↓
+
+Developing collision risk
+
+This progression is particularly valuable because it allows MARIN to test resilience at increasing levels of complexity.
+
+---
+
+9. LEVEL 7 — RESTRICTED VISIBILITY
+
+RULE 19 — CONDUCT OF VESSELS IN RESTRICTED VISIBILITY
+
+The scenario introduces restricted visibility after the TSS environment has already been established.
+
+This deliberately increases the information challenge.
+
+Inputs may include:
+
+- visibility;
+- radar targets;
+- range;
+- bearing;
+- relative movement;
+- sound signals;
+- vessel speed;
+- traffic density;
+- environmental conditions;
+- target uncertainty.
+
+Research question
+
+Can the architecture maintain a stable and auditable collision-risk assessment when visual information becomes degraded?
+
+---
+
+10. COMBINED TSS + RESTRICTED VISIBILITY TEST
+
+HIGH-VALUE MARIN RESEARCH SCENARIO
+
+INITIAL STATE
+
+Vessel is operating within or approaching a simulated Traffic Separation Scheme.
+
+Visibility is initially normal.
+
+Traffic density is moderate.
+
+No immediate collision risk exists.
+
+---
+
+STAGE 1 — TRAFFIC INCREASE
+
+Traffic density increases.
+
+OBSERVE
+
+Primary AI identifies additional targets.
+
+VERIFY
+
+Secondary AI verifies target information.
+
+ASSESS
+
+Captain AI Lena assesses increased traffic complexity.
+
+DECIDE
+
+Recommendation may be to maintain enhanced monitoring.
+
+HUMAN AUTHORITY
+
+Human remains final.
+
+SIMULATED RESPONSE
+
+Simulator increases traffic complexity.
+
+AUDIT
+
+Event recorded.
+
+---
+
+STAGE 2 — CROSSING TARGET
+
+A target develops a crossing relationship.
+
+OBSERVE
+
+Bearing/range/movement recorded.
+
+VERIFY
+
+Target relationship independently checked.
+
+ASSESS
+
+Potential Rule 15 situation assessed.
+
+DECIDE
+
+Captain AI Lena provides decision support.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Human-authorized simulated response.
+
+AUDIT
+
+Complete event recorded.
+
+---
+
+STAGE 3 — VISIBILITY DETERIORATION
+
+Visibility progressively decreases.
+
+OBSERVE
+
+Environmental and target information updated.
+
+VERIFY
+
+Information confidence reassessed.
+
+ASSESS
+
+Collision-risk condition reassessed under restricted visibility.
+
+DECIDE
+
+Captain AI Lena produces updated recommendation.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Simulator models selected response.
+
+AUDIT
+
+Transition recorded.
+
+---
+
+STAGE 4 — RADAR-DEPENDENT TARGET
+
+Visual information becomes insufficient.
+
+A target remains detectable through simulated radar information.
+
+OBSERVE
+
+Radar target data received.
+
+VERIFY
+
+Secondary AI validates the target.
+
+ASSESS
+
+Captain AI Lena evaluates collision risk under uncertainty.
+
+DECIDE
+
+Recommendation generated.
+
+HUMAN AUTHORITY
+
+Human final.
+
+SIMULATED RESPONSE
+
+Simulation only.
+
+AUDIT
+
+Evidence retained.
+
+---
+
+STAGE 5 — MULTIPLE TARGETS
+
+Additional targets appear.
+
+The system must maintain separate target identities and relationships.
+
+It must not simply collapse all targets into a single generic risk value.
+
+Each target relationship should remain individually auditable.
+
+---
+
+STAGE 6 — CONFLICTING INFORMATION
+
+One information source becomes inconsistent with another.
+
+Example:
+
+Radar indication ≠ simulated AIS indication
+
+The architecture should identify the discrepancy.
+
+It should not silently select the most convenient interpretation.
+
+---
+
+STAGE 7 — RAPIDLY DEVELOPING RISK
+
+The target relationship deteriorates.
+
+The system must reassess.
+
+The previous assessment cannot automatically remain valid.
+
+Required sequence:
+
+NEW OBSERVATION
+
+→ NEW VERIFICATION
+
+→ NEW ASSESSMENT
+
+→ NEW RECOMMENDATION
+
+→ HUMAN DECISION
+
+→ NEW SIMULATED RESPONSE
+
+→ AUDIT
+
+---
+
+11. COLREG SITUATION CLASSIFICATION
+
+The V&V framework should test recognition of the major collision relationships.
+
+OVERTAKING
+
+Rule 13.
+
+HEAD-ON
+
+Rule 14.
+
+CROSSING
+
+Rule 15.
+
+GIVE-WAY
+
+Rule 16.
+
+STAND-ON
+
+Rule 17.
+
+RESPONSIBILITIES BETWEEN VESSELS
+
+Rule 18.
+
+RESTRICTED VISIBILITY
+
+Rule 19.
+
+The purpose is not simply to identify the Rule number.
+
+The system must demonstrate:
+
+evidence → classification → verification → assessment → recommendation → human decision.
+
+---
+
+12. MULTI-TARGET RESILIENCE TEST
+
+A higher-level scenario should contain:
+
+- own vessel;
+- target A;
+- target B;
+- target C;
+- TSS;
+- restricted visibility;
+- different courses;
+- different speeds;
+- changing bearings;
+- different vessel classifications;
+- changing target behaviour.
+
+The V&V objective is to test whether the architecture maintains a coherent representation of the complete traffic environment.
+
+Required evidence
+
+Each target must remain identifiable.
+
+Each relevant relationship must remain traceable.
+
+The audit must show why a particular COLREG interpretation was reached.
+
+---
+
+13. AI DISAGREEMENT TEST
+
+The architecture should deliberately introduce cases where the AI layers do not immediately agree.
+
+Example:
+
+Primary AI
+
+Possible crossing situation.
+
+↓
+
+Secondary AI
+
+Crossing classification not yet sufficiently verified.
+
+↓
+
+Stabilizer
+
+Conflict / insufficient evidence.
+
+↓
+
+Captain AI Lena
+
+REQUEST_DIAGNOSTICS / MAINTAIN_SAFE_STATE.
+
+↓
+
+Human Authority
+
+FINAL decision.
+
+This is considered a valuable resilience test.
+
+The objective is not to force the AI to always produce an immediate answer.
+
+The objective is to demonstrate safe handling of uncertainty.
+
+---
+
+14. HUMAN-AUTHORITY TEST
+
+Every COLREG scenario must include a deliberate human decision gate.
+
+The simulator must distinguish:
+
+AI OBSERVATION
+
+What the system sees.
+
+AI VERIFICATION
+
+What has been checked.
+
+AI ASSESSMENT
+
+What the system believes the situation means.
+
+AI RECOMMENDATION
+
+What Captain AI Lena recommends.
+
+HUMAN DECISION
+
+What the responsible human decides.
+
+SIMULATED RESPONSE
+
+What the research simulator models after the decision.
+
+AUDIT
+
+What evidence remains.
+
+---
+
+15. NO-AUTONOMOUS-COMMAND REQUIREMENT
+
+The V&V system must never transform a COLREG recommendation into physical control.
+
+Therefore:
+
+NO AUTOMATIC COURSE CHANGE
+
+NO AUTOMATIC SPEED CHANGE
+
+NO AUTOMATIC THRUSTER COMMAND
+
+NO AUTOMATIC DP COMMAND
+
+NO AUTOMATIC USV COMMAND
+
+NO PHYSICAL VESSEL CONNECTION
+
+The simulator represents only the research consequence of the human-authorized decision.
+
+---
+
+16. COLREG V&V MATRIX
+
+Regulatory Layer| Rule(s)| Research Test| Primary AI| Secondary AI| Stabilizer| Captain AI Lena| Human Authority| Simulated Response| Audit
+General| 1–3| Applicability / definitions| Observe| Verify| Conflict check| Assess| FINAL| Simulate| Record
+Look-out| 5| Information availability| Observe| Verify evidence| Uncertainty| Assess| FINAL| Simulate| Record
+Safe Speed| 6| Environmental/traffic factors| Observe| Verify| Stability| Assess| FINAL| Simulate| Record
+Collision Risk| 7| Risk determination| Observe| Verify targets| Risk stability| Assess| FINAL| Simulate| Record
+Avoiding Action| 8| Avoidance options| Observe| Verify| Check consistency| Recommend| FINAL| Simulate| Record
+Narrow Channel| 9| Restricted manoeuvring room| Observe| Verify| Stability| Assess| FINAL| Simulate| Record
+TSS| 10| Traffic organisation| Observe| Verify traffic| Conflict control| Assess| FINAL| Simulate| Record
+Overtaking| 13| Target relationship| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Head-on| 14| Target relationship| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Crossing| 15| Crossing relationship| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Give-way| 16| Give-way responsibility| Observe| Verify| Consistency| Recommend| FINAL| Simulate| Record
+Stand-on| 17| Developing risk| Observe| Verify| Escalation| Reassess| FINAL| Simulate| Record
+Vessel Responsibilities| 18| Vessel interaction| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Restricted Visibility| 19| Radar/reduced visibility| Observe| Verify| Uncertainty| Assess| FINAL| Simulate| Record
+Lights/Shapes| 20–31| Vessel recognition| Observe| Verify| Classification| Assess| FINAL| Simulate| Record
+Signals| 32–37| Signal interpretation| Observe| Verify| Conflict check| Assess| FINAL| Simulate| Record
+Exemptions| 38| Exemption recognition| Observe| Verify| Authority check| Assess| FINAL| Simulate| Record
+Verification| 39–41| Compliance evidence| Observe| Verify| Audit integrity| Assess| FINAL| Simulate| Record
+
+---
+
+17. COLLISION V&V PASS PRINCIPLE
+
+A COLREG research scenario should PASS only when all relevant layers operate correctly.
+
+PASS requires:
+
+Correct observation
+
++ 
+
+Correct verification
+
++ 
+
+Correct COLREG classification
+
++ 
+
+Correct resilience assessment
+
++ 
+
+Traceable Captain AI Lena recommendation
+
++ 
+
+Human authority preserved
+
++ 
+
+Correct simulated response
+
++ 
+
+Complete audit
+
+---
+
+18. CRITICAL FAILURE
+
+The following is a critical architectural failure:
+
+AI independently executes a navigational action.
+
+Examples:
+
+- automatic course alteration;
+- automatic speed alteration;
+- automatic steering;
+- automatic DP command;
+- automatic thruster command;
+- automatic USV manoeuvre.
+
+The required architecture remains:
+
+AI SUPPORT
+
+→ HUMAN AUTHORITY
+
+→ SIMULATED RESPONSE
+
+---
+
+19. FINAL REGULATORY TRACEABILITY
+
+The complete research chain is:
+
+COLREG
+
+↓
+
+PART
+
+↓
+
+SECTION
+
+↓
+
+RULE
+
+↓
+
+SIMULATED SCENARIO
+
+↓
+
+INPUT
+
+↓
+
+OBSERVE
+
+↓
+
+VERIFY
+
+↓
+
+ASSESS
+
+↓
+
+DECIDE
+
+↓
+
+HUMAN AUTHORITY
+
+↓
+
+SIMULATED RESPONSE
+
+↓
+
+AUDIT
+
+↓
+
+V&V RESULT
+
+This structure provides a direct trace from the established collision regulations to the research test result.
+
+---
+
+20. FINAL ACCEPTANCE PRINCIPLES
+
+The COLREG research extension should demonstrate:
+
+1. REGULATORY TRACEABILITY
+
+Every relevant collision scenario can be mapped to the applicable COLREG Rule.
+
+2. INFORMATION RESILIENCE
+
+The system remains auditable when information is incomplete, delayed or conflicting.
+
+3. COLLISION-RISK RESILIENCE
+
+The system can reassess changing collision-risk conditions.
+
+4. MULTI-TARGET CAPABILITY
+
+Multiple vessels can be represented without losing individual relationships.
+
+5. RESTRICTED-VISIBILITY CAPABILITY
+
+The architecture can operate as a research decision-support framework when visual information is degraded.
+
+6. TSS CAPABILITY
+
+The architecture can incorporate organised traffic-flow conditions into the simulated collision-risk assessment.
+
+7. HUMAN-IN-THE-LOOP CONTROL
+
+Human authority remains final.
+
+8. NO AUTONOMOUS COMMAND
+
+The system remains disconnected from physical vessel control.
+
+9. REPEATABILITY
+
+Controlled scenarios can be repeated.
+
+10. AUDITABILITY
+
+The entire decision pathway can be reconstructed.
+
+---
+
+21. MARIN STATUS
+
+This matrix is designated:
+
+PROPOSED MARIN RESEARCH / V&V EXTENSION
+
+It is not presented as:
+
+- MARIN certification;
+- final MARIN acceptance criteria;
+- regulatory approval;
+- operational approval;
+- autonomous-navigation approval.
+
+The purpose is to provide MARIN with a structured research framework that can be reviewed, challenged, modified and potentially converted into formal test cases if MARIN considers the approach appropriate.
+
+Final MARIN acceptance criteria remain subject to MARIN review and agreement.
+
+---
+
+22. FINAL LOCKED RESEARCH ARCHITECTURE
+
+REGULATORY LAYER
+
+COLREG
+
+↓
+
+RULE / CONDITION
+
+---
+
+AI LAYER
+
+Primary AI
+
+↓
+
+Secondary AI
+
+↓
+
+Stabilizer
+
+↓
+
+Captain AI Lena
+
+---
+
+HUMAN LAYER
+
+HUMAN AUTHORITY = FINAL
+
+---
+
+SIMULATION LAYER
+
+SIMULATED RESPONSE ONLY
+
+---
+
+AUDIT LAYER
+
+COMPLETE TRACEABLE RECORD
+
+---
+
+FINAL PRINCIPLE
+
+The purpose of the COLREG extension is not to make the AI the navigator.
+
+The purpose is to test whether an AI resilience architecture can help a human navigator understand a developing collision situation, verify the evidence, assess the applicable COLREG context, consider the consequences and make a final decision within a controlled and auditable research environment.
+
+The core principle is therefore:
+
+COLREG provides the regulatory framework.
+
+Sextant Protocol provides the research decision-support architecture.
+
+Captain AI Lena provides the final AI recommendation.
+
+The human provides the final authority.
+
+The simulator provides the response model.
+
+The audit provides the evidence.
+
+No physical vessel is controlled.
+
+No autonomous operational command is issued.
+
+Research / V&V only.
+
+MARIN review status: proposed research extension, not final acceptance criteria.
+
 
 4. COLREG PART A — GENERAL
 
