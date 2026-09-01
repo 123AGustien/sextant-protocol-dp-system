@@ -4575,6 +4575,156 @@ Buoyage information must be assessed together with:
 - visibility;
 - applicable local navigation requirements.
 
+
+SEXTANT PROTOCOL™
+
+MARIN DP / USV RESILIENCE V&V RESEARCH
+
+PROPOSED SPECIAL OFFSHORE OPERATIONS — MD REVIEW VERSION
+
+Status: Research / V&V Proposal
+Development Branch: "feature/marin-usv-vv-research"
+Operational Connection: None
+Human Authority: Final
+Autonomous Command: False
+
+---
+
+VV-048 — HEAVY-LIFT LOADING IN SEAWAY
+
+Purpose:
+Assess the simulated resilience response during heavy-lift loading operations conducted in environmental conditions representative of offshore/seaway operations.
+
+V&V Parameters:
+
+- Lift weight
+- Crane radius
+- Crane load
+- Boom angle
+- Hook load
+- Vessel heel / list
+- Vessel trim
+- Free-surface effects
+- GM / GZ and stability response
+- Wind, wave and current
+- Vessel motions
+- Dynamic amplification / suspended-load movement
+- Deck securing and load-transfer condition
+- DP position error
+- Environmental loading
+- Lift suspension / abort criteria
+- Human-authority decision gate
+
+Expected V&V Evidence:
+
+The system should demonstrate traceable assessment of changing stability, environmental loading, vessel position and operational risk throughout the simulated lift.
+
+Human Authority: FINAL
+Simulated Execution: Human authorization required
+Operational DP Connection: NONE
+
+---
+
+VV-049 — HEAVY-LIFT DISCHARGE / OFFLOADING
+
+Purpose:
+Assess the simulated resilience response during heavy-lift discharge where vessel displacement, centre of gravity and stability conditions change throughout the operation.
+
+V&V Parameters:
+
+- Remaining vessel displacement
+- Changing KG / CG
+- Longitudinal and transverse CG movement
+- Heel / list
+- Trim
+- GM / GZ and stability response
+- Crane condition
+- Suspended-load condition
+- Seaway and vessel-motion response
+- Wind, wave and current
+- DP capability / resilience
+- Position and heading stability
+- Safe-state response
+- Emergency / lift-suspension condition
+- Human-authority decision gate
+
+Expected V&V Evidence:
+
+The system should demonstrate that changing loading conditions trigger reassessment of vessel stability, environmental stress, position resilience and operational status.
+
+Human Authority: FINAL
+Simulated Execution: Human authorization required
+Operational DP Connection: NONE
+
+---
+
+VV-050 — PIPELAYING OPERATION
+
+Purpose:
+Assess the simulated resilience response during pipelaying operations involving DP, pipe-handling equipment, tension management, seabed interaction and changing environmental conditions.
+
+V&V Parameters:
+
+- Vessel position
+- Vessel heading
+- DP environmental loading
+- Pipe tension
+- Tensioner status
+- Stinger / overboarding arrangement
+- Pipe departure angle
+- Layback
+- Touchdown position
+- Seabed interaction
+- Water depth
+- Under-keel clearance
+- Current
+- Tide
+- Wave conditions
+- Wind conditions
+- Loss of DP capability
+- Loss / degradation of pipe tension
+- Abnormal pipe condition
+- Emergency recovery / abandonment scenario
+- Human-authority decision gate
+
+Expected V&V Evidence:
+
+The system should demonstrate traceable reassessment when DP capability, environmental loading, pipe tension, vessel position or seabed-related conditions change.
+
+Human Authority: FINAL
+Simulated Execution: Human authorization required
+Operational DP Connection: NONE
+
+---
+
+ENGINEERING BOUNDARY
+
+VV-048 to VV-050 are proposed research and V&V scenarios for technical review.
+
+They do not constitute operational heavy-lift or pipelaying procedures, nor do they establish vessel-specific stability, crane, DP, structural or regulatory acceptance criteria.
+
+MARIN may provide additional:
+
+- Test objectives
+- Vessel/testbed parameters
+- Environmental conditions
+- Failure cases
+- Acceptance criteria
+- Measurement requirements
+- Instrumentation requirements
+- V&V methodology
+- Evidence requirements
+
+The Sextant Protocol™ matrix can then be extended through controlled module integration and V&V traceability mapping.
+
+RESEARCH PRINCIPLE
+
+OBSERVE → VERIFY → ASSESS → ARBITRATE → RECOMMEND → HUMAN DECISION → SIMULATED RESPONSE → AUDIT
+
+COMPLEMENT — NOT REPLACE
+SIMULATION ONLY — NOT CERTIFIED MARINE CONTROL SOFTWARE
+
+
 NO AUTONOMOUS NAVIGATION COMMAND.
 
 
