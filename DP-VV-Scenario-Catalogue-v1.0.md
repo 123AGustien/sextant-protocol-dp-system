@@ -116,6 +116,124 @@ Each scenario should contain, where applicable:
 
 The Scenario ID should remain associated with the resulting simulation record to provide traceability from the defined test condition through to the resulting evidence.
 
+4A. Scenario Catalogue ↔ Cockpit Mapping
+
+The DP Resilience V&V Research Cockpit uses the existing scenario controls and execution architecture. The Scenario Catalogue is added as a controlled reference and identification layer and does not replace or re-engineer the existing simulator execution path.
+
+When an operator selects a defined scenario in the cockpit, the simulator should associate the selected scenario with the corresponding Scenario Catalogue identifier and display the applicable V&V objective.
+
+Scenario Mapping
+
+Cockpit Scenario| Scenario ID| Scenario Name| V&V Objective
+NORMAL| DP-VV-001| NORMAL ENVIRONMENT| Verify nominal architecture behaviour and confirm that the system operates without unnecessary escalation.
+MODERATE| DP-VV-002| MODERATE ENVIRONMENTAL LOADING| Verify transition from nominal operation to increased monitoring under moderate environmental loading.
+HEAVY WEATHER| DP-VV-003| HEAVY WEATHER| Verify transition into protective resilience assessment under high environmental loading.
+CRITICAL CURRENT SURGE| DP-VV-004| CRITICAL CURRENT SURGE| Verify critical safety escalation, stabilizer arbitration and human review under severe current loading.
+HEAVY SEA| DP-VV-005| HEAVY SEA| Verify resilience assessment under severe wave loading.
+WIND GUST| DP-VV-006| WIND GUST| Verify reassessment following rapid environmental change in wind stress.
+COMBINED| DP-VV-007| COMBINED ENVIRONMENTAL STRESS| Verify coherent processing of multiple simultaneous environmental stress factors.
+RANDOM| DP-VV-008| RANDOM / REPEATABILITY TEST| Verify deterministic repeatability when identical inputs, seed and software configuration are used.
+
+Mapping Behaviour
+
+The mapping layer should operate as follows:
+
+SCENARIO SELECTED
+        ↓
+SCENARIO ID IDENTIFIED
+        ↓
+V&V OBJECTIVE DISPLAYED
+        ↓
+EXISTING DP SIMULATION ENGINE
+        ↓
+ENVIRONMENT ASSESSMENT
+        ↓
+PRIMARY AI
+        ↓
+SECONDARY AI
+        ↓
+STABILIZER
+        ↓
+RECOMMENDATION
+        ↓
+CAPTAIN AI LENA
+        ↓
+HUMAN AUTHORITY
+        ↓
+SIMULATED DP RESPONSE
+        ↓
+AUDIT RECORD
+
+The catalogue mapping must not modify the existing assessment calculations, AI layer sequence, stabilizer arbitration, human authorization gate or simulated response logic unless a separate engineering change is specifically approved and documented.
+
+Required Scenario Metadata
+
+Where technically implemented, each simulation run should retain or display:
+
+- Scenario ID;
+- Scenario name;
+- Scenario version;
+- V&V objective;
+- environmental input values;
+- calculated environmental stress;
+- risk classification;
+- Primary AI result;
+- Secondary AI result;
+- Stabilizer result;
+- Captain AI Lena recommendation;
+- human authorization state;
+- simulated response;
+- audit events;
+- PASS / FAIL / REVIEW status;
+- software/version identifier; and
+- test timestamp.
+
+Engineering Change Control
+
+The Scenario Catalogue is a reference and V&V planning layer. Adding or modifying a catalogue entry does not by itself constitute a change to the underlying simulator engine.
+
+Where MARIN provides a specific V&V requirement, test condition, evaluation criterion or acceptance criterion, the corresponding catalogue entry may be updated and, where implementation changes are required, those changes should be made in the designated MARIN V&V development branch.
+
+The preserved engineering baseline should remain unchanged.
+
+MARIN Engineering Orientation
+
+The current mapping represents the Sextant Protocol™ research team's proposed initial scenario structure.
+
+It is not intended to presume that these scenarios, objectives or acceptance criteria constitute MARIN's formal V&V methodology.
+
+MARIN may provide its preferred:
+
+- test objectives;
+- operating scenarios;
+- failure scenarios;
+- environmental conditions;
+- evaluation criteria;
+- acceptance criteria;
+- verification procedures;
+- validation methodology;
+- testbed requirements;
+- evidence requirements; and
+- reporting requirements.
+
+The Scenario Catalogue can then be extended or amended accordingly while maintaining traceability between the MARIN requirement, the applicable scenario ID, the simulator implementation and the resulting verification evidence.
+
+V&V Status
+
+The existing DP Resilience V&V Research Cockpit remains the execution environment.
+
+The Scenario Catalogue provides the controlled identification, objective and traceability layer for the scenarios executed by that cockpit.
+
+Accordingly:
+
+Scenario Catalogue = WHAT is being tested
+
+DP V&V Cockpit = HOW the research simulation is executed
+
+MARIN Engineering Orientation = HOW the eventual V&V methodology and acceptance basis may be defined
+
+This separation allows the existing simulator to remain stable while providing a structured mechanism for future MARIN-specific V&V development.
+
 ---
 
 5. CORE SCENARIO CATALOGUE
