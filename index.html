@@ -779,3 +779,2487 @@ label {
 <!-- ======================================================
      PART 1 END
 ======================================================= -->
+<!-- ======================================================
+     LAYER EXECUTION TRACE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Layer Execution Trace
+    </h2>
+
+    <div class="output">
+
+        <strong>ENVIRONMENT</strong>
+
+        <br>Stress:
+        <span id="traceEnvironment">—</span>
+
+        <br>Wind:
+        <span id="traceWind">—</span>
+
+        <br>Current:
+        <span id="traceCurrent">—</span>
+
+        <br>Wave:
+        <span id="traceWave">—</span>
+
+        <br>Tidal:
+        <span id="traceTidal">—</span>
+
+        <br><br>
+
+        <strong>S1 PRIMARY</strong>
+
+        <br>Mode:
+        <span id="tracePrimaryMode">STANDBY</span>
+
+        <br>Response:
+        <span id="tracePrimaryResponse">—</span>
+
+        <br><br>
+
+        <strong>S2 SECONDARY</strong>
+
+        <br>Mode:
+        <span id="traceSecondaryMode">STANDBY</span>
+
+        <br>Assessment:
+        <span id="traceSecondaryAssessment">—</span>
+
+        <br><br>
+
+        <strong>STABILIZER</strong>
+
+        <br>Mode:
+        <span id="traceStabilizerMode">STANDBY</span>
+
+        <br>Source:
+        <span id="traceStabilizerSource">—</span>
+
+        <br>Output:
+        <span id="traceStabilizerOutput">—</span>
+
+        <br><br>
+
+        <strong>RECOMMENDATION</strong>
+
+        <br>Urgency:
+        <span id="traceUrgency">—</span>
+
+        <br>Mode:
+        <span id="traceResponseMode">—</span>
+
+        <br>Recommendation:
+        <span id="traceRecommendation">—</span>
+
+        <br><br>
+
+        <strong>SIMULATED RESPONSE</strong>
+
+        <br>Proposed:
+        <span id="traceProposed">—</span>
+
+        <br>Gate:
+        <span id="traceGate">—</span>
+
+        <br>Status:
+        <span id="traceActionStatus">—</span>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     CAPTAIN AI LENA — DECISION SUPPORT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Captain AI Lena — UMV Control
+    </h2>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                LENA STATUS
+            </div>
+
+            <div
+                id="lenaStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                AI ROLE
+            </div>
+
+            <div class="status-value">
+                DECISION SUPPORT
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                RECOMMENDATION
+            </div>
+
+            <div
+                id="lenaRecommendation"
+                class="status-value"
+            >
+                NO SIMULATED RECOMMENDATION
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                URGENCY
+            </div>
+
+            <div
+                id="lenaUrgency"
+                class="status-value"
+            >
+                NORMAL
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                RESPONSE MODE
+            </div>
+
+            <div
+                id="lenaResponseMode"
+                class="status-value"
+            >
+                MONITORING
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                HUMAN AUTHORITY
+            </div>
+
+            <div class="status-value">
+                FINAL
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                AUTONOMOUS COMMAND
+            </div>
+
+            <div
+                id="lenaAutonomousCommand"
+                class="status-value"
+            >
+                FALSE
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                UMV ACTION
+            </div>
+
+            <div
+                id="lenaUMVAction"
+                class="status-value"
+            >
+                NOT EXECUTED
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="lenaMessage"
+        class="output"
+        style="margin-top:16px;"
+    >
+Captain AI Lena is awaiting simulated
+environmental assessment.
+
+No simulated actions recommended.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     DP SIMULATION ASSESSMENT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        DP Simulation Assessment
+    </h2>
+
+    <div
+        id="assessmentOutput"
+        class="output"
+    >
+System ready.
+
+Select environmental conditions or a scenario,
+then press RUN DP SIMULATION.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     CAPTAIN AI LENA — RECOMMENDED ACTIONS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Captain AI Lena — UMV Control / Recommended Actions
+    </h2>
+
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                CAPTAIN AI LENA
+            </div>
+
+            <div class="status-value">
+                ROLE: UMV RESILIENCE DECISION-SUPPORT LAYER
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                AUTHORITY
+            </div>
+
+            <div class="status-value">
+                HUMAN-IN-THE-LOOP
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                AUTONOMOUS COMMAND
+            </div>
+
+            <div
+                id="recommendedAutonomous"
+                class="status-value"
+            >
+                FALSE
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <p style="margin-top:16px;color:#a9bdcc;">
+
+        Captain AI Lena evaluates the simulated resilience
+        assessment and presents recommended actions for
+        human consideration.
+
+    </p>
+
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                LENA STATUS
+            </div>
+
+            <div
+                id="recommendedLenaStatus"
+                class="status-value"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                UMV CONTROL MODE
+            </div>
+
+            <div
+                id="recommendedControlMode"
+                class="status-value"
+            >
+                HUMAN AUTHORITY
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                RECOMMENDED ACTION
+            </div>
+
+            <div
+                id="recommendedAction"
+                class="status-value"
+            >
+                NO ACTION
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                URGENCY
+            </div>
+
+            <div
+                id="recommendedUrgency"
+                class="status-value"
+            >
+                NORMAL
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="recommendedMessage"
+        class="output"
+        style="margin-top:16px;"
+    >
+Captain AI Lena awaiting simulated assessment.
+
+No UMV action recommendation available.
+
+Human authority remains FINAL.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     HUMAN AUTHORIZATION — FINAL DECISION
+======================================================= -->
+
+<div
+    id="humanDecisionControls"
+    class="human-panel"
+>
+
+    <h2>
+        Human Authorization — Final Decision
+    </h2>
+
+
+    <div class="gate-box">
+
+        <strong>
+            HUMAN AUTHORIZATION REQUIRED
+        </strong>
+
+        <br><br>
+
+        Captain AI Lena provides decision support only.
+
+        <br>
+
+        No simulated manoeuvre is treated as an
+        operational command.
+
+        <br><br>
+
+        FINAL AUTHORITY:
+        <strong>HUMAN OPERATOR</strong>
+
+        <br>
+
+        CURRENT DECISION:
+        <strong id="humanDecisionStatus">
+            PENDING
+        </strong>
+
+        <br>
+
+        EXECUTION GATE:
+        <strong id="executionGate">
+            HUMAN DECISION REQUIRED
+        </strong>
+
+    </div>
+
+
+    <div class="human-controls">
+
+        <button onclick="acknowledgeCondition()">
+            ACKNOWLEDGE CONDITION
+        </button>
+
+        <button onclick="maintainSafeState()">
+            MAINTAIN SAFE STATE
+        </button>
+
+        <button onclick="authorizeSimulatedResponse()">
+            AUTHORIZE SIMULATED RESPONSE
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     UPDATED SIMULATED VESSEL STATE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Updated Simulated Vessel State
+    </h2>
+
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <div class="status-title">
+                POSITION ERROR
+            </div>
+
+            <div
+                id="positionError"
+                class="status-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                SIMULATED COMMAND
+            </div>
+
+            <div
+                id="simulatedCommand"
+                class="status-value"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                STABILITY INDEX
+            </div>
+
+            <div
+                id="stabilityIndex"
+                class="status-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <div class="status-title">
+                STATE
+            </div>
+
+            <div
+                id="vesselState"
+                class="status-value"
+            >
+                SIMULATED
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     SIMULATION AUDIT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Simulation Audit
+    </h2>
+
+    <div
+        id="auditOutput"
+        class="output"
+    >
+No completed simulation audit.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     RESEARCH PURPOSE / OPERATIONAL BOUNDARY
+======================================================= -->
+
+<div class="footer">
+
+    <strong>
+        SEXTANT PROTOCOL™ — DP RESILIENCE RESEARCH SIMULATOR
+    </strong>
+
+    <br><br>
+
+    This cockpit is a deterministic research and engineering
+    simulation environment developed to explore how a layered
+    resilience architecture could respond to changing maritime
+    environmental conditions.
+
+    <br><br>
+
+    The simulator creates a controlled virtual vessel
+    environment in which wind, current, wave and tidal
+    conditions can be varied, repeated and analysed.
+
+    <br><br>
+
+    The deterministic simulation engine processes those
+    conditions through the research architecture and produces
+    a traceable simulated result.
+
+    <br><br>
+
+    The simulator is intended to support:
+
+    <br>
+
+    Research • Education • Engineering analysis • Scenario
+    testing • Technical demonstration • Repeatable validation
+    • Future independent review
+
+    <br><br>
+
+    Trial manoeuvres and simulated responses shown by this
+    cockpit are planning and assessment representations only.
+
+    <br>
+
+    They are <strong>NOT operational DP commands</strong>
+    and are <strong>NOT transmitted to any vessel control
+    system.</strong>
+
+    <br><br>
+
+    <strong>
+        HUMAN-IN-THE-LOOP
+    </strong>
+
+    <br>
+
+    Human authority remains the final decision point in the
+    research architecture.
+
+    <br><br>
+
+    The simulator provides decision-support and simulated
+    responses; it does not replace the Master, DPO, authorised
+    operator, vessel procedures or classification requirements.
+
+    <br><br>
+
+    <strong>
+        OPERATIONAL BOUNDARY
+    </strong>
+
+    <br><br>
+
+    This prototype is intentionally isolated from operational
+    vessel control.
+
+    <br>
+
+    It does not connect to and must not be connected to:
+
+    <br>
+
+    Dynamic Positioning systems • Propulsion systems •
+    Navigation systems • Steering systems • Safety systems •
+    Vessel automation systems
+
+    <br><br>
+
+    It is not certified marine control software and does not
+    provide certified DP functionality.
+
+    <br><br>
+
+    <strong>
+        SEXTANT PROTOCOL™ – DP RESILIENCE RESEARCH SIMULATOR
+    </strong>
+
+    <br>
+
+    RESEARCH • SIMULATION • EDUCATION • ENGINEERING ANALYSIS
+
+    <br>
+
+    ENVIRONMENT → PRIMARY AI → SECONDARY AI → STABILIZER →
+    RECOMMENDED ACTIONS → CAPTAIN AI LENA → HUMAN AUTHORITY →
+    SIMULATED DP RESPONSE
+
+    <br><br>
+
+    <strong>
+        NOT CERTIFIED MARINE CONTROL SOFTWARE
+    </strong>
+
+    <br>
+
+    NOT FOR CONNECTION TO OPERATIONAL DP, PROPULSION,
+    NAVIGATION OR SAFETY SYSTEMS
+
+</div>
+
+
+</div>
+
+
+<!-- ======================================================
+     DETERMINISTIC SIMULATION ENGINE
+======================================================= -->
+
+<script>
+
+"use strict";
+
+/*
+============================================================
+ SEXTANT PROTOCOL™
+ DP RESILIENCE V&V RESEARCH COCKPIT
+
+ SPD v13.1.0
+ Deterministic Research Simulation Engine
+
+ MARIN USV V&V RESEARCH BRANCH
+
+ IMPORTANT:
+ This is a LOCAL SIMULATION ONLY.
+
+ No network connection.
+ No vessel interface.
+ No DP command transmission.
+
+ Captain AI Lena provides decision support only.
+
+ Human authorization remains FINAL.
+============================================================
+*/
+
+
+const ENGINE_VERSION = "SPD v13.1.0";
+
+
+let simulationState = {
+
+    ran: false,
+
+    stress: 0,
+
+    risk: "LOW",
+
+    recommendation: "NO ACTION",
+
+    urgency: "NORMAL",
+
+    responseMode: "MONITORING",
+
+    proposedResponse: "NONE",
+
+    humanDecision: "PENDING",
+
+    authorized: false
+
+};
+
+
+/* =========================================================
+   ENGINE INITIALISATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        document.getElementById(
+            "engineStatus"
+        ).textContent =
+            "ENGINE: READY — " +
+            ENGINE_VERSION;
+
+        resetSimulation();
+
+    }
+);
+
+
+/* =========================================================
+   INPUT HELPERS
+========================================================= */
+
+function getValue(id) {
+
+    const element =
+        document.getElementById(id);
+
+    let value =
+        Number(element.value);
+
+    if (!Number.isFinite(value)) {
+        value = 0;
+    }
+
+    value =
+        Math.max(
+            0,
+            Math.min(100, value)
+        );
+
+    element.value = value;
+
+    return value;
+
+}
+
+
+function setInputs(
+    wind,
+    current,
+    wave,
+    tidal
+) {
+
+    document.getElementById("wind").value =
+        wind;
+
+    document.getElementById("current").value =
+        current;
+
+    document.getElementById("wave").value =
+        wave;
+
+    document.getElementById("tidal").value =
+        tidal;
+
+}
+
+
+/* =========================================================
+   SCENARIOS
+========================================================= */
+
+function normalScenario() {
+
+    setInputs(
+        20,
+        15,
+        20,
+        10
+    );
+
+}
+
+
+function moderateWeatherScenario() {
+
+    setInputs(
+        40,
+        35,
+        45,
+        25
+    );
+
+}
+
+
+function heavyWeatherScenario() {
+
+    setInputs(
+        70,
+        60,
+        75,
+        50
+    );
+
+}
+
+
+function criticalScenario() {
+
+    setInputs(
+        90,
+        90,
+        95,
+        85
+    );
+
+}
+
+
+function currentSurgeScenario() {
+
+    setInputs(
+        35,
+        90,
+        45,
+        65
+    );
+
+}
+
+
+function heavySeaStateScenario() {
+
+    setInputs(
+        65,
+        45,
+        95,
+        55
+    );
+
+}
+
+
+function windGustScenario() {
+
+    setInputs(
+        95,
+        30,
+        40,
+        20
+    );
+
+}
+
+
+function combinedDisturbanceScenario() {
+
+    setInputs(
+        80,
+        75,
+        85,
+        70
+    );
+
+}
+
+
+function randomScenario() {
+
+    setInputs(
+
+        Math.floor(
+            Math.random() * 101
+        ),
+
+        Math.floor(
+            Math.random() * 101
+        ),
+
+        Math.floor(
+            Math.random() * 101
+        ),
+
+        Math.floor(
+            Math.random() * 101
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   ENVIRONMENT ASSESSMENT
+========================================================= */
+
+function calculateEnvironmentalStress(
+    wind,
+    current,
+    wave,
+    tidal
+) {
+
+    /*
+       Deterministic weighted environmental model.
+
+       Wind    = 30%
+       Current = 30%
+       Wave    = 25%
+       Tidal   = 15%
+
+       Total = 100%
+    */
+
+    return (
+
+        (wind * 0.30) +
+
+        (current * 0.30) +
+
+        (wave * 0.25) +
+
+        (tidal * 0.15)
+
+    );
+
+}
+
+
+function classifyRisk(stress) {
+
+    if (stress < 30) {
+        return "LOW";
+    }
+
+    if (stress < 50) {
+        return "MEDIUM";
+    }
+
+    return "HIGH";
+
+}
+
+
+/* =========================================================
+   PRIMARY AI
+========================================================= */
+
+function primaryAI(stress) {
+
+    if (stress < 30) {
+
+        return {
+
+            mode:
+                "NORMAL CONTROL",
+
+            response:
+                "Maintain nominal DP posture."
+
+        };
+
+    }
+
+
+    if (stress < 50) {
+
+        return {
+
+            mode:
+                "ADAPTIVE CONTROL",
+
+            response:
+                "Increase monitoring and prepare stabilisation."
+
+        };
+
+    }
+
+
+    if (stress < 75) {
+
+        return {
+
+            mode:
+                "ENHANCED CONTROL",
+
+            response:
+                "Prepare resilience response and reduce exposure."
+
+        };
+
+    }
+
+
+    return {
+
+        mode:
+            "CRITICAL CONTROL",
+
+        response:
+            "Immediate resilience assessment required."
+
+    };
+
+}
+
+
+/* =========================================================
+   SECONDARY AI
+========================================================= */
+
+function secondaryAI(stress) {
+
+    if (stress < 30) {
+
+        return {
+
+            mode:
+                "SAFETY MONITOR",
+
+            assessment:
+                "No significant environmental instability detected."
+
+        };
+
+    }
+
+
+    if (stress < 50) {
+
+        return {
+
+            mode:
+                "PRECAUTIONARY",
+
+            assessment:
+                "Moderate environmental loading detected."
+
+        };
+
+    }
+
+
+    if (stress < 75) {
+
+        return {
+
+            mode:
+                "PROTECTIVE",
+
+            assessment:
+                "Elevated environmental stress requires stabilisation."
+
+        };
+
+    }
+
+
+    return {
+
+        mode:
+            "CRITICAL SAFETY",
+
+        assessment:
+            "Critical environmental loading detected."
+
+    };
+
+}
+
+
+/* =========================================================
+   STABILIZER
+========================================================= */
+
+function stabilizer(
+    stress,
+    primary,
+    secondary
+) {
+
+    if (stress < 30) {
+
+        return {
+
+            mode:
+                "STABLE",
+
+            source:
+                "PRIMARY",
+
+            output:
+                "NORMAL DP MONITORING"
+
+        };
+
+    }
+
+
+    if (stress < 50) {
+
+        return {
+
+            mode:
+                "BALANCED",
+
+            source:
+                "PRIMARY + SECONDARY",
+
+            output:
+                "INCREASED MONITORING"
+
+        };
+
+    }
+
+
+    if (stress < 75) {
+
+        return {
+
+            mode:
+                "PROTECTIVE",
+
+            source:
+                "SECONDARY",
+
+            output:
+                "RESILIENCE PROTECTION"
+
+        };
+
+    }
+
+
+    return {
+
+        mode:
+            "CRITICAL ARBITRATION",
+
+        source:
+            "SECONDARY SAFETY LAYER",
+
+        output:
+            "SAFE STATE / HUMAN REVIEW"
+
+    };
+
+}
+
+
+/* =========================================================
+   CAPTAIN AI LENA — DECISION SUPPORT
+========================================================= */
+
+function lenaDecision(
+    stress,
+    risk
+) {
+
+    if (risk === "LOW") {
+
+        return {
+
+            recommendation:
+                "MAINTAIN SAFE STATE",
+
+            urgency:
+                "NORMAL",
+
+            responseMode:
+                "MONITORING",
+
+            proposed:
+                "NO MANOEUVRE REQUIRED",
+
+            message:
+
+                "Captain AI Lena assessment:\n\n" +
+
+                "Environmental conditions remain within " +
+                "the simulated low-risk envelope.\n\n" +
+
+                "Recommendation: MAINTAIN SAFE STATE.\n\n" +
+
+                "Human authority remains FINAL."
+
+        };
+
+    }
+
+
+    if (risk === "MEDIUM") {
+
+        return {
+
+            recommendation:
+                "INCREASE DP RESILIENCE MONITORING",
+
+            urgency:
+                "ELEVATED",
+
+            responseMode:
+                "PRECAUTIONARY",
+
+            proposed:
+                "SIMULATED STABILISATION RESPONSE",
+
+            message:
+
+                "Captain AI Lena assessment:\n\n" +
+
+                "Moderate environmental stress detected.\n\n" +
+
+                "Recommendation: increase resilience monitoring " +
+
+                "and prepare a simulated stabilisation response.\n\n" +
+
+                "No action is executed without human authorization."
+
+        };
+
+    }
+
+
+    if (stress < 75) {
+
+        return {
+
+            recommendation:
+                "ENTER RESILIENCE PROTECTION MODE",
+
+            urgency:
+                "HIGH",
+
+            responseMode:
+                "PROTECTIVE",
+
+            proposed:
+                "SIMULATED RESILIENCE RESPONSE",
+
+            message:
+
+                "Captain AI Lena assessment:\n\n" +
+
+                "High environmental stress detected.\n\n" +
+
+                "Recommendation: ENTER RESILIENCE PROTECTION MODE.\n\n" +
+
+                "Human operator authorization is required before " +
+
+                "any simulated response is treated as executed."
+
+        };
+
+    }
+
+
+    return {
+
+        recommendation:
+            "MAINTAIN SAFE STATE / ESCALATE",
+
+        urgency:
+            "CRITICAL",
+
+        responseMode:
+            "CRITICAL",
+
+        proposed:
+            "SIMULATED EMERGENCY STABILISATION",
+
+        message:
+
+            "Captain AI Lena assessment:\n\n" +
+
+            "Critical environmental stress detected.\n\n" +
+
+            "Recommendation: MAINTAIN SAFE STATE and ESCALATE " +
+
+            "to the human operator.\n\n" +
+
+            "AUTONOMOUS COMMAND: FALSE.\n\n" +
+
+            "Human authority remains FINAL."
+
+    };
+
+}
+
+
+/* =========================================================
+   SIMULATION RUN
+========================================================= */
+
+function runSimulation() {
+
+    const wind =
+        getValue("wind");
+
+    const current =
+        getValue("current");
+
+    const wave =
+        getValue("wave");
+
+    const tidal =
+        getValue("tidal");
+
+
+    const stress =
+        calculateEnvironmentalStress(
+            wind,
+            current,
+            wave,
+            tidal
+        );
+
+
+    const risk =
+        classifyRisk(stress);
+
+
+    const primary =
+        primaryAI(stress);
+
+
+    const secondary =
+        secondaryAI(stress);
+
+
+    const stable =
+        stabilizer(
+            stress,
+            primary,
+            secondary
+        );
+
+
+    const lena =
+        lenaDecision(
+            stress,
+            risk
+        );
+
+
+    simulationState = {
+
+        ran: true,
+
+        stress: stress,
+
+        risk: risk,
+
+        recommendation:
+            lena.recommendation,
+
+        urgency:
+            lena.urgency,
+
+        responseMode:
+            lena.responseMode,
+
+        proposedResponse:
+            lena.proposed,
+
+        humanDecision:
+            "PENDING",
+
+        authorized:
+            false
+
+    };
+
+
+    /* =====================================================
+       LIVE STATUS
+    ===================================================== */
+
+    document.getElementById(
+        "environmentStatus"
+    ).textContent =
+        stress.toFixed(2) +
+        " / " +
+        risk;
+
+
+    document.getElementById(
+        "primaryStatus"
+    ).textContent =
+        primary.mode;
+
+
+    document.getElementById(
+        "secondaryStatus"
+    ).textContent =
+        secondary.mode;
+
+
+    document.getElementById(
+        "stabilizerStatus"
+    ).textContent =
+        stable.mode;
+
+
+    document.getElementById(
+        "humanStatus"
+    ).textContent =
+        "FINAL";
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+        "SIMULATION COMPLETE";
+
+
+    /* =====================================================
+       TRACE
+    ===================================================== */
+
+    document.getElementById(
+        "traceEnvironment"
+    ).textContent =
+        stress.toFixed(2) +
+        " / " +
+        risk;
+
+
+    document.getElementById(
+        "traceWind"
+    ).textContent =
+        wind;
+
+
+    document.getElementById(
+        "traceCurrent"
+    ).textContent =
+        current;
+
+
+    document.getElementById(
+        "traceWave"
+    ).textContent =
+        wave;
+
+
+    document.getElementById(
+        "traceTidal"
+    ).textContent =
+        tidal;
+
+
+    document.getElementById(
+        "tracePrimaryMode"
+    ).textContent =
+        primary.mode;
+
+
+    document.getElementById(
+        "tracePrimaryResponse"
+    ).textContent =
+        primary.response;
+
+
+    document.getElementById(
+        "traceSecondaryMode"
+    ).textContent =
+        secondary.mode;
+
+
+    document.getElementById(
+        "traceSecondaryAssessment"
+    ).textContent =
+        secondary.assessment;
+
+
+    document.getElementById(
+        "traceStabilizerMode"
+    ).textContent =
+        stable.mode;
+
+
+    document.getElementById(
+        "traceStabilizerSource"
+    ).textContent =
+        stable.source;
+
+
+    document.getElementById(
+        "traceStabilizerOutput"
+    ).textContent =
+        stable.output;
+
+
+    document.getElementById(
+        "traceUrgency"
+    ).textContent =
+        lena.urgency;
+
+
+    document.getElementById(
+        "traceResponseMode"
+    ).textContent =
+        lena.responseMode;
+
+
+    document.getElementById(
+        "traceRecommendation"
+    ).textContent =
+        lena.recommendation;
+
+
+    document.getElementById(
+        "traceProposed"
+    ).textContent =
+        lena.proposed;
+
+
+    document.getElementById(
+        "traceGate"
+    ).textContent =
+        "HUMAN AUTHORIZATION REQUIRED";
+
+
+    document.getElementById(
+        "traceActionStatus"
+    ).textContent =
+        "NOT EXECUTED";
+
+
+    /* =====================================================
+       LENA PANEL
+    ===================================================== */
+
+    document.getElementById(
+        "lenaStatus"
+    ).textContent =
+        "ASSESSMENT COMPLETE";
+
+
+    document.getElementById(
+        "lenaRecommendation"
+    ).textContent =
+        lena.recommendation;
+
+
+    document.getElementById(
+        "lenaUrgency"
+    ).textContent =
+        lena.urgency;
+
+
+    document.getElementById(
+        "lenaResponseMode"
+    ).textContent =
+        lena.responseMode;
+
+
+    document.getElementById(
+        "lenaAutonomousCommand"
+    ).textContent =
+        "FALSE";
+
+
+    document.getElementById(
+        "lenaUMVAction"
+    ).textContent =
+        "NOT EXECUTED";
+
+
+    document.getElementById(
+        "lenaMessage"
+    ).textContent =
+        lena.message;
+
+
+    /* =====================================================
+       RECOMMENDED ACTION PANEL
+    ===================================================== */
+
+    document.getElementById(
+        "recommendedAutonomous"
+    ).textContent =
+        "FALSE";
+
+
+    document.getElementById(
+        "recommendedLenaStatus"
+    ).textContent =
+        "ASSESSMENT COMPLETE";
+
+
+    document.getElementById(
+        "recommendedControlMode"
+    ).textContent =
+        "HUMAN AUTHORITY";
+
+
+    document.getElementById(
+        "recommendedAction"
+    ).textContent =
+        lena.recommendation;
+
+
+    document.getElementById(
+        "recommendedUrgency"
+    ).textContent =
+        lena.urgency;
+
+
+    document.getElementById(
+        "recommendedMessage"
+    ).textContent =
+
+        lena.message +
+
+        "\n\nEXECUTION GATE:\n" +
+
+        "HUMAN DECISION REQUIRED";
+
+
+    /* =====================================================
+       HUMAN GATE RESET
+    ===================================================== */
+
+    document.getElementById(
+        "humanDecisionStatus"
+    ).textContent =
+        "PENDING";
+
+
+    document.getElementById(
+        "executionGate"
+    ).textContent =
+        "HUMAN DECISION REQUIRED";
+
+
+    /* =====================================================
+       VESSEL STATE
+    ===================================================== */
+
+    document.getElementById(
+        "positionError"
+    ).textContent =
+
+        "SIMULATED — " +
+
+        (stress * 0.05).toFixed(2) +
+
+        " m";
+
+
+    document.getElementById(
+        "simulatedCommand"
+    ).textContent =
+        "0";
+
+
+    document.getElementById(
+        "stabilityIndex"
+    ).textContent =
+
+        Math.max(
+            0,
+            100 - stress
+        ).toFixed(2);
+
+
+    document.getElementById(
+        "vesselState"
+    ).textContent =
+
+        risk === "HIGH"
+
+            ? "PROTECTIVE SIMULATED STATE"
+
+            : "SIMULATED";
+
+
+    /* =====================================================
+       ASSESSMENT REPORT
+    ===================================================== */
+
+    document.getElementById(
+        "assessmentOutput"
+    ).textContent =
+
+        "SEXTANT PROTOCOL™ — DP RESILIENCE ASSESSMENT\n" +
+
+        "================================================\n\n" +
+
+        "ENGINE: " +
+        ENGINE_VERSION +
+        "\n\n" +
+
+        "ENVIRONMENT\n" +
+
+        "Wind:    " +
+        wind +
+        "\n" +
+
+        "Current: " +
+        current +
+        "\n" +
+
+        "Wave:    " +
+        wave +
+        "\n" +
+
+        "Tidal:   " +
+        tidal +
+        "\n\n" +
+
+        "ENVIRONMENTAL STRESS: " +
+
+        stress.toFixed(2) +
+
+        "\n" +
+
+        "RISK CLASSIFICATION: " +
+
+        risk +
+
+        "\n\n" +
+
+        "PRIMARY AI\n" +
+
+        primary.mode +
+
+        "\n" +
+
+        primary.response +
+
+        "\n\n" +
+
+        "SECONDARY AI\n" +
+
+        secondary.mode +
+
+        "\n" +
+
+        secondary.assessment +
+
+        "\n\n" +
+
+        "STABILIZER\n" +
+
+        stable.mode +
+
+        "\n" +
+
+        stable.output +
+
+        "\n\n" +
+
+        "CAPTAIN AI LENA\n" +
+
+        "Recommendation: " +
+
+        lena.recommendation +
+
+        "\n" +
+
+        "Urgency: " +
+
+        lena.urgency +
+
+        "\n" +
+
+        "Response Mode: " +
+
+        lena.responseMode +
+
+        "\n\n" +
+
+        "HUMAN AUTHORITY: FINAL\n" +
+
+        "AUTONOMOUS COMMAND: FALSE\n" +
+
+        "EXECUTION: HUMAN AUTHORIZATION REQUIRED";
+
+
+    /* =====================================================
+       AUDIT
+    ===================================================== */
+
+    document.getElementById(
+        "auditOutput"
+    ).textContent =
+
+        "SIMULATION AUDIT\n" +
+
+        "============================\n\n" +
+
+        "EVENT: SIMULATOR_INITIALIZED\n" +
+
+        "STATUS: PASS\n\n" +
+
+        "EVENT: ENVIRONMENT_ASSESSMENT\n" +
+
+        "STATUS: PASS\n\n" +
+
+        "EVENT: PRIMARY_AI_ASSESSMENT\n" +
+
+        "STATUS: PASS\n\n" +
+
+        "EVENT: SECONDARY_AI_ASSESSMENT\n" +
+
+        "STATUS: PASS\n\n" +
+
+        "EVENT: STABILIZER_ARBITRATION\n" +
+
+        "STATUS: PASS\n\n" +
+
+        "EVENT: LENA_DECISION_SUPPORT\n" +
+
+        "STATUS: PASS\n\n" +
+
+        "EVENT: HUMAN_AUTHORIZATION_GATE\n" +
+
+        "STATUS: ACTIVE\n\n" +
+
+        "EVENT: SIMULATED_RESPONSE\n" +
+
+        "STATUS: WAITING_FOR_HUMAN_AUTHORIZATION\n\n" +
+
+        "AUTONOMOUS COMMAND: FALSE\n" +
+
+        "OPERATIONAL DP CONNECTION: NONE\n" +
+
+        "SIMULATION STATUS: COMPLETE";
+
+}
+
+
+/* =========================================================
+   HUMAN DECISION — ACKNOWLEDGE
+========================================================= */
+
+function acknowledgeCondition() {
+
+    if (!simulationState.ran) {
+
+        alert(
+            "Run a DP simulation before acknowledging the condition."
+        );
+
+        return;
+
+    }
+
+
+    simulationState.humanDecision =
+        "CONDITION ACKNOWLEDGED";
+
+    simulationState.authorized =
+        false;
+
+
+    document.getElementById(
+        "humanDecisionStatus"
+    ).textContent =
+        "CONDITION ACKNOWLEDGED";
+
+
+    document.getElementById(
+        "executionGate"
+    ).textContent =
+        "HUMAN DECISION RECORDED — NO ACTION AUTHORIZED";
+
+
+    document.getElementById(
+        "humanStatus"
+    ).textContent =
+        "ACKNOWLEDGED";
+
+
+    document.getElementById(
+        "traceGate"
+    ).textContent =
+        "HUMAN DECISION RECORDED";
+
+
+    document.getElementById(
+        "traceActionStatus"
+    ).textContent =
+        "NOT EXECUTED";
+
+
+    document.getElementById(
+        "auditOutput"
+    ).textContent +=
+
+        "\n\nEVENT: HUMAN_CONDITION_ACKNOWLEDGED\n" +
+
+        "STATUS: PASS\n" +
+
+        "ACTION: NONE\n" +
+
+        "AUTONOMOUS COMMAND: FALSE";
+
+}
+
+
+/* =========================================================
+   HUMAN DECISION — MAINTAIN SAFE STATE
+========================================================= */
+
+function maintainSafeState() {
+
+    if (!simulationState.ran) {
+
+        alert(
+            "Run a DP simulation before making a human decision."
+        );
+
+        return;
+
+    }
+
+
+    simulationState.humanDecision =
+        "MAINTAIN SAFE STATE";
+
+    simulationState.authorized =
+        false;
+
+
+    document.getElementById(
+        "humanDecisionStatus"
+    ).textContent =
+        "MAINTAIN SAFE STATE";
+
+
+    document.getElementById(
+        "executionGate"
+    ).textContent =
+        "SAFE STATE MAINTAINED — NO RESPONSE EXECUTED";
+
+
+    document.getElementById(
+        "humanStatus"
+    ).textContent =
+        "SAFE STATE";
+
+
+    document.getElementById(
+        "traceGate"
+    ).textContent =
+        "HUMAN DECISION: MAINTAIN SAFE STATE";
+
+
+    document.getElementById(
+        "traceActionStatus"
+    ).textContent =
+        "NO ACTION EXECUTED";
+
+
+    document.getElementById(
+        "lenaUMVAction"
+    ).textContent =
+        "NOT EXECUTED";
+
+
+    document.getElementById(
+        "vesselState"
+    ).textContent =
+        "SAFE STATE — SIMULATED";
+
+
+    document.getElementById(
+        "auditOutput"
+    ).textContent +=
+
+        "\n\nEVENT: HUMAN_DECISION\n" +
+
+        "DECISION: MAINTAIN SAFE STATE\n" +
+
+        "STATUS: PASS\n" +
+
+        "SIMULATED ACTION: NONE\n" +
+
+        "AUTONOMOUS COMMAND: FALSE";
+
+}
+
+
+/* =========================================================
+   HUMAN DECISION — AUTHORIZE SIMULATED RESPONSE
+========================================================= */
+
+function authorizeSimulatedResponse() {
+
+    if (!simulationState.ran) {
+
+        alert(
+            "Run a DP simulation before authorizing a response."
+        );
+
+        return;
+
+    }
+
+
+    simulationState.humanDecision =
+        "AUTHORIZE SIMULATED RESPONSE";
+
+    simulationState.authorized =
+        true;
+
+
+    document.getElementById(
+        "humanDecisionStatus"
+    ).textContent =
+        "AUTHORIZE SIMULATED RESPONSE";
+
+
+    document.getElementById(
+        "executionGate"
+    ).textContent =
+        "AUTHORIZED — SIMULATION ONLY";
+
+
+    document.getElementById(
+        "humanStatus"
+    ).textContent =
+        "AUTHORIZED";
+
+
+    document.getElementById(
+        "traceGate"
+    ).textContent =
+        "HUMAN AUTHORIZATION GRANTED";
+
+
+    document.getElementById(
+        "traceActionStatus"
+    ).textContent =
+        "SIMULATED RESPONSE EXECUTED";
+
+
+    document.getElementById(
+        "lenaUMVAction"
+    ).textContent =
+        "SIMULATED RESPONSE EXECUTED";
+
+
+    document.getElementById(
+        "simulatedCommand"
+    ).textContent =
+        "SIMULATED";
+
+
+    document.getElementById(
+        "vesselState"
+    ).textContent =
+        "SIMULATED RESPONSE";
+
+
+    document.getElementById(
+        "auditOutput"
+    ).textContent +=
+
+        "\n\nEVENT: HUMAN_AUTHORIZATION\n" +
+
+        "DECISION: AUTHORIZE SIMULATED RESPONSE\n" +
+
+        "STATUS: PASS\n" +
+
+        "EXECUTION: SIMULATED ONLY\n" +
+
+        "OPERATIONAL DP COMMAND: NONE\n" +
+
+        "AUTONOMOUS COMMAND: FALSE";
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetSimulation() {
+
+    simulationState = {
+
+        ran: false,
+
+        stress: 0,
+
+        risk: "LOW",
+
+        recommendation:
+            "NO ACTION",
+
+        urgency:
+            "NORMAL",
+
+        responseMode:
+            "MONITORING",
+
+        proposedResponse:
+            "NONE",
+
+        humanDecision:
+            "PENDING",
+
+        authorized:
+            false
+
+    };
+
+
+    document.getElementById(
+        "environmentStatus"
+    ).textContent =
+        "0.00 / LOW";
+
+
+    document.getElementById(
+        "primaryStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "secondaryStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "stabilizerStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "humanStatus"
+    ).textContent =
+        "FINAL";
+
+
+    document.getElementById(
+        "systemStatus"
+    ).textContent =
+        "SYSTEM READY";
+
+
+    document.getElementById(
+        "traceEnvironment"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceWind"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceCurrent"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceWave"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceTidal"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "tracePrimaryMode"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "tracePrimaryResponse"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceSecondaryMode"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "traceSecondaryAssessment"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceStabilizerMode"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "traceStabilizerSource"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceStabilizerOutput"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceUrgency"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceResponseMode"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceRecommendation"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceProposed"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceGate"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "traceActionStatus"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "lenaStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "lenaRecommendation"
+    ).textContent =
+        "NO SIMULATED RECOMMENDATION";
+
+
+    document.getElementById(
+        "lenaUrgency"
+    ).textContent =
+        "NORMAL";
+
+
+    document.getElementById(
+        "lenaResponseMode"
+    ).textContent =
+        "MONITORING";
+
+
+    document.getElementById(
+        "lenaAutonomousCommand"
+    ).textContent =
+        "FALSE";
+
+
+    document.getElementById(
+        "lenaUMVAction"
+    ).textContent =
+        "NOT EXECUTED";
+
+
+    document.getElementById(
+        "lenaMessage"
+    ).textContent =
+
+        "Captain AI Lena is awaiting simulated " +
+
+        "environmental assessment.\n\n" +
+
+        "No simulated actions recommended.";
+
+
+    document.getElementById(
+        "recommendedAutonomous"
+    ).textContent =
+        "FALSE";
+
+
+    document.getElementById(
+        "recommendedLenaStatus"
+    ).textContent =
+        "STANDBY";
+
+
+    document.getElementById(
+        "recommendedControlMode"
+    ).textContent =
+        "HUMAN AUTHORITY";
+
+
+    document.getElementById(
+        "recommendedAction"
+    ).textContent =
+        "NO ACTION";
+
+
+    document.getElementById(
+        "recommendedUrgency"
+    ).textContent =
+        "NORMAL";
+
+
+    document.getElementById(
+        "recommendedMessage"
+    ).textContent =
+
+        "Captain AI Lena awaiting simulated assessment.\n\n" +
+
+        "No UMV action recommendation available.\n\n" +
+
+        "Human authority remains FINAL.";
+
+
+    document.getElementById(
+        "humanDecisionStatus"
+    ).textContent =
+        "PENDING";
+
+
+    document.getElementById(
+        "executionGate"
+    ).textContent =
+        "HUMAN DECISION REQUIRED";
+
+
+    document.getElementById(
+        "positionError"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "simulatedCommand"
+    ).textContent =
+        "0";
+
+
+    document.getElementById(
+        "stabilityIndex"
+    ).textContent =
+        "—";
+
+
+    document.getElementById(
+        "vesselState"
+    ).textContent =
+        "SIMULATED";
+
+
+    document.getElementById(
+        "assessmentOutput"
+    ).textContent =
+
+        "System ready.\n\n" +
+
+        "Select environmental conditions or a scenario,\n" +
+
+        "then press RUN DP SIMULATION.";
+
+
+    document.getElementById(
+        "auditOutput"
+    ).textContent =
+        "No completed simulation audit.";
+
+}
+
+
+/* =========================================================
+   END OF SEXTANT PROTOCOL™ DP ENGINE
+========================================================= */
+
+</script>
+
+</body>
+</html>
