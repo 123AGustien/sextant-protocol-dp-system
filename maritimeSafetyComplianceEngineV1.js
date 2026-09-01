@@ -913,3 +913,199 @@ if (
         MaritimeSafetyComplianceEngineV1;
 
 }
+/* =================================================
+   GMDSS / RADIO SAFETY
+================================================= */
+
+const gmdss =
+    condition.gmdss || {};
+
+const gmdssRequired =
+    gmdss.required === true;
+
+const gmdssEquipmentAvailable =
+    gmdss.equipmentAvailable === true;
+
+const gmdssInspectionCurrent =
+    gmdss.inspectionCurrent === true;
+
+const gmdssRadioSurveyCurrent =
+    gmdss.radioSurveyCurrent === true;
+
+const gmdssCertificatesCurrent =
+    gmdss.certificatesCurrent === true;
+
+
+let gmdssStatus =
+    "NOT_ASSESSED";
+
+
+if (
+    gmdssRequired &&
+    gmdssEquipmentAvailable &&
+    gmdssInspectionCurrent &&
+    gmdssRadioSurveyCurrent &&
+    gmdssCertificatesCurrent
+) {
+
+    gmdssStatus =
+        "SIMULATED_GMDSS_REVIEW_COMPLETE";
+
+}
+else if (
+    gmdssRequired
+) {
+
+    gmdssStatus =
+        "SIMULATED_GMDSS_REVIEW_REQUIRED";
+
+}
+else {
+
+    gmdssStatus =
+        "SIMULATED_NOT_REQUIRED";
+
+}
+
+
+/* =================================================
+   FLAG-STATE / STATUTORY AUDITS & SURVEYS
+================================================= */
+
+const surveys =
+    condition.surveys || {};
+
+const statutorySurveysCurrent =
+    surveys.statutorySurveysCurrent === true;
+
+const flagStateSurveysCurrent =
+    surveys.flagStateSurveysCurrent === true;
+
+const flagStateAuditsCurrent =
+    surveys.flagStateAuditsCurrent === true;
+
+const annualSurveysCurrent =
+    surveys.annualSurveysCurrent === true;
+
+const intermediateSurveysCurrent =
+    surveys.intermediateSurveysCurrent === true;
+
+const renewalSurveysCurrent =
+    surveys.renewalSurveysCurrent === true;
+
+const specialSurveysCurrent =
+    surveys.specialSurveysCurrent === true;
+
+const radioSurveysCurrent =
+    surveys.radioSurveysCurrent === true;
+
+
+let surveyStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    statutorySurveysCurrent &&
+    flagStateSurveysCurrent &&
+    flagStateAuditsCurrent &&
+    annualSurveysCurrent &&
+    intermediateSurveysCurrent &&
+    renewalSurveysCurrent &&
+    specialSurveysCurrent &&
+    radioSurveysCurrent
+) {
+
+    surveyStatus =
+        "SIMULATED_SURVEY_REVIEW_COMPLETE";
+
+}
+
+
+/* =================================================
+   MACHINERY / ENGINE SURVEYS
+================================================= */
+
+const machinery =
+    condition.machinery || {};
+
+const machinerySurveyCurrent =
+    machinery.surveyCurrent === true;
+
+const mainEngineInspectionCurrent =
+    machinery.mainEngineInspectionCurrent === true;
+
+const auxiliaryEngineInspectionCurrent =
+    machinery.auxiliaryEngineInspectionCurrent === true;
+
+const emergencyGeneratorInspectionCurrent =
+    machinery.emergencyGeneratorInspectionCurrent === true;
+
+const steeringGearInspectionCurrent =
+    machinery.steeringGearInspectionCurrent === true;
+
+const propulsionSystemsInspectionCurrent =
+    machinery.propulsionSystemsInspectionCurrent === true;
+
+
+let machineryStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    machinerySurveyCurrent &&
+    mainEngineInspectionCurrent &&
+    auxiliaryEngineInspectionCurrent &&
+    emergencyGeneratorInspectionCurrent &&
+    steeringGearInspectionCurrent &&
+    propulsionSystemsInspectionCurrent
+) {
+
+    machineryStatus =
+        "SIMULATED_MACHINERY_SURVEY_COMPLETE";
+
+}
+
+
+/* =================================================
+   CATERING / FOOD HYGIENE / CREW WELFARE SURVEYS
+================================================= */
+
+const catering =
+    condition.catering || {};
+
+const cateringInspectionCurrent =
+    catering.inspectionCurrent === true;
+
+const galleyInspectionCurrent =
+    catering.galleyInspectionCurrent === true;
+
+const foodHygieneInspectionCurrent =
+    catering.foodHygieneInspectionCurrent === true;
+
+const provisionsStorageInspectionCurrent =
+    catering.provisionsStorageInspectionCurrent === true;
+
+const potableWaterInspectionCurrent =
+    catering.potableWaterInspectionCurrent === true;
+
+const crewAccommodationInspectionCurrent =
+    catering.crewAccommodationInspectionCurrent === true;
+
+
+let cateringStatus =
+    "SIMULATED_REVIEW_REQUIRED";
+
+
+if (
+    cateringInspectionCurrent &&
+    galleyInspectionCurrent &&
+    foodHygieneInspectionCurrent &&
+    provisionsStorageInspectionCurrent &&
+    potableWaterInspectionCurrent &&
+    crewAccommodationInspectionCurrent
+) {
+
+    cateringStatus =
+        "SIMULATED_CATERING_REVIEW_COMPLETE";
+
+}
