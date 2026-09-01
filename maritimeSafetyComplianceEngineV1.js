@@ -1712,3 +1712,1083 @@ if (
         vesselReadinessVAndV;
 
 }
+/* =========================================================
+   FINAL MARITIME SAFETY / VESSEL SUITABILITY CHECKLIST
+   EXPANDABLE V&V REVIEW LAYER
+========================================================= */
+
+
+/* =================================================
+   VESSEL IDENTIFICATION / MARKINGS
+================================================= */
+
+const identification =
+    condition.identification || {};
+
+const vesselNameMarkingCurrent =
+    identification.vesselNameMarkingCurrent === true;
+
+const imoNumberMarkingCurrent =
+    identification.imoNumberMarkingCurrent === true;
+
+const portOfRegistryMarkingCurrent =
+    identification.portOfRegistryMarkingCurrent === true;
+
+const funnelLogoMarkingCurrent =
+    identification.funnelLogoMarkingCurrent === true;
+
+const identificationMarkingsReviewed =
+    identification.identificationMarkingsReviewed === true;
+
+
+/* =================================================
+   BRIDGE / NAVIGATION SAFETY
+================================================= */
+
+const bridgeNavigation =
+    condition.bridgeNavigation || {};
+
+const navigationEquipmentReviewed =
+    bridgeNavigation.navigationEquipmentReviewed === true;
+
+const navigationLightsCurrent =
+    bridgeNavigation.navigationLightsCurrent === true;
+
+const soundSignalsCurrent =
+    bridgeNavigation.soundSignalsCurrent === true;
+
+const compassAndHeadingSystemsReviewed =
+    bridgeNavigation.compassAndHeadingSystemsReviewed === true;
+
+const bridgeEmergencyEquipmentReviewed =
+    bridgeNavigation.emergencyEquipmentReviewed === true;
+
+const navigationPublicationsCurrent =
+    bridgeNavigation.navigationPublicationsCurrent === true;
+
+const bridgeSafetyEquipmentCurrent =
+    bridgeNavigation.safetyEquipmentCurrent === true;
+
+
+/* =================================================
+   GMDSS / RADIO
+================================================= */
+
+const gmdss =
+    condition.gmdss || {};
+
+const gmdssRequired =
+    gmdss.required === true;
+
+const gmdssEquipmentAvailable =
+    gmdss.equipmentAvailable === true;
+
+const gmdssInspectionCurrent =
+    gmdss.inspectionCurrent === true;
+
+const gmdssRadioSurveyCurrent =
+    gmdss.radioSurveyCurrent === true;
+
+const gmdssCertificatesCurrent =
+    gmdss.certificatesCurrent === true;
+
+
+/* =================================================
+   FLAG-STATE / STATUTORY AUDITS & SURVEYS
+================================================= */
+
+const surveys =
+    condition.surveys || {};
+
+const statutorySurveysCurrent =
+    surveys.statutorySurveysCurrent === true;
+
+const flagStateSurveysCurrent =
+    surveys.flagStateSurveysCurrent === true;
+
+const flagStateAuditsCurrent =
+    surveys.flagStateAuditsCurrent === true;
+
+const annualSurveysCurrent =
+    surveys.annualSurveysCurrent === true;
+
+const intermediateSurveysCurrent =
+    surveys.intermediateSurveysCurrent === true;
+
+const renewalSurveysCurrent =
+    surveys.renewalSurveysCurrent === true;
+
+const specialSurveysCurrent =
+    surveys.specialSurveysCurrent === true;
+
+const radioSurveysCurrent =
+    surveys.radioSurveysCurrent === true;
+
+const loadLineSurveyCurrent =
+    surveys.loadLineSurveyCurrent === true;
+
+const safetyConstructionSurveyCurrent =
+    surveys.safetyConstructionSurveyCurrent === true;
+
+const safetyEquipmentSurveyCurrent =
+    surveys.safetyEquipmentSurveyCurrent === true;
+
+const safetyRadioSurveyCurrent =
+    surveys.safetyRadioSurveyCurrent === true;
+
+
+/* =================================================
+   MACHINERY / ENGINE / STEERING
+================================================= */
+
+const machinery =
+    condition.machinery || {};
+
+const machinerySurveyCurrent =
+    machinery.surveyCurrent === true;
+
+const mainEngineInspectionCurrent =
+    machinery.mainEngineInspectionCurrent === true;
+
+const auxiliaryEngineInspectionCurrent =
+    machinery.auxiliaryEngineInspectionCurrent === true;
+
+const emergencyGeneratorInspectionCurrent =
+    machinery.emergencyGeneratorInspectionCurrent === true;
+
+const steeringGearInspectionCurrent =
+    machinery.steeringGearInspectionCurrent === true;
+
+const propulsionSystemsInspectionCurrent =
+    machinery.propulsionSystemsInspectionCurrent === true;
+
+const machinerySpaceInspectionCurrent =
+    machinery.machinerySpaceInspectionCurrent === true;
+
+
+/* =================================================
+   HULL / STRUCTURAL / NDT
+================================================= */
+
+const hull =
+    condition.hull || {};
+
+const hullSurveyCurrent =
+    hull.surveyCurrent === true;
+
+const structuralInspectionCurrent =
+    hull.structuralInspectionCurrent === true;
+
+const hullNdtCurrent =
+    hull.ndtCurrent === true;
+
+const machineryNdtCurrent =
+    hull.machineryNdtCurrent === true;
+
+const tankInspectionCurrent =
+    hull.tankInspectionCurrent === true;
+
+const watertightIntegrityReviewed =
+    hull.watertightIntegrityReviewed === true;
+
+
+/* =================================================
+   STABILITY / TRIM / LOADLINE
+================================================= */
+
+const stability =
+    condition.stability || {};
+
+const stabilityBookletCurrent =
+    stability.stabilityBookletCurrent === true;
+
+const intactStabilityReviewed =
+    stability.intactStabilityReviewed === true;
+
+const dynamicStabilityReviewed =
+    stability.dynamicStabilityReviewed === true;
+
+const heelAndListReviewed =
+    stability.heelAndListReviewed === true;
+
+const trimReviewed =
+    stability.trimReviewed === true;
+
+const gzCurveOrRightingArmReviewed =
+    stability.gzCurveOrRightingArmReviewed === true;
+
+const rightingMomentReviewed =
+    stability.rightingMomentReviewed === true;
+
+const cgShiftReviewed =
+    stability.cgShiftReviewed === true;
+
+const controlledRateOfTurnReviewed =
+    stability.controlledRateOfTurnReviewed === true;
+
+const loadLineCertificateCurrent =
+    stability.loadLineCertificateCurrent === true;
+
+const assignedFreeboardReviewed =
+    stability.assignedFreeboardReviewed === true;
+
+const zoneAndSeasonRestrictionsReviewed =
+    stability.zoneAndSeasonRestrictionsReviewed === true;
+
+const permittedDraftReviewed =
+    stability.permittedDraftReviewed === true;
+
+
+/* =================================================
+   VESSEL CLASS / NOTATION
+================================================= */
+
+const vesselClass =
+    condition.vesselClass || {};
+
+const vesselClassDeclared =
+    vesselClass.declared === true;
+
+const classCertificateCurrent =
+    vesselClass.certificateCurrent === true;
+
+const classNotationCurrent =
+    vesselClass.notationCurrent === true;
+
+const dpNotationApplicable =
+    vesselClass.dpNotationApplicable === true;
+
+const dpNotationCurrent =
+    vesselClass.dpNotationCurrent === true;
+
+const iceClassApplicable =
+    vesselClass.iceClassApplicable === true;
+
+const iceClassCurrent =
+    vesselClass.iceClassCurrent === true;
+
+const vesselSuitabilitySurveyCurrent =
+    vesselClass.suitabilitySurveyCurrent === true;
+
+
+/* =================================================
+   OPERATING AREA / DISTANCE FROM SHORE
+================================================= */
+
+const operatingArea =
+    condition.operatingArea || {};
+
+const operatingAreaDeclared =
+    operatingArea.declared === true;
+
+const permittedDistanceFromShoreReviewed =
+    operatingArea.permittedDistanceFromShoreReviewed === true;
+
+const coastalStateRequirementsReviewed =
+    operatingArea.coastalStateRequirementsReviewed === true;
+
+const operatingRestrictionsCurrent =
+    operatingArea.operatingRestrictionsCurrent === true;
+
+
+/* =================================================
+   CATERING / ACCOMMODATION / CREW WELFARE
+================================================= */
+
+const catering =
+    condition.catering || {};
+
+const cateringInspectionCurrent =
+    catering.inspectionCurrent === true;
+
+const galleyInspectionCurrent =
+    catering.galleyInspectionCurrent === true;
+
+const foodHygieneInspectionCurrent =
+    catering.foodHygieneInspectionCurrent === true;
+
+const provisionsStorageInspectionCurrent =
+    catering.provisionsStorageInspectionCurrent === true;
+
+const potableWaterInspectionCurrent =
+    catering.potableWaterInspectionCurrent === true;
+
+const accommodationInspectionCurrent =
+    catering.accommodationInspectionCurrent === true;
+
+const crewCabinsReviewed =
+    catering.crewCabinsReviewed === true;
+
+const sanitaryFacilitiesReviewed =
+    catering.sanitaryFacilitiesReviewed === true;
+
+
+/* =================================================
+   ONBOARD LOGISTICS / STORES
+================================================= */
+
+const stores =
+    condition.stores || {};
+
+const deckStoresReviewed =
+    stores.deckStoresReviewed === true;
+
+const engineStoresReviewed =
+    stores.engineStoresReviewed === true;
+
+const cateringStoresReviewed =
+    stores.cateringStoresReviewed === true;
+
+const electronicStoresAvailable =
+    stores.electronicStoresAvailable === true;
+
+const sparePartsInventoryReviewed =
+    stores.sparePartsInventoryReviewed === true;
+
+const criticalEquipmentSparesAvailable =
+    stores.criticalEquipmentSparesAvailable === true;
+
+const foodStoresAdequate =
+    stores.foodStoresAdequate === true;
+
+const freshWaterAdequate =
+    stores.freshWaterAdequate === true;
+
+const fuelAdequate =
+    stores.fuelAdequate === true;
+
+const reserveMarginTenPercentReviewed =
+    stores.reserveMarginTenPercentReviewed === true;
+
+
+/* =================================================
+   WASTE / ENVIRONMENTAL MANAGEMENT
+================================================= */
+
+const environmental =
+    condition.environmental || {};
+
+const garbageManagementPlanAvailable =
+    environmental.garbageManagementPlanAvailable === true;
+
+const garbageSegregationAvailable =
+    environmental.garbageSegregationAvailable === true;
+
+const garbageDisposalRecordsCurrent =
+    environmental.garbageDisposalRecordsCurrent === true;
+
+const wasteOilManagementAvailable =
+    environmental.wasteOilManagementAvailable === true;
+
+const sludgeManagementAvailable =
+    environmental.sludgeManagementAvailable === true;
+
+const bilgeManagementAvailable =
+    environmental.bilgeManagementAvailable === true;
+
+const sewageManagementAvailable =
+    environmental.sewageManagementAvailable === true;
+
+const sewageTreatmentOrHoldingAvailable =
+    environmental.sewageTreatmentOrHoldingAvailable === true;
+
+const pollutionPreventionDocumentationCurrent =
+    environmental.pollutionPreventionDocumentationCurrent === true;
+
+const carbonEmissionRecordsReviewed =
+    environmental.carbonEmissionRecordsReviewed === true;
+
+
+/* =================================================
+   EMERGENCY LIGHTING / POWER
+================================================= */
+
+const emergencySystems =
+    condition.emergencySystems || {};
+
+const emergencyLightingAvailable =
+    emergencySystems.emergencyLightingAvailable === true;
+
+const emergencyLightingTestCurrent =
+    emergencySystems.emergencyLightingTestCurrent === true;
+
+const emergencyPowerAvailable =
+    emergencySystems.emergencyPowerAvailable === true;
+
+const emergencyGeneratorAvailable =
+    emergencySystems.emergencyGeneratorAvailable === true;
+
+const emergencyBatteryCapacityAdequate =
+    emergencySystems.emergencyBatteryCapacityAdequate === true;
+
+const emergencyPowerTestCurrent =
+    emergencySystems.emergencyPowerTestCurrent === true;
+
+
+/* =================================================
+   ESCAPE / FIRE / LIFE-SAVING
+================================================= */
+
+const emergencyEscapeRoutesMarked =
+    emergencySystems.emergencyEscapeRoutesMarked === true;
+
+const escapeRoutesClear =
+    emergencySystems.escapeRoutesClear === true;
+
+const emergencyExitsAvailable =
+    emergencySystems.emergencyExitsAvailable === true;
+
+const escapeRouteLightingAvailable =
+    emergencySystems.escapeRouteLightingAvailable === true;
+
+const fireSafetyPlansAvailable =
+    emergencySystems.fireSafetyPlansAvailable === true;
+
+const musterInformationAvailable =
+    emergencySystems.musterInformationAvailable === true;
+
+
+/* =================================================
+   SAFETY PLACARDS / MANOEUVRING INFORMATION
+================================================= */
+
+const safetyPlacardsCurrent =
+    emergencySystems.safetyPlacardsCurrent === true;
+
+const machinerySafetySignsAvailable =
+    emergencySystems.machinerySafetySignsAvailable === true;
+
+const turningCircleInformationAvailable =
+    emergencySystems.turningCircleInformationAvailable === true;
+
+const manoeuvringInformationAvailable =
+    emergencySystems.manoeuvringInformationAvailable === true;
+
+
+/* =================================================
+   COMPANY CONTINGENCY / RESILIENCE PLANNING
+================================================= */
+
+const contingency =
+    condition.contingency || {};
+
+const resiliencePlanFirstReviewRequired =
+    contingency.resiliencePlanFirstReviewRequired !== false;
+
+const contingencyPlanAvailable =
+    contingency.planAvailable === true;
+
+const emergencyResponsePlanAvailable =
+    contingency.emergencyResponsePlanAvailable === true;
+
+const pollutionResponsePlanAvailable =
+    contingency.pollutionResponsePlanAvailable === true;
+
+const cyberContingencyPlanAvailable =
+    contingency.cyberContingencyPlanAvailable === true;
+
+const businessContinuityPlanAvailable =
+    contingency.businessContinuityPlanAvailable === true;
+
+const shoreSupportAvailable =
+    contingency.shoreSupportAvailable === true;
+
+const recoveryPlanAvailable =
+    contingency.recoveryPlanAvailable === true;
+
+
+/* =================================================
+   P&I / MARINE INSURANCE
+================================================= */
+
+const pi =
+    condition.pi || {};
+
+const piClubDeclared =
+    pi.clubDeclared === true;
+
+const piCoverCurrent =
+    pi.coverCurrent === true;
+
+const piDocumentationCurrent =
+    pi.documentationCurrent === true;
+
+const piEntryEvidenceAvailable =
+    pi.entryEvidenceAvailable === true;
+
+
+/* =================================================
+   IDENTIFICATION REVIEW
+================================================= */
+
+const identificationPass =
+    vesselNameMarkingCurrent &&
+    imoNumberMarkingCurrent &&
+    portOfRegistryMarkingCurrent &&
+    funnelLogoMarkingCurrent &&
+    identificationMarkingsReviewed;
+
+
+/* =================================================
+   MARIN V&V — ADDITIONAL REVIEW AGGREGATES
+================================================= */
+
+const bridgeSafetyPass =
+    navigationEquipmentReviewed &&
+    navigationLightsCurrent &&
+    soundSignalsCurrent &&
+    compassAndHeadingSystemsReviewed &&
+    bridgeEmergencyEquipmentReviewed &&
+    navigationPublicationsCurrent &&
+    bridgeSafetyEquipmentCurrent;
+
+
+const machinerySafetyPass =
+    machinerySurveyCurrent &&
+    mainEngineInspectionCurrent &&
+    auxiliaryEngineInspectionCurrent &&
+    emergencyGeneratorInspectionCurrent &&
+    steeringGearInspectionCurrent &&
+    propulsionSystemsInspectionCurrent &&
+    machinerySpaceInspectionCurrent;
+
+
+const hullSafetyPass =
+    hullSurveyCurrent &&
+    structuralInspectionCurrent &&
+    hullNdtCurrent &&
+    machineryNdtCurrent &&
+    tankInspectionCurrent &&
+    watertightIntegrityReviewed;
+
+
+const stabilitySafetyPass =
+    stabilityBookletCurrent &&
+    intactStabilityReviewed &&
+    dynamicStabilityReviewed &&
+    heelAndListReviewed &&
+    trimReviewed &&
+    gzCurveOrRightingArmReviewed &&
+    rightingMomentReviewed &&
+    cgShiftReviewed &&
+    controlledRateOfTurnReviewed &&
+    loadLineCertificateCurrent &&
+    assignedFreeboardReviewed &&
+    zoneAndSeasonRestrictionsReviewed &&
+    permittedDraftReviewed;
+
+
+const vesselClassPass =
+    vesselClassDeclared &&
+    classCertificateCurrent &&
+    classNotationCurrent &&
+    (
+        !dpNotationApplicable ||
+        dpNotationCurrent
+    ) &&
+    (
+        !iceClassApplicable ||
+        iceClassCurrent
+    ) &&
+    vesselSuitabilitySurveyCurrent;
+
+
+const operatingAreaPass =
+    operatingAreaDeclared &&
+    permittedDistanceFromShoreReviewed &&
+    coastalStateRequirementsReviewed &&
+    operatingRestrictionsCurrent;
+
+
+const environmentalSafetyPass =
+    garbageManagementPlanAvailable &&
+    garbageSegregationAvailable &&
+    garbageDisposalRecordsCurrent &&
+    wasteOilManagementAvailable &&
+    sludgeManagementAvailable &&
+    bilgeManagementAvailable &&
+    sewageManagementAvailable &&
+    sewageTreatmentOrHoldingAvailable &&
+    pollutionPreventionDocumentationCurrent &&
+    carbonEmissionRecordsReviewed;
+
+
+const emergencyPowerPass =
+    emergencyLightingAvailable &&
+    emergencyLightingTestCurrent &&
+    emergencyPowerAvailable &&
+    emergencyGeneratorAvailable &&
+    emergencyBatteryCapacityAdequate &&
+    emergencyPowerTestCurrent;
+
+
+const escapeSafetyPass =
+    emergencyEscapeRoutesMarked &&
+    escapeRoutesClear &&
+    emergencyExitsAvailable &&
+    escapeRouteLightingAvailable &&
+    fireSafetyPlansAvailable &&
+    musterInformationAvailable;
+
+
+const storesPass =
+    deckStoresReviewed &&
+    engineStoresReviewed &&
+    cateringStoresReviewed &&
+    electronicStoresAvailable &&
+    sparePartsInventoryReviewed &&
+    criticalEquipmentSparesAvailable &&
+    foodStoresAdequate &&
+    freshWaterAdequate &&
+    fuelAdequate &&
+    reserveMarginTenPercentReviewed;
+
+
+const accommodationCateringPass =
+    cateringInspectionCurrent &&
+    galleyInspectionCurrent &&
+    foodHygieneInspectionCurrent &&
+    provisionsStorageInspectionCurrent &&
+    potableWaterInspectionCurrent &&
+    accommodationInspectionCurrent &&
+    crewCabinsReviewed &&
+    sanitaryFacilitiesReviewed;
+
+
+const contingencyPass =
+    contingencyPlanAvailable &&
+    emergencyResponsePlanAvailable &&
+    pollutionResponsePlanAvailable &&
+    cyberContingencyPlanAvailable &&
+    businessContinuityPlanAvailable &&
+    shoreSupportAvailable &&
+    recoveryPlanAvailable;
+
+
+const piReviewPass =
+    piClubDeclared &&
+    piCoverCurrent &&
+    piDocumentationCurrent &&
+    piEntryEvidenceAvailable;
+
+
+const gmdssPass =
+    !gmdssRequired ||
+    (
+        gmdssEquipmentAvailable &&
+        gmdssInspectionCurrent &&
+        gmdssRadioSurveyCurrent &&
+        gmdssCertificatesCurrent
+    );
+
+
+const statutorySurveyPass =
+    statutorySurveysCurrent &&
+    flagStateSurveysCurrent &&
+    flagStateAuditsCurrent &&
+    annualSurveysCurrent &&
+    intermediateSurveysCurrent &&
+    renewalSurveysCurrent &&
+    specialSurveysCurrent &&
+    radioSurveysCurrent &&
+    loadLineSurveyCurrent &&
+    safetyConstructionSurveyCurrent &&
+    safetyEquipmentSurveyCurrent &&
+    safetyRadioSurveyCurrent;
+
+
+/* =================================================
+   SEXTANT PROTOCOL RESILIENCE-FIRST PRINCIPLE
+================================================= */
+
+const resilienceFirstPrinciple = {
+
+    enabled:
+        resiliencePlanFirstReviewRequired,
+
+    priority:
+        "FIRST_REVIEW_ITEM",
+
+    purpose:
+        "Establish the vessel resilience, contingency and recovery review before scenario execution or operational suitability assessment.",
+
+    sequence:
+        "RESILIENCE PLAN → SAFETY / COMPLIANCE REVIEW → VESSEL SUITABILITY → V&V SCENARIO → HUMAN DECISION",
+
+    authority:
+        "HUMAN AUTHORITY",
+
+    operationalCommand:
+        false,
+
+    certificationDecision:
+        false,
+
+    classComplianceDecision:
+        false,
+
+    note:
+        "The Sextant Protocol research layer does not determine class compliance or statutory compliance. It identifies review requirements and provides a traceable resilience assessment for human and independent professional review."
+};
+
+
+/* =================================================
+   FINAL ADDITIONAL REVIEW STATUS
+================================================= */
+
+const additionalReviewPass =
+    identificationPass &&
+    bridgeSafetyPass &&
+    gmdssPass &&
+    statutorySurveyPass &&
+    machinerySafetyPass &&
+    hullSafetyPass &&
+    stabilitySafetyPass &&
+    vesselClassPass &&
+    operatingAreaPass &&
+    environmentalSafetyPass &&
+    emergencyPowerPass &&
+    escapeSafetyPass &&
+    storesPass &&
+    accommodationCateringPass &&
+    contingencyPass &&
+    piReviewPass;
+
+
+const additionalReviewStatus =
+    additionalReviewPass
+        ? "SIMULATED_ADDITIONAL_REVIEW_COMPLETE"
+        : "SIMULATED_ADDITIONAL_REVIEW_REQUIRED";
+
+
+/* =================================================
+   FINAL TRACEABLE RESULT
+================================================= */
+
+const finalMaritimeReview = {
+
+    identification: {
+
+        vesselNameMarkingCurrent,
+        imoNumberMarkingCurrent,
+        portOfRegistryMarkingCurrent,
+        funnelLogoMarkingCurrent,
+        identificationMarkingsReviewed,
+
+        status:
+            identificationPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    bridgeNavigation: {
+
+        navigationEquipmentReviewed,
+        navigationLightsCurrent,
+        soundSignalsCurrent,
+        compassAndHeadingSystemsReviewed,
+        bridgeEmergencyEquipmentReviewed,
+        navigationPublicationsCurrent,
+        bridgeSafetyEquipmentCurrent,
+
+        status:
+            bridgeSafetyPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    gmdss: {
+
+        required:
+            gmdssRequired,
+
+        equipmentAvailable:
+            gmdssEquipmentAvailable,
+
+        inspectionCurrent:
+            gmdssInspectionCurrent,
+
+        radioSurveyCurrent:
+            gmdssRadioSurveyCurrent,
+
+        certificatesCurrent:
+            gmdssCertificatesCurrent,
+
+        status:
+            gmdssPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    statutorySurveys: {
+
+        statutorySurveysCurrent,
+        flagStateSurveysCurrent,
+        flagStateAuditsCurrent,
+        annualSurveysCurrent,
+        intermediateSurveysCurrent,
+        renewalSurveysCurrent,
+        specialSurveysCurrent,
+        radioSurveysCurrent,
+        loadLineSurveyCurrent,
+        safetyConstructionSurveyCurrent,
+        safetyEquipmentSurveyCurrent,
+        safetyRadioSurveyCurrent,
+
+        status:
+            statutorySurveyPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    machinery: {
+
+        machinerySurveyCurrent,
+        mainEngineInspectionCurrent,
+        auxiliaryEngineInspectionCurrent,
+        emergencyGeneratorInspectionCurrent,
+        steeringGearInspectionCurrent,
+        propulsionSystemsInspectionCurrent,
+        machinerySpaceInspectionCurrent,
+
+        status:
+            machinerySafetyPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    hullAndNdt: {
+
+        hullSurveyCurrent,
+        structuralInspectionCurrent,
+        hullNdtCurrent,
+        machineryNdtCurrent,
+        tankInspectionCurrent,
+        watertightIntegrityReviewed,
+
+        status:
+            hullSafetyPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    stabilityTrimLoadLine: {
+
+        stabilityBookletCurrent,
+        intactStabilityReviewed,
+        dynamicStabilityReviewed,
+        heelAndListReviewed,
+        trimReviewed,
+        gzCurveOrRightingArmReviewed,
+        rightingMomentReviewed,
+        cgShiftReviewed,
+        controlledRateOfTurnReviewed,
+        loadLineCertificateCurrent,
+        assignedFreeboardReviewed,
+        zoneAndSeasonRestrictionsReviewed,
+        permittedDraftReviewed,
+
+        status:
+            stabilitySafetyPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    vesselClass: {
+
+        vesselClassDeclared,
+        classCertificateCurrent,
+        classNotationCurrent,
+        dpNotationApplicable,
+        dpNotationCurrent,
+        iceClassApplicable,
+        iceClassCurrent,
+        vesselSuitabilitySurveyCurrent,
+
+        status:
+            vesselClassPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    operatingArea: {
+
+        operatingAreaDeclared,
+        permittedDistanceFromShoreReviewed,
+        coastalStateRequirementsReviewed,
+        operatingRestrictionsCurrent,
+
+        status:
+            operatingAreaPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    cateringAccommodation: {
+
+        cateringInspectionCurrent,
+        galleyInspectionCurrent,
+        foodHygieneInspectionCurrent,
+        provisionsStorageInspectionCurrent,
+        potableWaterInspectionCurrent,
+        accommodationInspectionCurrent,
+        crewCabinsReviewed,
+        sanitaryFacilitiesReviewed,
+
+        status:
+            accommodationCateringPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    storesAndLogistics: {
+
+        deckStoresReviewed,
+        engineStoresReviewed,
+        cateringStoresReviewed,
+        electronicStoresAvailable,
+        sparePartsInventoryReviewed,
+        criticalEquipmentSparesAvailable,
+        foodStoresAdequate,
+        freshWaterAdequate,
+        fuelAdequate,
+        reserveMarginTenPercentReviewed,
+
+        status:
+            storesPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    environmentalManagement: {
+
+        garbageManagementPlanAvailable,
+        garbageSegregationAvailable,
+        garbageDisposalRecordsCurrent,
+
+        wasteOilManagementAvailable,
+        sludgeManagementAvailable,
+        bilgeManagementAvailable,
+
+        sewageManagementAvailable,
+        sewageTreatmentOrHoldingAvailable,
+
+        pollutionPreventionDocumentationCurrent,
+        carbonEmissionRecordsReviewed,
+
+        status:
+            environmentalSafetyPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    emergencySystems: {
+
+        emergencyLightingAvailable,
+        emergencyLightingTestCurrent,
+        emergencyPowerAvailable,
+        emergencyGeneratorAvailable,
+        emergencyBatteryCapacityAdequate,
+        emergencyPowerTestCurrent,
+
+        escapeRoutesClear,
+        emergencyExitsAvailable,
+        escapeRouteLightingAvailable,
+
+        status:
+            emergencyPowerPass && escapeSafetyPass
+                ? "SIMULATED_REVIEW_COMPLETE"
+                : "SIMULATED_REVIEW_REQUIRED"
+    },
+
+
+    contingencyAndResilience: {
+
+        resilienceFirstPrinciple,
+
+        contingencyPlanAvailable,
+        emergencyResponsePlanAvailable,
+        pollutionResponsePlanAvailable,
+        cyberContingencyPlanAvailable,
+        businessContinuityPlanAvailable,
+        shoreSupportAvailable,
+        recoveryPlanAvailable,
+
+        status:
+            contingencyPass
+                ? "SIMULATED_CONTINGENCY_REVIEW_COMPLETE"
+                : "SIMULATED_CONTINGENCY_REVIEW_REQUIRED"
+    },
+
+
+    pAndI: {
+
+        clubDeclared:
+            piClubDeclared,
+
+        coverCurrent:
+            piCoverCurrent,
+
+        documentationCurrent:
+            piDocumentationCurrent,
+
+        entryEvidenceAvailable:
+            piEntryEvidenceAvailable,
+
+        status:
+            piReviewPass
+                ? "SIMULATED_DOCUMENTATION_CURRENT"
+                : "SIMULATED_INSURANCE_REVIEW_REQUIRED"
+    },
+
+
+    assessment: {
+
+        overallStatus:
+            additionalReviewStatus,
+
+        reviewRequired:
+            !additionalReviewPass,
+
+        recommendedAction:
+            additionalReviewPass
+                ? "PROCEED TO HUMAN-REVIEWED V&V SCENARIO"
+                : "ESCALATE / COMPLETE REQUIRED REVIEW ITEMS",
+
+        humanAuthority:
+            true,
+
+        autonomousCommand:
+            false,
+
+        operationalConnection:
+            false
+    }
+
+};
+
+
+/* =================================================
+   GLOBAL ACCESS
+================================================= */
+
+if (
+    typeof window !== "undefined"
+) {
+
+    window.MaritimeFinalVesselReviewV1 =
+        finalMaritimeReview;
+
+}
