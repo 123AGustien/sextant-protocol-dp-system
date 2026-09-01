@@ -5371,6 +5371,363 @@ if (
         draftDensityUKCResult;
 
 }
+/* =========================================================
+   EMERGENCY LIGHTING / SOUND SIGNALS /
+   DEAD SHIP / NUC / AGROUND REVIEW
+========================================================= */
+
+const emergencySignalReview =
+    condition.emergencySignalReview || {};
+
+
+/* =================================================
+   EMERGENCY LIGHTING
+================================================= */
+
+const emergencyLightingRequired =
+    emergencySignalReview.emergencyLightingRequired === true;
+
+const emergencyLightingOperational =
+    emergencySignalReview.emergencyLightingOperational === true;
+
+const emergencyLightingTestCurrent =
+    emergencySignalReview.emergencyLightingTestCurrent === true;
+
+const emergencyLightingCoverageAdequate =
+    emergencySignalReview.emergencyLightingCoverageAdequate === true;
+
+
+/* =================================================
+   EMERGENCY POWER / DEAD SHIP
+================================================= */
+
+const vesselDeadShip =
+    emergencySignalReview.vesselDeadShip === true;
+
+const mainPowerAvailable =
+    emergencySignalReview.mainPowerAvailable === true;
+
+const emergencyPowerAvailable =
+    emergencySignalReview.emergencyPowerAvailable === true;
+
+const emergencyGeneratorAvailable =
+    emergencySignalReview.emergencyGeneratorAvailable === true;
+
+const emergencyBatteryAvailable =
+    emergencySignalReview.emergencyBatteryAvailable === true;
+
+
+/* =================================================
+   NAVIGATION LIGHTING
+================================================= */
+
+const navigationLightsAvailable =
+    emergencySignalReview.navigationLightsAvailable === true;
+
+const requiredNavigationLightsOperational =
+    emergencySignalReview.requiredNavigationLightsOperational === true;
+
+const backupNavigationLightingAvailable =
+    emergencySignalReview.backupNavigationLightingAvailable === true;
+
+
+/* =================================================
+   SOUND SIGNAL EQUIPMENT
+================================================= */
+
+const soundSignalEquipmentAvailable =
+    emergencySignalReview.soundSignalEquipmentAvailable === true;
+
+const soundSignalEquipmentOperational =
+    emergencySignalReview.soundSignalEquipmentOperational === true;
+
+const emergencySoundSignalSourceAvailable =
+    emergencySignalReview.emergencySoundSignalSourceAvailable === true;
+
+
+/* =================================================
+   VESSEL STATUS
+================================================= */
+
+const vesselNotUnderCommand =
+    emergencySignalReview.vesselNotUnderCommand === true;
+
+const vesselRestrictedAbilityToManoeuvre =
+    emergencySignalReview.vesselRestrictedAbilityToManoeuvre === true;
+
+const vesselAtAnchor =
+    emergencySignalReview.vesselAtAnchor === true;
+
+const vesselAground =
+    emergencySignalReview.vesselAground === true;
+
+
+/* =================================================
+   RELEVANT SOUND-SIGNAL ASSESSMENT
+================================================= */
+
+let applicableSoundSignal =
+    "NO_SPECIAL_SOUND_SIGNAL_SELECTED";
+
+
+if (vesselNotUnderCommand) {
+
+    applicableSoundSignal =
+        "NUC_SOUND_SIGNAL_REVIEW_REQUIRED";
+
+}
+
+
+if (vesselRestrictedAbilityToManoeuvre) {
+
+    applicableSoundSignal =
+        "RAM_SOUND_SIGNAL_REVIEW_REQUIRED";
+
+}
+
+
+if (vesselAground) {
+
+    applicableSoundSignal =
+        "AGROUND_SOUND_SIGNAL_REVIEW_REQUIRED";
+
+}
+
+
+if (vesselAtAnchor) {
+
+    applicableSoundSignal =
+        "ANCHOR_SOUND_SIGNAL_REVIEW_REQUIRED";
+
+}
+
+
+/*
+   IMPORTANT:
+
+   The exact signal, duration and repetition must be
+   determined from the applicable COLREGs requirements,
+   vessel status, visibility and operating circumstances.
+
+   This module does NOT automatically transmit or sound
+   a physical signal.
+*/
+
+
+/* =================================================
+   LIGHT / SOUND REVIEW
+================================================= */
+
+const emergencyLightingPass =
+    !emergencyLightingRequired ||
+    (
+        emergencyLightingOperational &&
+        emergencyLightingTestCurrent &&
+        emergencyLightingCoverageAdequate
+    );
+
+
+const emergencyPowerPass =
+    emergencyPowerAvailable ||
+    emergencyGeneratorAvailable ||
+    emergencyBatteryAvailable;
+
+
+const soundSignalPass =
+    soundSignalEquipmentAvailable &&
+    soundSignalEquipmentOperational &&
+    emergencySoundSignalSourceAvailable;
+
+
+/* =================================================
+   DEAD-SHIP REVIEW
+================================================= */
+
+let deadShipStatus =
+    "SIMULATED_DEAD_SHIP_REVIEW_NOT_REQUIRED";
+
+
+if (vesselDeadShip) {
+
+    deadShipStatus =
+        emergencyPowerPass &&
+        (
+            backupNavigationLightingAvailable ||
+            !requiredNavigationLightsOperational
+        )
+            ? "SIMULATED_DEAD_SHIP_EMERGENCY_REVIEW_COMPLETE"
+            : "SIMULATED_DEAD_SHIP_EMERGENCY_REVIEW_REQUIRED";
+
+}
+
+
+/* =================================================
+   NUC / RAM / AGROUND REVIEW
+================================================= */
+
+const specialStatusPass =
+    (
+        !vesselNotUnderCommand &&
+        !vesselRestrictedAbilityToManoeuvre &&
+        !vesselAground &&
+        !vesselAtAnchor
+    )
+    ||
+    soundSignalPass;
+
+
+/* =================================================
+   OVERALL EMERGENCY SIGNAL REVIEW
+================================================= */
+
+const emergencySignalReviewPass =
+    emergencyLightingPass &&
+    emergencyPowerPass &&
+    specialStatusPass;
+
+
+const emergencySignalStatus =
+    emergencySignalReviewPass
+        ? "SIMULATED_EMERGENCY_LIGHT_AND_SIGNAL_REVIEW_COMPLETE"
+        : "SIMULATED_EMERGENCY_LIGHT_AND_SIGNAL_REVIEW_REQUIRED";
+
+
+/* =================================================
+   TRACEABLE RESULT
+================================================= */
+
+const emergencySignalResult = {
+
+    emergencyLighting: {
+
+        required:
+            emergencyLightingRequired,
+
+        operational:
+            emergencyLightingOperational,
+
+        testCurrent:
+            emergencyLightingTestCurrent,
+
+        coverageAdequate:
+            emergencyLightingCoverageAdequate,
+
+        pass:
+            emergencyLightingPass
+
+    },
+
+
+    emergencyPower: {
+
+        vesselDeadShip,
+
+        mainPowerAvailable,
+
+        emergencyPowerAvailable,
+
+        emergencyGeneratorAvailable,
+
+        emergencyBatteryAvailable,
+
+        pass:
+            emergencyPowerPass
+
+    },
+
+
+    navigationLighting: {
+
+        navigationLightsAvailable,
+
+        requiredNavigationLightsOperational,
+
+        backupNavigationLightingAvailable
+
+    },
+
+
+    soundSignals: {
+
+        equipmentAvailable:
+            soundSignalEquipmentAvailable,
+
+        equipmentOperational:
+            soundSignalEquipmentOperational,
+
+        emergencySourceAvailable:
+            emergencySoundSignalSourceAvailable,
+
+        applicableAssessment:
+            applicableSoundSignal,
+
+        pass:
+            soundSignalPass
+
+    },
+
+
+    vesselStatus: {
+
+        notUnderCommand:
+            vesselNotUnderCommand,
+
+        restrictedAbilityToManoeuvre:
+            vesselRestrictedAbilityToManoeuvre,
+
+        atAnchor:
+            vesselAtAnchor,
+
+        aground:
+            vesselAground
+
+    },
+
+
+    assessment: {
+
+        deadShipStatus,
+
+        overallStatus:
+            emergencySignalStatus,
+
+        reviewRequired:
+            !emergencySignalReviewPass
+
+    },
+
+
+    execution: {
+
+        gate:
+            "HUMAN AUTHORIZATION REQUIRED",
+
+        physicalSignalTransmission:
+            false,
+
+        physicalNavigationControl:
+            false,
+
+        operationalCommand:
+            false
+
+    }
+
+};
+
+
+/* =================================================
+   GLOBAL ACCESS
+================================================= */
+
+if (
+    typeof window !== "undefined"
+) {
+
+    window.MaritimeEmergencySignalReviewV1 =
+        emergencySignalResult;
+
+}
 
 
  =========================================================
