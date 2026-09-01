@@ -1,0 +1,559 @@
+SEXTANT PROTOCOL™
+
+DP RESILIENCE RESEARCH SIMULATOR
+
+MARIN V&V BASELINE SPECIFICATION
+
+Document ID: SP-DP-MARIN-VV-001
+Version: 1.0
+Status: Pre-Development Baseline
+Date: 1 September 2026
+Research Programme: MARIN USV / DP Resilience V&V Research
+Software Baseline: "marin-vv-baseline-2026-09-01"
+Baseline Commit: "a8b46ce"
+
+---
+
+1. PURPOSE
+
+This document establishes the preserved engineering baseline for the Sextant Protocol™ DP Resilience Research Simulator before further MARIN-oriented verification and validation development.
+
+The purpose of the baseline is to provide a fixed and reproducible reference against which future engineering modifications, experiments, validation activities and research results may be compared.
+
+The baseline is intentionally preserved before further development.
+
+Principle:
+
+«PRESERVE BASELINE → DEVELOP → TEST → CHALLENGE → MEASURE → REPEAT»
+
+---
+
+2. BASELINE STATUS
+
+The current software is classified as:
+
+RESEARCH / SIMULATION PROTOTYPE
+
+The baseline:
+
+- has no operational vessel connection;
+- has no physical vessel interface;
+- does not transmit DP commands;
+- does not control propulsion;
+- does not control navigation;
+- does not control steering;
+- does not control safety systems;
+- is not certified marine control software; and
+- provides research-oriented decision support and simulated responses only.
+
+Operational authority: NONE
+
+Autonomous command authority: FALSE
+
+Human authority: FINAL
+
+---
+
+3. BASELINE SOFTWARE
+
+The preserved baseline is represented by:
+
+Repository: Sextant Protocol™ DP Resilience System
+
+Branch / Release:
+
+"marin-vv-baseline-2026-09-01"
+
+Commit:
+
+"a8b46ce"
+
+The baseline preserves the complete engineering state immediately before further MARIN-oriented V&V development.
+
+No experimental modification should be made directly to the preserved baseline.
+
+---
+
+4. RESEARCH ARCHITECTURE
+
+The baseline architecture is:
+
+ENVIRONMENT
+
+↓
+
+PRIMARY AI
+
+↓
+
+SECONDARY AI
+
+↓
+
+STABILIZER
+
+↓
+
+RECOMMENDATION
+
+↓
+
+CAPTAIN AI LENA
+
+↓
+
+HUMAN AUTHORITY
+
+↓
+
+SIMULATED DP RESPONSE
+
+The architecture investigates whether layered resilience assessment and deterministic arbitration can provide structured recognition, escalation and decision support when simulated maritime conditions deteriorate.
+
+This remains a research hypothesis.
+
+No performance or safety conclusion is claimed by the baseline itself.
+
+---
+
+5. ENVIRONMENT MODEL
+
+The baseline provides four environmental stress inputs:
+
+Wind
+
+Range:
+
+"0–100"
+
+Current
+
+Range:
+
+"0–100"
+
+Wave
+
+Range:
+
+"0–100"
+
+Tidal
+
+Range:
+
+"0–100"
+
+The current deterministic weighting is:
+
+Environmental factor| Weight
+Wind| 30%
+Current| 30%
+Wave| 25%
+Tidal| 15%
+Total| 100%
+
+Environmental stress is calculated deterministically from these inputs.
+
+---
+
+6. RISK CLASSIFICATION
+
+The baseline classifies environmental stress as:
+
+Stress| Classification
+"< 30"| LOW
+"30–49.99"| MEDIUM
+"≥ 50"| HIGH
+
+These thresholds are baseline parameters.
+
+They are not presented as certified maritime limits.
+
+A future V&V programme may challenge, modify, justify or replace these parameters based on evidence.
+
+---
+
+7. PRIMARY AI
+
+The Primary AI provides the first simulated assessment response.
+
+The baseline supports four response states:
+
+- NORMAL CONTROL
+- ADAPTIVE CONTROL
+- ENHANCED CONTROL
+- CRITICAL CONTROL
+
+The Primary AI does not issue an operational vessel command.
+
+Its output is a research-simulation assessment.
+
+---
+
+8. SECONDARY AI
+
+The Secondary AI provides an independent safety-oriented assessment layer.
+
+Baseline states include:
+
+- SAFETY MONITOR
+- PRECAUTIONARY
+- PROTECTIVE
+- CRITICAL SAFETY
+
+The Secondary AI contributes to the subsequent stabilizer arbitration.
+
+---
+
+9. STABILIZER
+
+The Stabilizer is a central research component.
+
+Its purpose is to investigate deterministic arbitration between assessment layers.
+
+Baseline states include:
+
+- STABLE
+- BALANCED
+- PROTECTIVE
+- CRITICAL ARBITRATION
+
+The Stabilizer does not independently control a vessel.
+
+Its research purpose is to:
+
+1. identify developing conditions;
+2. identify conflicting assessment states;
+3. structure escalation;
+4. classify the simulated resilience condition;
+5. provide structured decision support; and
+6. preserve human decision authority.
+
+---
+
+10. CAPTAIN AI LENA
+
+Captain AI Lena operates in the baseline as a decision-support layer.
+
+Lena receives the simulated assessment and produces:
+
+- recommendation;
+- urgency;
+- response mode;
+- proposed simulated response; and
+- explanatory decision-support messaging.
+
+Baseline autonomous command state:
+
+FALSE
+
+Lena does not possess independent operational authority.
+
+---
+
+11. HUMAN-IN-THE-LOOP
+
+The baseline contains an explicit human decision gate.
+
+The available simulated human decisions are:
+
+ACKNOWLEDGE CONDITION
+
+Records awareness of the simulated condition without authorising a response.
+
+MAINTAIN SAFE STATE
+
+Records a human decision to maintain the simulated safe state.
+
+AUTHORIZE SIMULATED RESPONSE
+
+Authorises execution of the simulated response inside the research environment only.
+
+The human operator remains the final authority.
+
+---
+
+12. SIMULATED RESPONSE
+
+The response mechanism is intentionally isolated from real vessel systems.
+
+When a simulated response is authorised, the software records:
+
+EXECUTION: SIMULATED ONLY
+
+OPERATIONAL DP COMMAND: NONE
+
+AUTONOMOUS COMMAND: FALSE
+
+The baseline therefore does not represent an operational DP controller.
+
+---
+
+13. SIMULATED VESSEL
+
+The baseline provides a virtual vessel profile:
+
+Name: SEXTANT-MPSV-01
+Type: Multi-Purpose Support Vessel
+DP Class: DP2-SIMULATED
+Length: 85 m
+Beam: 20 m
+Draft: 6 m
+Main Thrusters: 2
+Tunnel Thrusters: 2
+Total Thrusters: 4
+Nominal Simulated Thrust: 100 units
+
+These values define the research simulation environment.
+
+They do not represent a certified vessel model or a real vessel configuration.
+
+---
+
+14. BASELINE SCENARIOS
+
+The simulator provides repeatable scenario presets including:
+
+- NORMAL
+- MODERATE
+- HEAVY WEATHER
+- CRITICAL
+- CURRENT SURGE
+- HEAVY SEA
+- WIND GUST
+- COMBINED
+- RANDOM
+
+These scenarios provide initial repeatability for future testing.
+
+---
+
+15. AUDITABILITY
+
+The baseline produces a simulation audit containing events associated with:
+
+- simulator initialization;
+- environmental assessment;
+- Primary AI assessment;
+- Secondary AI assessment;
+- Stabilizer arbitration;
+- Lena decision support;
+- human authorization gate; and
+- simulated response status.
+
+The objective is to establish a traceable chain from environmental input to final simulated outcome.
+
+---
+
+16. BASELINE LIMITATIONS
+
+The following limitations are explicitly acknowledged.
+
+16.1 Environmental abstraction
+
+The environmental model uses simplified scalar stress inputs.
+
+It is not a high-fidelity hydrodynamic or vessel-motion model.
+
+16.2 Simplified vessel dynamics
+
+The baseline does not constitute a validated mathematical model of a real DP vessel.
+
+16.3 Simulated response
+
+The baseline response is representational and does not model all physical consequences of a real manoeuvre.
+
+16.4 AI terminology
+
+The Primary AI, Secondary AI and Captain AI Lena terminology describes architectural research layers.
+
+The baseline does not establish that these components constitute certified autonomous-control AI.
+
+16.5 Certification
+
+No classification, statutory or regulatory certification is claimed.
+
+---
+
+17. PROPOSED MARIN V&V DEVELOPMENT
+
+The preserved baseline provides the starting point for a future V&V programme.
+
+The proposed progression is:
+
+BASELINE
+
+↓
+
+SOFTWARE TESTING
+
+↓
+
+REPEATABLE SCENARIOS
+
+↓
+
+FAULT INJECTION
+
+↓
+
+BASELINE COMPARISON
+
+↓
+
+HUMAN-FACTORS TESTING
+
+↓
+
+HIGH-FIDELITY SIMULATION
+
+↓
+
+HARDWARE-IN-THE-LOOP
+
+↓
+
+INDEPENDENT VERIFICATION & VALIDATION
+
+↓
+
+TECHNICAL / CLASSIFICATION REVIEW
+
+Each stage should be evidence-driven.
+
+No later stage should be interpreted as automatically validating an earlier research hypothesis.
+
+---
+
+18. PROPOSED V&V QUESTIONS
+
+The future research programme may investigate:
+
+1. Does the layered architecture detect environmental deterioration earlier than a defined baseline?
+2. Does deterministic arbitration reduce conflicting assessment states?
+3. Does the architecture provide more structured escalation?
+4. Are recommendations repeatable under identical inputs?
+5. Are results deterministic and auditable?
+6. How does fault injection affect each architectural layer?
+7. How does the architecture behave under simultaneous disturbances?
+8. How does human decision-making interact with the recommendation layer?
+9. What failure modes are introduced by the architecture?
+10. What failure modes remain undetected?
+11. Which results can be independently reproduced?
+12. Which claims cannot yet be supported by evidence?
+
+Negative results are considered valid research results.
+
+---
+
+19. INDEPENDENT REVIEW
+
+The project welcomes independent technical challenge.
+
+MARIN or other qualified research and engineering organisations may independently assess:
+
+- architecture;
+- assumptions;
+- environmental model;
+- thresholds;
+- deterministic calculations;
+- scenario definitions;
+- fault-injection methodology;
+- human-in-the-loop design;
+- auditability;
+- limitations; and
+- proposed validation methodology.
+
+The objective is not to demonstrate success prematurely.
+
+The objective is to determine whether the resilience proposition survives independent testing.
+
+---
+
+20. CHANGE CONTROL
+
+The preserved baseline shall remain unchanged.
+
+Future development should occur from a separate development branch.
+
+Every material modification should be:
+
+1. identified;
+2. version controlled;
+3. tested;
+4. documented;
+5. compared against the baseline; and
+6. associated with an auditable result.
+
+Where practical, experimental results should identify:
+
+- software version;
+- commit;
+- scenario;
+- input parameters;
+- expected result;
+- actual result;
+- pass/fail status;
+- observations; and
+- limitations.
+
+---
+
+21. RESEARCH INTEGRITY PRINCIPLES
+
+The MARIN V&V programme should maintain the following principles:
+
+NO PREMATURE CERTIFICATION CLAIMS
+
+NO OPERATIONAL CONTROL CLAIM
+
+NO GUARANTEED SAFETY CLAIM
+
+NO REPLACEMENT CLAIM
+
+INDEPENDENT REVIEW WELCOMED
+
+NEGATIVE RESULTS ACCEPTED
+
+REPEATABLE TESTING
+
+DETERMINISTIC RESULTS WHERE SPECIFIED
+
+AUDITABLE RESULTS
+
+VERSION-CONTROLLED DEVELOPMENT
+
+---
+
+22. BASELINE ACCEPTANCE STATEMENT
+
+This document establishes the "marin-vv-baseline-2026-09-01" software state as the preserved pre-development reference for the proposed MARIN-oriented V&V research programme.
+
+The baseline is not presented as a finished autonomous DP system.
+
+It is a controlled research environment intended to provide a starting point from which the architecture can be tested, challenged, measured and independently evaluated.
+
+---
+
+23. GOVERNING RESEARCH PRINCIPLE
+
+«BUILD → TEST → CHALLENGE → MEASURE → REPEAT → INDEPENDENTLY REVIEW»
+
+The Sextant Protocol™ DP Resilience Research Simulator is intended to complement established maritime engineering, simulation, safety-assurance and verification practices.
+
+It does not replace them.
+
+---
+
+SEXTANT PROTOCOL™
+
+DP RESILIENCE RESEARCH
+
+MARIN V&V BASELINE — PRE-DEVELOPMENT
+
+SIMULATION ONLY
+
+HUMAN-IN-THE-LOOP
+
+NOT CERTIFIED MARINE CONTROL SOFTWARE
