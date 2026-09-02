@@ -1,0 +1,4711 @@
+/*
+============================================================
+SEXTANT PROTOCOL™
+DP RESILIENCE V&V RESEARCH COCKPIT
+============================================================
+
+FILE:
+dp_cockpit.js
+
+VERSION:
+2.6.1
+
+PURPOSE:
+Browser-side controller for the deterministic DP resilience
+research / V&V cockpit.
+
+ARCHITECTURE:
+
+ENVIRONMENT
+    ↓
+SYSTEM SETUP
+    ↓
+PRIMARY AI
+    ↓
+SECONDARY AI
+    ↓
+STABILIZER
+    ↓
+RECOMMENDED ACTIONS ENGINE
+    ↓
+RESERVE-POWER VERIFICATION
+    ↓
+HUMAN-IN-THE-LOOP
+    ↓
+SIMULATED DP RESPONSE
+    ↓
+UPDATED SIMULATED STATE
+    ↓
+AUDIT
+
+SAFETY BOUNDARY:
+SIMULATION ONLY — NO AUTONOMOUS OPERATIONAL COMMAND
+
+CRITICAL DISTINCTION:
+BIAS     = POSITIONING MODE ONLY
+PUSH-UP  = ENGINE LOAD COMPENSATION ONLY
+PUSH-UP ≠ POSITIONING BIAS
+
+PUSH-UP SAFETY:
+PUSH-UP REQUIRES AUTHORITATIVE RESERVE-POWER
+VERIFICATION.
+
+UNKNOWN / UNVERIFIED RESERVE:
+NOT SUFFICIENT FOR PUSH-UP.
+
+HUMAN AUTHORITY:
+FINAL
+
+REAL VESSEL:
+NO
+
+AUTONOMOUS COMMAND:
+NO
+
+CERTIFICATION:
+NOT CERTIFIED
+
+IMPORTANT CONTROLLER RULE:
+The simulation engine is authoritative for:
+- environmental assessment
+- risk
+- reserve verification
+- proposed response
+- human decision state
+- final simulated response
+- updated simulated state
+- audit
+
+This controller is an interface layer only.
+
+============================================================
+*/
+
+(function () {
+
+    "use strict";
+
+
+    /* ========================================================
+       MODULE CONSTANTS
+    ======================================================== */
+
+    const MODULE_NAME =
+        "SextantDPResilienceCockpit";
+
+    const VERSION =
+        "2.6.1";
+
+    const SIMULATION_ENGINE_VERSION =
+        "1.2.0";
+
+    const RECOMMENDED_ACTIONS_VERSION =
+        "SPD-DP-RECOMMENDED-ACTIONS-V1.2";
+
+    const SAFETY_BOUNDARY =
+        "SIMULATION ONLY — NO AUTONOMOUS OPERATIONAL COMMAND";
+
+    const AUTONOMOUS_COMMAND =
+        false;
+
+    const REAL_VESSEL_CONNECTION =
+        false;
+
+    const HUMAN_AUTHORITY =
+        "FINAL";
+
+
+    /* ========================================================
+       SYSTEM SETUP MODES
+    ======================================================== */
+
+    const POSITIONING_MODES = {
+
+        NON_BIAS:
+            "NON_BIAS",
+
+        BIAS:
+            "BIAS"
+
+    };
+
+
+    const ENGINE_LOAD_MODES = {
+
+        NORMAL:
+            "NORMAL",
+
+        PUSH_UP:
+            "PUSH_UP"
+
+    };
+
+
+    /* ========================================================
+       PIPELINE
+    ======================================================== */
+
+    const PIPELINE = [
+
+        "ENVIRONMENT",
+
+        "SYSTEM SETUP",
+
+        "S1 PRIMARY AI",
+
+        "S2 SECONDARY AI",
+
+        "STABILIZER",
+
+        "RECOMMENDED ACTIONS ENGINE",
+
+        "RESERVE-POWER VERIFICATION",
+
+        "HUMAN-IN-THE-LOOP",
+
+        "SIMULATED DP RESPONSE",
+
+        "UPDATED SIMULATED STATE",
+
+        "AUDIT"
+
+    ];
+
+
+    /* ========================================================
+       BASIC DOM HELPERS
+    ======================================================== */
+
+    function byId(id) {
+
+        return document.getElementById(id);
+
+    }
+
+
+    function firstById(ids) {
+
+        for (
+            let i = 0;
+            i < ids.length;
+            i++
+        ) {
+
+            const el =
+                byId(ids[i]);
+
+            if (el) {
+
+                return el;
+
+            }
+
+        }
+
+        return null;
+
+    }
+
+
+    function setText(ids, value) {
+
+        const el =
+            firstById(
+                Array.isArray(ids)
+                    ? ids
+                    : [ids]
+            );
+
+        if (el) {
+
+            el.textContent =
+                value === undefined ||
+                value === null
+                    ? ""
+                    : String(value);
+
+        }
+
+    }
+
+
+    /*
+     * v2.6.1:
+     *
+     * Some cockpit layouts contain more than one display
+     * field for the same authoritative value.
+     *
+     * This helper updates every matching field instead of
+     * leaving one static field showing an older state.
+     */
+
+    function setTextAll(ids, value) {
+
+        const list =
+            Array.isArray(ids)
+                ? ids
+                : [ids];
+
+
+        const text =
+            value === undefined ||
+            value === null
+                ? ""
+                : String(value);
+
+
+        let updated =
+            false;
+
+
+        for (
+            let i = 0;
+            i < list.length;
+            i++
+        ) {
+
+            const el =
+                byId(list[i]);
+
+
+            if (el) {
+
+                el.textContent =
+                    text;
+
+                updated =
+                    true;
+
+            }
+
+        }
+
+
+        return updated;
+
+    }
+
+
+    function setValue(ids, value) {
+
+        const el =
+            firstById(
+                Array.isArray(ids)
+                    ? ids
+                    : [ids]
+            );
+
+        if (!el) {
+
+            return false;
+
+        }
+
+        el.value =
+            value;
+
+        return true;
+
+    }
+
+
+    function getValue(ids, fallback) {
+
+        const el =
+            firstById(
+                Array.isArray(ids)
+                    ? ids
+                    : [ids]
+            );
+
+        if (!el) {
+
+            return fallback;
+
+        }
+
+        return el.value;
+
+    }
+
+
+    function parseNumber(ids, fallback) {
+
+        const value =
+            Number(
+                getValue(
+                    ids,
+                    fallback
+                )
+            );
+
+        return Number.isFinite(value)
+            ? value
+            : fallback;
+
+    }
+
+
+    function safeJSON(value) {
+
+        try {
+
+            return JSON.stringify(
+                value,
+                null,
+                2
+            );
+
+        } catch (error) {
+
+            return String(value);
+
+        }
+
+    }
+
+
+    function log(message, data) {
+
+        if (
+            data !== undefined
+        ) {
+
+            console.log(
+                "[Sextant DP Cockpit]",
+                message,
+                data
+            );
+
+        } else {
+
+            console.log(
+                "[Sextant DP Cockpit]",
+                message
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       SAFETY DISPLAY
+    ======================================================== */
+
+    function displaySafety() {
+
+        setTextAll(
+            [
+                "safetyBoundary",
+                "liveSafetyBoundary",
+                "safetyStatus"
+            ],
+            SAFETY_BOUNDARY
+        );
+
+
+        setTextAll(
+            [
+                "autonomousCommand",
+                "liveAutonomousCommand"
+            ],
+            "FALSE — NO AUTONOMOUS COMMAND"
+        );
+
+
+        setTextAll(
+            [
+                "humanAuthority",
+                "liveHumanAuthority"
+            ],
+            "FINAL"
+        );
+
+    }
+
+
+    /* ========================================================
+       ENGINE DISCOVERY
+    ======================================================== */
+
+    function discoverSimulationEngine() {
+
+        const candidates = [
+
+            "DPSimulationEngine",
+
+            "DPSimulatorEngine",
+
+            "DPResilienceEngine",
+
+            "dpSimulationEngine",
+
+            "dpEngine"
+
+        ];
+
+
+        for (
+            let i = 0;
+            i < candidates.length;
+            i++
+        ) {
+
+            const candidate =
+                window[candidates[i]];
+
+
+            if (
+                candidate &&
+                typeof candidate.run ===
+                    "function"
+            ) {
+
+                return candidate;
+
+            }
+
+        }
+
+
+        return null;
+
+    }
+
+
+    /* ========================================================
+       RECOMMENDED ACTIONS ENGINE
+    ======================================================== */
+
+    function discoverRecommendedActionsEngine() {
+
+        if (
+            window.DPRecommendedActions &&
+            typeof
+                window.DPRecommendedActions.generate ===
+                    "function"
+        ) {
+
+            return window.DPRecommendedActions;
+
+        }
+
+
+        return null;
+
+    }
+
+
+    function retryRecommendedActionsEngine() {
+
+        const engine =
+            discoverRecommendedActionsEngine();
+
+
+        if (engine) {
+
+            log(
+                "RECOMMENDED ACTIONS ENGINE CONNECTED",
+                engine.version ||
+                RECOMMENDED_ACTIONS_VERSION
+            );
+
+        } else {
+
+            log(
+                "RECOMMENDED ACTIONS ENGINE NOT DETECTED"
+            );
+
+        }
+
+
+        return engine;
+
+    }
+
+
+    /* ========================================================
+       SYSTEM SETUP
+    ======================================================== */
+
+    function readSystemSetup() {
+
+        let positioningMode =
+            getValue(
+                [
+                    "positioningMode",
+                    "positionMode",
+                    "biasMode"
+                ],
+                POSITIONING_MODES.NON_BIAS
+            );
+
+
+        let engineLoadMode =
+            getValue(
+                [
+                    "engineLoadMode",
+                    "loadMode",
+                    "engineMode"
+                ],
+                ENGINE_LOAD_MODES.NORMAL
+            );
+
+
+        if (
+            positioningMode !==
+                POSITIONING_MODES.BIAS &&
+            positioningMode !==
+                POSITIONING_MODES.NON_BIAS
+        ) {
+
+            positioningMode =
+                POSITIONING_MODES.NON_BIAS;
+
+        }
+
+
+        if (
+            engineLoadMode !==
+                ENGINE_LOAD_MODES.PUSH_UP &&
+            engineLoadMode !==
+                ENGINE_LOAD_MODES.NORMAL
+        ) {
+
+            engineLoadMode =
+                ENGINE_LOAD_MODES.NORMAL;
+
+        }
+
+
+        return {
+
+            positioningMode:
+                positioningMode,
+
+            engineLoadMode:
+                engineLoadMode
+
+        };
+
+    }
+
+
+    function updateSystemSetupDisplay(setup) {
+
+        const current =
+            setup ||
+            readSystemSetup();
+
+
+        const positioningLabel =
+            current.positioningMode ===
+                POSITIONING_MODES.BIAS
+
+                ? "BIAS — POSITIONING MODE"
+
+                : "NON-BIAS — STANDARD POSITIONING";
+
+
+        const loadLabel =
+            current.engineLoadMode ===
+                ENGINE_LOAD_MODES.PUSH_UP
+
+                ? "PUSH-UP — ENGINE LOAD COMPENSATION"
+
+                : "NORMAL — NOMINAL ENGINE LOAD";
+
+
+        setTextAll(
+            [
+                "livePositioningMode"
+            ],
+            current.positioningMode
+        );
+
+
+        setTextAll(
+            [
+                "liveEngineLoadMode"
+            ],
+            current.engineLoadMode
+        );
+
+
+        setTextAll(
+            [
+                "positioningModeStatus",
+                "positioningStatus"
+            ],
+            positioningLabel
+        );
+
+
+        setTextAll(
+            [
+                "engineLoadModeStatus",
+                "engineLoadStatus"
+            ],
+            loadLabel
+        );
+
+
+        setTextAll(
+            [
+                "setupDistinction",
+                "modeDistinction"
+            ],
+            "POSITIONING BIAS/NON-BIAS IS SEPARATE FROM ENGINE LOAD NORMAL/PUSH-UP"
+        );
+
+
+        log(
+            "POSITIONING MODE:",
+            current.positioningMode
+        );
+
+
+        log(
+            "ENGINE LOAD MODE:",
+            current.engineLoadMode
+        );
+
+
+        log(
+            "PUSH-UP ≠ POSITIONING BIAS"
+        );
+
+
+        return current;
+
+    }
+
+
+    /* ========================================================
+       ENVIRONMENT
+    ======================================================== */
+
+    function readEnvironment() {
+
+        const setup =
+            readSystemSetup();
+
+
+        return {
+
+            wind:
+                parseNumber(
+                    [
+                        "wind",
+                        "windSpeed",
+                        "windForce"
+                    ],
+                    0
+                ),
+
+            current:
+                parseNumber(
+                    [
+                        "current",
+                        "currentSpeed",
+                        "currentForce"
+                    ],
+                    0
+                ),
+
+            wave:
+                parseNumber(
+                    [
+                        "wave",
+                        "waveHeight",
+                        "waveForce"
+                    ],
+                    0
+                ),
+
+            tidal:
+                parseNumber(
+                    [
+                        "tidal",
+                        "tide",
+                        "tidalForce"
+                    ],
+                    0
+                ),
+
+            positioningMode:
+                setup.positioningMode,
+
+            engineLoadMode:
+                setup.engineLoadMode
+
+        };
+
+    }
+
+
+    /* ========================================================
+       ENVIRONMENT DISPLAY
+    ======================================================== */
+
+    function updateEnvironmentDisplay(
+        environment
+    ) {
+
+        if (!environment) {
+
+            return;
+
+        }
+
+
+        setTextAll(
+            [
+                "liveWind",
+                "displayWind"
+            ],
+            environment.wind
+        );
+
+
+        setTextAll(
+            [
+                "liveCurrent",
+                "displayCurrent"
+            ],
+            environment.current
+        );
+
+
+        setTextAll(
+            [
+                "liveWave",
+                "displayWave"
+            ],
+            environment.wave
+        );
+
+
+        setTextAll(
+            [
+                "liveTidal",
+                "displayTidal"
+            ],
+            environment.tidal
+        );
+
+
+        setTextAll(
+            [
+                "environmentStatus",
+                "liveEnvironmentStatus"
+            ],
+            "INPUTS RECEIVED"
+        );
+
+    }
+
+
+    /* ========================================================
+       AUTHORITATIVE ENGINE EXECUTION
+    ======================================================== */
+
+    function executeEngine(environment) {
+
+        const engine =
+            discoverSimulationEngine();
+
+
+        if (!engine) {
+
+            throw new Error(
+                "DP Simulation Engine is not connected."
+            );
+
+        }
+
+
+        if (
+            typeof engine.run !==
+                "function"
+        ) {
+
+            throw new Error(
+                "DP Simulation Engine does not expose run()."
+            );
+
+        }
+
+
+        log(
+            "EXECUTING AUTHORITATIVE DP SIMULATION ENGINE"
+        );
+
+
+        const result =
+            engine.run(
+                environment
+            );
+
+
+        if (!result) {
+
+            throw new Error(
+                "DP Simulation Engine returned no result."
+            );
+
+        }
+
+
+        return result;
+
+    }
+
+
+    /* ========================================================
+       AUTHORITATIVE HUMAN ENGINE ACCESS
+    ======================================================== */
+
+    function discoverHumanEngineMethod(
+        methodName
+    ) {
+
+        const engine =
+            discoverSimulationEngine();
+
+
+        if (!engine) {
+
+            return null;
+
+        }
+
+
+        if (
+            typeof engine[methodName] ===
+                "function"
+        ) {
+
+            return engine[methodName]
+                .bind(engine);
+
+        }
+
+
+        return null;
+
+    }
+
+
+    /* ========================================================
+       RECOMMENDED ACTIONS
+    ======================================================== */
+
+    function executeRecommendedActions(
+        result
+    ) {
+
+        if (!result) {
+
+            return null;
+
+        }
+
+
+        /*
+         * The authoritative engine result is preferred.
+         */
+
+        if (
+            result.recommendedAction
+        ) {
+
+            return result.recommendedAction;
+
+        }
+
+
+        if (
+            result.recommendedActions
+        ) {
+
+            return result.recommendedActions;
+
+        }
+
+
+        if (
+            result.recommendations
+        ) {
+
+            return result.recommendations;
+
+        }
+
+
+        const actions =
+            discoverRecommendedActionsEngine();
+
+
+        if (
+            actions &&
+            typeof actions.generate ===
+                "function"
+        ) {
+
+            return actions.generate(
+                result
+            );
+
+        }
+
+
+        return null;
+
+    }
+
+
+    /* ========================================================
+       RESERVE-POWER VERIFICATION
+    ======================================================== */
+
+    function extractReserveVerification(
+        result
+    ) {
+
+        if (!result) {
+
+            return {
+
+                reserveVerified:
+                    false,
+
+                availableReserve:
+                    null,
+
+                requiredReserve:
+                    null,
+
+                status:
+                    "NOT VERIFIED",
+
+                verificationSource:
+                    "NO SIMULATION RESULT"
+
+            };
+
+        }
+
+
+        const reserve =
+            result.reservePowerVerification ||
+            result.reserveVerification ||
+            null;
+
+
+        if (!reserve) {
+
+            return {
+
+                reserveVerified:
+                    false,
+
+                availableReserve:
+                    null,
+
+                requiredReserve:
+                    null,
+
+                status:
+                    "NOT VERIFIED",
+
+                verificationSource:
+                    "NO AUTHORITATIVE RESERVE RESULT"
+
+            };
+
+        }
+
+
+        return {
+
+            reserveVerified:
+                reserve.reserveVerified ===
+                    true,
+
+            availableReserve:
+                reserve.availableReserve !==
+                    undefined
+
+                    ? reserve.availableReserve
+
+                    : null,
+
+            requiredReserve:
+                reserve.requiredReserve !==
+                    undefined
+
+                    ? reserve.requiredReserve
+
+                    : null,
+
+            status:
+                reserve.status ||
+                (
+                    reserve.reserveVerified ===
+                        true
+
+                        ? "VERIFIED"
+
+                        : "NOT VERIFIED"
+                ),
+
+            verificationSource:
+                reserve.verificationSource ||
+                "AUTHORITATIVE DP SIMULATION ENGINE"
+
+        };
+
+    }
+
+
+    function updateReservePowerDisplay(
+        reserveVerification
+    ) {
+
+        const reserve =
+            reserveVerification || {
+
+                reserveVerified:
+                    false,
+
+                availableReserve:
+                    null,
+
+                requiredReserve:
+                    null,
+
+                status:
+                    "NOT VERIFIED"
+
+            };
+
+
+        const verified =
+            reserve.reserveVerified ===
+                true;
+
+
+        const available =
+            reserve.availableReserve;
+
+
+        const required =
+            reserve.requiredReserve;
+
+
+        /*
+         * IMPORTANT:
+         *
+         * Every reserve display is derived from the
+         * authoritative verification result.
+         *
+         * There is no controller-side assumption that
+         * reserve is sufficient.
+         */
+
+        setTextAll(
+            [
+                "liveReserve",
+                "reservePower",
+                "liveReservePower"
+            ],
+            verified
+                ? "VERIFIED"
+                : "NOT VERIFIED"
+        );
+
+
+        setTextAll(
+            [
+                "reserveVerification",
+                "reserveVerificationStatus"
+            ],
+            verified
+                ? "VERIFIED"
+                : "NOT VERIFIED"
+        );
+
+
+        setTextAll(
+            [
+                "reserveStatus"
+            ],
+            reserve.status ||
+            (
+                verified
+                    ? "VERIFIED"
+                    : "NOT VERIFIED"
+            )
+        );
+
+
+        setTextAll(
+            [
+                "availableReserve",
+                "reserveAvailable"
+            ],
+            available === null ||
+            available === undefined
+
+                ? "—"
+
+                : Number(
+                    available
+                ).toFixed(2)
+        );
+
+
+        setTextAll(
+            [
+                "requiredReserve",
+                "reserveRequired"
+            ],
+            required === null ||
+            required === undefined
+
+                ? "—"
+
+                : Number(
+                    required
+                ).toFixed(2)
+        );
+
+
+        setTextAll(
+            [
+                "reserveGate",
+                "reservePowerGate",
+                "pushUpGate",
+                "pushUpReserveGate"
+            ],
+            verified
+                ? "RESERVE VERIFIED"
+                : "NOT VERIFIED"
+        );
+
+
+        log(
+            "AUTHORITATIVE RESERVE VERIFICATION:",
+            reserve
+        );
+
+    }
+
+
+    /* ========================================================
+       RESULT FIELD HELPERS
+    ======================================================== */
+
+    function getPrimary(result) {
+
+        return result?.primary || {};
+
+    }
+
+
+    function getSecondary(result) {
+
+        return result?.secondary || {};
+
+    }
+
+
+    function getStabilizer(result) {
+
+        return result?.stabilizer || {};
+
+    }
+
+
+    function getRecommendedAssessment(
+        result,
+        actions
+    ) {
+
+        return (
+            result?.recommendedAction ||
+            actions?.recommendedAction ||
+            actions ||
+            {}
+        );
+
+    }
+
+
+    function getProposedAction(result) {
+
+        return (
+            result?.proposedAction ||
+            result?.simulatedAction ||
+            {}
+        );
+
+    }
+
+
+    function getSimulatedAction(result) {
+
+        return (
+            result?.simulatedAction ||
+            {}
+        );
+
+    }
+
+
+    function getUpdatedState(result) {
+
+        return (
+            result?.updatedState ||
+            result?.simulatedVesselState ||
+            result?.vesselState ||
+            result?.simulatedState ||
+            result?.state ||
+            {}
+        );
+
+    }
+
+
+    function getExecutionGate(result) {
+
+        return (
+            result?.executionGate ||
+            result?.humanAuthorityGate ||
+            result?.simulatedAction?.executionGate ||
+            {}
+        );
+
+    }
+
+
+    /* ========================================================
+       ASSESSMENT DISPLAY
+    ======================================================== */
+
+    function updateAssessment(
+        result,
+        actions,
+        reserveVerification,
+        setup
+    ) {
+
+        if (!result) {
+
+            return;
+
+        }
+
+
+        const primary =
+            getPrimary(result);
+
+
+        const secondary =
+            getSecondary(result);
+
+
+        const stabilizer =
+            getStabilizer(result);
+
+
+        const recommendation =
+            getRecommendedAssessment(
+                result,
+                actions
+            );
+
+
+        const proposed =
+            getProposedAction(
+                result
+            );
+
+
+        const simulated =
+            getSimulatedAction(
+                result
+            );
+
+
+        const gate =
+            getExecutionGate(
+                result
+            );
+
+
+        const environment =
+            result.environment ||
+            recommendation.simulatedEnvironment ||
+            {};
+
+
+        const authoritativeSetup =
+            result.systemSetup ||
+            setup ||
+            readSystemSetup();
+
+
+        /* ----------------------------------------------------
+           RISK
+        ---------------------------------------------------- */
+
+        const risk =
+            result.risk ||
+            result.assessment?.risk ||
+            result.assessment?.riskLevel ||
+            "—";
+
+
+        setTextAll(
+            [
+                "riskLevel",
+                "assessmentRisk",
+                "risk"
+            ],
+            risk
+        );
+
+
+        /* ----------------------------------------------------
+           PRIMARY AI
+        ---------------------------------------------------- */
+
+        setTextAll(
+            [
+                "primaryMode",
+                "assessmentPrimaryMode"
+            ],
+            primary.mode ||
+            result.primaryState ||
+            result.primaryMode ||
+            "—"
+        );
+
+
+        setTextAll(
+            [
+                "primaryResponse",
+                "decisionPrimaryResponse"
+            ],
+            primary.response ||
+            primary.action ||
+            result.primaryResponse ||
+            result.primaryAction ||
+            "—"
+        );
+
+
+        /* ----------------------------------------------------
+           SECONDARY AI
+        ---------------------------------------------------- */
+
+        setTextAll(
+            [
+                "secondaryMode",
+                "assessmentSecondaryMode"
+            ],
+            secondary.mode ||
+            result.secondaryState ||
+            result.secondaryMode ||
+            "—"
+        );
+
+
+        setTextAll(
+            [
+                "secondaryAssessment",
+                "decisionSecondaryAssessment"
+            ],
+            secondary.assessment ||
+            secondary.response ||
+            secondary.action ||
+            result.secondaryAssessment ||
+            result.secondaryResponse ||
+            "—"
+        );
+
+
+        /* ----------------------------------------------------
+           STABILIZER
+        ---------------------------------------------------- */
+
+        setTextAll(
+            [
+                "stabilizerMode",
+                "assessmentStabilizerMode"
+            ],
+            stabilizer.mode ||
+            result.stabilizerMode ||
+            "—"
+        );
+
+
+        setTextAll(
+            [
+                "stabilizerSource",
+                "decisionStabilizerSource"
+            ],
+            stabilizer.source ||
+            result.stabilizerSource ||
+            "—"
+        );
+
+
+        setTextAll(
+            [
+                "stabilizerOutput",
+                "decisionStabilizerOutput"
+            ],
+            safeJSON(
+                stabilizer
+            )
+        );
+
+
+        /* ----------------------------------------------------
+           ENVIRONMENT
+        ---------------------------------------------------- */
+
+        setTextAll(
+            [
+                "decisionEnvironment",
+                "traceEnvironment"
+            ],
+            safeJSON(
+                environment
+            )
+        );
+
+
+        setTextAll(
+            [
+                "traceWind",
+                "decisionWind"
+            ],
+            environment.wind !== undefined
+                ? environment.wind
+                : "—"
+        );
+
+
+        setTextAll(
+            [
+                "traceCurrent",
+                "decisionCurrent"
+            ],
+            environment.current !== undefined
+                ? environment.current
+                : "—"
+        );
+
+
+        setTextAll(
+            [
+                "traceWave",
+                "decisionWave"
+            ],
+            environment.wave !== undefined
+                ? environment.wave
+                : "—"
+        );
+
+
+        setTextAll(
+            [
+                "traceTidal",
+                "decisionTidal"
+            ],
+            environment.tidal !== undefined
+                ? environment.tidal
+                : "—"
+        );
+
+
+        /* ----------------------------------------------------
+           SYSTEM SETUP
+        ---------------------------------------------------- */
+
+        setTextAll(
+            [
+                "tracePositioningMode",
+                "decisionPositioningMode"
+            ],
+            authoritativeSetup.positioningMode ||
+            environment.positioningMode ||
+            POSITIONING_MODES.NON_BIAS
+        );
+
+
+        setTextAll(
+            [
+                "traceEngineLoadMode",
+                "decisionEngineLoadMode"
+            ],
+            authoritativeSetup.engineLoadMode ||
+            environment.engineLoadMode ||
+            ENGINE_LOAD_MODES.NORMAL
+        );
+
+
+        /* ----------------------------------------------------
+           RESERVE VERIFICATION
+        ---------------------------------------------------- */
+
+        updateReservePowerDisplay(
+            reserveVerification
+        );
+
+
+        /* ----------------------------------------------------
+           RECOMMENDED ACTION
+        ---------------------------------------------------- */
+
+        updateRecommendedActionDisplay(
+            actions,
+            result
+        );
+
+
+        /* ----------------------------------------------------
+           CAPTAIN AI LENA
+        ---------------------------------------------------- */
+
+        updateLenaDisplay(
+            actions,
+            result
+        );
+
+
+        /* ----------------------------------------------------
+           DECISION TRACE
+        ---------------------------------------------------- */
+
+        const primaryRecommendation =
+            recommendation.primaryRecommendation ||
+            recommendation.recommendedAction ||
+            recommendation.action ||
+            result.recommendation ||
+            "—";
+
+
+        const urgency =
+            recommendation.urgency ||
+            result.urgency ||
+            "—";
+
+
+        const responseMode =
+            recommendation.responseMode ||
+            result.responseMode ||
+            proposed.mode ||
+            simulated.mode ||
+            "—";
+
+
+        let proposedAction =
+            proposed.mode ||
+            proposed.action ||
+            proposed.response ||
+            null;
+
+
+        if (!proposedAction) {
+
+            if (
+                proposed.simulatedCommand !==
+                undefined
+            ) {
+
+                proposedAction =
+                    "SIMULATED COMMAND: " +
+                    proposed.simulatedCommand;
+
+            } else if (
+                simulated.mode
+            ) {
+
+                proposedAction =
+                    simulated.mode;
+
+            } else if (
+                simulated.response
+            ) {
+
+                proposedAction =
+                    simulated.response;
+
+            } else {
+
+                proposedAction =
+                    "—";
+
+            }
+
+        }
+
+
+        const gateStatus =
+            gate.status ||
+            proposed.executionGate ||
+            simulated.executionGate ||
+            (
+                authoritativeSetup.engineLoadMode ===
+                    ENGINE_LOAD_MODES.PUSH_UP &&
+                reserveVerification?.reserveVerified !==
+                    true
+
+                    ? "BLOCKED — RESERVE NOT VERIFIED"
+
+                    : "HUMAN AUTHORIZATION REQUIRED"
+            );
+
+
+        const actionStatus =
+            simulated.status ||
+            proposed.status ||
+            "SIMULATION ONLY — NO REAL EXECUTION";
+
+
+        setTextAll(
+            [
+                "urgency",
+                "decisionUrgency",
+                "assessmentUrgency"
+            ],
+            urgency
+        );
+
+
+        setTextAll(
+            [
+                "responseMode",
+                "simulatedResponseMode",
+                "decisionResponseMode"
+            ],
+            responseMode
+        );
+
+
+        setTextAll(
+            [
+                "recommendation",
+                "decisionRecommendation",
+                "assessmentRecommendation"
+            ],
+            primaryRecommendation
+        );
+
+
+        setTextAll(
+            [
+                "proposedAction",
+                "simulatedProposedAction",
+                "decisionProposedAction"
+            ],
+            proposedAction
+        );
+
+
+        setTextAll(
+            [
+                "gate",
+                "executionGate",
+                "decisionGate"
+            ],
+            gateStatus
+        );
+
+
+        setTextAll(
+            [
+                "actionStatus",
+                "simulatedActionStatus",
+                "decisionActionStatus"
+            ],
+            actionStatus
+        );
+
+
+        /* ----------------------------------------------------
+           SIMULATED VESSEL STATE
+        ---------------------------------------------------- */
+
+        updateVesselStateDisplay(
+            result
+        );
+
+
+        /* ----------------------------------------------------
+           FULL AUTHORITATIVE ASSESSMENT
+        ---------------------------------------------------- */
+
+        setTextAll(
+            [
+                "assessmentOutput",
+                "assessmentResult"
+            ],
+            safeJSON(
+                result
+            )
+        );
+
+
+        /* ----------------------------------------------------
+           FULL AUTHORITATIVE AUDIT
+        ---------------------------------------------------- */
+
+        setTextAll(
+            [
+                "auditOutput",
+                "auditResult"
+            ],
+            safeJSON(
+                result.audit ||
+                result.auditRecord ||
+                result.cockpitAudit ||
+                result
+            )
+        );
+
+
+        log(
+            "ASSESSMENT DISPLAY UPDATED",
+            {
+                risk:
+                    risk,
+
+                urgency:
+                    urgency,
+
+                responseMode:
+                    responseMode,
+
+                recommendation:
+                    primaryRecommendation,
+
+                proposedAction:
+                    proposedAction,
+
+                gate:
+                    gateStatus,
+
+                actionStatus:
+                    actionStatus
+            }
+        );
+
+    }
+
+
+    /* ========================================================
+       RECOMMENDED ACTION DISPLAY
+    ======================================================== */
+
+    function findRecommendedAction(
+        actions
+    ) {
+
+        if (!actions) {
+
+            return null;
+
+        }
+
+
+        if (
+            typeof actions ===
+                "string"
+        ) {
+
+            return actions;
+
+        }
+
+
+        if (
+            actions.primaryRecommendation
+        ) {
+
+            return actions.primaryRecommendation;
+
+        }
+
+
+        if (
+            actions.recommendedAction
+        ) {
+
+            return actions.recommendedAction;
+
+        }
+
+
+        if (
+            actions.action
+        ) {
+
+            return actions.action;
+
+        }
+
+
+        if (
+            actions.operationalStatus
+        ) {
+
+            return actions.operationalStatus;
+
+        }
+
+
+        if (
+            Array.isArray(
+                actions.actions
+            ) &&
+            actions.actions.length > 0
+        ) {
+
+            const first =
+                actions.actions[0];
+
+
+            if (
+                typeof first ===
+                    "string"
+            ) {
+
+                return first;
+
+            }
+
+
+            return (
+                first.recommendation ||
+                first.action ||
+                null
+            );
+
+        }
+
+
+        return null;
+
+    }
+
+
+    function updateRecommendedActionDisplay(
+        actions,
+        result
+    ) {
+
+        const action =
+            findRecommendedAction(
+                actions
+            );
+
+
+        const resultRecommendation =
+            result?.recommendedAction;
+
+
+        const fallback =
+            resultRecommendation?.primaryRecommendation ||
+            resultRecommendation?.recommendedAction ||
+            result?.recommendation ||
+            "Maintain the simulated safe state and continue monitoring the assessed conditions.";
+
+
+        const finalAction =
+            action ||
+            fallback;
+
+
+        setTextAll(
+            [
+                "recommendedAction",
+                "liveRecommendedAction",
+                "actionRecommendation"
+            ],
+            finalAction
+        );
+
+
+        setTextAll(
+            [
+                "recommendedStatus"
+            ],
+            "DECISION SUPPORT"
+        );
+
+    }
+
+
+    /* ========================================================
+       CAPTAIN AI LENA DISPLAY
+    ======================================================== */
+
+    function updateLenaDisplay(
+        actions,
+        result
+    ) {
+
+        const resultRecommendation =
+            result?.recommendedAction;
+
+
+        const recommendation =
+            findRecommendedAction(
+                actions
+            ) ||
+            resultRecommendation?.primaryRecommendation ||
+            resultRecommendation?.recommendedAction ||
+            result?.recommendation ||
+            "Maintain the simulated safe state and continue monitoring the assessed conditions.";
+
+
+        setTextAll(
+            [
+                "lenaStatus",
+                "captainLenaStatus"
+            ],
+            "DECISION SUPPORT"
+        );
+
+
+        setTextAll(
+            [
+                "lenaRecommendation",
+                "captainLenaRecommendation"
+            ],
+            recommendation
+        );
+
+
+        setTextAll(
+            [
+                "lenaUrgency",
+                "captainLenaUrgency"
+            ],
+            resultRecommendation?.urgency ||
+            result?.urgency ||
+            "NORMAL"
+        );
+
+
+        setTextAll(
+            [
+                "lenaResponseMode",
+                "captainLenaResponseMode"
+            ],
+            resultRecommendation?.responseMode ||
+            result?.responseMode ||
+            "SIMULATED DP RESPONSE"
+        );
+
+
+        setTextAll(
+            [
+                "lenaAutonomousCommand",
+                "captainLenaAutonomousCommand"
+            ],
+            "FALSE — NO AUTONOMOUS COMMAND"
+        );
+
+
+        setTextAll(
+            [
+                "lenaUMVAction",
+                "captainLenaUMVAction"
+            ],
+            "SIMULATION ONLY"
+        );
+
+
+        setTextAll(
+            [
+                "lenaDecisionSupportMessage",
+                "captainLenaMessage"
+            ],
+            "Captain AI Lena provides decision support only. Human authority remains final. No operational command is generated."
+        );
+
+    }
+
+
+    /* ========================================================
+       SIMULATED VESSEL STATE
+    ======================================================== */
+
+    function updateVesselStateDisplay(
+        result
+    ) {
+
+        const vessel =
+            getUpdatedState(
+                result
+            );
+
+
+        const simulated =
+            getSimulatedAction(
+                result
+            );
+
+
+        const positionError =
+            vessel.positionError !==
+                undefined
+
+                ? vessel.positionError
+
+                : vessel.position?.error !==
+                    undefined
+
+                    ? vessel.position.error
+
+                    : 0;
+
+
+        const simulatedCommand =
+            vessel.simulatedCommand !==
+                undefined
+
+                ? vessel.simulatedCommand
+
+                : vessel.command !==
+                    undefined
+
+                    ? vessel.command
+
+                    : simulated.simulatedCommand !==
+                        undefined
+
+                        ? simulated.simulatedCommand
+
+                        : 0;
+
+
+        const stabilityIndex =
+            vessel.stabilityIndex !==
+                undefined
+
+                ? vessel.stabilityIndex
+
+                : vessel.stability !==
+                    undefined
+
+                    ? vessel.stability
+
+                    : 100;
+
+
+        const vesselStatus =
+            vessel.state ||
+            vessel.status ||
+            simulated.status ||
+            "STABLE";
+
+
+        setTextAll(
+            [
+                "positionError",
+                "livePositionError"
+            ],
+            Number(
+                positionError
+            ).toFixed(2)
+        );
+
+
+        setTextAll(
+            [
+                "simulatedCommand",
+                "liveSimulatedCommand"
+            ],
+            simulatedCommand
+        );
+
+
+        setTextAll(
+            [
+                "stabilityIndex",
+                "liveStabilityIndex"
+            ],
+            Number(
+                stabilityIndex
+            ).toFixed(2)
+        );
+
+
+        setTextAll(
+            [
+                "vesselState",
+                "liveVesselState"
+            ],
+            vesselStatus
+        );
+
+    }
+
+
+    /* ========================================================
+       HUMAN AUTHORITY DISPLAY
+    ======================================================== */
+
+    function updateHumanAuthorityDisplay(
+        result
+    ) {
+
+        const human =
+            result?.human ||
+            {};
+
+
+        const gate =
+            result?.executionGate ||
+            result?.humanAuthorityGate ||
+            {};
+
+
+        let message =
+            "HUMAN AUTHORIZATION REQUIRED";
+
+
+        if (
+            gate.blocked === true
+        ) {
+
+            message =
+                "PUSH-UP BLOCKED — RESERVE NOT VERIFIED";
+
+        } else if (
+            human.decision ===
+                "MAINTAIN_SAFE_STATE"
+        ) {
+
+            message =
+                "SAFE STATE MAINTAINED — SIMULATED";
+
+        } else if (
+            human.decision ===
+                "AUTHORIZE_SIMULATED_RESPONSE"
+        ) {
+
+            message =
+                "SIMULATED RESPONSE AUTHORIZED — NO REAL COMMAND";
+
+        } else if (
+            human.decision ===
+                "ACKNOWLEDGED"
+        ) {
+
+            message =
+                "CONDITION ACKNOWLEDGED — HUMAN DECISION PENDING";
+
+        }
+
+
+        setTextAll(
+            [
+                "humanDecisionStatus",
+                "humanAuthorityStatus",
+                "decisionAuthorityStatus"
+            ],
+            message
+        );
+
+
+        /*
+         * Preserve the specific reserve gate.
+         *
+         * A generic human-authorization message must never
+         * overwrite a reserve-blocked PUSH-UP condition.
+         */
+
+        if (
+            gate.blocked === true
+        ) {
+
+            setTextAll(
+                [
+                    "gate",
+                    "executionGate",
+                    "decisionGate"
+                ],
+                gate.status ||
+                "BLOCKED — RESERVE NOT VERIFIED"
+            );
+
+
+            setTextAll(
+                [
+                    "executionStatus",
+                    "liveExecutionStatus"
+                ],
+                "SIMULATION HOLD / RESERVE GATE"
+            );
+
+
+        } else {
+
+            setTextAll(
+                [
+                    "gate",
+                    "executionGate",
+                    "decisionGate"
+                ],
+                gate.status ||
+                "HUMAN AUTHORIZATION REQUIRED"
+            );
+
+
+            setTextAll(
+                [
+                    "executionStatus",
+                    "liveExecutionStatus"
+                ],
+                result?.simulatedAction?.status ||
+                "HUMAN AUTHORIZATION REQUIRED"
+            );
+
+        }
+
+    }
+
+
+    /* ========================================================
+       HUMAN DECISION — AUTHORITATIVE ENGINE
+    ======================================================== */
+
+    function acknowledgeCondition(
+        reason
+    ) {
+
+        const acknowledge =
+            discoverHumanEngineMethod(
+                "acknowledgeHumanDecision"
+            );
+
+
+        if (!acknowledge) {
+
+            setHumanAuthorityStatus(
+                "ENGINE HUMAN-DECISION API NOT AVAILABLE"
+            );
+
+
+            return {
+
+                acknowledged:
+                    false,
+
+                authorized:
+                    false,
+
+                executed:
+                    false,
+
+                autonomousCommand:
+                    false
+
+            };
+
+        }
+
+
+        const result =
+            acknowledge(
+                reason ||
+                "Human operator acknowledged the simulated condition."
+            );
+
+
+        if (
+            result &&
+            result.success === false
+        ) {
+
+            setHumanAuthorityStatus(
+                result.message ||
+                "NO PENDING SIMULATION"
+            );
+
+
+            return result;
+
+        }
+
+
+        window.lastDPSimulation =
+            result;
+
+
+        updateAssessment(
+            result,
+            executeRecommendedActions(result),
+            extractReserveVerification(result),
+            result.systemSetup
+        );
+
+
+        updateHumanAuthorityDisplay(
+            result
+        );
+
+
+        log(
+            "HUMAN ACKNOWLEDGEMENT ACCEPTED BY AUTHORITATIVE ENGINE"
+        );
+
+
+        return result;
+
+    }
+
+
+    function maintainSafeState(
+        reason
+    ) {
+
+        const maintain =
+            discoverHumanEngineMethod(
+                "maintainSafeState"
+            );
+
+
+        if (!maintain) {
+
+            setHumanAuthorityStatus(
+                "ENGINE HUMAN-DECISION API NOT AVAILABLE"
+            );
+
+
+            return {
+
+                acknowledged:
+                    false,
+
+                authorized:
+                    false,
+
+                executed:
+                    false,
+
+                autonomousCommand:
+                    false
+
+            };
+
+        }
+
+
+        const result =
+            maintain(
+                reason ||
+                "Human operator elected to maintain the simulated safe state."
+            );
+
+
+        if (
+            result &&
+            result.success === false
+        ) {
+
+            setHumanAuthorityStatus(
+                result.message ||
+                "NO PENDING SIMULATION"
+            );
+
+
+            return result;
+
+        }
+
+
+        window.lastDPSimulation =
+            result;
+
+
+        updateAssessment(
+            result,
+            executeRecommendedActions(result),
+            extractReserveVerification(result),
+            result.systemSetup
+        );
+
+
+        updateHumanAuthorityDisplay(
+            result
+        );
+
+
+        log(
+            "HUMAN DECISION: MAINTAIN SAFE STATE"
+        );
+
+
+        return result;
+
+    }
+
+
+    function authorizeSimulatedResponse(
+        reason
+    ) {
+
+        const current =
+            window.lastDPSimulation;
+
+
+        if (!current) {
+
+            setHumanAuthorityStatus(
+                "NO SIMULATION RESULT — AUTHORIZATION NOT AVAILABLE"
+            );
+
+
+            return {
+
+                authorized:
+                    false,
+
+                executed:
+                    false,
+
+                autonomousCommand:
+                    false
+
+            };
+
+        }
+
+
+        const setup =
+            current.systemSetup ||
+            readSystemSetup();
+
+
+        const reserve =
+            extractReserveVerification(
+                current
+            );
+
+
+        /*
+         * Controller-side pre-gate.
+         *
+         * The authoritative engine remains the final gate.
+         */
+
+        if (
+            setup.engineLoadMode ===
+                ENGINE_LOAD_MODES.PUSH_UP &&
+            reserve.reserveVerified !==
+                true
+        ) {
+
+            setHumanAuthorityStatus(
+                "PUSH-UP BLOCKED — RESERVE NOT VERIFIED"
+            );
+
+
+            setTextAll(
+                [
+                    "executionStatus",
+                    "liveExecutionStatus"
+                ],
+                "SIMULATION HOLD / RESERVE GATE"
+            );
+
+
+            return {
+
+                authorized:
+                    false,
+
+                executed:
+                    false,
+
+                blocked:
+                    true,
+
+                reason:
+                    "RESERVE NOT VERIFIED",
+
+                autonomousCommand:
+                    false
+
+            };
+
+        }
+
+
+        /*
+         * Human acknowledgement must occur first.
+         */
+
+        if (
+            current.human &&
+            current.human.acknowledged !==
+                true
+        ) {
+
+            setHumanAuthorityStatus(
+                "HUMAN ACKNOWLEDGEMENT REQUIRED BEFORE AUTHORIZATION"
+            );
+
+
+            return {
+
+                authorized:
+                    false,
+
+                executed:
+                    false,
+
+                blocked:
+                    true,
+
+                reason:
+                    "HUMAN ACKNOWLEDGEMENT REQUIRED",
+
+                autonomousCommand:
+                    false
+
+            };
+
+        }
+
+
+        const authorize =
+            discoverHumanEngineMethod(
+                "authorizeSimulatedResponse"
+            );
+
+
+        if (!authorize) {
+
+            setHumanAuthorityStatus(
+                "ENGINE HUMAN-AUTHORIZATION API NOT AVAILABLE"
+            );
+
+
+            return {
+
+                authorized:
+                    false,
+
+                executed:
+                    false,
+
+                autonomousCommand:
+                    false
+
+            };
+
+        }
+
+
+        const result =
+            authorize(
+                reason ||
+                "Human operator authorized the proposed simulated response."
+            );
+
+
+        if (
+            result &&
+            result.success === false
+        ) {
+
+            setHumanAuthorityStatus(
+                result.message ||
+                "SIMULATED RESPONSE AUTHORIZATION NOT ACCEPTED"
+            );
+
+
+            return result;
+
+        }
+
+
+        window.lastDPSimulation =
+            result;
+
+
+        updateAssessment(
+            result,
+            executeRecommendedActions(result),
+            extractReserveVerification(result),
+            result.systemSetup
+        );
+
+
+        updateHumanAuthorityDisplay(
+            result
+        );
+
+
+        log(
+            "SIMULATED RESPONSE AUTHORIZED THROUGH AUTHORITATIVE ENGINE"
+        );
+
+
+        return result;
+
+    }
+
+
+    function setHumanAuthorityStatus(
+        message
+    ) {
+
+        setTextAll(
+            [
+                "humanDecisionStatus",
+                "humanAuthorityStatus",
+                "decisionAuthorityStatus"
+            ],
+            message
+        );
+
+
+        log(
+            "HUMAN AUTHORITY:",
+            message
+        );
+
+    }
+
+
+    /* ========================================================
+       SIMULATED DP RESPONSE DISPLAY
+    ======================================================== */
+
+    function simulatedDPResponse(
+        result,
+        humanDecision
+    ) {
+
+        const setup =
+            result?.systemSetup ||
+            readSystemSetup();
+
+
+        const reserve =
+            extractReserveVerification(
+                result
+            );
+
+
+        const authoritativeAction =
+            getSimulatedAction(
+                result
+            );
+
+
+        let response;
+
+
+        if (
+            authoritativeAction.response
+        ) {
+
+            response =
+                authoritativeAction.response;
+
+        } else if (
+            authoritativeAction.action
+        ) {
+
+            response =
+                authoritativeAction.action;
+
+        } else if (
+            setup.engineLoadMode ===
+                ENGINE_LOAD_MODES.PUSH_UP
+        ) {
+
+            if (
+                reserve.reserveVerified ===
+                    true
+            ) {
+
+                response =
+                    "PUSH-UP SIMULATION PERMITTED FOR HUMAN REVIEW";
+
+            } else {
+
+                response =
+                    "PUSH-UP BLOCKED — RESERVE NOT VERIFIED";
+
+            }
+
+        } else {
+
+            response =
+                "NORMAL LOAD — HUMAN REVIEW REQUIRED";
+
+        }
+
+
+        const blocked =
+            setup.engineLoadMode ===
+                ENGINE_LOAD_MODES.PUSH_UP &&
+            reserve.reserveVerified !==
+                true;
+
+
+        const output = {
+
+            executed:
+                false,
+
+            humanAuthorizationRequired:
+                true,
+
+            humanDecision:
+                humanDecision ||
+                null,
+
+            realVesselConnection:
+                false,
+
+            autonomousCommand:
+                false,
+
+            simulatedOnly:
+                true,
+
+            response:
+                response,
+
+            blocked:
+                blocked,
+
+            reserveVerified:
+                reserve.reserveVerified
+
+        };
+
+
+        setTextAll(
+            [
+                "responseMode",
+                "simulatedResponseMode"
+            ],
+            "SIMULATED DP RESPONSE"
+        );
+
+
+        setTextAll(
+            [
+                "proposedAction",
+                "simulatedProposedAction"
+            ],
+            response
+        );
+
+
+        setTextAll(
+            [
+                "gate",
+                "executionGate"
+            ],
+            blocked
+
+                ? "BLOCKED — RESERVE NOT VERIFIED"
+
+                : "HUMAN AUTHORIZATION REQUIRED"
+        );
+
+
+        setTextAll(
+            [
+                "actionStatus",
+                "simulatedActionStatus"
+            ],
+            blocked
+
+                ? "SIMULATION HOLD / RESERVE GATE"
+
+                : "SIMULATION ONLY — NO REAL EXECUTION"
+        );
+
+
+        return output;
+
+    }
+
+
+    /* ========================================================
+       CONTROLLER HUMAN GATE
+    ======================================================== */
+
+    function applyHumanAuthority(
+        result,
+        reserveVerification
+    ) {
+
+        const setup =
+            result?.systemSetup ||
+            readSystemSetup();
+
+
+        const reserve =
+            reserveVerification ||
+            extractReserveVerification(
+                result
+            );
+
+
+        const gate = {
+
+            humanAuthorizationRequired:
+                true,
+
+            humanAuthority:
+                HUMAN_AUTHORITY,
+
+            autonomousCommand:
+                false,
+
+            realVesselConnection:
+                false,
+
+            executed:
+                false,
+
+            authorized:
+                false
+
+        };
+
+
+        if (
+            setup.engineLoadMode ===
+                ENGINE_LOAD_MODES.PUSH_UP &&
+            reserve.reserveVerified !==
+                true
+        ) {
+
+            gate.blocked =
+                true;
+
+            gate.reason =
+                "RESERVE NOT VERIFIED";
+
+
+            gate.status =
+                "BLOCKED — RESERVE NOT VERIFIED";
+
+
+            return gate;
+
+        }
+
+
+        gate.status =
+            "HUMAN AUTHORIZATION REQUIRED";
+
+
+        return gate;
+
+    }
+
+
+    /* ========================================================
+       MAIN PIPELINE
+    ======================================================== */
+
+    function runPipeline() {
+
+        try {
+
+            log(
+                "================================================"
+            );
+
+
+            log(
+                "STARTING DP V&V SIMULATION"
+            );
+
+
+            log(
+                "MODULE:",
+                MODULE_NAME
+            );
+
+
+            log(
+                "VERSION:",
+                VERSION
+            );
+
+
+            displaySafety();
+
+
+            const setup =
+                updateSystemSetupDisplay(
+                    readSystemSetup()
+                );
+
+
+            const environment =
+                readEnvironment();
+
+
+            updateEnvironmentDisplay(
+                environment
+            );
+
+
+            setTextAll(
+                [
+                    "engineStatus",
+                    "liveEngineStatus"
+                ],
+                "CONNECTED — RUNNING"
+            );
+
+
+            setTextAll(
+                [
+                    "environmentStatus",
+                    "liveEnvironmentStatus"
+                ],
+                "PROCESSING"
+            );
+
+
+            /* ------------------------------------------------
+               AUTHORITATIVE ENGINE
+            ------------------------------------------------ */
+
+            const result =
+                executeEngine(
+                    environment
+                );
+
+
+            /* ------------------------------------------------
+               AUTHORITATIVE SETUP
+            ------------------------------------------------ */
+
+            const authoritativeSetup =
+                result.systemSetup ||
+                setup;
+
+
+            updateSystemSetupDisplay(
+                authoritativeSetup
+            );
+
+
+            /* ------------------------------------------------
+               RECOMMENDED ACTIONS
+            ------------------------------------------------ */
+
+            const actions =
+                executeRecommendedActions(
+                    result
+                );
+
+
+            /* ------------------------------------------------
+               RESERVE VERIFICATION
+            ------------------------------------------------ */
+
+            const reserveVerification =
+                extractReserveVerification(
+                    result
+                );
+
+
+            /* ------------------------------------------------
+               HUMAN GATE
+            ------------------------------------------------ */
+
+            const humanGate =
+                applyHumanAuthority(
+                    result,
+                    reserveVerification
+                );
+
+
+            /* ------------------------------------------------
+               SIMULATED RESPONSE DISPLAY
+            ------------------------------------------------ */
+
+            const simulatedResponse =
+                simulatedDPResponse(
+                    result,
+                    humanGate
+                );
+
+
+            /* ------------------------------------------------
+               CONTROLLER METADATA
+            ------------------------------------------------ */
+
+            result.humanAuthorityGate =
+                humanGate;
+
+
+            result.simulatedDPResponse =
+                simulatedResponse;
+
+
+            result.recommendedActions =
+                actions;
+
+
+            result.cockpitAudit = {
+
+                module:
+                    MODULE_NAME,
+
+                version:
+                    VERSION,
+
+                timestamp:
+                    new Date()
+                        .toISOString(),
+
+                systemSetup:
+                    authoritativeSetup,
+
+                reservePowerVerification:
+                    reserveVerification,
+
+                humanAuthority:
+                    HUMAN_AUTHORITY,
+
+                autonomousCommand:
+                    false,
+
+                realVesselConnection:
+                    false,
+
+                simulatedOnly:
+                    true
+
+            };
+
+
+            /* ------------------------------------------------
+               UPDATE SCREEN
+            ------------------------------------------------ */
+
+            updateAssessment(
+                result,
+                actions,
+                reserveVerification,
+                authoritativeSetup
+            );
+
+
+            setTextAll(
+                [
+                    "engineStatus",
+                    "liveEngineStatus"
+                ],
+                "CONNECTED — READY"
+            );
+
+
+            setTextAll(
+                [
+                    "environmentStatus",
+                    "liveEnvironmentStatus"
+                ],
+                "INPUTS PROCESSED"
+            );
+
+
+            setTextAll(
+                [
+                    "primaryAIStatus",
+                    "livePrimaryAI"
+                ],
+                result.primary?.mode ||
+                "NORMAL CONTROL"
+            );
+
+
+            setTextAll(
+                [
+                    "secondaryAIStatus",
+                    "liveSecondaryAI"
+                ],
+                result.secondary?.mode ||
+                "INDEPENDENT MONITORING"
+            );
+
+
+            setTextAll(
+                [
+                    "stabilizerStatus",
+                    "liveStabilizer"
+                ],
+                result.stabilizer?.status ||
+                result.stabilizer?.mode ||
+                "STABLE"
+            );
+
+
+            updateHumanAuthorityDisplay(
+                result
+            );
+
+
+            /*
+             * Keep the specific reserve safety condition
+             * visible at system level.
+             */
+
+            if (
+                humanGate.blocked === true
+            ) {
+
+                setTextAll(
+                    [
+                        "systemStatus",
+                        "liveSystemStatus"
+                    ],
+                    "SIMULATION COMPLETE — RESERVE GATE ACTIVE"
+                );
+
+            } else {
+
+                setTextAll(
+                    [
+                        "systemStatus",
+                        "liveSystemStatus"
+                    ],
+                    "SIMULATION COMPLETE — HUMAN DECISION PENDING"
+                );
+
+            }
+
+
+            /* ------------------------------------------------
+               GLOBAL RESEARCH REFERENCES
+            ------------------------------------------------ */
+
+            window.lastDPSimulation =
+                result;
+
+
+            window.lastDPRecommendedActions =
+                actions;
+
+
+            log(
+                "SIMULATION COMPLETE — PENDING HUMAN DECISION"
+            );
+
+
+            log(
+                "AUTHORITATIVE RESERVE:",
+                reserveVerification
+            );
+
+
+            log(
+                "HUMAN AUTHORITY REMAINS FINAL"
+            );
+
+
+            log(
+                "NO AUTONOMOUS OPERATIONAL EXECUTION"
+            );
+
+
+            log(
+                "================================================"
+            );
+
+
+            return result;
+
+        } catch (error) {
+
+            console.error(
+                "[Sextant DP Cockpit] SIMULATION ERROR:",
+                error
+            );
+
+
+            setTextAll(
+                [
+                    "engineStatus",
+                    "liveEngineStatus"
+                ],
+                "ENGINE ERROR"
+            );
+
+
+            setTextAll(
+                [
+                    "systemStatus",
+                    "liveSystemStatus"
+                ],
+                "SIMULATION ERROR"
+            );
+
+
+            setTextAll(
+                [
+                    "executionStatus",
+                    "liveExecutionStatus"
+                ],
+                "HUMAN AUTHORIZATION REQUIRED"
+            );
+
+
+            setTextAll(
+                [
+                    "assessmentOutput",
+                    "assessmentResult"
+                ],
+                "SIMULATION ERROR\n\n" +
+                error.message
+            );
+
+
+            setTextAll(
+                [
+                    "auditOutput",
+                    "auditResult"
+                ],
+                safeJSON({
+
+                    module:
+                        MODULE_NAME,
+
+                    version:
+                        VERSION,
+
+                    error:
+                        error.message,
+
+                    timestamp:
+                        new Date()
+                            .toISOString()
+
+                })
+            );
+
+
+            return null;
+
+        }
+
+    }
+
+
+    /* ========================================================
+       RESET
+    ======================================================== */
+
+    function resetCockpit() {
+
+        log(
+            "RESETTING DP V&V COCKPIT"
+        );
+
+
+        setValue(
+            [
+                "wind",
+                "windSpeed",
+                "windForce"
+            ],
+            0
+        );
+
+
+        setValue(
+            [
+                "current",
+                "currentSpeed",
+                "currentForce"
+            ],
+            0
+        );
+
+
+        setValue(
+            [
+                "wave",
+                "waveHeight",
+                "waveForce"
+            ],
+            0
+        );
+
+
+        setValue(
+            [
+                "tidal",
+                "tide",
+                "tidalForce"
+            ],
+            0
+        );
+
+
+        setValue(
+            [
+                "positioningMode",
+                "positionMode",
+                "biasMode"
+            ],
+            POSITIONING_MODES.NON_BIAS
+        );
+
+
+        setValue(
+            [
+                "engineLoadMode",
+                "loadMode",
+                "engineMode"
+            ],
+            ENGINE_LOAD_MODES.NORMAL
+        );
+
+
+        updateSystemSetupDisplay({
+
+            positioningMode:
+                POSITIONING_MODES.NON_BIAS,
+
+            engineLoadMode:
+                ENGINE_LOAD_MODES.NORMAL
+
+        });
+
+
+        updateReservePowerDisplay({
+
+            reserveVerified:
+                false,
+
+            availableReserve:
+                null,
+
+            requiredReserve:
+                0,
+
+            status:
+                "NOT VERIFIED"
+
+        });
+
+
+        setTextAll(
+            [
+                "environmentStatus",
+                "liveEnvironmentStatus"
+            ],
+            "WAITING"
+        );
+
+
+        setTextAll(
+            [
+                "systemStatus",
+                "liveSystemStatus"
+            ],
+            "READY"
+        );
+
+
+        setTextAll(
+            [
+                "engineStatus",
+                "liveEngineStatus"
+            ],
+            "CONNECTED — READY"
+        );
+
+
+        setTextAll(
+            [
+                "executionStatus",
+                "liveExecutionStatus"
+            ],
+            "HUMAN AUTHORIZATION REQUIRED"
+        );
+
+
+        setTextAll(
+            [
+                "humanDecisionStatus",
+                "humanAuthorityStatus",
+                "decisionAuthorityStatus"
+            ],
+            "HUMAN AUTHORIZATION REQUIRED"
+        );
+
+
+        setTextAll(
+            [
+                "assessmentOutput",
+                "assessmentResult"
+            ],
+            "Awaiting simulation."
+        );
+
+
+        setTextAll(
+            [
+                "auditOutput",
+                "auditResult"
+            ],
+            "Awaiting simulation."
+        );
+
+
+        setTextAll(
+            [
+                "recommendedAction",
+                "liveRecommendedAction",
+                "actionRecommendation"
+            ],
+            "—"
+        );
+
+
+        setTextAll(
+            [
+                "lenaRecommendation",
+                "captainLenaRecommendation"
+            ],
+            "Maintain the simulated safe state and continue monitoring the assessed conditions."
+        );
+
+
+        setTextAll(
+            [
+                "lenaUrgency",
+                "captainLenaUrgency"
+            ],
+            "NORMAL"
+        );
+
+
+        setTextAll(
+            [
+                "positionError",
+                "livePositionError"
+            ],
+            "0.00"
+        );
+
+
+        setTextAll(
+            [
+                "simulatedCommand",
+                "liveSimulatedCommand"
+            ],
+            "0"
+        );
+
+
+        setTextAll(
+            [
+                "stabilityIndex",
+                "liveStabilityIndex"
+            ],
+            "100"
+        );
+
+
+        setTextAll(
+            [
+                "vesselState",
+                "liveVesselState"
+            ],
+            "STABLE"
+        );
+
+
+        window.lastDPSimulation =
+            null;
+
+
+        window.lastDPRecommendedActions =
+            null;
+
+
+        log(
+            "RESET COMPLETE"
+        );
+
+    }
+
+
+    /* ========================================================
+       SCENARIO SUPPORT
+    ======================================================== */
+
+    function setScenario(
+        name,
+        wind,
+        current,
+        wave,
+        tidal
+    ) {
+
+        setValue(
+            [
+                "wind",
+                "windSpeed",
+                "windForce"
+            ],
+            wind
+        );
+
+
+        setValue(
+            [
+                "current",
+                "currentSpeed",
+                "currentForce"
+            ],
+            current
+        );
+
+
+        setValue(
+            [
+                "wave",
+                "waveHeight",
+                "waveForce"
+            ],
+            wave
+        );
+
+
+        setValue(
+            [
+                "tidal",
+                "tide",
+                "tidalForce"
+            ],
+            tidal
+        );
+
+
+        updateEnvironmentDisplay({
+
+            wind:
+                wind,
+
+            current:
+                current,
+
+            wave:
+                wave,
+
+            tidal:
+                tidal
+
+        });
+
+
+        setTextAll(
+            [
+                "environmentStatus",
+                "liveEnvironmentStatus"
+            ],
+            "SCENARIO LOADED — READY TO RUN"
+        );
+
+
+        log(
+            "SCENARIO LOADED:",
+            name
+        );
+
+
+        log(
+            "SCENARIO INPUTS:",
+            {
+                wind,
+                current,
+                wave,
+                tidal
+            }
+        );
+
+
+        return {
+
+            name,
+            wind,
+            current,
+            wave,
+            tidal
+
+        };
+
+    }
+
+
+    function normalScenario() {
+
+        return setScenario(
+            "NORMAL",
+            0,
+            0,
+            0,
+            0
+        );
+
+    }
+
+
+    function moderateWeatherScenario() {
+
+        return setScenario(
+            "MODERATE WEATHER",
+            30,
+            30,
+            30,
+            30
+        );
+
+    }
+
+
+    function heavyWeatherScenario() {
+
+        return setScenario(
+            "HEAVY WEATHER",
+            60,
+            60,
+            60,
+            60
+        );
+
+    }
+
+
+    function criticalScenario() {
+
+        return setScenario(
+            "CRITICAL",
+            90,
+            90,
+            90,
+            90
+        );
+
+    }
+
+
+    function currentSurgeScenario() {
+
+        return setScenario(
+            "CURRENT SURGE",
+            20,
+            80,
+            20,
+            20
+        );
+
+    }
+
+
+    function heavySeaStateScenario() {
+
+        return setScenario(
+            "HEAVY SEA STATE",
+            20,
+            30,
+            90,
+            30
+        );
+
+    }
+
+
+    function windGustScenario() {
+
+        return setScenario(
+            "WIND GUST",
+            90,
+            20,
+            30,
+            20
+        );
+
+    }
+
+
+    function combinedDisturbanceScenario() {
+
+        return setScenario(
+            "COMBINED DISTURBANCE",
+            80,
+            80,
+            80,
+            80
+        );
+
+    }
+
+
+    function randomScenario() {
+
+        function randomStress() {
+
+            return Math.floor(
+                Math.random() * 101
+            );
+
+        }
+
+
+        return setScenario(
+            "RANDOM",
+            randomStress(),
+            randomStress(),
+            randomStress(),
+            randomStress()
+        );
+
+    }
+
+
+    /* ========================================================
+       SCENARIO GLOBAL COMPATIBILITY
+    ======================================================== */
+
+    window.normalScenario =
+        normalScenario;
+
+    window.moderateWeatherScenario =
+        moderateWeatherScenario;
+
+    window.heavyWeatherScenario =
+        heavyWeatherScenario;
+
+    window.criticalScenario =
+        criticalScenario;
+
+    window.currentSurgeScenario =
+        currentSurgeScenario;
+
+    window.heavySeaStateScenario =
+        heavySeaStateScenario;
+
+    window.windGustScenario =
+        windGustScenario;
+
+    window.combinedDisturbanceScenario =
+        combinedDisturbanceScenario;
+
+    window.randomScenario =
+        randomScenario;
+
+
+    /* ========================================================
+       BUTTON WIRING
+    ======================================================== */
+
+    function wireButton(
+        ids,
+        handler
+    ) {
+
+        const button =
+            firstById(
+                Array.isArray(ids)
+                    ? ids
+                    : [ids]
+            );
+
+
+        if (!button) {
+
+            return false;
+
+        }
+
+
+        /*
+         * Prevent duplicate controller listeners.
+         */
+
+        if (
+            button.dataset &&
+            button.dataset.sextantWired ===
+                "true"
+        ) {
+
+            return true;
+
+        }
+
+
+        button.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                handler(event);
+
+            }
+        );
+
+
+        if (
+            button.dataset
+        ) {
+
+            button.dataset.sextantWired =
+                "true";
+
+        }
+
+
+        return true;
+
+    }
+
+
+    function wireScenarioButtons() {
+
+        wireButton(
+            [
+                "normalScenario",
+                "normalScenarioButton"
+            ],
+            normalScenario
+        );
+
+
+        wireButton(
+            [
+                "moderateWeatherScenario",
+                "moderateWeatherButton"
+            ],
+            moderateWeatherScenario
+        );
+
+
+        wireButton(
+            [
+                "heavyWeatherScenario",
+                "heavyWeatherButton"
+            ],
+            heavyWeatherScenario
+        );
+
+
+        wireButton(
+            [
+                "criticalScenario",
+                "criticalScenarioButton"
+            ],
+            criticalScenario
+        );
+
+
+        wireButton(
+            [
+                "currentSurgeScenario",
+                "currentSurgeButton"
+            ],
+            currentSurgeScenario
+        );
+
+
+        wireButton(
+            [
+                "heavySeaStateScenario",
+                "heavySeaStateButton"
+            ],
+            heavySeaStateScenario
+        );
+
+
+        wireButton(
+            [
+                "windGustScenario",
+                "windGustButton"
+            ],
+            windGustScenario
+        );
+
+
+        wireButton(
+            [
+                "combinedDisturbanceScenario",
+                "combinedDisturbanceButton"
+            ],
+            combinedDisturbanceScenario
+        );
+
+
+        wireButton(
+            [
+                "randomScenario",
+                "randomScenarioButton"
+            ],
+            randomScenario
+        );
+
+    }
+
+
+    function wireSystemSetup() {
+
+        const positioning =
+            firstById([
+                "positioningMode",
+                "positionMode",
+                "biasMode"
+            ]);
+
+
+        const load =
+            firstById([
+                "engineLoadMode",
+                "loadMode",
+                "engineMode"
+            ]);
+
+
+        if (
+            positioning &&
+            positioning.dataset.sextantSetupWired !==
+                "positioning"
+        ) {
+
+            positioning.addEventListener(
+                "change",
+                function () {
+
+                    updateSystemSetupDisplay(
+                        readSystemSetup()
+                    );
+
+                }
+            );
+
+
+            positioning.dataset.sextantSetupWired =
+                "positioning";
+
+        }
+
+
+        if (
+            load &&
+            load.dataset.sextantSetupWired !==
+                "load"
+        ) {
+
+            load.addEventListener(
+                "change",
+                function () {
+
+                    const setup =
+                        readSystemSetup();
+
+
+                    updateSystemSetupDisplay(
+                        setup
+                    );
+
+
+                    /*
+                     * PUSH-UP selection invalidates
+                     * previous reserve verification.
+                     *
+                     * No assumption of reserve is made.
+                     */
+
+                    if (
+                        setup.engineLoadMode ===
+                            ENGINE_LOAD_MODES.PUSH_UP
+                    ) {
+
+                        updateReservePowerDisplay({
+
+                            reserveVerified:
+                                false,
+
+                            availableReserve:
+                                null,
+
+                            requiredReserve:
+                                15,
+
+                            status:
+                                "AWAITING AUTHORITATIVE VERIFICATION"
+
+                        });
+
+
+                        setTextAll(
+                            [
+                                "executionStatus",
+                                "liveExecutionStatus"
+                            ],
+                            "PUSH-UP SELECTED — RESERVE VERIFICATION REQUIRED"
+                        );
+
+                    } else {
+
+                        /*
+                         * NORMAL mode also requires a fresh
+                         * authoritative simulation before the
+                         * reserve state is displayed as verified.
+                         */
+
+                        updateReservePowerDisplay({
+
+                            reserveVerified:
+                                false,
+
+                            availableReserve:
+                                null,
+
+                            requiredReserve:
+                                0,
+
+                            status:
+                                "NOT VERIFIED"
+
+                        });
+
+
+                        setTextAll(
+                            [
+                                "executionStatus",
+                                "liveExecutionStatus"
+                            ],
+                            "HUMAN AUTHORIZATION REQUIRED"
+                        );
+
+                    }
+
+                }
+            );
+
+
+            load.dataset.sextantSetupWired =
+                "load";
+
+        }
+
+    }
+
+
+    function wireUI() {
+
+        /*
+         * MAIN RUN
+         */
+
+        wireButton(
+            [
+                "runSimulation",
+                "runSimulationButton",
+                "runVvSimulation",
+                "runDPButton",
+                "simulateButton",
+                "startSimulation"
+            ],
+            runPipeline
+        );
+
+
+        /*
+         * RESET
+         */
+
+        wireButton(
+            [
+                "resetSimulation",
+                "resetSimulationButton",
+                "resetSystem",
+                "resetDPButton",
+                "resetButton"
+            ],
+            resetCockpit
+        );
+
+
+        /*
+         * ENGINE TEST
+         */
+
+        wireButton(
+            [
+                "testEngine",
+                "engineTest",
+                "testDPEngine"
+            ],
+            validateWiring
+        );
+
+
+        /*
+         * HUMAN AUTHORITY
+         */
+
+        wireButton(
+            [
+                "acknowledgeCondition",
+                "acknowledgeButton"
+            ],
+            acknowledgeCondition
+        );
+
+
+        wireButton(
+            [
+                "maintainSafeState",
+                "maintainSafeStateButton"
+            ],
+            maintainSafeState
+        );
+
+
+        wireButton(
+            [
+                "authorizeSimulatedResponse",
+                "authorizeResponseButton"
+            ],
+            authorizeSimulatedResponse
+        );
+
+
+        wireScenarioButtons();
+
+        wireSystemSetup();
+
+    }
+
+
+    /* ========================================================
+       WIRING VALIDATION
+    ======================================================== */
+
+    function validateWiring() {
+
+        const simulationEngine =
+            discoverSimulationEngine();
+
+
+        const recommendedActions =
+            discoverRecommendedActionsEngine();
+
+
+        const setup =
+            readSystemSetup();
+
+
+        const validation = {
+
+            module:
+                MODULE_NAME,
+
+            version:
+                VERSION,
+
+            simulationEngineConnected:
+                !!simulationEngine,
+
+            simulationEngineVersion:
+                simulationEngine?.version ||
+                SIMULATION_ENGINE_VERSION,
+
+            simulationEngineRun:
+                !!(
+                    simulationEngine &&
+                    typeof
+                        simulationEngine.run ===
+                            "function"
+                ),
+
+            humanAcknowledgeAPI:
+                !!(
+                    simulationEngine &&
+                    typeof
+                        simulationEngine
+                            .acknowledgeHumanDecision ===
+                            "function"
+                ),
+
+            humanMaintainSafeStateAPI:
+                !!(
+                    simulationEngine &&
+                    typeof
+                        simulationEngine
+                            .maintainSafeState ===
+                            "function"
+                ),
+
+            humanAuthorizeAPI:
+                !!(
+                    simulationEngine &&
+                    typeof
+                        simulationEngine
+                            .authorizeSimulatedResponse ===
+                            "function"
+                ),
+
+            recommendedActionsConnected:
+                !!recommendedActions,
+
+            recommendedActionsVersion:
+                recommendedActions?.version ||
+                RECOMMENDED_ACTIONS_VERSION,
+
+            positioningMode:
+                setup.positioningMode,
+
+            engineLoadMode:
+                setup.engineLoadMode,
+
+            pushUpIsPositioningBias:
+                false,
+
+            reserveVerificationRequiredForPushUp:
+                true,
+
+            humanAuthority:
+                HUMAN_AUTHORITY,
+
+            autonomousCommand:
+                false,
+
+            realVesselConnection:
+                false,
+
+            safetyBoundary:
+                SAFETY_BOUNDARY,
+
+            pipeline:
+                PIPELINE.slice()
+
+        };
+
+
+        log(
+            "WIRING VALIDATION:",
+            validation
+        );
+
+
+        setTextAll(
+            [
+                "engineStatus",
+                "liveEngineStatus"
+            ],
+            validation.simulationEngineConnected &&
+            validation.simulationEngineRun
+
+                ? "CONNECTED — READY"
+
+                : "NOT CONNECTED"
+        );
+
+
+        return validation;
+
+    }
+
+
+    function testRecommendedActionsConnection() {
+
+        const engine =
+            retryRecommendedActionsEngine();
+
+
+        const result = {
+
+            connected:
+                !!engine,
+
+            version:
+                engine?.version ||
+                RECOMMENDED_ACTIONS_VERSION
+
+        };
+
+
+        log(
+            "RECOMMENDED ACTIONS TEST:",
+            result
+        );
+
+
+        return result;
+
+    }
+
+
+    /* ========================================================
+       PUBLIC API
+    ======================================================== */
+
+    window.runDPCockpit =
+        runPipeline;
+
+
+    window.runDPSimulation =
+        runPipeline;
+
+
+    window.executeDPSimulation =
+        runPipeline;
+
+
+    /*
+     * BACKWARD COMPATIBILITY
+     */
+
+    window.runSimulation =
+        runPipeline;
+
+
+    window.resetDPCockpit =
+        resetCockpit;
+
+
+    window.resetSimulation =
+        resetCockpit;
+
+
+    window.validateDPWiring =
+        validateWiring;
+
+
+    window.testDPEngineConnection =
+        validateWiring;
+
+
+    window.testRecommendedActionsConnection =
+        testRecommendedActionsConnection;
+
+
+    window.DPCockpit = {
+
+        module:
+            MODULE_NAME,
+
+        version:
+            VERSION,
+
+        simulationEngineVersion:
+            SIMULATION_ENGINE_VERSION,
+
+        recommendedActionsVersion:
+            RECOMMENDED_ACTIONS_VERSION,
+
+        run:
+            runPipeline,
+
+        reset:
+            resetCockpit,
+
+        validate:
+            validateWiring,
+
+        safety:
+            SAFETY_BOUNDARY,
+
+        humanAuthority:
+            HUMAN_AUTHORITY,
+
+        autonomousCommand:
+            AUTONOMOUS_COMMAND,
+
+        realVesselConnection:
+            REAL_VESSEL_CONNECTION,
+
+        positioningModes:
+            POSITIONING_MODES,
+
+        engineLoadModes:
+            ENGINE_LOAD_MODES,
+
+        scenarios: {
+
+            normal:
+                normalScenario,
+
+            moderateWeather:
+                moderateWeatherScenario,
+
+            heavyWeather:
+                heavyWeatherScenario,
+
+            critical:
+                criticalScenario,
+
+            currentSurge:
+                currentSurgeScenario,
+
+            heavySeaState:
+                heavySeaStateScenario,
+
+            windGust:
+                windGustScenario,
+
+            combinedDisturbance:
+                combinedDisturbanceScenario,
+
+            random:
+                randomScenario
+
+        },
+
+        humanAuthorityActions: {
+
+            acknowledge:
+                acknowledgeCondition,
+
+            maintainSafeState:
+                maintainSafeState,
+
+            authorizeSimulatedResponse:
+                authorizeSimulatedResponse
+
+        },
+
+        pipeline:
+            PIPELINE.slice()
+
+    };
+
+
+    /* ========================================================
+       BOOT
+    ======================================================== */
+
+    function boot() {
+
+        log(
+            "================================================"
+        );
+
+
+        log(
+            MODULE_NAME +
+            " v" +
+            VERSION +
+            " BOOT"
+        );
+
+
+        log(
+            "SAFETY:",
+            SAFETY_BOUNDARY
+        );
+
+
+        log(
+            "HUMAN AUTHORITY:",
+            HUMAN_AUTHORITY
+        );
+
+
+        log(
+            "AUTONOMOUS COMMAND:",
+            AUTONOMOUS_COMMAND
+        );
+
+
+        log(
+            "REAL VESSEL CONNECTION:",
+            REAL_VESSEL_CONNECTION
+        );
+
+
+        log(
+            "BIAS = POSITIONING ONLY"
+        );
+
+
+        log(
+            "PUSH-UP = ENGINE LOAD COMPENSATION ONLY"
+        );
+
+
+        log(
+            "PUSH-UP ≠ POSITIONING BIAS"
+        );
+
+
+        log(
+            "PUSH-UP REQUIRES RESERVE-POWER VERIFICATION"
+        );
+
+
+        displaySafety();
+
+
+        /*
+         * Compatibility aliases.
+         */
+
+        window.runSimulation =
+            runPipeline;
+
+
+        window.resetSimulation =
+            resetCockpit;
+
+
+        /*
+         * Wire interface.
+         */
+
+        wireUI();
+
+
+        /*
+         * Validate authoritative engine.
+         */
+
+        validateWiring();
+
+
+        /*
+         * Connect recommended actions.
+         */
+
+        retryRecommendedActionsEngine();
+
+
+        /*
+         * Initial system setup.
+         */
+
+        updateSystemSetupDisplay(
+            readSystemSetup()
+        );
+
+
+        /*
+         * Initial reserve state is NOT VERIFIED.
+         *
+         * It becomes authoritative only after
+         * the simulation engine has run.
+         */
+
+        updateReservePowerDisplay({
+
+            reserveVerified:
+                false,
+
+            availableReserve:
+                null,
+
+            requiredReserve:
+                0,
+
+            status:
+                "NOT VERIFIED"
+
+        });
+
+
+        setTextAll(
+            [
+                "systemStatus",
+                "liveSystemStatus"
+            ],
+            "READY"
+        );
+
+
+        setTextAll(
+            [
+                "environmentStatus",
+                "liveEnvironmentStatus"
+            ],
+            "WAITING"
+        );
+
+
+        setTextAll(
+            [
+                "executionStatus",
+                "liveExecutionStatus"
+            ],
+            "HUMAN AUTHORIZATION REQUIRED"
+        );
+
+
+        log(
+            "COCKPIT READY"
+        );
+
+
+        log(
+            "AUTHORITATIVE ENGINE:",
+            SIMULATION_ENGINE_VERSION
+        );
+
+
+        log(
+            "HUMAN DECISION API: CONNECTED THROUGH ENGINE"
+        );
+
+
+        log(
+            "================================================"
+        );
+
+    }
+
+
+    /* ========================================================
+       START
+    ======================================================== */
+
+    if (
+        document.readyState ===
+            "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            boot
+        );
+
+    } else {
+
+        boot();
+
+    }
+
+
+})();
