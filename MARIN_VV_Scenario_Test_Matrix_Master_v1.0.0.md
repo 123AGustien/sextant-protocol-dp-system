@@ -10,6 +10,131 @@ Architecture: SPD v13.1 / DP Resilience Cockpit
 Purpose: Proposed MARIN engineering / V&V research framework
 Status: Research / V&V Proposal Development
 Branch: "feature/marin-usv-vv-research"
+VESSEL HYDROSTATIC, BUOYANCY, FREEBOARD & TONNAGE DESIGN MATRIX
+
+1. Design Principle
+
+A vessel's stability and survivability are governed by the relationship between:
+
+Hull Geometry → Underwater Displacement Volume → Buoyancy → Draft → Freeboard → Reserve Buoyancy → G / M / GM → GZ → Uprighting Moment
+
+Gross Tonnage (GT) and Net Tonnage (NT) are included in the vessel's dimensional and regulatory architecture, but they are not direct measures of stability or displacement.
+
+---
+
+2. Vessel Design Matrix
+
+ID| Design Element| Primary Definition| Stability / Operational Relevance| V&V Check
+DES-001| Hull Geometry| Physical geometry of the vessel| Determines hydrostatic characteristics and available buoyant volume| Hull/hydrostatic model
+DES-002| Underwater Displacement Volume| Volume of water displaced by the immersed hull| Determines buoyancy for the loading condition| Displacement-volume consistency
+DES-003| Displacement| Vessel mass/weight corresponding to displaced water| Fundamental loading and hydrostatic parameter| Weight/buoyancy balance
+DES-004| Draft| Vertical immersion of the hull| Determines displaced volume and hydrostatic properties| Draft vs hydrostatic data
+DES-005| Waterplane Area| Area of the hull intersected by the water surface| Influences BM and initial stability| Hydrostatic calculation
+DES-006| Freeboard| Vertical distance between the waterline and applicable freeboard/deck reference| Provides protection against excessive immersion and contributes to reserve buoyancy| Freeboard verification
+DES-007| Reserve Buoyancy| Effective watertight volume above the waterline| Provides additional buoyancy as immersion/heel increases| Reserve-buoyancy assessment
+DES-008| Centre of Gravity G| Location of the vessel's total mass| Determines stability relative to the metacentre| KG/VCG calculation
+DES-009| Metacentre M| Hydrostatic reference point associated with small-angle heel| Establishes initial stability relationship with G| KM calculation
+DES-010| Metacentric Height GM| Vertical separation between G and M| Primary initial-stability parameter| GM calculation and limit check
+DES-011| Free-Surface Effect| Reduction in effective stability caused by liquid movement in slack tanks| Can produce a virtual rise of G and reduce effective GM| FSM correction
+DES-012| Angle of List| Equilibrium heel caused by transverse weight shift or heeling moment| Indicates vessel's current equilibrium condition| List-angle assessment
+DES-013| GZ| Righting lever at a specified heel angle| Represents the vessel's restoring capability| Approved GZ curve
+DES-014| Uprighting Moment| Displacement × GZ| Quantifies available restoring moment| Righting/heeling moment comparison
+DES-015| Watertight Integrity| Integrity of hull, compartments and closures| Preserves effective reserve buoyancy| Compartment/closure verification
+DES-016| Flooding Condition| Loss of normally buoyant volume through water ingress| Can reduce freeboard and stability| Damage-stability scenario
+DES-017| Loading Condition| Cargo, ballast, fuel, consumables and other weights| Changes displacement, KG, GM, list and GZ| Loading-condition simulation
+DES-018| Gross Tonnage (GT)| Regulatory measure derived from specified enclosed volume| Regulatory/commercial parameter; not a direct stability parameter| Tonnage calculation
+DES-019| Net Tonnage (NT)| Regulatory measure derived using prescribed tonnage methodology| Regulatory/commercial parameter associated with qualifying spaces; not a direct stability parameter| Tonnage calculation
+
+---
+
+3. Hydrostatic Stability Chain
+
+HULL GEOMETRY
+      ↓
+UNDERWATER DISPLACEMENT VOLUME
+      ↓
+DISPLACEMENT / DRAFT
+      ↓
+WATERPLANE AREA
+      ↓
+BM / KM
+      ↓
+G + FREE-SURFACE CORRECTION
+      ↓
+EFFECTIVE GM
+      ↓
+HEEL ANGLE
+      ↓
+GZ CURVE
+      ↓
+UPRIGHTING MOMENT
+      ↓
+RESIDUAL STABILITY
+
+---
+
+4. Freeboard & Reserve Buoyancy
+
+Freeboard and reserve buoyancy shall be treated as separate but connected design variables.
+
+Parameter| Function
+Freeboard| Protects against excessive immersion and provides vertical margin above the waterline
+Reserve buoyancy| Provides additional effective buoyant volume as the vessel becomes more deeply immersed or heels
+Watertight volume| Allows reserve buoyancy to remain effective
+Downflooding point| Defines a critical limit beyond which openings may allow progressive flooding
+GZ range| Defines the vessel's restoring capability through the applicable heel range
+
+The stability assessment must therefore consider not only whether the vessel has positive GM, but whether sufficient freeboard, reserve buoyancy, GZ and righting moment remain available throughout the applicable operating condition.
+
+---
+
+5. Tonnage Architecture
+
+TOTAL VESSEL ENCLOSED VOLUME
+            ↓
+       TONNAGE RULES
+          ↙     ↘
+        GT       NT
+
+Important distinction
+
+GT ≠ Displacement
+
+NT ≠ Displacement
+
+GT / NT ≠ GM
+
+GT / NT ≠ GZ
+
+GT and NT are standardized tonnage measures derived from vessel volume according to applicable regulatory rules. They should therefore be maintained in the vessel's regulatory and dimensional data layer, while displacement and hydrostatic stability remain in the stability layer.
+
+---
+
+6. Sextant Protocol™ Integration
+
+The vessel model can be divided into five connected layers:
+
+Layer| Core Variables| Function
+L1 — Geometry| Hull, waterplane, compartments| Establish physical vessel model
+L2 — Hydrostatics| Displacement, draft, KM, BM| Establish buoyancy and hydrostatic properties
+L3 — Stability| G, KG, GM, GZ| Determine stability and restoring capability
+L4 — Operations| Ballast, loading, speed, heading, towing, weather| Determine changing operational condition
+L5 — Decision & Audit| Risk, recommendation, human authorization, result| Produce deterministic and auditable decision support
+
+---
+
+7. Golden Stability Principle
+
+«A vessel shall not be considered stable solely because it has positive GM.»
+
+The assessment shall consider, as applicable:
+
+Displacement + Draft + Freeboard + Reserve Buoyancy + KG + GM + Free-Surface Effect + GZ + Righting Moment + Heeling Moment + Downflooding + Loading Condition.
+
+The Sextant Protocol™ decision architecture shall therefore assess the complete vessel state, rather than relying on a single stability parameter.
+
+Human Decision Authority remains responsible for final operational authorization.
+
 
 ---
 
