@@ -4,6 +4,305 @@ MARIN DP / USV RESILIENCE V&V SCENARIO TEST MATRIX
 CRANE, TOWING & ELECTRONIC EQUIPMENT RESILIENCE MATRIX
 SEXTANT PROTOCOL™ — MARIN V&V ARCHITECTURE
 
+VV-049 — ENGINE OVERHEAT / LOAD TRANSFER WITH RESERVE POWER VERIFICATION
+
+SCENARIO
+
+One propulsion or power-generation engine develops an overheating condition while the vessel remains operational.
+
+The system must:
+
+1. Detect and assess the overheating condition.
+2. Reduce or remove load from the affected engine.
+3. Determine whether the remaining engine(s) have sufficient available reserve capacity.
+4. Transfer load only when adequate reserve power has been verified.
+5. Prevent overload of the healthy engine(s).
+6. Maintain vessel safety and stability if load transfer is not safely achievable.
+7. Require human authorization before consequential recovery or load-transfer action.
+
+---
+
+INPUT
+
+Primary inputs:
+
+- Engine A temperature / thermal status
+- Engine B temperature / thermal status
+- Engine A available power
+- Engine B available power
+- Current total vessel power demand
+- Current engine loading
+- Available spinning/reserve capacity
+- Generator/engine operating status
+- Propulsion demand
+- Electrical load demand
+- Environmental operating conditions
+- Fault severity
+- Time-to-limit / thermal margin
+
+Scenario trigger:
+
+"ENGINE_OVERHEAT"
+
+Example:
+
+"Engine A = OVERHEATING"
+
+"Engine B = AVAILABLE"
+
+---
+
+DECISION LOGIC
+
+STEP 1 — OBSERVE
+
+Detect abnormal engine temperature and confirm that the condition exceeds the defined operating threshold.
+
+STEP 2 — VERIFY
+
+Validate:
+
+- overheating signal
+- affected engine status
+- healthy engine status
+- available reserve power
+- present vessel demand
+- transfer capacity
+- thermal margin
+- overload risk
+
+STEP 3 — ASSESS
+
+Calculate whether the healthy engine(s) can safely accept the additional load.
+
+Required condition:
+
+"Available Reserve Power >= Required Transferred Load + Safety Margin"
+
+If TRUE:
+
+"LOAD_TRANSFER_FEASIBLE"
+
+If FALSE:
+
+"LOAD_TRANSFER_NOT_FEASIBLE"
+
+STEP 4 — DECIDE
+
+If sufficient reserve exists:
+
+"REDUCE_AFFECTED_ENGINE_LOAD"
+
+followed by:
+
+"TRANSFER_LOAD_TO_HEALTHY_ENGINE"
+
+If sufficient reserve does not exist:
+
+"DO_NOT_TRANSFER_LOAD"
+
+and:
+
+"MAINTAIN_SAFE_STATE / REDUCE_DEMAND / ESCALATE"
+
+STEP 5 — ACT
+
+No automatic consequential recovery action is permitted without human authorization.
+
+The system presents the operator with the recommended action:
+
+AUTHORIZE_LOAD_TRANSFER
+
+or
+
+MAINTAIN_SAFE_STATE
+
+or
+
+REDUCE_POWER_DEMAND
+
+or
+
+ESCALATE
+
+STEP 6 — UPDATE
+
+After the authorized action:
+
+- reassess engine temperatures
+- reassess engine loading
+- reassess available reserve
+- verify vessel power balance
+- verify no secondary overload
+- record final system state
+- create an auditable decision record
+
+---
+
+EXPECTED DECISION
+
+CASE A — SUFFICIENT RESERVE
+
+Affected engine overheating is confirmed.
+
+Healthy engine has sufficient verified reserve capacity.
+
+Expected AI decision:
+
+"REDUCE_OVERHEATED_ENGINE_LOAD → TRANSFER_LOAD_TO_HEALTHY_ENGINE"
+
+Subject to:
+
+"HUMAN_AUTHORIZATION_REQUIRED"
+
+Expected result:
+
+"STABLE / LOAD BALANCED"
+
+---
+
+CASE B — INSUFFICIENT RESERVE
+
+Affected engine overheating is confirmed.
+
+Healthy engine does not have sufficient reserve capacity.
+
+Expected AI decision:
+
+"DO NOT TRANSFER LOAD"
+
+Recommended:
+
+"REDUCE_NON_CRITICAL_LOAD / MAINTAIN_SAFE_STATE / ESCALATE"
+
+Subject to human authority.
+
+Expected result:
+
+"SAFE_STATE_MAINTAINED"
+
+with no secondary engine overload.
+
+---
+
+CASE C — RESERVE STATUS UNCERTAIN
+
+Overheating is confirmed but available reserve power cannot be reliably verified.
+
+Expected AI decision:
+
+"NO_LOAD_TRANSFER"
+
+"REQUEST_DIAGNOSTICS"
+
+"ESCALATE"
+
+The system must apply the conservative rule:
+
+Unknown reserve ≠ sufficient reserve.
+
+---
+
+KPI
+
+- Overheating detection time
+- Verification time
+- Decision latency
+- Reserve-power verification accuracy
+- Load-transfer success/failure
+- Maximum healthy-engine loading
+- Remaining reserve margin
+- Prevention of secondary overload
+- Vessel power-balance stability
+- Time to safe state
+- Human authorization compliance
+- Audit completeness
+- False-positive / false-negative rate
+
+---
+
+HUMAN AUTHORITY
+
+AI may:
+
+- detect overheating
+- verify operating conditions
+- calculate reserve margin
+- assess transfer feasibility
+- recommend load-transfer strategy
+- recommend safe-state strategy
+- continuously reassess the system
+
+Human must authorize:
+
+- consequential load transfer
+- major load reduction
+- recovery action
+- escalation/abort decisions where applicable
+
+Golden Rule:
+
+"NO CONSEQUENTIAL RECOVERY ACTION WITHOUT HUMAN AUTHORIZATION"
+
+---
+
+SAFETY INVARIANT
+
+The healthy engine must never be commanded to compensate for the overheating engine unless sufficient reserve power has first been verified.
+
+"TRANSFER_ALLOWED = TRUE"
+
+only when:
+
+"Verified Reserve >= Required Transfer + Safety Margin"
+
+Otherwise:
+
+"TRANSFER_ALLOWED = FALSE"
+
+---
+
+AUDIT RESULT
+
+The V&V system shall record:
+
+- Initial engine condition
+- Overheating detection
+- Verification result
+- Available reserve
+- Required transfer load
+- Safety margin
+- Transfer feasibility decision
+- AI recommendation
+- Human authorization
+- Executed action
+- Post-action engine condition
+- Final vessel state
+
+PASS CONDITION:
+
+The system correctly prevents unsafe load transfer when reserve capacity is insufficient or uncertain, and correctly identifies a feasible load-transfer opportunity when verified reserve capacity is adequate.
+
+---
+
+V&V TRACEABILITY
+
+Scenario: Engine Overheat / Load Transfer
+
+Input → Engine thermal condition + vessel demand + available reserve
+
+Decision → Transfer / Do Not Transfer
+
+KPI → Reserve verification + overload prevention + decision latency
+
+Human Authority → Human authorization required
+
+Audit → Complete decision and post-action record
+
+Safety Principle →
+
+"VERIFY RESERVE BEFORE COMPENSATION"
+
 
 DP STATION-KEEPING — BIAS / NO-BIAS SCENARIO
 
@@ -8280,6 +8579,304 @@ All responses remain inside the research simulator.
 Operational command = FALSE
 
 Physical vessel connection = NONE
+VV-049 — ENGINE OVERHEAT / LOAD TRANSFER WITH RESERVE POWER VERIFICATION
+
+SCENARIO
+
+One propulsion or power-generation engine develops an overheating condition while the vessel remains operational.
+
+The system must:
+
+1. Detect and assess the overheating condition.
+2. Reduce or remove load from the affected engine.
+3. Determine whether the remaining engine(s) have sufficient available reserve capacity.
+4. Transfer load only when adequate reserve power has been verified.
+5. Prevent overload of the healthy engine(s).
+6. Maintain vessel safety and stability if load transfer is not safely achievable.
+7. Require human authorization before consequential recovery or load-transfer action.
+
+---
+
+INPUT
+
+Primary inputs:
+
+- Engine A temperature / thermal status
+- Engine B temperature / thermal status
+- Engine A available power
+- Engine B available power
+- Current total vessel power demand
+- Current engine loading
+- Available spinning/reserve capacity
+- Generator/engine operating status
+- Propulsion demand
+- Electrical load demand
+- Environmental operating conditions
+- Fault severity
+- Time-to-limit / thermal margin
+
+Scenario trigger:
+
+"ENGINE_OVERHEAT"
+
+Example:
+
+"Engine A = OVERHEATING"
+
+"Engine B = AVAILABLE"
+
+---
+
+DECISION LOGIC
+
+STEP 1 — OBSERVE
+
+Detect abnormal engine temperature and confirm that the condition exceeds the defined operating threshold.
+
+STEP 2 — VERIFY
+
+Validate:
+
+- overheating signal
+- affected engine status
+- healthy engine status
+- available reserve power
+- present vessel demand
+- transfer capacity
+- thermal margin
+- overload risk
+
+STEP 3 — ASSESS
+
+Calculate whether the healthy engine(s) can safely accept the additional load.
+
+Required condition:
+
+"Available Reserve Power >= Required Transferred Load + Safety Margin"
+
+If TRUE:
+
+"LOAD_TRANSFER_FEASIBLE"
+
+If FALSE:
+
+"LOAD_TRANSFER_NOT_FEASIBLE"
+
+STEP 4 — DECIDE
+
+If sufficient reserve exists:
+
+"REDUCE_AFFECTED_ENGINE_LOAD"
+
+followed by:
+
+"TRANSFER_LOAD_TO_HEALTHY_ENGINE"
+
+If sufficient reserve does not exist:
+
+"DO_NOT_TRANSFER_LOAD"
+
+and:
+
+"MAINTAIN_SAFE_STATE / REDUCE_DEMAND / ESCALATE"
+
+STEP 5 — ACT
+
+No automatic consequential recovery action is permitted without human authorization.
+
+The system presents the operator with the recommended action:
+
+AUTHORIZE_LOAD_TRANSFER
+
+or
+
+MAINTAIN_SAFE_STATE
+
+or
+
+REDUCE_POWER_DEMAND
+
+or
+
+ESCALATE
+
+STEP 6 — UPDATE
+
+After the authorized action:
+
+- reassess engine temperatures
+- reassess engine loading
+- reassess available reserve
+- verify vessel power balance
+- verify no secondary overload
+- record final system state
+- create an auditable decision record
+
+---
+
+EXPECTED DECISION
+
+CASE A — SUFFICIENT RESERVE
+
+Affected engine overheating is confirmed.
+
+Healthy engine has sufficient verified reserve capacity.
+
+Expected AI decision:
+
+"REDUCE_OVERHEATED_ENGINE_LOAD → TRANSFER_LOAD_TO_HEALTHY_ENGINE"
+
+Subject to:
+
+"HUMAN_AUTHORIZATION_REQUIRED"
+
+Expected result:
+
+"STABLE / LOAD BALANCED"
+
+---
+
+CASE B — INSUFFICIENT RESERVE
+
+Affected engine overheating is confirmed.
+
+Healthy engine does not have sufficient reserve capacity.
+
+Expected AI decision:
+
+"DO NOT TRANSFER LOAD"
+
+Recommended:
+
+"REDUCE_NON_CRITICAL_LOAD / MAINTAIN_SAFE_STATE / ESCALATE"
+
+Subject to human authority.
+
+Expected result:
+
+"SAFE_STATE_MAINTAINED"
+
+with no secondary engine overload.
+
+---
+
+CASE C — RESERVE STATUS UNCERTAIN
+
+Overheating is confirmed but available reserve power cannot be reliably verified.
+
+Expected AI decision:
+
+"NO_LOAD_TRANSFER"
+
+"REQUEST_DIAGNOSTICS"
+
+"ESCALATE"
+
+The system must apply the conservative rule:
+
+Unknown reserve ≠ sufficient reserve.
+
+---
+
+KPI
+
+- Overheating detection time
+- Verification time
+- Decision latency
+- Reserve-power verification accuracy
+- Load-transfer success/failure
+- Maximum healthy-engine loading
+- Remaining reserve margin
+- Prevention of secondary overload
+- Vessel power-balance stability
+- Time to safe state
+- Human authorization compliance
+- Audit completeness
+- False-positive / false-negative rate
+
+---
+
+HUMAN AUTHORITY
+
+AI may:
+
+- detect overheating
+- verify operating conditions
+- calculate reserve margin
+- assess transfer feasibility
+- recommend load-transfer strategy
+- recommend safe-state strategy
+- continuously reassess the system
+
+Human must authorize:
+
+- consequential load transfer
+- major load reduction
+- recovery action
+- escalation/abort decisions where applicable
+
+Golden Rule:
+
+"NO CONSEQUENTIAL RECOVERY ACTION WITHOUT HUMAN AUTHORIZATION"
+
+---
+
+SAFETY INVARIANT
+
+The healthy engine must never be commanded to compensate for the overheating engine unless sufficient reserve power has first been verified.
+
+"TRANSFER_ALLOWED = TRUE"
+
+only when:
+
+"Verified Reserve >= Required Transfer + Safety Margin"
+
+Otherwise:
+
+"TRANSFER_ALLOWED = FALSE"
+
+---
+
+AUDIT RESULT
+
+The V&V system shall record:
+
+- Initial engine condition
+- Overheating detection
+- Verification result
+- Available reserve
+- Required transfer load
+- Safety margin
+- Transfer feasibility decision
+- AI recommendation
+- Human authorization
+- Executed action
+- Post-action engine condition
+- Final vessel state
+
+PASS CONDITION:
+
+The system correctly prevents unsafe load transfer when reserve capacity is insufficient or uncertain, and correctly identifies a feasible load-transfer opportunity when verified reserve capacity is adequate.
+
+---
+
+V&V TRACEABILITY
+
+Scenario: Engine Overheat / Load Transfer
+
+Input → Engine thermal condition + vessel demand + available reserve
+
+Decision → Transfer / Do Not Transfer
+
+KPI → Reserve verification + overload prevention + decision latency
+
+Human Authority → Human authorization required
+
+Audit → Complete decision and post-action record
+
+Safety Principle →
+
+"VERIFY RESERVE BEFORE COMPENSATION"
 
 ---
 
