@@ -2,6 +2,194 @@ SEXTANT PROTOCOL™
 
 MARIN DP / USV RESILIENCE V&V SCENARIO TEST MATRIX
 CRANE, TOWING & ELECTRONIC EQUIPMENT RESILIENCE MATRIX
+SEXTANT PROTOCOL™ — MARIN V&V ARCHITECTURE
+
+1. PRIMARY OBJECTIVE
+
+The Sextant Protocol™ V&V programme is designed to enable an independent maritime engineering evaluation of a layered resilience and decision-support architecture for Dynamic Positioning (DP), autonomous vessels and Uncrewed Surface Vessel (USV) operations.
+
+The architecture under evaluation consists of:
+
+PRIMARY AI
+↓
+SECONDARY AI / INDEPENDENT VERIFICATION
+↓
+STABILISER / SAFETY LAYER
+↓
+CAPTAIN AI LENA — DECISION SUPPORT & RESILIENCE ASSESSMENT
+↓
+HUMAN DECISION AUTHORITY / DEFINED AUTONOMOUS AUTHORITY
+↓
+ACTUATION / JOYSTICK CONTROL
+↓
+AUDIT, V&V & PERFORMANCE RECORD
+
+The architecture is intended to support three operational modes.
+
+---
+
+2. MODE 1 — HUMAN CONTROL
+
+The human operator retains direct control through the vessel, DP or USV control interface, including joystick control where applicable.
+
+The AI architecture may observe and provide information or recommendations, but control remains with the human operator.
+
+---
+
+3. MODE 2 — AI DECISION SUPPORT
+
+The Primary AI and Secondary AI independently assess the operational situation.
+
+The Stabiliser / Safety Layer evaluates safety-state constraints and prevents defined unsafe transitions.
+
+Captain AI Lena consolidates the available assessment and provides decision-support guidance and a recommended action.
+
+Human authority remains the final execution authority.
+
+No recovery or operational action is executed solely because an AI system has recommended it unless the applicable predefined authority and safety conditions permit such execution.
+
+---
+
+4. MODE 3 — DEFINED AUTONOMOUS OPERATION
+
+Where predefined autonomy conditions, safety gates, system-state requirements and operational boundaries are satisfied, the architecture may support autonomous decision and execution.
+
+The V&V programme is intended to determine whether these:
+
+- autonomy conditions;
+- decision gates;
+- safety boundaries;
+- verification mechanisms;
+- failure responses; and
+- authority transitions
+
+are sufficiently explicit, deterministic, measurable and robust for the intended research application.
+
+Autonomous operation is therefore treated as a defined and bounded operational state, rather than unrestricted AI control.
+
+---
+
+5. MARIN V&V ROLE
+
+Sextant Protocol™ does not seek to replace MARIN's existing simulation, testing, verification, certification or engineering processes.
+
+Instead, the proposed V&V collaboration would allow MARIN to independently challenge the architecture through controlled maritime scenarios and determine:
+
+- whether system decisions are repeatable and deterministic;
+- whether Primary and Secondary AI verification provides measurable resilience;
+- whether the Stabiliser appropriately prevents defined unsafe transitions;
+- whether Captain AI Lena produces appropriate and traceable decision guidance;
+- whether human authority remains effective under degraded and conflicting conditions;
+- whether autonomous operation can be bounded by explicit safety conditions;
+- whether decision latency and system performance can be measured;
+- whether failures and degraded states produce predictable responses; and
+- whether every significant decision can be independently reconstructed through an audit record.
+
+The objective is therefore independent engineering challenge and evidence generation, rather than prior acceptance of the architecture.
+
+---
+
+6. V&V PRINCIPLE
+
+The fundamental decision sequence is:
+
+OBSERVE → VERIFY → ASSESS → DECIDE → AUTHORIZE → ACT → UPDATE → AUDIT
+
+The governing research principle is:
+
+«AI may assess and recommend; defined authority determines whether, when and under what conditions an action may be executed.»
+
+This principle provides the basis for testing the separation between:
+
+AI ASSESSMENT
+and
+OPERATIONAL AUTHORITY
+
+and allows the V&V programme to examine whether that separation remains effective during normal, degraded, abnormal and critical conditions.
+
+---
+
+7. V&V SCENARIO MATRIX
+
+Each V&V scenario is mapped through the complete decision chain:
+
+SCENARIO
+→ INPUT
+→ SYSTEM STATE
+→ AI ASSESSMENT
+→ SECONDARY VERIFICATION
+→ SAFETY / STABILISER CHECK
+→ DECISION
+→ HUMAN / AUTONOMOUS AUTHORITY
+→ ACTION
+→ KPI
+→ RESULT
+→ AUDIT RECORD
+
+This structure allows each scenario to be evaluated independently and allows the resulting evidence to be reconstructed after execution.
+
+---
+
+8. RESEARCH EVIDENCE OBJECTIVE
+
+The purpose of the V&V programme is to establish measurable evidence concerning:
+
+Determinism
+Can the same defined inputs produce repeatable system behaviour?
+
+Verification
+Does independent secondary assessment identify disagreement, uncertainty or abnormal system states?
+
+Safety containment
+Does the Stabiliser prevent or constrain predefined unsafe transitions?
+
+Decision support
+Does Captain AI Lena provide appropriate, traceable and operationally understandable guidance?
+
+Human authority
+Does the operator retain effective authority when the system is degraded or uncertain?
+
+Autonomy boundaries
+Can autonomous operation be explicitly bounded by measurable conditions and safety gates?
+
+Latency
+Can the time required for assessment, verification, decision and execution be measured?
+
+Auditability
+Can the complete decision path be reconstructed from the recorded evidence?
+
+---
+
+9. V&V POSITION
+
+The Sextant Protocol™ programme does not claim that the architecture is already certified, class-approved or operationally authorised.
+
+The purpose of the proposed programme is to give MARIN the opportunity to independently challenge, test, measure and assess the architecture under controlled and realistic maritime conditions.
+
+The resulting evidence may then be used to determine:
+
+what works,
+
+what does not work,
+
+under which conditions it works,
+
+where additional safeguards are required,
+
+and
+
+whether further engineering development or formal certification pathways are justified.
+
+---
+
+FUNDAMENTAL PROPOSITION
+
+Sextant Protocol™ does not ask MARIN to accept the architecture.
+
+Sextant Protocol™ asks MARIN to challenge it.
+
+The V&V evidence determines the result.
+
 
 SEXTANT PROTOCOL™ — MARIN V&V ARCHITECTURE
 
