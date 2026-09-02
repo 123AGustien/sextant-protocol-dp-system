@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SEXTANT PROTOCOL™ – DP Resilience V&V Research Cockpit</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #071018;
+            color: #dce8ef;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            background: #0b1822;
+            border-bottom: 1px solid #294353;
+            padding: 18px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            margin: 7px 0 0;
+            color: #8fa7b5;
+            font-size: 13px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: auto;
+            padding: 16px;
+        }
+
+        .banner {
+            border: 1px solid #31566a;
+            background: #0b1d29;
+            padding: 14px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+        }
+
+        .banner-title {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .warning {
+            border-color: #806d32;
+            background: #211d0b;
+        }
+
+        .danger {
+            border-color: #713b3b;
+            background: #211010;
+        }
+
+        .success {
+            border-color: #315f4b;
+            background: #0c2018;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .panel {
+            background: #0b1822;
+            border: 1px solid #294353;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 14px;
+        }
+
+        .panel h2 {
+            margin: 0 0 12px;
+            font-size: 16px;
+            color: #ffffff;
+        }
+
+        .panel h3 {
+            margin: 0 0 8px;
+            font-size: 13px;
+            color: #9db7c5;
+        }
+
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #a9bdc8;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 11px;
+            background: #071018;
+            border: 1px solid #385666;
+            color: #ffffff;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: #76aeca;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .status-card {
+            background: #071018;
+            border: 1px solid #294353;
+            border-radius: 6px;
+            padding: 12px;
+            min-height: 74px;
+        }
+
+        .status-label {
+            font-size: 10px;
+            color: #78919f;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .setup-distinction {
+            margin-top: 12px;
+            padding: 10px;
+            border-left: 3px solid #658da2;
+            background: #08151e;
+            color: #b7cbd5;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 11px 9px;
+            border-radius: 5px;
+            border: 1px solid #456477;
+            background: #102532;
+            color: #ffffff;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        button:hover {
+            background: #173747;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .primary-button {
+            background: #17415a;
+            border-color: #5b94b2;
+        }
+
+        .danger-button {
+            background: #431c1c;
+            border-color: #865050;
+        }
+
+        .safe-button {
+            background: #163b2b;
+            border-color: #477b61;
+        }
+
+        .trace {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 7px;
+            font-size: 12px;
+            border-bottom: 1px solid #172a35;
+            padding: 7px 0;
+        }
+
+        .trace:last-child {
+            border-bottom: none;
+        }
+
+        .trace-key {
+            color: #7794a3;
+        }
+
+        .trace-value {
+            color: #dbe8ee;
+            word-break: break-word;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-break: break-word;
+            background: #050c11;
+            border: 1px solid #1c303c;
+            border-radius: 5px;
+            padding: 12px;
+            max-height: 500px;
+            overflow: auto;
+            color: #cfe0e8;
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        .gate {
+            font-weight: bold;
+            padding: 12px;
+            border: 1px solid #5d4e2a;
+            background: #181509;
+            border-radius: 6px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #607783;
+            font-size: 11px;
+            padding: 20px 10px 30px;
+        }
+
+        @media (max-width: 900px) {
+            .grid,
+            .grid-3,
+            .setup-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .status-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .input-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                padding: 10px;
+            }
+
+            .status-grid,
+            .input-grid,
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trace {
+                grid-template-columns: 1fr;
+                gap: 3px;
+            }
+
+            header h1 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>SEXTANT PROTOCOL™ – DP Resilience V&V Research Cockpit</h1>
+    <p>
+        Deterministic Maritime Resilience Research Simulator · DP / USV V&V Environment
+    </p>
+</header>
+
+<div class="container">
+
+    <!-- =========================================================
+         V&V SAFETY BOUNDARY
+         ========================================================= -->
+
+    <div class="banner warning">
+        <div class="banner-title">
+            ⚠ V&V RESEARCH MODE — HUMAN AUTHORITY REQUIRED
+        </div>
+
+        <div>
+            This cockpit is a deterministic research and verification environment.
+            It has no operational vessel connection, no autonomous DP command capability,
+            and no real actuator interface. All actions are simulated.
+            Final authority remains with the human operator.
+        </div>
+    </div>
+
+    <!-- =========================================================
+         SYSTEM STATUS
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>🟢 SYSTEM STATUS</h2>
+
+        <div class="status-grid">
+
+            <div class="status-card">
+                <div class="status-label">Engine</div>
+                <div class="status-value" id="engineStatus">
+                    ENGINE: INITIALISING...
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Environment</div>
+                <div class="status-value" id="environmentStatus">
+                    WAITING
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Primary AI</div>
+                <div class="status-value" id="primaryStatus">
+                    STANDBY
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Secondary AI</div>
+                <div class="status-value" id="secondaryStatus">
+                    STANDBY
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Stabilizer</div>
+                <div class="status-value" id="stabilizerStatus">
+                    STANDBY
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Human Authority</div>
+                <div class="status-value" id="humanStatus">
+                    REQUIRED
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">System</div>
+                <div class="status-value" id="systemStatus">
+                    READY
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Execution</div>
+                <div class="status-value" id="executionGate">
+                    HUMAN AUTHORIZATION REQUIRED
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         SYSTEM SETUP
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>⚙ SYSTEM SETUP — POSITIONING / ENGINE LOAD</h2>
+
+        <div class="setup-grid">
+
+            <div>
+                <label for="positioningMode">
+                    POSITIONING MODE
+                </label>
+
+                <select id="positioningMode">
+                    <option value="NON_BIAS">
+                        NON-BIAS — STANDARD POSITIONING
+                    </option>
+
+                    <option value="BIAS">
+                        BIAS — POSITIONING MODE
+                    </option>
+                </select>
+            </div>
+
+            <div>
+                <label for="engineLoadMode">
+                    ENGINE LOAD MODE
+                </label>
+
+                <select id="engineLoadMode">
+                    <option value="NORMAL">
+                        NORMAL — NOMINAL ENGINE LOAD
+                    </option>
+
+                    <option value="PUSH_UP">
+                        PUSH-UP — ENGINE LOAD COMPENSATION
+                    </option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="setup-distinction" id="setupDistinction">
+            BIAS = POSITIONING MODE ONLY.
+            PUSH-UP = ENGINE LOAD COMPENSATION ONLY.
+            PUSH-UP ≠ POSITIONING BIAS.
+            PUSH-UP requires authoritative reserve-power verification and human authorization.
+        </div>
+
+        <div class="status-grid">
+
+            <div class="status-card">
+                <div class="status-label">Live Positioning Mode</div>
+                <div class="status-value" id="livePositioningMode">
+                    NON-BIAS
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Live Engine Load Mode</div>
+                <div class="status-value" id="liveEngineLoadMode">
+                    NORMAL
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Reserve Power</div>
+                <div class="status-value" id="liveReserve">
+                    NOT VERIFIED
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">PUSH-UP Gate</div>
+                <div class="status-value" id="reserveGate">
+                    NOT VERIFIED
+                </div>
+            </div>
+
+        </div>
+
+        <div class="status-grid">
+
+            <div class="status-card">
+                <div class="status-label">Reserve Verification</div>
+                <div class="status-value" id="reserveVerification">
+                    NOT VERIFIED
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Reserve Status</div>
+                <div class="status-value" id="reserveStatus">
+                    NOT VERIFIED
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Available Reserve</div>
+                <div class="status-value" id="availableReserve">
+                    —
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Required Reserve</div>
+                <div class="status-value" id="requiredReserve">
+                    —
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         ENVIRONMENT
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>🌊 ENVIRONMENTAL INPUTS</h2>
+
+        <div class="input-grid">
+
+            <div>
+                <label for="wind">WIND STRESS</label>
+
+                <input
+                    id="wind"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value="20"
+                >
+            </div>
+
+            <div>
+                <label for="current">CURRENT STRESS</label>
+
+                <input
+                    id="current"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value="20"
+                >
+            </div>
+
+            <div>
+                <label for="wave">WAVE STRESS</label>
+
+                <input
+                    id="wave"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value="20"
+                >
+            </div>
+
+            <div>
+                <label for="tidal">TIDAL STRESS</label>
+
+                <input
+                    id="tidal"
+                    type="number"
+                    min="0"
+                    max="100"
+                    value="20"
+                >
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         SCENARIO CONTROL
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>🎛 SCENARIO CONTROL</h2>
+
+        <div class="scenario-grid">
+
+            <button
+                id="scenarioNormal"
+                onclick="normalScenario()">
+                NORMAL
+            </button>
+
+            <button
+                id="scenarioModerate"
+                onclick="moderateWeatherScenario()">
+                MODERATE WEATHER
+            </button>
+
+            <button
+                id="scenarioHeavy"
+                onclick="heavyWeatherScenario()">
+                HEAVY WEATHER
+            </button>
+
+            <button
+                id="scenarioCritical"
+                onclick="criticalScenario()">
+                CRITICAL
+            </button>
+
+            <button
+                id="scenarioCurrentSurge"
+                onclick="currentSurgeScenario()">
+                CURRENT SURGE
+            </button>
+
+            <button
+                id="scenarioHeavySea"
+                onclick="heavySeaStateScenario()">
+                HEAVY SEA STATE
+            </button>
+
+            <button
+                id="scenarioWindGust"
+                onclick="windGustScenario()">
+                WIND GUST
+            </button>
+
+            <button
+                id="scenarioCombined"
+                onclick="combinedDisturbanceScenario()">
+                COMBINED DISTURBANCE
+            </button>
+
+            <button
+                id="scenarioRandom"
+                onclick="randomScenario()">
+                RANDOM
+            </button>
+
+        </div>
+
+        <br>
+
+        <div class="grid">
+
+            <!-- Controller-owned button.
+                 dp_cockpit.js wires this ID. -->
+
+            <button
+                id="runSimulation"
+                class="primary-button">
+                ▶ RUN V&V SIMULATION
+            </button>
+
+            <!-- Controller-owned button.
+                 dp_cockpit.js wires this ID. -->
+
+            <button
+                id="resetSystem">
+                ↺ RESET
+            </button>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         DECISION TRACE
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>🔎 DECISION TRACE</h2>
+
+        <div class="trace">
+            <div class="trace-key">Environment</div>
+            <div class="trace-value" id="traceEnvironment">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Wind</div>
+            <div class="trace-value" id="traceWind">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Current</div>
+            <div class="trace-value" id="traceCurrent">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Wave</div>
+            <div class="trace-value" id="traceWave">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Tidal</div>
+            <div class="trace-value" id="traceTidal">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Primary Mode</div>
+            <div class="trace-value" id="tracePrimaryMode">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Primary Response</div>
+            <div class="trace-value" id="tracePrimaryResponse">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Secondary Mode</div>
+            <div class="trace-value" id="traceSecondaryMode">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Secondary Assessment</div>
+            <div class="trace-value" id="traceSecondaryAssessment">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Stabilizer Mode</div>
+            <div class="trace-value" id="traceStabilizerMode">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Stabilizer Source</div>
+            <div class="trace-value" id="traceStabilizerSource">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Stabilizer Output</div>
+            <div class="trace-value" id="traceStabilizerOutput">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Urgency</div>
+            <div class="trace-value" id="traceUrgency">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Response Mode</div>
+            <div class="trace-value" id="traceResponseMode">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Recommendation</div>
+            <div class="trace-value" id="traceRecommendation">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Proposed Action</div>
+            <div class="trace-value" id="traceProposed">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Gate</div>
+            <div class="trace-value" id="traceGate">—</div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Action Status</div>
+            <div class="trace-value" id="traceActionStatus">—</div>
+        </div>
+
+    </div>
+
+    <!-- =========================================================
+         CAPTAIN AI LENA
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>🧭 CAPTAIN AI LENA — DECISION SUPPORT</h2>
+
+        <div class="status-grid">
+
+            <div class="status-card">
+                <div class="status-label">Lena Status</div>
+                <div class="status-value" id="lenaStatus">
+                    STANDBY
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Recommendation</div>
+                <div class="status-value" id="lenaRecommendation">
+                    —
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Urgency</div>
+                <div class="status-value" id="lenaUrgency">
+                    —
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Response Mode</div>
+                <div class="status-value" id="lenaResponseMode">
+                    —
+                </div>
+            </div>
+
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Autonomous Command</div>
+            <div class="trace-value" id="lenaAutonomousCommand">
+                FALSE — NO AUTONOMOUS COMMAND
+            </div>
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">UMV Action</div>
+            <div class="trace-value" id="lenaUMVAction">
+                SIMULATION ONLY
+            </div>
+        </div>
+
+        <div
+            class="banner success"
+            style="margin-top:12px; margin-bottom:0;">
+
+            <div class="banner-title">
+                LENA DECISION-SUPPORT MESSAGE
+            </div>
+
+            <div id="lenaMessage">
+                Awaiting simulation.
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         RECOMMENDED ACTION
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>📋 RECOMMENDED ACTION</h2>
+
+        <div class="status-grid">
+
+            <div class="status-card">
+                <div class="status-label">Autonomous</div>
+                <div class="status-value" id="recommendedAutonomous">
+                    FALSE
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Lena Status</div>
+                <div class="status-value" id="recommendedLenaStatus">
+                    STANDBY
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Control Mode</div>
+                <div class="status-value" id="recommendedControlMode">
+                    HUMAN AUTHORITY
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Urgency</div>
+                <div class="status-value" id="recommendedUrgency">
+                    —
+                </div>
+            </div>
+
+        </div>
+
+        <div class="trace">
+            <div class="trace-key">Recommended Action</div>
+            <div class="trace-value" id="recommendedAction">
+                —
+            </div>
+        </div>
+
+        <div
+            class="banner warning"
+            style="margin-top:12px; margin-bottom:0;">
+
+            <div id="recommendedMessage">
+                No recommendation available until a simulation is executed.
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         HUMAN DECISION AUTHORITY
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>👤 HUMAN DECISION AUTHORITY</h2>
+
+        <div class="gate">
+            <div id="humanDecisionStatus">
+                HUMAN AUTHORIZATION REQUIRED — NO ACTION AUTHORIZED
+            </div>
+        </div>
+
+        <br>
+
+        <div class="grid-3">
+
+            <button
+                id="acknowledgeConditionButton"
+                class="safe-button"
+                onclick="acknowledgeCondition()">
+                ACKNOWLEDGE CONDITION
+            </button>
+
+            <button
+                id="maintainSafeStateButton"
+                class="safe-button"
+                onclick="maintainSafeState()">
+                MAINTAIN SAFE STATE
+            </button>
+
+            <button
+                id="authorizeSimulatedResponseButton"
+                class="primary-button"
+                onclick="authorizeSimulatedResponse()">
+                AUTHORIZE SIMULATED RESPONSE
+            </button>
+
+        </div>
+
+        <br>
+
+        <div
+            class="banner danger"
+            style="margin-bottom:0;">
+
+            <div class="banner-title">
+                EXECUTION BOUNDARY
+            </div>
+
+            <div>
+                Authorization applies only to the simulated V&V response.
+                No real vessel, propulsion, thruster, DP controller, actuator,
+                network or external system can be commanded by this cockpit.
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         SIMULATED VESSEL STATE
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>🚢 SIMULATED VESSEL STATE</h2>
+
+        <div class="status-grid">
+
+            <div class="status-card">
+                <div class="status-label">Position Error</div>
+                <div class="status-value" id="positionError">
+                    0.00
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Simulated Command</div>
+                <div class="status-value" id="simulatedCommand">
+                    0
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Stability Index</div>
+                <div class="status-value" id="stabilityIndex">
+                    100
+                </div>
+            </div>
+
+            <div class="status-card">
+                <div class="status-label">Vessel State</div>
+                <div class="status-value" id="vesselState">
+                    STABLE
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- =========================================================
+         ASSESSMENT OUTPUT
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>📊 ASSESSMENT OUTPUT</h2>
+
+        <pre id="assessmentOutput">Awaiting simulation.</pre>
+    </div>
+
+    <!-- =========================================================
+         AUDIT OUTPUT
+         ========================================================= -->
+
+    <div class="panel">
+        <h2>🧾 AUDIT OUTPUT</h2>
+
+        <pre id="auditOutput">Awaiting simulation.</pre>
+    </div>
+
+    <!-- =========================================================
+         FINAL SAFETY NOTICE
+         ========================================================= -->
+
+    <div class="banner warning">
+
+        <div class="banner-title">
+            SEXTANT PROTOCOL™ SAFETY DOCTRINE
+        </div>
+
+        <div>
+            OBSERVE → VERIFY → ASSESS → DECIDE → ACT → UPDATE
+        </div>
+
+        <br>
+
+        <div>
+            <strong>BIAS</strong> = positioning mode only.<br>
+            <strong>PUSH-UP</strong> = engine-load compensation only.<br>
+            <strong>PUSH-UP ≠ POSITIONING BIAS.</strong><br>
+            <strong>PUSH-UP requires reserve-power verification.</strong><br>
+            <strong>Human authorization remains mandatory.</strong><br>
+            <strong>No autonomous operational execution.</strong>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    Sextant Protocol™ DP Resilience V&V Research Cockpit ·
+    Research / Simulation Only · Not Certified
+</div>
+
+<!-- =============================================================
+     AUTHORITATIVE JAVASCRIPT STACK
+
+     IMPORTANT:
+     1. Simulation engine loads first.
+     2. Recommended Actions loads second.
+     3. Cockpit controller loads last.
+
+     The cockpit controller interfaces the UI with both engines.
+     ============================================================= -->
+
+<script src="./dp_simulation_engine.js"></script>
+
+<script src="./dp_recommended_actions.js"></script>
+
+<script src="./dp_cockpit.js"></script>
+
+</body>
+</html>
