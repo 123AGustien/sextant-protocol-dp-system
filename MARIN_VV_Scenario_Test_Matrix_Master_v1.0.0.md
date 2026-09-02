@@ -1,6 +1,203 @@
 SEXTANT PROTOCOL™
 
 MARIN DP / USV RESILIENCE V&V SCENARIO TEST MATRIX
+CRANE, TOWING & ELECTRONIC EQUIPMENT RESILIENCE MATRIX
+
+1. 5,000-TONNE SEAWAY CRANE — SWL & WIRE-ROPE ARCHITECTURE
+
+«Engineering principle: Wire-rope diameter and construction shall not be selected from crane SWL alone. The design shall account for total suspended load, reeving arrangement, dynamic amplification, number of parts of line, rope efficiency, D/d ratio, sheave/drum geometry, fleet angle, termination efficiency and applicable class/flag requirements.»
+
+ID| Parameter| Design Variable| Engineering Check| V&V Evidence
+CRN-001| Crane SWL| 5,000 t| Verify rated capacity for specified operating configuration| Approved crane load chart
+CRN-002| Gross lifted load| Payload + hook block + rigging + attachments| Establish total suspended mass| Load calculation
+CRN-003| Dynamic load| Vessel motion + hoisting/lowering + acceleration| Apply approved dynamic amplification| Dynamic load-case analysis
+CRN-004| Number of parts of line| Reeving arrangement| Determine load distribution between rope parts| Reeving calculation
+CRN-005| Rope line tension| Suspended load / effective supporting parts| Determine maximum rope tension| Rope-tension calculation
+CRN-006| Rope MBL| Minimum Breaking Load| MBL must exceed calculated design tension by applicable safety factor| Manufacturer certificate
+CRN-007| Rope WLL/SWL| Permitted working load| Verify against applicable design requirement| Certification
+CRN-008| Rope diameter| d| Select from required MBL, fatigue, bending and D/d requirements| Rope specification
+CRN-009| Strand construction| Number and arrangement of strands/wires| Select according to strength, fatigue and operational requirements| Manufacturer specification
+CRN-010| Rope core| Approved core construction| Verify crushing, bending and stability requirements| Manufacturer certificate
+CRN-011| Sheave/drum diameter| D| Verify required D/d ratio| Mechanical calculation
+CRN-012| Fleet angle| Rope/sheave alignment| Limit adverse side loading and spooling effects| Geometry verification
+CRN-013| Rope termination| Socket/wedge/ferrule/etc.| Verify termination efficiency| Certificate/inspection
+CRN-014| Vessel motion| Heave, roll, pitch| Determine dynamic rope loading in seaway| Seaway simulation
+CRN-015| Rope condition| Wear, corrosion, broken wires, deformation| Apply applicable inspection/rejection criteria| Inspection record
+CRN-016| Abnormal loading| Shock, snagging, sudden load transfer| Assess credible overload cases| FMEA / load-case analysis
+
+Crane Design Chain
+
+5,000 t SWL
+      ↓
+TOTAL SUSPENDED LOAD
+      ↓
+DYNAMIC AMPLIFICATION
+      ↓
+REEVING / PARTS OF LINE
+      ↓
+MAXIMUM ROPE TENSION
+      ↓
+REQUIRED MBL
+      ↓
+ROPE DIAMETER
+      ↓
+STRAND / WIRE CONSTRUCTION
+      ↓
+CORE
+      ↓
+SHEAVE / DRUM D/d
+      ↓
+TERMINATION
+      ↓
+INSPECTION & CONDITION MONITORING
+
+---
+
+2. SUPERTANKER TOWING — TOWLINE STRENGTH ARCHITECTURE
+
+«Engineering principle: Supertanker displacement alone shall not be used as a direct formula for towline SWL. Towline design shall consider vessel resistance, environmental forces, tow speed, tow configuration and dynamic loading.»
+
+ID| Parameter| Input| Engineering Assessment| V&V Evidence
+TOW-001| Tanker displacement| Δ| Establish vessel mass/loading condition| Vessel loading data
+TOW-002| Hull resistance| R| Determine resistance at intended tow speed| Resistance calculation
+TOW-003| Wind force| Wind velocity + projected area| Determine aerodynamic tow resistance| Environmental load calculation
+TOW-004| Current force| Current velocity + underwater area| Determine current resistance| Environmental load calculation
+TOW-005| Wave/drift force| Sea state + heading| Determine additional environmental loading| Seaway simulation
+TOW-006| Tow speed| V| Establish operational towing condition| Tow plan
+TOW-007| Static towline tension| T| Calculate steady-state towing load| Towline calculation
+TOW-008| Dynamic amplification| DAF| Account for surge, yaw, wave and snap loading| Dynamic simulation
+TOW-009| Maximum towline tension| T_MAX| Establish governing design tension| Load-case analysis
+TOW-010| Towline MBL| MBL| Verify line strength against required design load| Manufacturer certificate
+TOW-011| Safety factor| SF| Apply applicable class/flag/towing standard| Compliance calculation
+TOW-012| Bridle| Geometry + leg forces| Verify load sharing and peak force| Bridle calculation
+TOW-013| Shackles/connectors| MBL/WLL| Verify every component in load path| Component certificates
+TOW-014| Emergency tow| Worst credible condition| Verify emergency configuration| Emergency towing analysis
+TOW-015| Towline monitoring| Tension| Detect overload and abnormal loading| Monitoring/logging test
+
+Conceptual Towline Chain
+
+TANKER DISPLACEMENT
+        ↓
+HULL RESISTANCE
+        ↓
+WIND + CURRENT + WAVES
+        ↓
+TOW SPEED / HEADING
+        ↓
+STATIC TOW LOAD
+        ↓
+DYNAMIC AMPLIFICATION
+        ↓
+MAXIMUM TOWLINE TENSION
+        ↓
+REQUIRED MBL / WLL
+        ↓
+BRIDLE + SHACKLES + CONNECTIONS
+        ↓
+COMPLETE TOWING SYSTEM
+
+Safety Principle
+
+Required Towline Strength
+        ≥
+Maximum Calculated Dynamic Towline Tension
+        ×
+Applicable Safety Factor
+
+The numerical safety factor shall be taken from the applicable approved towing/class/flag requirement, rather than being invented by the decision-support system.
+
+---
+
+3. ELECTRONIC EQUIPMENT — MARINE ENVIRONMENTAL RESILIENCE
+
+ID| Environmental Factor| Equipment Requirement| V&V Test
+ELE-001| Operating temperature| Equipment operates throughout specified temperature range| Thermal operating test
+ELE-002| Storage temperature| Equipment survives specified non-operating temperature range| Storage-temperature test
+ELE-003| Heat exposure| Components remain within permissible thermal limits| Thermal endurance test
+ELE-004| Humidity| Equipment maintains function under specified humidity| Humidity test
+ELE-005| Vibration| Continuous vessel vibration tolerance| Vibration endurance test
+ELE-006| Mechanical shock| Equipment survives specified shock levels| Shock test
+ELE-007| Salt atmosphere| Protection against marine corrosion| Corrosion/environmental test
+ELE-008| Water ingress| Appropriate enclosure protection| Ingress-protection test
+ELE-009| EMC| Immunity to and emissions within specified limits| EMC test
+ELE-010| Power disturbance| Tolerance of voltage variation/interruption/transients| Power-quality test
+ELE-011| Cooling| Thermal management maintains component limits| Cooling/load test
+ELE-012| Over-temperature| Alarm/protection operates correctly| Over-temperature test
+ELE-013| Data storage| Operational and audit data retained securely| Storage-integrity test
+ELE-014| Power loss| Data/state protected during sudden loss of power| Power-loss recovery test
+ELE-015| Restart| Safe recovery after interruption| Restart test
+ELE-016| Redundancy| Primary/secondary equipment maintains required availability| Failover test
+ELE-017| Audit memory| Decisions and events remain traceable| Audit-integrity test
+ELE-018| HMI| Operator interface remains usable under vibration and environmental conditions| HMI test
+
+---
+
+4. ELECTRONIC EQUIPMENT RESILIENCE CHAIN
+
+TEMPERATURE
+      +
+HUMIDITY
+      +
+VIBRATION
+      +
+SHOCK
+      +
+SALT / CORROSION
+      +
+WATER INGRESS
+      +
+EMC
+      +
+POWER DISTURBANCE
+      ↓
+EQUIPMENT HEALTH
+      ↓
+PRIMARY / SECONDARY REDUNDANCY
+      ↓
+FAILOVER
+      ↓
+SAFE STATE
+      ↓
+DATA / AUDIT RETENTION
+      ↓
+HUMAN DECISION AUTHORITY
+
+---
+
+5. SEXTANT PROTOCOL™ INTEGRATION
+
+The three engineering domains are integrated into the same resilience architecture:
+
+Domain| Physical State| Risk Calculation| Decision Response| Human Authority
+Crane| Load, rope tension, MBL, vessel motion| Overload / structural risk| Reduce load, alter operation, stop operation or escalate| Master / Crane Authority
+Towing| Displacement, resistance, towline tension, environmental forces| Towline overload / loss of control| Alter speed/heading/tug configuration or escalate| Master / Tow Master
+Electronics| Temperature, vibration, power, EMC, equipment health| Equipment degradation/failure| Protect, isolate, fail over or maintain safe state| Authorised Operator
+Vessel Stability| GM, GZ, freeboard, list, righting moment| Loss of stability margin| Alter loading, ballast, heading/speed or escalate| Master
+
+Golden Rule Integration
+
+OBSERVE
+   ↓
+VERIFY
+   ↓
+ASSESS
+   ↓
+CALCULATE
+   ↓
+DECIDE
+   ↓
+HUMAN AUTHORIZATION
+   ↓
+ACT
+   ↓
+UPDATE
+   ↓
+AUDIT
+
+«Sextant Protocol™ shall provide deterministic, traceable decision support; it shall not replace the vessel's approved engineering design, class requirements, operating manuals, towing plans or the authority of the Master / designated responsible person.»
+
+
+
 
 MASTER SEQUENTIAL V&V CATALOGUE
 
