@@ -1,507 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>
-    Sextant Protocol™ – DP Resilience V&amp;V Research Cockpit
-</title>
+    <title>
+        Sextant Protocol™ – DP Resilience V&V Research Cockpit
+    </title>
 
-<style>
+    <style>
 
-* {
-    box-sizing: border-box;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            background: #050b12;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #08111f;
-    color: #e8f0f7;
-}
+        .header {
+            background: #081522;
+            border-bottom: 2px solid #1d3c56;
+            padding: 20px;
+            text-align: center;
+        }
 
-.header {
-    padding: 18px;
-    text-align: center;
-    background: #0d1b2a;
-    border-bottom: 2px solid #29445f;
-}
+        .branch-label {
+            margin-top: 8px;
+            color: #8fb7d9;
+            font-size: 13px;
+        }
 
-.header h1 {
-    margin: 0;
-    font-size: 24px;
-}
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
 
-.header p {
-    margin: 8px 0 0;
-    color: #9fb3c8;
-    font-size: 13px;
-    line-height: 1.6;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
 
-.branch-label {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 6px 10px;
-    border: 1px solid #46627d;
-    border-radius: 5px;
-    background: #091827;
-    color: #8fc7ff;
-    font-family: monospace;
-    font-size: 12px;
-}
+        .panel {
+            background: #0a1622;
+            border: 1px solid #24445f;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
 
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 15px;
-}
+        .vessel-data {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
 
-.grid {
-    display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px;
-}
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 90px;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
 
-.panel {
-    background: #0e1c2c;
-    border: 1px solid #29445f;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #46627d;
+            background: #07111d;
+            color: white;
+            font-size: 15px;
+        }
 
-.panel h2 {
-    margin-top: 0;
-    font-size: 16px;
-    border-bottom: 1px solid #29445f;
-    padding-bottom: 8px;
-}
+        button {
+            padding: 10px 14px;
+            margin: 4px;
+            border-radius: 5px;
+            border: 1px solid #46627d;
+            background: #102638;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
 
-.vessel-data {
-    line-height: 1.8;
-    font-size: 14px;
-}
+        button:hover {
+            background: #183b55;
+        }
 
-.input-row {
-    display: grid;
-    grid-template-columns: 1fr 90px;
-    gap: 10px;
-    align-items: center;
-    margin: 10px 0;
-}
+        .run {
+            background: #155d35;
+            border-color: #2d8b55;
+        }
 
-input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #46627d;
-    background: #07111d;
-    color: white;
-    font-size: 15px;
-}
+        .reset {
+            background: #5b2525;
+            border-color: #8f3c3c;
+        }
 
-button {
-    border: none;
-    border-radius: 6px;
-    padding: 12px 18px;
-    margin: 5px;
-    font-weight: bold;
-    cursor: pointer;
-}
+        .scenario {
+            background: #14283a;
+        }
 
-button:active {
-    transform: scale(0.98);
-}
+        .controls {
+            text-align: center;
+        }
 
-.run {
-    background: #1f8f5f;
-    color: white;
-}
+        .architecture {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
 
-.reset {
-    background: #46586d;
-    color: white;
-}
+        .node {
+            background: #102638;
+            border: 1px solid #41657f;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            min-width: 120px;
+        }
 
-.scenario {
-    background: #315a7d;
-    color: white;
-}
+        .arrow {
+            color: #7ca8c7;
+            font-size: 20px;
+        }
 
-.controls {
-    text-align: center;
-    margin: 15px 0;
-}
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
 
-.architecture {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-top: 10px;
-}
+        .status-card {
+            background: #07111d;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 12px;
+        }
 
-.node {
-    padding: 10px;
-    border: 1px solid #587590;
-    border-radius: 6px;
-    background: #13283b;
-    text-align: center;
-    min-width: 125px;
-    font-size: 12px;
-}
+        .output {
+            background: #03070c;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 15px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 13px;
+        }
 
-.arrow {
-    color: #8faac0;
-    font-size: 20px;
-}
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #7592aa;
+            font-size: 12px;
+        }
 
-.status-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-}
+        .engine-status {
+            margin-top: 10px;
+            color: #75d69a;
+            font-weight: bold;
+        }
 
-.status-card {
-    padding: 12px;
-    background: #091827;
-    border: 1px solid #29445f;
-    border-radius: 6px;
-}
+        .lena-panel {
+            background: #081a25;
+            border: 1px solid #31627f;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
 
-.status-title {
-    font-size: 11px;
-    color: #91a8bd;
-}
+        .lena-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
 
-.status-value {
-    margin-top: 5px;
-    font-weight: bold;
-    font-size: 14px;
-}
+        .lena-card {
+            background: #07111d;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 12px;
+        }
 
-.output {
-    white-space: pre-wrap;
-    background: #050c14;
-    border: 1px solid #29445f;
-    border-radius: 6px;
-    padding: 15px;
-    min-height: 320px;
-    font-family: monospace;
-    font-size: 13px;
-    overflow-x: auto;
-}
+        .lena-title {
+            color: #80b7d9;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
 
-.footer {
-    text-align: center;
-    padding: 18px;
-    color: #8799aa;
-    font-size: 11px;
-    line-height: 1.6;
-}
+        .lena-value {
+            font-weight: bold;
+            font-size: 15px;
+        }
 
-.engine-status {
-    text-align: center;
-    padding: 8px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    background: #091827;
-    border: 1px solid #29445f;
-    font-family: monospace;
-    font-size: 12px;
-}
+        .lena-message {
+            margin-top: 15px;
+            background: #03070c;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 15px;
+            line-height: 1.5;
+        }
 
-/* =========================================================
-   CAPTAIN AI LENA
-========================================================= */
+        .human-panel {
+            background: #1b1407;
+            border: 1px solid #735a27;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
 
-.lena-panel {
-    background: #0e1c2c;
-    border: 1px solid #587590;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
+        .boundary {
+            background: #07111d;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 15px;
+            line-height: 1.5;
+        }
 
-.lena-panel h2 {
-    margin-top: 0;
-    font-size: 17px;
-    border-bottom: 1px solid #587590;
-    padding-bottom: 8px;
-}
+        .warning {
+            background: #211707;
+            border: 1px solid #765b22;
+            border-radius: 6px;
+            padding: 15px;
+            line-height: 1.5;
+            margin-top: 12px;
+        }
 
-.lena-grid {
-    display: grid;
-    grid-template-columns:
-        repeat(auto-fit, minmax(160px, 1fr));
-    gap: 10px;
-    margin-top: 12px;
-}
+        .vv-panel {
+            background: #081722;
+            border: 1px solid #315d76;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
 
-.lena-card {
-    padding: 12px;
-    background: #091827;
-    border: 1px solid #29445f;
-    border-radius: 6px;
-}
+        .vv-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 4px;
+            background: #173d50;
+            border: 1px solid #36748f;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
 
-.lena-title {
-    font-size: 11px;
-    color: #91a8bd;
-}
-
-.lena-value {
-    margin-top: 5px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-.lena-message {
-    margin-top: 12px;
-    padding: 12px;
-    background: #050c14;
-    border: 1px solid #29445f;
-    border-radius: 6px;
-    font-family: monospace;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
-.human-panel {
-    background: #0e1c2c;
-    border: 1px solid #587590;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-
-.human-panel h2 {
-    margin-top: 0;
-    font-size: 16px;
-    border-bottom: 1px solid #587590;
-    padding-bottom: 8px;
-}
-
-.boundary {
-    background: #091827;
-    border: 1px solid #29445f;
-    border-radius: 6px;
-    padding: 15px;
-    line-height: 1.7;
-    font-size: 13px;
-}
-
-.warning {
-    margin-top: 12px;
-    padding: 12px;
-    border: 1px solid #705f32;
-    background: #181509;
-    border-radius: 6px;
-    font-family: monospace;
-    font-size: 12px;
-    line-height: 1.6;
-}
-
-.vv-panel {
-    background: #0e1c2c;
-    border: 1px solid #46627d;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-
-.vv-panel h2 {
-    margin-top: 0;
-    font-size: 16px;
-    border-bottom: 1px solid #46627d;
-    padding-bottom: 8px;
-}
-
-.vv-badge {
-    display: inline-block;
-    padding: 5px 8px;
-    margin-bottom: 10px;
-    border: 1px solid #587590;
-    border-radius: 5px;
-    background: #091827;
-    color: #9fc9eb;
-    font-family: monospace;
-    font-size: 11px;
-}
-
-@media (max-width: 600px) {
-
-    .header h1 {
-        font-size: 18px;
-    }
-
-    .architecture {
-        flex-direction: column;
-    }
-
-    .arrow {
-        transform: rotate(90deg);
-    }
-
-    button {
-        width: 90%;
-    }
-
-}
-
-</style>
+    </style>
 
 </head>
 
+
 <body>
 
-<div class="header">
-
-    <h1>
-        SEXTANT PROTOCOL™ — DP RESILIENCE V&amp;V RESEARCH COCKPIT
-    </h1>
-
-    <p>
-        MARIN USV V&amp;V RESEARCH •
-        feature/marin-usv-vv-research
-    </p>
-
-    <p>
-        MPSV SIMULATION • PRIMARY AI →
-        SECONDARY AI → STABILIZER →
-        CAPTAIN AI LENA → HUMAN-IN-THE-LOOP
-    </p>
-
-</div>
-
-
-<!-- ======================================================
-     MARIN V&V RESEARCH HEADER
-======================================================= -->
 
 <div class="header">
 
     <h1>
-        SEXTANT PROTOCOL™ –
-        DP RESILIENCE V&amp;V RESEARCH COCKPIT
+        Sextant Protocol™
     </h1>
-
-    <p>
-        MARIN / USV V&amp;V RESEARCH FRAMEWORK
-        <br>
-        MPSV SIMULATION • PRIMARY AI →
-        SECONDARY AI → STABILIZER →
-        CAPTAIN AI LENA → HUMAN-IN-THE-LOOP
-    </p>
-
-    <div class="branch-label">
-        BRANCH:
-        feature/marin-usv-vv-research
-    </div>
-
-</div>
-
-<div class="container">
-
-<!-- ======================================================
-     ENGINE STATUS
-======================================================= -->
-
-<div class="engine-status">
-
-    ENGINE:
-
-    <span id="engineStatus">
-        INITIALISING...
-    </span>
-
-</div>
-
-
-<!-- ======================================================
-     V&V RESEARCH FRAMEWORK
-======================================================= -->
-
-<div class="vv-panel">
-
-    <div class="vv-badge">
-        MARIN / USV V&amp;V RESEARCH FRAMEWORK
-    </div>
 
     <h2>
-        Verification &amp; Validation Research Framework
+        DP Resilience V&V Research Cockpit
     </h2>
 
-    <div class="boundary">
+    <div class="branch-label">
+        Branch:
+        feature/marin-usv-vv-research
+    </div>
 
-        This cockpit provides a reusable deterministic
-        DP resilience simulation framework for research,
-        verification and validation activities.
-
-        <br><br>
-
-        The framework is designed so that external
-        research partners may provide their own:
-
-        <br>
-        • scenarios
-        <br>
-        • operating conditions
-        <br>
-        • resilience metrics
-        <br>
-        • evaluation criteria
-        <br>
-        • verification conditions
-        <br>
-        • validation requirements
-
-        <br><br>
-
-        These requirements can subsequently be mapped
-        into the existing Sextant Protocol™ simulation
-        architecture without changing the underlying
-        layered decision-support framework.
-
-        <br><br>
-
-        <strong>
-            MARIN SCENARIOS / METRICS / CONDITIONS
-        </strong>
-
-        <br>
-
-        ↓
-
-        <br>
-
-        <strong>
-            EXISTING SEXTANT PROTOCOL™ V&amp;V FRAMEWORK
-        </strong>
-
-        <br>
-
-        ↓
-
-        <br>
-
-        <strong>
-            REPEATABLE SIMULATION / TRACE / ASSESSMENT
-        </strong>
-
+    <div class="engine-status">
+        Engine Status:
+        <span id="engineStatus">
+            INITIALISING...
+        </span>
     </div>
 
 </div>
+
+
+<div class="header">
+
+    <h2>
+        MARIN V&V Research Framework
+    </h2>
+
+    <div class="branch-label">
+        Deterministic Maritime Resilience Simulation —
+        Research / V&V Only
+    </div>
+
+</div>
+
+
+<div class="container">
 
 
 <!-- ======================================================
@@ -520,42 +325,59 @@ button:active {
             ENVIRONMENT
         </div>
 
-        <div class="arrow">→</div>
+        <div class="arrow">
+            →
+        </div>
 
         <div class="node">
-            PRIMARY AI<br>
+            PRIMARY AI
+            <br>
             Normal Control
         </div>
 
-        <div class="arrow">→</div>
+        <div class="arrow">
+            →
+        </div>
 
         <div class="node">
-            SECONDARY AI<br>
+            SECONDARY AI
+            <br>
             Safety Layer
         </div>
 
-        <div class="arrow">→</div>
+        <div class="arrow">
+            →
+        </div>
 
         <div class="node">
-            STABILIZER<br>
+            STABILIZER
+            <br>
             Arbitration
         </div>
 
-        <div class="arrow">→</div>
+        <div class="arrow">
+            →
+        </div>
 
         <div class="node">
-            CAPTAIN AI LENA<br>
+            CAPTAIN AI LENA
+            <br>
             Decision Support
         </div>
 
-        <div class="arrow">→</div>
+        <div class="arrow">
+            →
+        </div>
 
         <div class="node">
-            HUMAN-IN-THE-LOOP<br>
+            HUMAN-IN-THE-LOOP
+            <br>
             Final Authority
         </div>
 
-        <div class="arrow">→</div>
+        <div class="arrow">
+            →
+        </div>
 
         <div class="node">
             SIMULATED DP ACTION
@@ -567,10 +389,8 @@ button:active {
 
 
 <!-- ======================================================
-     VESSEL + ENVIRONMENT
+     SIMULATED VESSEL PROFILE
 ======================================================= -->
-
-<div class="grid">
 
 <div class="panel">
 
@@ -580,49 +400,94 @@ button:active {
 
     <div class="vessel-data">
 
-        <strong>Name:</strong>
-        SEXTANT-MPSV-01
-        <br>
+        <div>
+            Vessel Name
+        </div>
 
-        <strong>Type:</strong>
-        Multi-Purpose Support Vessel
-        <br>
+        <div>
+            SEXTANT-MPSV-01
+        </div>
 
-        <strong>DP Class:</strong>
-        DP2-SIMULATED
-        <br>
+        <div>
+            Vessel Type
+        </div>
 
-        <strong>Length:</strong>
-        85 m
-        <br>
+        <div>
+            Multi-Purpose Support Vessel
+        </div>
 
-        <strong>Beam:</strong>
-        20 m
-        <br>
+        <div>
+            DP Class
+        </div>
 
-        <strong>Draft:</strong>
-        6 m
-        <br>
+        <div>
+            DP2-SIMULATED
+        </div>
 
-        <strong>Main Thrusters:</strong>
-        2
-        <br>
+        <div>
+            Length
+        </div>
 
-        <strong>Tunnel Thrusters:</strong>
-        2
-        <br>
+        <div>
+            85 m
+        </div>
 
-        <strong>Total Thrusters:</strong>
-        4
-        <br>
+        <div>
+            Beam
+        </div>
 
-        <strong>Nominal Simulated Thrust:</strong>
-        100 units
+        <div>
+            20 m
+        </div>
+
+        <div>
+            Draft
+        </div>
+
+        <div>
+            6 m
+        </div>
+
+        <div>
+            Main Thrusters
+        </div>
+
+        <div>
+            2
+        </div>
+
+        <div>
+            Tunnel Thrusters
+        </div>
+
+        <div>
+            2
+        </div>
+
+        <div>
+            Total Thrusters
+        </div>
+
+        <div>
+            4
+        </div>
+
+        <div>
+            Nominal Simulated Thrust
+        </div>
+
+        <div>
+            100 units
+        </div>
 
     </div>
 
 </div>
 
+
+<!-- ======================================================
+     ENVIRONMENTAL SIMULATION INPUTS
+======================================================= -->
 
 <div class="panel">
 
@@ -696,6 +561,114 @@ button:active {
 
 </div>
 
+
+<!-- ======================================================
+     SYSTEM SETUP — POSITIONING / ENGINE LOAD
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        System Setup
+    </h2>
+
+    <div class="input-row">
+
+        <label>
+            Positioning Mode
+        </label>
+
+        <select
+            id="positioningMode"
+            style="
+                width:100%;
+                padding:8px;
+                border-radius:5px;
+                border:1px solid #46627d;
+                background:#07111d;
+                color:white;
+                font-size:15px;
+            "
+        >
+
+            <option value="NON_BIAS">
+                NON-BIAS
+            </option>
+
+            <option value="BIAS">
+                BIAS
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <label>
+            Engine Load Mode
+        </label>
+
+        <select
+            id="engineLoadMode"
+            style="
+                width:100%;
+                padding:8px;
+                border-radius:5px;
+                border:1px solid #46627d;
+                background:#07111d;
+                color:white;
+                font-size:15px;
+            "
+        >
+
+            <option value="NORMAL">
+                NORMAL
+            </option>
+
+            <option value="PUSH_UP">
+                PUSH-UP
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="warning">
+
+        <strong>
+            SYSTEM SETUP
+        </strong>
+
+        <br><br>
+
+        POSITIONING:
+        <strong>
+            BIAS / NON-BIAS
+        </strong>
+
+        <br>
+
+        ENGINE LOAD:
+        <strong>
+            NORMAL / PUSH-UP
+        </strong>
+
+        <br><br>
+
+        PUSH-UP is an engine-load compensation function.
+        It does not represent positioning bias.
+
+        <br><br>
+
+        Any simulated PUSH-UP recommendation remains
+        subject to reserve-power verification and the
+        HUMAN AUTHORIZATION REQUIRED execution gate.
+
+    </div>
+
 </div>
 
 
@@ -722,7 +695,7 @@ button:active {
             class="scenario"
             onclick="moderateWeatherScenario()"
         >
-            MODERATE
+            MODERATE WEATHER
         </button>
 
         <button
@@ -750,7 +723,7 @@ button:active {
             class="scenario"
             onclick="heavySeaStateScenario()"
         >
-            HEAVY SEA
+            HEAVY SEA STATE
         </button>
 
         <button
@@ -764,7 +737,7 @@ button:active {
             class="scenario"
             onclick="combinedDisturbanceScenario()"
         >
-            COMBINED
+            COMBINED DISTURBANCE
         </button>
 
         <button
@@ -774,30 +747,23 @@ button:active {
             RANDOM
         </button>
 
+        <br>
+
+        <button
+            class="run"
+            onclick="runSimulation()"
+        >
+            RUN SIMULATION
+        </button>
+
+        <button
+            class="reset"
+            onclick="resetSimulation()"
+        >
+            RESET
+        </button>
+
     </div>
-
-</div>
-
-
-<!-- ======================================================
-     MAIN CONTROL
-======================================================= -->
-
-<div class="controls">
-
-    <button
-        class="run"
-        onclick="runSimulation()"
-    >
-        ▶ RUN DP SIMULATION
-    </button>
-
-    <button
-        class="reset"
-        onclick="resetSimulation()"
-    >
-        RESET
-    </button>
 
 </div>
 
@@ -816,95 +782,72 @@ button:active {
 
         <div class="status-card">
 
-            <div class="status-title">
-                ENVIRONMENT
-            </div>
+            <strong>
+                Environment
+            </strong>
 
-            <div
-                class="status-value"
-                id="liveEnvironment"
-            >
-                26.25 / LOW
+            <div id="liveEnvironment">
+                READY
             </div>
 
         </div>
 
-
         <div class="status-card">
 
-            <div class="status-title">
-                PRIMARY AI
-            </div>
+            <strong>
+                Primary AI
+            </strong>
 
-            <div
-                class="status-value"
-                id="livePrimary"
-            >
-                STANDBY
+            <div id="livePrimary">
+                READY
             </div>
 
         </div>
 
-
         <div class="status-card">
 
-            <div class="status-title">
-                SECONDARY AI
-            </div>
+            <strong>
+                Secondary AI
+            </strong>
 
-            <div
-                class="status-value"
-                id="liveSecondary"
-            >
-                STANDBY
+            <div id="liveSecondary">
+                READY
             </div>
 
         </div>
 
-
         <div class="status-card">
 
-            <div class="status-title">
-                STABILIZER
-            </div>
+            <strong>
+                Stabilizer
+            </strong>
 
-            <div
-                class="status-value"
-                id="liveStabilizer"
-            >
-                STANDBY
+            <div id="liveStabilizer">
+                READY
             </div>
 
         </div>
 
-
         <div class="status-card">
 
-            <div class="status-title">
-                HUMAN AUTHORITY
-            </div>
+            <strong>
+                Human Authority
+            </strong>
 
-            <div
-                class="status-value"
-                id="liveHuman"
-            >
-                FINAL
+            <div id="liveHuman">
+                WAITING
             </div>
 
         </div>
 
-
         <div class="status-card">
 
-            <div class="status-title">
-                SYSTEM
-            </div>
+            <strong>
+                System
+            </strong>
 
-            <div
-                class="status-value"
-                id="liveSystem"
-            >
-                SYSTEM READY
+            <div id="liveSystem">
+                READY
             </div>
 
         </div>
@@ -929,27 +872,14 @@ button:active {
         <div class="lena-card">
 
             <div class="lena-title">
-                LENA STATUS
+                STATUS
             </div>
 
             <div
                 class="lena-value"
                 id="lenaStatus"
             >
-                STANDBY
-            </div>
-
-        </div>
-
-
-        <div class="lena-card">
-
-            <div class="lena-title">
-                AI ROLE
-            </div>
-
-            <div class="lena-value">
-                DECISION SUPPORT
+                READY
             </div>
 
         </div>
@@ -965,7 +895,7 @@ button:active {
                 class="lena-value"
                 id="lenaRecommendation"
             >
-                NO SIMULATED RECOMMENDATION
+                STANDBY
             </div>
 
         </div>
@@ -981,7 +911,7 @@ button:active {
                 class="lena-value"
                 id="lenaUrgency"
             >
-                NORMAL
+                LOW
             </div>
 
         </div>
@@ -997,7 +927,7 @@ button:active {
                 class="lena-value"
                 id="lenaResponseMode"
             >
-                MONITORING
+                MONITOR
             </div>
 
         </div>
@@ -1006,40 +936,14 @@ button:active {
         <div class="lena-card">
 
             <div class="lena-title">
-                HUMAN AUTHORITY
-            </div>
-
-            <div class="lena-value">
-                FINAL
-            </div>
-
-        </div>
-
-
-        <div class="lena-card">
-
-            <div class="lena-title">
-                AUTONOMOUS COMMAND
-            </div>
-
-            <div class="lena-value">
-                FALSE
-            </div>
-
-        </div>
-
-
-        <div class="lena-card">
-
-            <div class="lena-title">
-                SIMULATED ACTION
+                ACTION
             </div>
 
             <div
                 class="lena-value"
                 id="lenaAction"
             >
-                NOT EXECUTED
+                NONE
             </div>
 
         </div>
@@ -1051,138 +955,56 @@ button:active {
         class="lena-message"
         id="lenaMessage"
     >
-        Captain AI Lena is awaiting simulated environmental
-        assessment. No simulated actions recommended.
+        Captain AI Lena is standing by for simulation.
     </div>
 
 </div>
 
 
 <!-- ======================================================
-     DP SIMULATION ASSESSMENT
+     RECOMMENDED ACTION
 ======================================================= -->
 
 <div class="panel">
 
     <h2>
-        DP Simulation Assessment
+        Recommended Action
     </h2>
 
-    <div
-        id="simulationOutput"
-        class="output"
-    >
-System ready. Select environmental conditions or a scenario,
-then press RUN DP SIMULATION.
-    </div>
+    <div class="status-grid">
 
-</div>
+        <div class="status-card">
 
+            <strong>
+                Lena Status
+            </strong>
 
-<!-- ======================================================
-     RECOMMENDED ACTIONS
-======================================================= -->
-
-<div class="lena-panel">
-
-    <h2>
-        Captain AI Lena — Recommended Actions
-    </h2>
-
-    <div class="boundary">
-
-        <strong>
-            CAPTAIN AI LENA
-        </strong>
-
-        <br>
-
-        ROLE:
-        <strong>
-            DP RESILIENCE DECISION-SUPPORT LAYER
-        </strong>
-
-        <br>
-
-        AUTHORITY:
-        <strong>
-            HUMAN-IN-THE-LOOP
-        </strong>
-
-        <br>
-
-        AUTONOMOUS COMMAND:
-        <strong>
-            FALSE
-        </strong>
-
-        <br><br>
-
-        Captain AI Lena evaluates the simulated resilience
-        assessment and presents recommended actions for human
-        consideration.
-
-    </div>
-
-
-    <div class="lena-grid">
-
-        <div class="lena-card">
-
-            <div class="lena-title">
-                LENA STATUS
-            </div>
-
-            <div
-                class="lena-value"
-                id="actionLenaStatus"
-            >
-                STANDBY
+            <div id="actionLenaStatus">
+                READY
             </div>
 
         </div>
 
+        <div class="status-card">
 
-        <div class="lena-card">
+            <strong>
+                Recommended Action
+            </strong>
 
-            <div class="lena-title">
-                CONTROL MODE
-            </div>
-
-            <div class="lena-value">
-                HUMAN AUTHORITY
-            </div>
-
-        </div>
-
-
-        <div class="lena-card">
-
-            <div class="lena-title">
-                RECOMMENDED ACTION
-            </div>
-
-            <div
-                class="lena-value"
-                id="recommendedAction"
-            >
-                NO ACTION
+            <div id="recommendedAction">
+                NONE
             </div>
 
         </div>
 
+        <div class="status-card">
 
-        <div class="lena-card">
+            <strong>
+                Urgency
+            </strong>
 
-            <div class="lena-title">
-                URGENCY
-            </div>
-
-            <div
-                class="lena-value"
-                id="recommendedUrgency"
-            >
-                NORMAL
+            <div id="recommendedUrgency">
+                LOW
             </div>
 
         </div>
@@ -1194,23 +1016,43 @@ then press RUN DP SIMULATION.
         class="lena-message"
         id="recommendedMessage"
     >
-        Captain AI Lena awaiting simulated assessment.
-        No DP action recommendation available.
-        Human authority remains FINAL.
+        No recommendation available.
     </div>
 
 </div>
+
+
 <!-- ======================================================
-     HUMAN AUTHORIZATION
+     SIMULATION OUTPUT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Simulation Output
+    </h2>
+
+    <div
+        class="output"
+        id="simulationOutput"
+    >
+        System ready.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     HUMAN DECISION AUTHORITY
 ======================================================= -->
 
 <div class="human-panel">
 
     <h2>
-        Human Authorization — Final Decision
+        Human Decision Authority
     </h2>
 
-    <div class="boundary">
+    <div class="warning">
 
         <strong>
             HUMAN AUTHORIZATION REQUIRED
@@ -1218,19 +1060,9 @@ then press RUN DP SIMULATION.
 
         <br><br>
 
-        Captain AI Lena provides decision support only.
-
-        <br>
-
-        No simulated manoeuvre is treated as an operational
-        command.
-
-        <br><br>
-
-        FINAL AUTHORITY:
-        <strong>
-            HUMAN OPERATOR
-        </strong>
+        AI systems provide assessment and recommendations
+        only. Final authority remains with the human
+        operator.
 
     </div>
 
@@ -1238,23 +1070,18 @@ then press RUN DP SIMULATION.
     <div class="controls">
 
         <button
-            class="scenario"
             onclick="acknowledgeSimulation()"
         >
             ACKNOWLEDGE
         </button>
 
-
         <button
-            class="reset"
             onclick="maintainSafeState()"
         >
             MAINTAIN SAFE STATE
         </button>
 
-
         <button
-            class="run"
             onclick="authorizeSimulatedResponse()"
         >
             AUTHORIZE SIMULATED RESPONSE
@@ -1263,84 +1090,51 @@ then press RUN DP SIMULATION.
     </div>
 
 
-    <div
-        class="warning"
-        id="humanGateStatus"
-    >
-        EXECUTION GATE:
-        HUMAN AUTHORIZATION REQUIRED
+    <div class="status-card">
+
+        <strong>
+            Human Gate Status
+        </strong>
+
+        <div id="humanGateStatus">
+            HUMAN AUTHORIZATION REQUIRED
+        </div>
+
     </div>
 
 </div>
 
 
 <!-- ======================================================
-     MARIN V&V SCENARIO MAPPING
+     MARIN SCENARIO / METRICS / EVALUATION
 ======================================================= -->
 
 <div class="vv-panel">
 
-    <div class="vv-badge">
-        SCENARIO INPUT INTERFACE
-    </div>
+    <span class="vv-badge">
+        MARIN V&V RESEARCH
+    </span>
 
     <h2>
-        MARIN Scenario / Metrics / Evaluation Mapping
+        Scenario / Metrics / Evaluation Mapping
     </h2>
 
     <div class="boundary">
 
-        The current simulator provides the baseline
-        Sextant Protocol™ DP resilience architecture.
+        Scenario condition →
+        Environmental input →
+        AI assessment →
+        Decision recommendation →
+        Safety gate →
+        Human authority →
+        Simulated action →
+        Audit result.
 
         <br><br>
 
-        The framework is intentionally designed to accept
-        additional scenario definitions and evaluation
-        requirements from MARIN or other research partners.
-
-        <br><br>
-
-        <strong>
-            Requested future mapping inputs:
-        </strong>
-
-        <br>
-
-        • Scenario definitions
-        <br>
-        • Environmental conditions
-        <br>
-        • Vessel / USV parameters
-        <br>
-        • Failure and disturbance conditions
-        <br>
-        • V&amp;V metrics
-        <br>
-        • Expected system responses
-        <br>
-        • Evaluation thresholds
-        <br>
-        • Acceptance conditions
-        <br>
-        • Repeatability requirements
-        <br>
-        • Required audit / evidence outputs
-
-        <br><br>
-
-        These inputs can be mapped into the existing
-        deterministic simulation framework for repeatable
-        research and engineering evaluation.
-
-        <br><br>
-
-        <strong>
-            CURRENT STATUS:
-        </strong>
-
-        FRAMEWORK READY —
-        MARIN SCENARIO MAPPING PENDING
+        The simulator is intended to support deterministic,
+        repeatable and auditable research evaluation of
+        resilience and decision-support behaviour.
 
     </div>
 
@@ -1354,152 +1148,67 @@ then press RUN DP SIMULATION.
 <div class="panel">
 
     <h2>
-        Research Purpose &amp; Operational Boundary
+        Research Purpose
     </h2>
 
     <div class="boundary">
 
+        This cockpit is a deterministic maritime resilience
+        research simulator developed for V&V evaluation.
+
+        <br><br>
+
+        It is designed to examine system behaviour under
+        changing environmental and operational disturbance
+        conditions.
+
+        <br><br>
+
+        The simulator provides decision support and records
+        the relationship between environmental conditions,
+        AI assessment, stabilizer arbitration, recommended
+        actions, human authorization and simulated response.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     OPERATIONAL BOUNDARY
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Operational Boundary
+    </h2>
+
+    <div class="warning">
+
         <strong>
-            SEXTANT PROTOCOL™ — DP RESILIENCE V&amp;V
-            RESEARCH SIMULATOR
+            RESEARCH / V&V ONLY
         </strong>
 
         <br><br>
 
-        This cockpit is a deterministic research and
-        engineering simulation environment developed to
-        explore how a layered resilience architecture could
-        respond to changing maritime environmental conditions.
+        This system is a simulation and research instrument.
 
         <br><br>
 
-        The simulator creates a controlled virtual vessel
-        environment in which wind, current, wave and tidal
-        conditions can be varied, repeated and analysed.
+        It is not a certified DP system.
 
         <br><br>
 
-        The deterministic simulation engine processes those
-        conditions through the research architecture and
-        produces a traceable simulated result.
+        It does not issue operational commands to a vessel.
 
         <br><br>
 
-        The simulator is intended to support:
-
-        <br>
-
-        • Research
-        <br>
-        • Education
-        <br>
-        • Engineering analysis
-        <br>
-        • Scenario testing
-        <br>
-        • Technical demonstration
-        <br>
-        • Repeatable validation
-        <br>
-        • Verification research
-        <br>
-        • Future independent review
-        <br>
-        • Partner-defined V&amp;V scenario mapping
+        No autonomous vessel control is permitted.
 
         <br><br>
 
-        <strong>
-            PARTNER SCENARIO PRINCIPLE
-        </strong>
-
-        <br><br>
-
-        The underlying Sextant Protocol™ framework is
-        established independently of any particular external
-        scenario set.
-
-        <br><br>
-
-        Research partners may provide their own scenarios,
-        metrics and evaluation conditions for mapping into
-        the existing framework.
-
-        <br><br>
-
-        This allows the same architecture to be subjected
-        to partner-defined and repeatable V&amp;V conditions
-        without treating the present demonstration scenarios
-        as the final evaluation set.
-
-        <br><br>
-
-        Trial manoeuvres and simulated responses shown by
-        this cockpit are planning and assessment
-        representations only.
-
-        <br><br>
-
-        They are
-        <strong>
-            NOT operational DP commands
-        </strong>
-        and are
-        <strong>
-            NOT transmitted to any vessel control system.
-        </strong>
-
-        <br><br>
-
-        <strong>
-            HUMAN-IN-THE-LOOP
-        </strong>
-
-        <br><br>
-
-        Human authority remains the final decision point in
-        the research architecture.
-
-        <br><br>
-
-        The simulator provides decision-support and
-        simulated responses; it does not replace the Master,
-        DPO, authorised operator, vessel procedures or
-        classification requirements.
-
-        <br><br>
-
-        <strong>
-            OPERATIONAL BOUNDARY
-        </strong>
-
-        <br><br>
-
-        This prototype is intentionally isolated from
-        operational vessel control.
-
-        <br><br>
-
-        It does not connect to and must not be connected to:
-
-        <br>
-
-        • Dynamic Positioning systems
-        <br>
-        • Propulsion systems
-        <br>
-        • Navigation systems
-        <br>
-        • Steering systems
-        <br>
-        • Safety systems
-        <br>
-        • Vessel automation systems
-
-        <br><br>
-
-        It is not certified marine control software and
-        does not provide certified DP functionality.
+        Human authority remains final.
 
     </div>
 
@@ -1512,48 +1221,49 @@ then press RUN DP SIMULATION.
 
 <div class="panel">
 
-    <div class="warning">
+    <h2>
+        Final System Boundary
+    </h2>
 
-        <strong>
-            SEXTANT PROTOCOL™ –
-            DP RESILIENCE V&amp;V RESEARCH SIMULATOR
-        </strong>
+    <div class="boundary">
 
-        <br><br>
+        ENVIRONMENT
 
-        MARIN / USV V&amp;V RESEARCH FRAMEWORK
+        →
+        
+        PRIMARY AI
 
-        <br><br>
+        →
 
-        RESEARCH • SIMULATION • EDUCATION •
-        ENGINEERING ANALYSIS • VERIFICATION • VALIDATION
+        SECONDARY AI
 
-        <br><br>
+        →
 
-        ENVIRONMENT →
-        PRIMARY AI →
-        SECONDARY AI →
-        STABILIZER →
-        RECOMMENDED ACTIONS →
-        CAPTAIN AI LENA →
-        HUMAN AUTHORITY →
-        SIMULATED DP RESPONSE
+        STABILIZER
 
-        <br><br>
+        →
 
-        <strong>
-            BRANCH:
-            feature/marin-usv-vv-research
-        </strong>
+        CAPTAIN AI LENA
+
+        →
+
+        HUMAN-IN-THE-LOOP
+
+        →
+
+        SIMULATED DP ACTION
 
         <br><br>
 
-        NOT CERTIFIED MARINE CONTROL SOFTWARE
+        No direct operational vessel connection.
 
-        <br>
+        <br><br>
 
-        NOT FOR CONNECTION TO OPERATIONAL DP,
-        PROPULSION, NAVIGATION OR SAFETY SYSTEMS
+        No autonomous command execution.
+
+        <br><br>
+
+        HUMAN AUTHORIZATION REQUIRED.
 
     </div>
 
@@ -1563,71 +1273,27 @@ then press RUN DP SIMULATION.
 </div>
 
 
-<!-- ======================================================
-     FOOTER
-======================================================= -->
-
 <div class="footer">
 
-    SEXTANT PROTOCOL™ –
-    DP RESILIENCE V&amp;V RESEARCH COCKPIT
+    Sextant Protocol™ —
+    DP Resilience V&V Research Cockpit
 
     <br>
 
-    BRANCH:
-    feature/marin-usv-vv-research
-
-    <br>
-
-    RESEARCH / SIMULATION ONLY
-
-    <br>
-
-    NOT CERTIFIED MARINE CONTROL SOFTWARE
-
-    <br>
-
-    NOT FOR CONNECTION TO OPERATIONAL DP,
-    PROPULSION, NAVIGATION OR SAFETY SYSTEMS
+    Research / V&V Only — Not Certified
 
 </div>
 
 
-<!-- ======================================================
-     DP SIMULATION ENGINE
-=======================================================
-
-     This file must contain JavaScript only.
-
-     The engine must expose:
-
-     window.DPSimulationEngine
-
-     with at least:
-
-     run()
-     validate()
-     acknowledgeHumanDecision()
-     maintainSafeState()
-     authorizeSimulatedResponse()
-
-======================================================= -->
-
 <script src="./dp_simulation_engine.js"></script>
 
 
-<!-- ======================================================
-     COCKPIT EXECUTION / ENGINE WIRING
-======================================================= -->
-
 <script>
 
-"use strict";
 
-
-/* =========================================================
+/* ======================================================
    ENVIRONMENT INPUTS
-========================================================= */
+======================================================= */
 
 function getEnvironmentInputs() {
 
@@ -1651,26 +1317,38 @@ function getEnvironmentInputs() {
         tidal:
             Number(
                 document.getElementById("tidal").value
-            )
+            ),
+
+        positioningMode:
+            document.getElementById(
+                "positioningMode"
+            ).value,
+
+        engineLoadMode:
+            document.getElementById(
+                "engineLoadMode"
+            ).value
 
     };
 
 }
 
 
-/* =========================================================
+/* ======================================================
    RUN SIMULATION
-========================================================= */
+======================================================= */
 
 function runSimulation() {
 
     if (
-        !window.DPSimulationEngine
+        !window.DPSimulationEngine ||
+        typeof window.DPSimulationEngine.run !== "function"
     ) {
 
-        alert(
-            "DP Simulation Engine is not loaded."
-        );
+        document.getElementById(
+            "simulationOutput"
+        ).textContent =
+            "ERROR: DP Simulation Engine unavailable.";
 
         return;
 
@@ -1691,78 +1369,96 @@ function runSimulation() {
 }
 
 
-/* =========================================================
+/* ======================================================
    HUMAN ACKNOWLEDGEMENT
-========================================================= */
+======================================================= */
 
 function acknowledgeSimulation() {
 
-    if (!window.DPSimulationEngine) {
-        return;
-    }
-
-    const result =
+    if (
+        window.DPSimulationEngine &&
+        typeof
         window.DPSimulationEngine
-            .acknowledgeHumanDecision(
-                "Human operator acknowledged the simulated condition."
-            );
+            .acknowledgeHumanDecision ===
+        "function"
+    ) {
 
-    renderSimulationResult(
-        result
-    );
+        const result =
+            window.DPSimulationEngine
+                .acknowledgeHumanDecision(
+                    "ACKNOWLEDGE"
+                );
+
+        renderSimulationResult(
+            result
+        );
+
+    }
 
 }
 
 
-/* =========================================================
+/* ======================================================
    MAINTAIN SAFE STATE
-========================================================= */
+======================================================= */
 
 function maintainSafeState() {
 
-    if (!window.DPSimulationEngine) {
-        return;
-    }
-
-    const result =
+    if (
+        window.DPSimulationEngine &&
+        typeof
         window.DPSimulationEngine
-            .maintainSafeState(
-                "Human operator selected MAINTAIN SAFE STATE."
-            );
+            .maintainSafeState ===
+        "function"
+    ) {
 
-    renderSimulationResult(
-        result
-    );
+        const result =
+            window.DPSimulationEngine
+                .maintainSafeState(
+                    "MAINTAIN_SAFE_STATE"
+                );
+
+        renderSimulationResult(
+            result
+        );
+
+    }
 
 }
 
 
-/* =========================================================
+/* ======================================================
    AUTHORIZE SIMULATED RESPONSE
-========================================================= */
+======================================================= */
 
 function authorizeSimulatedResponse() {
 
-    if (!window.DPSimulationEngine) {
-        return;
-    }
-
-    const result =
+    if (
+        window.DPSimulationEngine &&
+        typeof
         window.DPSimulationEngine
-            .authorizeSimulatedResponse(
-                "Human operator authorized the proposed simulated response."
-            );
+            .authorizeSimulatedResponse ===
+        "function"
+    ) {
 
-    renderSimulationResult(
-        result
-    );
+        const result =
+            window.DPSimulationEngine
+                .authorizeSimulatedResponse(
+                    "AUTHORIZE_SIMULATED_RESPONSE"
+                );
+
+        renderSimulationResult(
+            result
+        );
+
+    }
 
 }
 
 
-/* =========================================================
-   SCENARIO HELPER
-========================================================= */
+/* ======================================================
+   SCENARIO SETTER
+======================================================= */
 
 function setScenario(
     wind,
@@ -1771,24 +1467,28 @@ function setScenario(
     tidal
 ) {
 
-    document.getElementById("wind").value =
-        wind;
+    document.getElementById(
+        "wind"
+    ).value = wind;
 
-    document.getElementById("current").value =
-        current;
+    document.getElementById(
+        "current"
+    ).value = current;
 
-    document.getElementById("wave").value =
-        wave;
+    document.getElementById(
+        "wave"
+    ).value = wave;
 
-    document.getElementById("tidal").value =
-        tidal;
+    document.getElementById(
+        "tidal"
+    ).value = tidal;
 
 }
 
 
-/* =========================================================
+/* ======================================================
    SCENARIOS
-========================================================= */
+======================================================= */
 
 function normalScenario() {
 
@@ -1889,7 +1589,6 @@ function combinedDisturbanceScenario() {
 function randomScenario() {
 
     setScenario(
-
         Math.floor(
             Math.random() * 101
         ),
@@ -1905,628 +1604,172 @@ function randomScenario() {
         Math.floor(
             Math.random() * 101
         )
-
     );
 
 }
 
 
-/* =========================================================
+/* ======================================================
    RESET
-========================================================= */
+======================================================= */
 
 function resetSimulation() {
 
-    setScenario(
-        30,
-        25,
-        30,
-        20
-    );
+    document.getElementById(
+        "wind"
+    ).value = 30;
+
+    document.getElementById(
+        "current"
+    ).value = 25;
+
+    document.getElementById(
+        "wave"
+    ).value = 30;
+
+    document.getElementById(
+        "tidal"
+    ).value = 20;
 
 
-    const output =
-        document.getElementById(
-            "simulationOutput"
-        );
+    document.getElementById(
+        "positioningMode"
+    ).value =
+        "NON_BIAS";
 
 
-    if (output) {
-
-        output.textContent =
-            "System ready. Select environmental conditions or a scenario, then press RUN DP SIMULATION.";
-
-    }
+    document.getElementById(
+        "engineLoadMode"
+    ).value =
+        "NORMAL";
 
 
     document.getElementById(
         "liveEnvironment"
     ).textContent =
-        "26.25 / LOW";
-
+        "READY";
 
     document.getElementById(
         "livePrimary"
     ).textContent =
-        "STANDBY";
-
+        "READY";
 
     document.getElementById(
         "liveSecondary"
     ).textContent =
-        "STANDBY";
-
+        "READY";
 
     document.getElementById(
         "liveStabilizer"
     ).textContent =
-        "STANDBY";
-
+        "READY";
 
     document.getElementById(
         "liveHuman"
     ).textContent =
-        "FINAL";
-
+        "WAITING";
 
     document.getElementById(
         "liveSystem"
     ).textContent =
-        "SYSTEM READY";
+        "READY";
 
 
     document.getElementById(
         "lenaStatus"
     ).textContent =
+        "READY";
+
+    document.getElementById(
+        "lenaRecommendation"
+    ).textContent =
         "STANDBY";
+
+    document.getElementById(
+        "lenaUrgency"
+    ).textContent =
+        "LOW";
+
+    document.getElementById(
+        "lenaResponseMode"
+    ).textContent =
+        "MONITOR";
+
+    document.getElementById(
+        "lenaAction"
+    ).textContent =
+        "NONE";
+
+    document.getElementById(
+        "lenaMessage"
+    ).textContent =
+        "Captain AI Lena is standing by for simulation.";
 
 
     document.getElementById(
         "actionLenaStatus"
     ).textContent =
-        "STANDBY";
-
-
-    document.getElementById(
-        "lenaRecommendation"
-    ).textContent =
-        "NO SIMULATED RECOMMENDATION";
-
+        "READY";
 
     document.getElementById(
         "recommendedAction"
     ).textContent =
-        "NO ACTION";
-
-
-    document.getElementById(
-        "lenaUrgency"
-    ).textContent =
-        "NORMAL";
-
+        "NONE";
 
     document.getElementById(
         "recommendedUrgency"
     ).textContent =
-        "NORMAL";
-
-
-    document.getElementById(
-        "lenaResponseMode"
-    ).textContent =
-        "MONITORING";
-
-
-    document.getElementById(
-        "lenaAction"
-    ).textContent =
-        "NOT EXECUTED";
-
-
-    document.getElementById(
-        "lenaMessage"
-    ).textContent =
-        "Captain AI Lena is awaiting simulated environmental assessment. No simulated actions recommended.";
-
+        "LOW";
 
     document.getElementById(
         "recommendedMessage"
     ).textContent =
-        "Captain AI Lena awaiting simulated assessment. No DP action recommendation available. Human authority remains FINAL.";
+        "No recommendation available.";
+
+
+    document.getElementById(
+        "simulationOutput"
+    ).textContent =
+        "System ready.";
 
 
     document.getElementById(
         "humanGateStatus"
     ).textContent =
-        "EXECUTION GATE: HUMAN AUTHORIZATION REQUIRED";
+        "HUMAN AUTHORIZATION REQUIRED";
 
 
     document.getElementById(
         "engineStatus"
     ).textContent =
-        "DP SIMULATION ENGINE 1.2.0 CONNECTED — READY";
+        "INITIALISING...";
 
 }
 
 
-/* =========================================================
-   RENDER COMPLETE EXECUTION TRACE
-========================================================= */
+/* ======================================================
+   RENDER SIMULATION RESULT
+======================================================= */
 
 function renderSimulationResult(
     result
 ) {
 
     if (!result) {
+
         return;
+
     }
 
 
-    const output =
-        document.getElementById(
-            "simulationOutput"
+    document.getElementById(
+        "simulationOutput"
+    ).textContent =
+        JSON.stringify(
+            result,
+            null,
+            2
         );
-
-
-    if (!output) {
-        return;
-    }
-
-
-    let text = "";
-
-
-    text +=
-        "SEXTANT PROTOCOL™ — DP RESILIENCE V&V SIMULATION\n";
-
-    text +=
-        "================================================\n\n";
-
-
-    text +=
-        "BRANCH: feature/marin-usv-vv-research\n";
-
-    text +=
-        "MODE: MARIN / USV V&V RESEARCH FRAMEWORK\n\n";
-
-
-    text +=
-        "ENGINE: " +
-        result.engineName +
-        " " +
-        result.version +
-        "\n";
-
-
-    text +=
-        "SIMULATION MODE: " +
-        result.mode +
-        "\n";
-
-
-    text +=
-        "SYSTEM STATUS: " +
-        result.systemStatus +
-        "\n\n";
-
-
-    /* ENVIRONMENT */
-
-    text +=
-        "ENVIRONMENT\n";
-
-    text +=
-        "-----------\n";
-
-
-    text +=
-        "Wind:    " +
-        result.environment.wind +
-        "\n";
-
-
-    text +=
-        "Current: " +
-        result.environment.current +
-        "\n";
-
-
-    text +=
-        "Wave:    " +
-        result.environment.wave +
-        "\n";
-
-
-    text +=
-        "Tidal:   " +
-        result.environment.tidal +
-        "\n";
-
-
-    text +=
-        "Stress:  " +
-        Number(
-            result.environment.environmentalStress
-        ).toFixed(2) +
-        "\n";
-
-
-    text +=
-        "Risk:    " +
-        result.risk +
-        "\n\n";
-
-
-    /* S1 */
-
-    text +=
-        "S1 PRIMARY ASSESSMENT\n";
-
-    text +=
-        "---------------------\n";
-
-
-    text +=
-        "Mode: " +
-        result.primary.mode +
-        "\n";
-
-
-    text +=
-        "Response: " +
-        result.primary.response +
-        "\n";
-
-
-    text +=
-        "Stress: " +
-        result.primary.stress +
-        "\n\n";
-
-
-    /* S2 */
-
-    text +=
-        "S2 INDEPENDENT SAFETY ASSESSMENT\n";
-
-    text +=
-        "---------------------------------\n";
-
-
-    text +=
-        "Mode: " +
-        result.secondary.mode +
-        "\n";
-
-
-    text +=
-        "Assessment: " +
-        result.secondary.assessment +
-        "\n";
-
-
-    text +=
-        "Independent Stress: " +
-        result.secondary.independentStress +
-        "\n\n";
-
-
-    /* STABILIZER */
-
-    text +=
-        "STABILIZER / ARBITRATION\n";
-
-    text +=
-        "------------------------\n";
-
-
-    text +=
-        "Mode: " +
-        result.stabilizer.mode +
-        "\n";
-
-
-    text +=
-        "Source: " +
-        result.stabilizer.source +
-        "\n";
-
-
-    text +=
-        "Status: " +
-        result.stabilizer.status +
-        "\n";
-
-
-    text +=
-        "Output: " +
-        result.stabilizer.finalOutput +
-        "\n\n";
-
-
-    /* LENA */
-
-    text +=
-        "CAPTAIN AI LENA\n";
-
-    text +=
-        "---------------\n";
-
-
-    text +=
-        "Recommendation: " +
-        result.recommendedAction.primaryRecommendation +
-        "\n";
-
-
-    text +=
-        "Urgency: " +
-        result.recommendedAction.urgency +
-        "\n";
-
-
-    text +=
-        "Response Mode: " +
-        result.recommendedAction.responseMode +
-        "\n";
-
-
-    text +=
-        "Rationale: " +
-        result.recommendedAction.rationale +
-        "\n\n";
-
-
-    text +=
-        "Recommended Actions:\n";
-
-
-    if (
-        Array.isArray(
-            result.recommendedAction.recommendedActions
-        )
-    ) {
-
-        result.recommendedAction
-            .recommendedActions
-            .forEach(
-                function (
-                    action,
-                    index
-                ) {
-
-                    text +=
-                        (index + 1) +
-                        ". " +
-                        action +
-                        "\n";
-
-                }
-            );
-
-    }
-
-
-    text +=
-        "\n";
-
-
-    /* HUMAN */
-
-    text +=
-        "HUMAN AUTHORITY\n";
-
-    text +=
-        "---------------\n";
-
-
-    text +=
-        "Authority: FINAL\n";
-
-
-    text +=
-        "Decision: " +
-        result.human.decision +
-        "\n";
-
-
-    text +=
-        "Acknowledged: " +
-        result.human.acknowledged +
-        "\n";
-
-
-    text +=
-        "Authorized: " +
-        result.human.authorized +
-        "\n";
-
-
-    text +=
-        "Action Executed: " +
-        result.human.actionExecuted +
-        "\n\n";
-
-
-    /* PROPOSED */
-
-    text +=
-        "PROPOSED SIMULATED DP RESPONSE\n";
-
-    text +=
-        "-------------------------------\n";
-
-
-    text +=
-        "Command: " +
-        result.proposedAction.simulatedCommand +
-        "\n";
-
-
-    text +=
-        "Execution Gate: " +
-        result.proposedAction.executionGate +
-        "\n";
-
-
-    text +=
-        "Status: " +
-        result.proposedAction.status +
-        "\n\n";
-
-
-    /* EXECUTED */
-
-    text +=
-        "SIMULATED DP RESPONSE\n";
-
-    text +=
-        "---------------------\n";
-
-
-    text +=
-        "Mode: " +
-        result.simulatedAction.mode +
-        "\n";
-
-
-    text +=
-        "Command: " +
-        result.simulatedAction.simulatedCommand +
-        "\n";
-
-
-    text +=
-        "Status: " +
-        result.simulatedAction.status +
-        "\n";
-
-
-    text +=
-        "Operational Command: " +
-        result.simulatedAction.operationalCommand +
-        "\n";
-
-
-    text +=
-        "Real Vessel Connection: " +
-        result.simulatedAction.realVesselConnection +
-        "\n\n";
-
-
-    /* UPDATED STATE */
-
-    text +=
-        "UPDATED SIMULATED VESSEL STATE\n";
-
-    text +=
-        "-------------------------------\n";
-
-
-    text +=
-        "Position Error: " +
-        result.updatedState.positionError +
-        "\n";
-
-
-    text +=
-        "Stability Index: " +
-        result.updatedState.stabilityIndex +
-        "\n";
-
-
-    text +=
-        "Risk: " +
-        result.updatedState.risk +
-        "\n";
-
-
-    text +=
-        "State: " +
-        result.updatedState.status +
-        "\n\n";
-
-
-    /* GATE */
-
-    text +=
-        "EXECUTION GATE\n";
-
-    text +=
-        "--------------\n";
-
-
-    text +=
-        "Required: " +
-        result.executionGate.required +
-        "\n";
-
-
-    text +=
-        "Acknowledged: " +
-        result.executionGate.acknowledged +
-        "\n";
-
-
-    text +=
-        "Authorized: " +
-        result.executionGate.authorized +
-        "\n";
-
-
-    text +=
-        "Executed: " +
-        result.executionGate.executed +
-        "\n";
-
-
-    text +=
-        "Status: " +
-        result.executionGate.status +
-        "\n\n";
-
-
-    /* AUDIT */
-
-    if (result.audit) {
-
-        text +=
-            "AUDIT\n";
-
-        text +=
-            "-----\n";
-
-
-        text +=
-            "Human Decision: " +
-            result.audit.humanDecision +
-            "\n";
-
-
-        text +=
-            "Human Authorized: " +
-            result.audit.humanAuthorized +
-            "\n";
-
-
-        text +=
-            "Simulated Action Executed: " +
-            result.audit.simulatedActionExecuted +
-            "\n";
-
-
-        text +=
-            "Operational Command: FALSE\n";
-
-
-        text +=
-            "Real Vessel Connection: FALSE\n";
-
-    }
-
-
-    output.textContent =
-        text;
 
 
     updateLiveStatus(
@@ -2538,72 +1781,15 @@ function renderSimulationResult(
         result
     );
 
-}
-
-
-/* =========================================================
-   LIVE STATUS
-========================================================= */
-
-function updateLiveStatus(
-    result
-) {
-
-    document.getElementById(
-        "liveEnvironment"
-    ).textContent =
-        Number(
-            result.environment.environmentalStress
-        ).toFixed(2) +
-        " / " +
-        result.risk;
-
-
-    document.getElementById(
-        "livePrimary"
-    ).textContent =
-        result.primary.mode;
-
-
-    document.getElementById(
-        "liveSecondary"
-    ).textContent =
-        result.secondary.mode;
-
-
-    document.getElementById(
-        "liveStabilizer"
-    ).textContent =
-        result.stabilizer.status;
-
-
-    document.getElementById(
-        "liveHuman"
-    ).textContent =
-        "FINAL";
-
-
-    document.getElementById(
-        "liveSystem"
-    ).textContent =
-        result.systemStatus;
-
-
-    document.getElementById(
-        "engineStatus"
-    ).textContent =
-        "DP SIMULATION ENGINE 1.2.0 CONNECTED — " +
-        result.systemStatus;
-
 
     if (
+        result.human &&
         result.executionGate
     ) {
 
         document.getElementById(
             "humanGateStatus"
         ).textContent =
-            "EXECUTION GATE: " +
             result.executionGate.status;
 
     }
@@ -2611,152 +1797,242 @@ function updateLiveStatus(
 }
 
 
-/* =========================================================
-   CAPTAIN AI LENA DISPLAY
-========================================================= */
+/* ======================================================
+   LIVE STATUS
+======================================================= */
+
+function updateLiveStatus(
+    result
+) {
+
+    if (
+        result.environment
+    ) {
+
+        document.getElementById(
+            "liveEnvironment"
+        ).textContent =
+            result.environment.environmentalStress;
+
+    }
+
+
+    if (
+        result.primary
+    ) {
+
+        document.getElementById(
+            "livePrimary"
+        ).textContent =
+            result.primary.response;
+
+    }
+
+
+    if (
+        result.secondary
+    ) {
+
+        document.getElementById(
+            "liveSecondary"
+        ).textContent =
+            result.secondary.assessment;
+
+    }
+
+
+    if (
+        result.stabilizer
+    ) {
+
+        document.getElementById(
+            "liveStabilizer"
+        ).textContent =
+            result.stabilizer.status;
+
+    }
+
+
+    if (
+        result.human
+    ) {
+
+        document.getElementById(
+            "liveHuman"
+        ).textContent =
+            result.human.decision;
+
+    }
+
+
+    if (
+        result.systemStatus
+    ) {
+
+        document.getElementById(
+            "liveSystem"
+        ).textContent =
+            result.systemStatus;
+
+    }
+
+}
+
+
+/* ======================================================
+   LENA DISPLAY
+======================================================= */
 
 function updateLenaDisplay(
     result
 ) {
 
+    if (
+        !result.recommendedAction
+    ) {
+
+        return;
+
+    }
+
+
     const recommendation =
         result.recommendedAction;
-
-
-    if (!recommendation) {
-        return;
-    }
 
 
     document.getElementById(
         "lenaStatus"
     ).textContent =
-        "ACTIVE — DECISION SUPPORT";
-
-
-    document.getElementById(
-        "actionLenaStatus"
-    ).textContent =
-        "ACTIVE";
+        result.systemStatus || "READY";
 
 
     document.getElementById(
         "lenaRecommendation"
     ).textContent =
-        recommendation.primaryRecommendation;
-
-
-    document.getElementById(
-        "recommendedAction"
-    ).textContent =
-        recommendation.primaryRecommendation;
+        recommendation
+            .primaryRecommendation ||
+        "STANDBY";
 
 
     document.getElementById(
         "lenaUrgency"
     ).textContent =
-        recommendation.urgency;
-
-
-    document.getElementById(
-        "recommendedUrgency"
-    ).textContent =
-        recommendation.urgency;
+        recommendation.urgency ||
+        "LOW";
 
 
     document.getElementById(
         "lenaResponseMode"
     ).textContent =
-        recommendation.responseMode;
+        recommendation.responseMode ||
+        "MONITOR";
 
 
-    if (
-        result.simulatedAction
-    ) {
-
-        document.getElementById(
-            "lenaAction"
-        ).textContent =
-            result.simulatedAction.status;
-
-    }
+    document.getElementById(
+        "lenaAction"
+    ).textContent =
+        (
+            recommendation
+                .recommendedActions &&
+            recommendation
+                .recommendedActions[0]
+        ) ||
+        "NONE";
 
 
     document.getElementById(
         "lenaMessage"
     ).textContent =
-        recommendation.rationale;
+        recommendation.rationale ||
+        "No additional guidance available.";
+
+
+    document.getElementById(
+        "actionLenaStatus"
+    ).textContent =
+        result.systemStatus ||
+        "READY";
+
+
+    document.getElementById(
+        "recommendedAction"
+    ).textContent =
+        recommendation
+            .primaryRecommendation ||
+        "NONE";
+
+
+    document.getElementById(
+        "recommendedUrgency"
+    ).textContent =
+        recommendation.urgency ||
+        "LOW";
 
 
     document.getElementById(
         "recommendedMessage"
     ).textContent =
-        recommendation.rationale;
+        recommendation.rationale ||
+        "No recommendation available.";
 
 }
 
 
-/* =========================================================
+/* ======================================================
    STARTUP VALIDATION
-========================================================= */
+======================================================= */
 
-document.addEventListener(
-    "DOMContentLoaded",
+window.addEventListener(
+    "load",
     function () {
-
-        const status =
-            document.getElementById(
-                "engineStatus"
-            );
-
 
         if (
             window.DPSimulationEngine &&
             typeof
-                window.DPSimulationEngine.validate
-                === "function" &&
-            window.DPSimulationEngine.validate()
+            window.DPSimulationEngine
+                .validate ===
+            "function"
         ) {
 
-            status.textContent =
-                "DP SIMULATION ENGINE 1.2.0 CONNECTED — READY";
+            const validation =
+                window.DPSimulationEngine
+                    .validate();
 
+            if (
+                validation &&
+                validation.valid
+            ) {
 
-            console.log(
-                "SEXTANT DP V&V COCKPIT — ENGINE WIRING READY"
-            );
+                document.getElementById(
+                    "engineStatus"
+                ).textContent =
+                    "ONLINE — v1.2.0";
 
+            } else {
 
-            console.log(
-                "BRANCH: feature/marin-usv-vv-research"
-            );
+                document.getElementById(
+                    "engineStatus"
+                ).textContent =
+                    "VALIDATION FAILED";
 
-
-            console.log(
-                "ENVIRONMENT → S1 PRIMARY → S2 SECONDARY → STABILIZER → LENA → HUMAN → SIMULATED DP"
-            );
-
-
-            console.log(
-                "MARIN SCENARIO / METRIC / EVALUATION MAPPING READY"
-            );
+            }
 
         } else {
 
-            status.textContent =
-                "DP SIMULATION ENGINE — NOT CONNECTED";
-
-
-            console.error(
-                "DPSimulationEngine validation failed."
-            );
+            document.getElementById(
+                "engineStatus"
+            ).textContent =
+                "ENGINE NOT FOUND";
 
         }
 
     }
 );
 
+
 </script>
 
+
 </body>
+
 </html>
