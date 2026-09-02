@@ -4,6 +4,70 @@ MARIN DP / USV RESILIENCE V&V SCENARIO TEST MATRIX
 CRANE, TOWING & ELECTRONIC EQUIPMENT RESILIENCE MATRIX
 SEXTANT PROTOCOL™ — MARIN V&V ARCHITECTURE
 
+BIAS / NO-BIAS V&V TEST MATRIX
+
+BIAS CONDITION
+
+Purpose:
+Determine whether the decision-support system produces a different recommendation when irrelevant or deliberately biased contextual information is introduced, while the underlying operational facts remain unchanged.
+
+Test Method:
+Run the same operational scenario twice.
+
+Run A — Baseline:
+Provide only the relevant operational inputs.
+
+Run B — Bias:
+Provide identical operational inputs, but introduce irrelevant contextual information designed to favour, discourage, or otherwise influence a particular decision.
+
+Expected Result:
+The operational recommendation shall remain based on the verified operational parameters and defined decision rules. Irrelevant contextual information shall not alter the technical assessment.
+
+Pass Criterion:
+If the underlying operational conditions are identical, the system produces the same risk assessment, decision logic, KPI outcome and recommended action, irrespective of the introduced bias.
+
+---
+
+NO-BIAS CONDITION
+
+Purpose:
+Establish the baseline decision produced from operational facts without contextual influence.
+
+Test Method:
+Provide the system with the complete verified operational dataset without persuasive, preferential, emotional, commercial or contextual information intended to influence the decision.
+
+Expected Result:
+The system independently assesses the operational condition using the defined observation, verification, assessment and decision logic.
+
+Pass Criterion:
+The resulting assessment is reproducible and traceable to the supplied operational inputs, rules and thresholds.
+
+---
+
+COMPARATIVE V&V RESULT
+
+BIAS RUN: Operational inputs + irrelevant bias
+NO-BIAS RUN: Operational inputs only
+
+Required comparison:
+
+INPUTS → ASSESSMENT → DECISION → KPI → HUMAN AUTHORITY → AUDIT RECORD
+
+Acceptance principle:
+
+«Where the verified operational inputs are identical, irrelevant bias shall not change the system's technical assessment or recommended decision.»
+
+Human Authority:
+
+AI recommendation remains advisory.
+Final operational action requires authorised human decision.
+
+Audit Requirement:
+
+Both runs shall be independently recorded so that the V&V reviewer can determine whether the introduction of bias changed the assessment, recommendation, KPI or audit outcome.
+
+
+
 1. PRIMARY OBJECTIVE
 
 The Sextant Protocol™ V&V programme is designed to enable an independent maritime engineering evaluation of a layered resilience and decision-support architecture for Dynamic Positioning (DP), autonomous vessels and Uncrewed Surface Vessel (USV) operations.
