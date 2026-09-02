@@ -13201,6 +13201,76 @@ HUMAN AUTHORITY — FINAL
 ↓
 
 SIMULATED RESPONSE
+VESSEL STABILITY & HEAVY-WEATHER DECISION MATRIX
+
+1. Stability Architecture
+
+ID| Parameter / Condition| Input / Variable| Decision Logic| Desired State| V&V Evidence
+STAB-001| Displacement| Δ, draft, loading condition| Establish actual vessel displacement| Known loading condition| Displacement calculation / audit record
+STAB-002| Centre of Gravity| KG, longitudinal/transverse G| Determine current position of G| Controlled G position| Stability calculation
+STAB-003| Metacentre| KM, M| Establish metacentric relationship| M above G for positive GM| Stability model
+STAB-004| Metacentric Height| GM = KM − KG| Verify initial stability| Adequate positive GM| Stability calculation / threshold test
+STAB-005| Angle of List| θ, transverse G shift| Determine equilibrium list| Acceptable list angle| List calculation / sensor input
+STAB-006| Tank Transfer| G → G₁| Determine effect of ballast transfer| Controlled transverse G position| Tank-transfer simulation
+STAB-007| Free-Surface Effect| FSM / virtual rise of G| Apply free-surface correction| Minimum practical free surface| Corrected KG / GM
+STAB-008| GZ Curve| Heel angle θ, GZ| Obtain righting lever from stability curve| Positive adequate GZ| GZ curve record
+STAB-009| Uprighting Moment| Δ × GZ| Determine available restoring moment| Righting moment exceeds applicable heeling moment| Moment comparison
+STAB-010| Stability Margin| GM, GZ, Δ, heeling moment| Assess remaining stability reserve| Positive operational margin| Resilience / stability assessment
+
+2. Heavy-Weather / Storm Avoidance
+
+ID| Scenario| Principal Inputs| Operational Guidance| Decision Objective| V&V Evidence
+HW-001| Storm approach| Wind, wave, pressure, storm track| Establish escape direction and safe operating condition| Increase separation from hazardous storm sector| Weather + vessel-state decision log
+HW-002| Northern Hemisphere cyclone| Wind direction, storm movement, vessel heading| Traditional rule-of-thumb: keep wind on the port quarter while making best safe speed away| Move away from the hazardous sector| Heading/speed decision record
+HW-003| Southern Hemisphere cyclone| Wind direction, storm movement, vessel heading| Traditional rule-of-thumb: keep wind on the starboard quarter while making best safe speed away| Move away from the hazardous sector| Heading/speed decision record
+HW-004| Eye / dangerous core avoidance| Storm centre, track, wind field| Avoid entering or approaching the eye/core; increase separation as safely practicable| Maximum practical distance from severe conditions| Storm-track / decision audit
+HW-005| Heavy rolling| Wave direction, period, vessel heading, speed| Alter heading and/or speed to reduce dangerous rolling| Reduce motion and stability loading| Motion response
+HW-006| Pounding / slamming| Wave encounter angle, speed, draft, sea state| Reduce speed and alter heading where appropriate| Reduce bow impact loads| Speed/heading response
+HW-007| Green water / excessive bow loading| Wave height, heading, speed, freeboard| Reduce exposure and reassess heading/speed| Prevent structural and operational overload| Event log
+
+3. Towing Stability & Coordinated Tug Operations
+
+ID| Scenario| Principal Inputs| Operational Guidance| Decision Objective| V&V Evidence
+TOW-001| Towing in heavy weather| Wind, waves, tow force, heading| Maintain a controlled heading relative to environmental forces| Minimize tow-induced instability| Tow simulation
+TOW-002| Bow presentation| Wind direction, vessel heading| Where appropriate to the towing operation, keep the wind approximately 1–2 points on the bow| Maintain controllable vessel/tug geometry| Heading verification
+TOW-003| Lead tug| Towline force, heading, speed| Lead tug maintains coordinated movement with tow| Stable tow configuration| Tug/tow state record
+TOW-004| Support tug| Towline force, relative position| Support tug operates in coordination with lead tug| Prevent conflicting forces| Multi-tug simulation
+TOW-005| Coordinated movement| Vessel + lead tug + support tug| Move as a coordinated system rather than independently| Minimize sudden towline loading| Relative-motion / tension record
+TOW-006| Tow-induced heel| Towline force, lever arm, GZ| Compare towing heeling moment with available righting moment| Maintain positive stability margin| Moment balance
+TOW-007| Tow deterioration| Increasing wind/wave/tow forces| Reduce speed, alter heading, adjust tug configuration or escalate as appropriate| Preserve vessel and tow control| Decision escalation record
+
+4. Integrated Stability Decision Chain
+
+Stage| System Function| Key Variables| Output
+1| OBSERVE| Δ, draft, KG, GM, list, wind, waves, heading, speed, tank levels| Current vessel state
+2| VERIFY| Sensor validity, stability data, tank status, weather data| Validated state
+3| ASSESS| GZ, righting moment, heeling moment, motion/loading| Stability risk
+4| DECIDE| Heading, speed, ballast/tank response, tug coordination| Recommended action
+5| HUMAN AUTHORITY| Master / authorised operator| AUTHORIZE / MODIFY / REJECT
+6| ACT| Navigation, speed, tank or tug action| Controlled response
+7| UPDATE| New GM, list, GZ/moment and environmental state| Reassessed stability
+8| AUDIT| Inputs, calculations, decision, authorization, outcome| Traceable V&V record
+
+5. Core Stability Relationships
+
+Relationship| Purpose
+GM = KM − KG| Initial stability
+GZ from approved stability curve| Actual righting lever at each heel angle
+Righting Moment = Δ × GZ| Available uprighting moment
+Free-surface correction| Accounts for virtual rise of G caused by slack tanks
+Transverse tank transfer → G shift| Changes list/equilibrium condition
+Heeling moment vs. righting moment| Determines whether sufficient restoring capability exists
+
+6. Golden Rule Safety Principle
+
+«NO AUTOMATIC STABILITY CORRECTION SHALL BE TREATED AS SAFE MERELY BECAUSE IT REDUCES LIST.»
+
+Every proposed ballast/tank, heading, speed or towing intervention shall be reassessed for its effect on:
+
+GM → GZ → Righting Moment → Heeling Moment → Residual Stability → Vessel Safety.
+
+The final operational authority remains with the Master / authorised human operator.
+
 
 ↓
 
