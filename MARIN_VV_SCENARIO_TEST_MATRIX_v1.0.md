@@ -14,6 +14,22 @@ Operational DP Connection: NONE
 Autonomous Command: FALSE
 Human Authority: FINAL
 
+Dangerous Cargo — SDS / Emergency Information
+
+For all dangerous cargo carried onboard, the relevant Safety Data Sheets (SDS) and dangerous-goods emergency information shall be maintained in a clearly identified, readily accessible location outside the fixed FFA room, so that the information remains immediately available to the Master and emergency response team during a fire, spill or other dangerous-goods incident.
+
+The onboard dangerous-goods documentation shall include, as applicable:
+
+- Dangerous Goods Manifest / Stowage Plan
+- Relevant SDS
+- IMDG emergency response information
+- EmS Guide
+- MFAG
+
+The arrangement shall ensure that emergency information is available away from the dangerous-goods packages and immediately accessible in the event of an incident, in accordance with IMDG Code section 5.4.3.4.
+
+The 2024 IMDG Code, including Amendment 42-24, is mandatory from 1 January 2026.
+
 BIAS CONTROL / DECISION INDEPENDENCE
 
 V&V TEST DIMENSION
