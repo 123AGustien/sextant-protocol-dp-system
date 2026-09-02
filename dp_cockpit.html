@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Sextant Protocol™ – DP Resilience V&V Research Cockpit
+    </title>
+
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #050b12;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .header {
+            background: #081522;
+            border-bottom: 2px solid #1d3c56;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .branch-label {
+            margin-top: 8px;
+            color: #8fb7d9;
+            font-size: 13px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: #0a1622;
+            border: 1px solid #24445f;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .vessel-data {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 90px;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #46627d;
+            background: #07111d;
+            color: white;
+            font-size: 15px;
+        }
+
+        select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #46627d;
+            background: #07111d;
+            color: white;
+            font-size: 15px;
+        }
+
+        button {
+            padding: 10px 14px;
+            margin: 4px;
+            border-radius: 5px;
+            border: 1px solid #46627d;
+            background: #102638;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background: #183b55;
+        }
+
+        .run {
+            background: #155d35;
+            border-color: #2d8b55;
+        }
+
+        .reset {
+            background: #5b2525;
+            border-color: #8f3c3c;
+        }
+
+        .scenario {
+            background: #14283a;
+        }
+
+        .controls {
+            text-align: center;
+        }
+
+        .architecture {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .node {
+            background: #102638;
+            border: 1px solid #41657f;
+            border-radius: 6px;
+            padding: 10px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .arrow {
+            color: #7ca8c7;
+            font-size: 20px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .status-card {
+            background: #07111d;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .status-card strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .output {
+            background: #03070c;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 15px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #7592aa;
+            font-size: 12px;
+        }
+
+        .engine-status {
+            margin-top: 10px;
+            color: #75d69a;
+            font-weight: bold;
+        }
+
+        .lena-panel {
+            background: #081a25;
+            border: 1px solid #31627f;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .lena-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .lena-card {
+            background: #07111d;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .lena-title {
+            color: #80b7d9;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .lena-value {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .lena-message {
+            margin-top: 15px;
+            background: #03070c;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 15px;
+            line-height: 1.5;
+        }
+
+        .human-panel {
+            background: #1b1407;
+            border: 1px solid #735a27;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .boundary {
+            background: #07111d;
+            border: 1px solid #29475f;
+            border-radius: 6px;
+            padding: 15px;
+            line-height: 1.5;
+        }
+
+        .warning {
+            background: #211707;
+            border: 1px solid #765b22;
+            border-radius: 6px;
+            padding: 15px;
+            line-height: 1.5;
+            margin-top: 12px;
+        }
+
+        .vv-panel {
+            background: #081722;
+            border: 1px solid #315d76;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .vv-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 4px;
+            background: #173d50;
+            border: 1px solid #36748f;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <h1>
+        Sextant Protocol™
+    </h1>
+
+    <h2>
+        DP Resilience V&V Research Cockpit
+    </h2>
+
+    <div class="branch-label">
+        Branch:
+        feature/marin-usv-vv-research
+    </div>
+
+    <div class="engine-status">
+        Engine Status:
+        <span id="engineStatus">
+            INITIALISING...
+        </span>
+    </div>
+
+</div>
+
+
+<div class="header">
+
+    <h2>
+        MARIN V&V Research Framework
+    </h2>
+
+    <div class="branch-label">
+        Deterministic Maritime Resilience Simulation —
+        Research / V&V Only
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- ======================================================
+     PRINCIPAL ARCHITECTURE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Principal Architecture
+    </h2>
+
+    <div class="architecture">
+
+        <div class="node">
+            ENVIRONMENT
+        </div>
+
+        <div class="arrow">
+            →
+        </div>
+
+        <div class="node">
+            PRIMARY AI
+            <br>
+            Normal Control
+        </div>
+
+        <div class="arrow">
+            →
+        </div>
+
+        <div class="node">
+            SECONDARY AI
+            <br>
+            Safety Layer
+        </div>
+
+        <div class="arrow">
+            →
+        </div>
+
+        <div class="node">
+            STABILIZER
+            <br>
+            Arbitration
+        </div>
+
+        <div class="arrow">
+            →
+        </div>
+
+        <div class="node">
+            CAPTAIN AI LENA
+            <br>
+            Decision Support
+        </div>
+
+        <div class="arrow">
+            →
+        </div>
+
+        <div class="node">
+            HUMAN-IN-THE-LOOP
+            <br>
+            Final Authority
+        </div>
+
+        <div class="arrow">
+            →
+        </div>
+
+        <div class="node">
+            SIMULATED DP ACTION
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     SIMULATED VESSEL PROFILE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Simulated Vessel Profile
+    </h2>
+
+    <div class="vessel-data">
+
+        <div>
+            Vessel Name
+        </div>
+
+        <div>
+            SEXTANT-MPSV-01
+        </div>
+
+        <div>
+            Vessel Type
+        </div>
+
+        <div>
+            Multi-Purpose Support Vessel
+        </div>
+
+        <div>
+            DP Class
+        </div>
+
+        <div>
+            DP2-SIMULATED
+        </div>
+
+        <div>
+            Length
+        </div>
+
+        <div>
+            85 m
+        </div>
+
+        <div>
+            Beam
+        </div>
+
+        <div>
+            20 m
+        </div>
+
+        <div>
+            Draft
+        </div>
+
+        <div>
+            6 m
+        </div>
+
+        <div>
+            Main Thrusters
+        </div>
+
+        <div>
+            2
+        </div>
+
+        <div>
+            Tunnel Thrusters
+        </div>
+
+        <div>
+            2
+        </div>
+
+        <div>
+            Total Thrusters
+        </div>
+
+        <div>
+            4
+        </div>
+
+        <div>
+            Nominal Simulated Thrust
+        </div>
+
+        <div>
+            100 units
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     ENVIRONMENTAL SIMULATION INPUTS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Environmental Simulation Inputs
+    </h2>
+
+    <div class="input-row">
+
+        <label>
+            Wind Stress (0–100)
+        </label>
+
+        <input
+            id="wind"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+    <div class="input-row">
+
+        <label>
+            Current Stress (0–100)
+        </label>
+
+        <input
+            id="current"
+            type="number"
+            min="0"
+            max="100"
+            value="25"
+        >
+
+    </div>
+
+    <div class="input-row">
+
+        <label>
+            Wave Stress (0–100)
+        </label>
+
+        <input
+            id="wave"
+            type="number"
+            min="0"
+            max="100"
+            value="30"
+        >
+
+    </div>
+
+    <div class="input-row">
+
+        <label>
+            Tidal Stress (0–100)
+        </label>
+
+        <input
+            id="tidal"
+            type="number"
+            min="0"
+            max="100"
+            value="20"
+        >
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     SYSTEM SETUP — POSITIONING / ENGINE LOAD
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        System Setup
+    </h2>
+
+    <div class="input-row">
+
+        <label>
+            Positioning Mode
+        </label>
+
+        <select
+            id="positioningMode"
+        >
+
+            <option value="NON_BIAS">
+                NON-BIAS
+            </option>
+
+            <option value="BIAS">
+                BIAS
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <label>
+            Engine Load Mode
+        </label>
+
+        <select
+            id="engineLoadMode"
+        >
+
+            <option value="NORMAL">
+                NORMAL
+            </option>
+
+            <option value="PUSH_UP">
+                PUSH-UP
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="warning">
+
+        <strong>
+            SYSTEM SETUP
+        </strong>
+
+        <br><br>
+
+        POSITIONING:
+        <strong>
+            BIAS / NON-BIAS
+        </strong>
+
+        <br>
+
+        ENGINE LOAD:
+        <strong>
+            NORMAL / PUSH-UP
+        </strong>
+
+        <br><br>
+
+        PUSH-UP is an engine-load compensation function.
+        It does not represent positioning bias.
+
+        <br><br>
+
+        Any simulated PUSH-UP recommendation remains
+        subject to reserve-power verification and the
+        HUMAN AUTHORIZATION REQUIRED execution gate.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     SCENARIO CONTROLS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Scenario Controls
+    </h2>
+
+    <div class="controls">
+
+        <button
+            class="scenario"
+            onclick="normalScenario()"
+        >
+            NORMAL
+        </button>
+
+        <button
+            class="scenario"
+            onclick="moderateWeatherScenario()"
+        >
+            MODERATE WEATHER
+        </button>
+
+        <button
+            class="scenario"
+            onclick="heavyWeatherScenario()"
+        >
+            HEAVY WEATHER
+        </button>
+
+        <button
+            class="scenario"
+            onclick="criticalScenario()"
+        >
+            CRITICAL
+        </button>
+
+        <button
+            class="scenario"
+            onclick="currentSurgeScenario()"
+        >
+            CURRENT SURGE
+        </button>
+
+        <button
+            class="scenario"
+            onclick="heavySeaStateScenario()"
+        >
+            HEAVY SEA STATE
+        </button>
+
+        <button
+            class="scenario"
+            onclick="windGustScenario()"
+        >
+            WIND GUST
+        </button>
+
+        <button
+            class="scenario"
+            onclick="combinedDisturbanceScenario()"
+        >
+            COMBINED DISTURBANCE
+        </button>
+
+        <button
+            class="scenario"
+            onclick="randomScenario()"
+        >
+            RANDOM
+        </button>
+
+        <br>
+
+        <button
+            class="run"
+            onclick="runSimulation()"
+        >
+            RUN SIMULATION
+        </button>
+
+        <button
+            class="reset"
+            onclick="resetSimulation()"
+        >
+            RESET
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     LIVE SYSTEM STATUS
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Live System Status
+    </h2>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <strong>
+                Environment
+            </strong>
+
+            <div id="liveEnvironment">
+                READY
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                Positioning Mode
+            </strong>
+
+            <div id="livePositioningMode">
+                NON-BIAS
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                Engine Load Mode
+            </strong>
+
+            <div id="liveEngineLoadMode">
+                NORMAL
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                Reserve Verification
+            </strong>
+
+            <div id="liveReserve">
+                NOT VERIFIED
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                Primary AI
+            </strong>
+
+            <div id="livePrimary">
+                READY
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                Secondary AI
+            </strong>
+
+            <div id="liveSecondary">
+                READY
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                Stabilizer
+            </strong>
+
+            <div id="liveStabilizer">
+                READY
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                Human Authority
+            </strong>
+
+            <div id="liveHuman">
+                WAITING
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                System
+            </strong>
+
+            <div id="liveSystem">
+                READY
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     CAPTAIN AI LENA
+======================================================= -->
+
+<div class="lena-panel">
+
+    <h2>
+        Captain AI Lena — Decision Support
+    </h2>
+
+    <div class="lena-grid">
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                STATUS
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaStatus"
+            >
+                READY
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                RECOMMENDATION
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaRecommendation"
+            >
+                STANDBY
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                URGENCY
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaUrgency"
+            >
+                LOW
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                RESPONSE MODE
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaResponseMode"
+            >
+                MONITOR
+            </div>
+
+        </div>
+
+
+        <div class="lena-card">
+
+            <div class="lena-title">
+                ACTION
+            </div>
+
+            <div
+                class="lena-value"
+                id="lenaAction"
+            >
+                NONE
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="lena-message"
+        id="lenaMessage"
+    >
+        Captain AI Lena is standing by for simulation.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     RECOMMENDED ACTION
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Recommended Action
+    </h2>
+
+    <div class="status-grid">
+
+        <div class="status-card">
+
+            <strong>
+                Lena Status
+            </strong>
+
+            <div id="actionLenaStatus">
+                READY
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                Recommended Action
+            </strong>
+
+            <div id="recommendedAction">
+                NONE
+            </div>
+
+        </div>
+
+        <div class="status-card">
+
+            <strong>
+                Urgency
+            </strong>
+
+            <div id="recommendedUrgency">
+                LOW
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="lena-message"
+        id="recommendedMessage"
+    >
+        No recommendation available.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     SIMULATION OUTPUT
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Simulation Output
+    </h2>
+
+    <div
+        class="output"
+        id="simulationOutput"
+    >
+        System ready.
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     HUMAN DECISION AUTHORITY
+======================================================= -->
+
+<div class="human-panel">
+
+    <h2>
+        Human Decision Authority
+    </h2>
+
+    <div class="warning">
+
+        <strong>
+            HUMAN AUTHORIZATION REQUIRED
+        </strong>
+
+        <br><br>
+
+        AI systems provide assessment and recommendations
+        only. Final authority remains with the human
+        operator.
+
+    </div>
+
+
+    <div class="controls">
+
+        <button
+            onclick="acknowledgeSimulation()"
+        >
+            ACKNOWLEDGE
+        </button>
+
+        <button
+            onclick="maintainSafeState()"
+        >
+            MAINTAIN SAFE STATE
+        </button>
+
+        <button
+            onclick="authorizeSimulatedResponse()"
+        >
+            AUTHORIZE SIMULATED RESPONSE
+        </button>
+
+    </div>
+
+
+    <div class="status-card">
+
+        <strong>
+            Human Gate Status
+        </strong>
+
+        <div id="humanGateStatus">
+            HUMAN AUTHORIZATION REQUIRED
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     MARIN SCENARIO / METRICS / EVALUATION
+======================================================= -->
+
+<div class="vv-panel">
+
+    <span class="vv-badge">
+        MARIN V&V RESEARCH
+    </span>
+
+    <h2>
+        Scenario / Metrics / Evaluation Mapping
+    </h2>
+
+    <div class="boundary">
+
+        Scenario condition →
+        Environmental input →
+        Positioning mode →
+        Engine load mode →
+        AI assessment →
+        Reserve-power verification →
+        Decision recommendation →
+        Safety gate →
+        Human authority →
+        Simulated action →
+        Audit result.
+
+        <br><br>
+
+        The simulator is intended to support deterministic,
+        repeatable and auditable research evaluation of
+        resilience and decision-support behaviour.
+
+        <br><br>
+
+        <strong>
+            POSITIONING:
+        </strong>
+        BIAS / NON-BIAS
+
+        <br>
+
+        <strong>
+            ENGINE LOAD:
+        </strong>
+        NORMAL / PUSH-UP
+
+        <br>
+
+        <strong>
+            SAFETY DISTINCTION:
+        </strong>
+        PUSH-UP ≠ POSITIONING BIAS
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     RESEARCH PURPOSE
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Research Purpose
+    </h2>
+
+    <div class="boundary">
+
+        This cockpit is a deterministic maritime resilience
+        research simulator developed for V&V evaluation.
+
+        <br><br>
+
+        It is designed to examine system behaviour under
+        changing environmental and operational disturbance
+        conditions.
+
+        <br><br>
+
+        The simulator provides decision support and records
+        the relationship between environmental conditions,
+        positioning configuration, engine-load configuration,
+        AI assessment, stabilizer arbitration, reserve-power
+        verification, recommended actions, human authorization
+        and simulated response.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     OPERATIONAL BOUNDARY
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Operational Boundary
+    </h2>
+
+    <div class="warning">
+
+        <strong>
+            RESEARCH / V&V ONLY
+        </strong>
+
+        <br><br>
+
+        This system is a simulation and research instrument.
+
+        <br><br>
+
+        It is not a certified DP system.
+
+        <br><br>
+
+        It does not issue operational commands to a vessel.
+
+        <br><br>
+
+        No autonomous vessel control is permitted.
+
+        <br><br>
+
+        Human authority remains final.
+
+    </div>
+
+</div>
+
+
+<!-- ======================================================
+     FINAL SYSTEM BOUNDARY
+======================================================= -->
+
+<div class="panel">
+
+    <h2>
+        Final System Boundary
+    </h2>
+
+    <div class="boundary">
+
+        ENVIRONMENT
+
+        →
+
+        PRIMARY AI
+
+        →
+
+        SECONDARY AI
+
+        →
+
+        STABILIZER
+
+        →
+
+        CAPTAIN AI LENA
+
+        →
+
+        HUMAN-IN-THE-LOOP
+
+        →
+
+        SIMULATED DP ACTION
+
+        <br><br>
+
+        System setup distinguishes:
+
+        <br>
+
+        POSITIONING:
+        <strong>
+            BIAS / NON-BIAS
+        </strong>
+
+        <br>
+
+        ENGINE LOAD:
+        <strong>
+            NORMAL / PUSH-UP
+        </strong>
+
+        <br><br>
+
+        PUSH-UP is not positioning bias.
+
+        <br><br>
+
+        PUSH-UP requires deterministic
+        reserve-power verification.
+
+        <br><br>
+
+        No direct operational vessel connection.
+
+        <br><br>
+
+        No autonomous command execution.
+
+        <br><br>
+
+        HUMAN AUTHORIZATION REQUIRED.
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<div class="footer">
+
+    Sextant Protocol™ —
+    DP Resilience V&V Research Cockpit
+
+    <br>
+
+    Research / V&V Only — Not Certified
+
+</div>
+
+
+<script src="./dp_simulation_engine.js"></script>
+
+
+<script>
+
+
+/* ======================================================
+   ENVIRONMENT INPUTS
+======================================================= */
+
+function getEnvironmentInputs() {
+
+    return {
+
+        wind:
+            Number(
+                document.getElementById("wind").value
+            ),
+
+        current:
+            Number(
+                document.getElementById("current").value
+            ),
+
+        wave:
+            Number(
+                document.getElementById("wave").value
+            ),
+
+        tidal:
+            Number(
+                document.getElementById("tidal").value
+            ),
+
+        positioningMode:
+            document.getElementById(
+                "positioningMode"
+            ).value,
+
+        engineLoadMode:
+            document.getElementById(
+                "engineLoadMode"
+            ).value
+
+    };
+
+}
+
+
+/* ======================================================
+   RUN SIMULATION
+======================================================= */
+
+function runSimulation() {
+
+    if (
+        !window.DPSimulationEngine ||
+        typeof window.DPSimulationEngine.run !== "function"
+    ) {
+
+        document.getElementById(
+            "simulationOutput"
+        ).textContent =
+            "ERROR: DP Simulation Engine unavailable.";
+
+        return;
+
+    }
+
+    const inputs =
+        getEnvironmentInputs();
+
+    const result =
+        window.DPSimulationEngine.run(
+            inputs
+        );
+
+    renderSimulationResult(
+        result
+    );
+
+}
+
+
+/* ======================================================
+   HUMAN ACKNOWLEDGEMENT
+======================================================= */
+
+function acknowledgeSimulation() {
+
+    if (
+        window.DPSimulationEngine &&
+        typeof
+        window.DPSimulationEngine
+            .acknowledgeHumanDecision ===
+        "function"
+    ) {
+
+        const result =
+            window.DPSimulationEngine
+                .acknowledgeHumanDecision(
+                    "ACKNOWLEDGE"
+                );
+
+        renderSimulationResult(
+            result
+        );
+
+    }
+
+}
+
+
+/* ======================================================
+   MAINTAIN SAFE STATE
+======================================================= */
+
+function maintainSafeState() {
+
+    if (
+        window.DPSimulationEngine &&
+        typeof
+        window.DPSimulationEngine
+            .maintainSafeState ===
+        "function"
+    ) {
+
+        const result =
+            window.DPSimulationEngine
+                .maintainSafeState(
+                    "MAINTAIN_SAFE_STATE"
+                );
+
+        renderSimulationResult(
+            result
+        );
+
+    }
+
+}
+
+
+/* ======================================================
+   AUTHORIZE SIMULATED RESPONSE
+======================================================= */
+
+function authorizeSimulatedResponse() {
+
+    if (
+        window.DPSimulationEngine &&
+        typeof
+        window.DPSimulationEngine
+            .authorizeSimulatedResponse ===
+        "function"
+    ) {
+
+        const result =
+            window.DPSimulationEngine
+                .authorizeSimulatedResponse(
+                    "AUTHORIZE_SIMULATED_RESPONSE"
+                );
+
+        renderSimulationResult(
+            result
+        );
+
+    }
+
+}
+
+
+/* ======================================================
+   SCENARIO SETTER
+======================================================= */
+
+function setScenario(
+    wind,
+    current,
+    wave,
+    tidal
+) {
+
+    document.getElementById(
+        "wind"
+    ).value = wind;
+
+    document.getElementById(
+        "current"
+    ).value = current;
+
+    document.getElementById(
+        "wave"
+    ).value = wave;
+
+    document.getElementById(
+        "tidal"
+    ).value = tidal;
+
+}
+
+
+/* ======================================================
+   SCENARIOS
+======================================================= */
+
+function normalScenario() {
+
+    setScenario(
+        20,
+        20,
+        20,
+        15
+    );
+
+}
+
+
+function moderateWeatherScenario() {
+
+    setScenario(
+        45,
+        40,
+        45,
+        30
+    );
+
+}
+
+
+function heavyWeatherScenario() {
+
+    setScenario(
+        75,
+        70,
+        80,
+        60
+    );
+
+}
+
+
+function criticalScenario() {
+
+    setScenario(
+        100,
+        100,
+        100,
+        100
+    );
+
+}
+
+
+function currentSurgeScenario() {
+
+    setScenario(
+        30,
+        90,
+        40,
+        35
+    );
+
+}
+
+
+function heavySeaStateScenario() {
+
+    setScenario(
+        60,
+        55,
+        95,
+        45
+    );
+
+}
+
+
+function windGustScenario() {
+
+    setScenario(
+        95,
+        35,
+        40,
+        25
+    );
+
+}
+
+
+function combinedDisturbanceScenario() {
+
+    setScenario(
+        80,
+        75,
+        85,
+        70
+    );
+
+}
+
+
+function randomScenario() {
+
+    setScenario(
+        Math.floor(
+            Math.random() * 101
+        ),
+
+        Math.floor(
+            Math.random() * 101
+        ),
+
+        Math.floor(
+            Math.random() * 101
+        ),
+
+        Math.floor(
+            Math.random() * 101
+        )
+    );
+
+}
+
+
+/* ======================================================
+   RESET
+======================================================= */
+
+function resetSimulation() {
+
+    document.getElementById(
+        "wind"
+    ).value = 30;
+
+    document.getElementById(
+        "current"
+    ).value = 25;
+
+    document.getElementById(
+        "wave"
+    ).value = 30;
+
+    document.getElementById(
+        "tidal"
+    ).value = 20;
+
+
+    document.getElementById(
+        "positioningMode"
+    ).value =
+        "NON_BIAS";
+
+
+    document.getElementById(
+        "engineLoadMode"
+    ).value =
+        "NORMAL";
+
+
+    document.getElementById(
+        "liveEnvironment"
+    ).textContent =
+        "READY";
+
+
+    document.getElementById(
+        "livePositioningMode"
+    ).textContent =
+        "NON-BIAS";
+
+
+    document.getElementById(
+        "liveEngineLoadMode"
+    ).textContent =
+        "NORMAL";
+
+
+    document.getElementById(
+        "liveReserve"
+    ).textContent =
+        "NOT VERIFIED";
+
+
+    document.getElementById(
+        "livePrimary"
+    ).textContent =
+        "READY";
+
+    document.getElementById(
+        "liveSecondary"
+    ).textContent =
+        "READY";
+
+    document.getElementById(
+        "liveStabilizer"
+    ).textContent =
+        "READY";
+
+    document.getElementById(
+        "liveHuman"
+    ).textContent =
+        "WAITING";
+
+    document.getElementById(
+        "liveSystem"
+    ).textContent =
+        "READY";
+
+
+    document.getElementById(
+        "lenaStatus"
+    ).textContent =
+        "READY";
+
+    document.getElementById(
+        "lenaRecommendation"
+    ).textContent =
+        "STANDBY";
+
+    document.getElementById(
+        "lenaUrgency"
+    ).textContent =
+        "LOW";
+
+    document.getElementById(
+        "lenaResponseMode"
+    ).textContent =
+        "MONITOR";
+
+    document.getElementById(
+        "lenaAction"
+    ).textContent =
+        "NONE";
+
+    document.getElementById(
+        "lenaMessage"
+    ).textContent =
+        "Captain AI Lena is standing by for simulation.";
+
+
+    document.getElementById(
+        "actionLenaStatus"
+    ).textContent =
+        "READY";
+
+    document.getElementById(
+        "recommendedAction"
+    ).textContent =
+        "NONE";
+
+    document.getElementById(
+        "recommendedUrgency"
+    ).textContent =
+        "LOW";
+
+    document.getElementById(
+        "recommendedMessage"
+    ).textContent =
+        "No recommendation available.";
+
+
+    document.getElementById(
+        "simulationOutput"
+    ).textContent =
+        "System ready.";
+
+
+    document.getElementById(
+        "humanGateStatus"
+    ).textContent =
+        "HUMAN AUTHORIZATION REQUIRED";
+
+
+    document.getElementById(
+        "engineStatus"
+    ).textContent =
+        "INITIALISING...";
+
+}
+
+
+/* ======================================================
+   RENDER SIMULATION RESULT
+======================================================= */
+
+function renderSimulationResult(
+    result
+) {
+
+    if (!result) {
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "simulationOutput"
+    ).textContent =
+        JSON.stringify(
+            result,
+            null,
+            2
+        );
+
+
+    updateLiveStatus(
+        result
+    );
+
+
+    updateLenaDisplay(
+        result
+    );
+
+
+    if (
+        result.human &&
+        result.executionGate
+    ) {
+
+        document.getElementById(
+            "humanGateStatus"
+        ).textContent =
+            result.executionGate.status;
+
+    }
+
+}
+
+
+/* ======================================================
+   LIVE STATUS
+======================================================= */
+
+function updateLiveStatus(
+    result
+) {
+
+    if (
+        result.environment
+    ) {
+
+        document.getElementById(
+            "liveEnvironment"
+        ).textContent =
+            result.environment.environmentalStress;
+
+    }
+
+
+    if (
+        result.systemSetup
+    ) {
+
+        document.getElementById(
+            "livePositioningMode"
+        ).textContent =
+            result.systemSetup.positioningMode ||
+            "NON_BIAS";
+
+
+        document.getElementById(
+            "liveEngineLoadMode"
+        ).textContent =
+            result.systemSetup.engineLoadMode ||
+            "NORMAL";
+
+    }
+
+
+    if (
+        result.reservePowerVerification
+    ) {
+
+        const reserve =
+            result.reservePowerVerification;
+
+
+        if (
+            reserve.reserveVerified === true
+        ) {
+
+            document.getElementById(
+                "liveReserve"
+            ).textContent =
+                "VERIFIED";
+
+        } else {
+
+            document.getElementById(
+                "liveReserve"
+            ).textContent =
+                "NOT VERIFIED";
+
+        }
+
+    }
+
+
+    if (
+        result.primary
+    ) {
+
+        document.getElementById(
+            "livePrimary"
+        ).textContent =
+            result.primary.response;
+
+    }
+
+
+    if (
+        result.secondary
+    ) {
+
+        document.getElementById(
+            "liveSecondary"
+        ).textContent =
+            result.secondary.assessment;
+
+    }
+
+
+    if (
+        result.stabilizer
+    ) {
+
+        document.getElementById(
+            "liveStabilizer"
+        ).textContent =
+            result.stabilizer.status;
+
+    }
+
+
+    if (
+        result.human
+    ) {
+
+        document.getElementById(
+            "liveHuman"
+        ).textContent =
+            result.human.decision;
+
+    }
+
+
+    if (
+        result.systemStatus
+    ) {
+
+        document.getElementById(
+            "liveSystem"
+        ).textContent =
+            result.systemStatus;
+
+    }
+
+}
+
+
+/* ======================================================
+   LENA DISPLAY
+======================================================= */
+
+function updateLenaDisplay(
+    result
+) {
+
+    if (
+        !result.recommendedAction
+    ) {
+
+        return;
+
+    }
+
+
+    const recommendation =
+        result.recommendedAction;
+
+
+    document.getElementById(
+        "lenaStatus"
+    ).textContent =
+        result.systemStatus || "READY";
+
+
+    document.getElementById(
+        "lenaRecommendation"
+    ).textContent =
+        recommendation
+            .primaryRecommendation ||
+        "STANDBY";
+
+
+    document.getElementById(
+        "lenaUrgency"
+    ).textContent =
+        recommendation.urgency ||
+        "LOW";
+
+
+    document.getElementById(
+        "lenaResponseMode"
+    ).textContent =
+        recommendation.responseMode ||
+        "MONITOR";
+
+
+    document.getElementById(
+        "lenaAction"
+    ).textContent =
+        (
+            recommendation
+                .recommendedActions &&
+            recommendation
+                .recommendedActions[0]
+        ) ||
+        "NONE";
+
+
+    document.getElementById(
+        "lenaMessage"
+    ).textContent =
+        recommendation.rationale ||
+        "No additional guidance available.";
+
+
+    document.getElementById(
+        "actionLenaStatus"
+    ).textContent =
+        result.systemStatus ||
+        "READY";
+
+
+    document.getElementById(
+        "recommendedAction"
+    ).textContent =
+        recommendation
+            .primaryRecommendation ||
+        "NONE";
+
+
+    document.getElementById(
+        "recommendedUrgency"
+    ).textContent =
+        recommendation.urgency ||
+        "LOW";
+
+
+    document.getElementById(
+        "recommendedMessage"
+    ).textContent =
+        recommendation.rationale ||
+        "No recommendation available.";
+
+}
+
+
+/* ======================================================
+   STARTUP VALIDATION
+======================================================= */
+
+window.addEventListener(
+    "load",
+    function () {
+
+        if (
+            window.DPSimulationEngine &&
+            typeof
+            window.DPSimulationEngine
+                .validate ===
+            "function"
+        ) {
+
+            const validation =
+                window.DPSimulationEngine
+                    .validate();
+
+            if (
+                validation &&
+                validation.valid
+            ) {
+
+                document.getElementById(
+                    "engineStatus"
+                ).textContent =
+                    "ONLINE — v1.2.0";
+
+            } else {
+
+                document.getElementById(
+                    "engineStatus"
+                ).textContent =
+                    "VALIDATION FAILED";
+
+            }
+
+        } else {
+
+            document.getElementById(
+                "engineStatus"
+            ).textContent =
+                "ENGINE NOT FOUND";
+
+        }
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>
