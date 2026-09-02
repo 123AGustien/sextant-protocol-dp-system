@@ -26,6 +26,71 @@ During the operation, one propulsion/power unit develops an overheating conditio
 
 Sextant Protocol™ Response
 
+The system follows the OBSERVE → VERIFY → ASSESS → DECIDE → ACT → UPDATE resilience cycle:
+
+OBSERVES the developing thermal degradation.
+
+VERIFIES the condition and confirms that the affected propulsion/power unit is degrading.
+
+ASSESSES remaining thrust capability, available power margin, load distribution and DP2 redundancy.
+
+DECIDES whether safe load redistribution remains possible within the vessel's defined operating and redundancy envelope.
+
+ACTS by supporting controlled thrust/load redistribution within predetermined safe operating limits.
+
+UPDATES the resilience assessment continuously as the vessel's condition changes.
+
+If the remaining propulsion system can safely compensate while maintaining the required redundancy and operating margins, the push-up load may be maintained within the approved operating envelope.
+
+If sufficient reserve or redundancy is no longer available, the system does not simply demand additional thrust.
+
+Instead, it escalates the condition for human decision and authorization, allowing the operator to select the appropriate safe-state response.
+
+Executive Value
+
+This scenario demonstrates that Sextant Protocol™ addresses the critical distinction between:
+
+"Can the vessel compensate?"
+
+and:
+
+"Can the vessel compensate safely while maintaining DP2 resilience?"
+
+The system therefore supports:
+
+- Early detection of propulsion degradation
+- Controlled load redistribution
+- Protection against secondary overload
+- Continuous resilience assessment
+- Preservation of human decision authority
+- Auditable decision-making
+
+Core Principle
+
+«Compensation is permitted only while the vessel remains within its defined safe operating and redundancy envelope.»
+
+Once that envelope is threatened, the system transitions from automatic/controlled compensation support to human-authorized safe-state management.
+
+Human Authority Gate
+
+NO RECOVERY ACTION BEYOND THE DEFINED SAFE ENVELOPE WITHOUT HUMAN AUTHORIZATION.
+
+The system provides the assessment, predicted consequence, recommended response and audit record.
+
+The human operator retains final authority over continuation, reduction, stabilization or termination of the operation.
+
+DP2 RESILIENCE SCENARIO
+
+Engine Overheat During Push-Up Operation
+
+Operational Scenario
+
+A DP2 offshore vessel is conducting a controlled push-up operation requiring sustained thrust against an external structure.
+
+During the operation, one propulsion/power unit develops an overheating condition and must reduce its available load.
+
+Sextant Protocol™ Response
+
 The system:
 
 OBSERVES the thermal degradation
