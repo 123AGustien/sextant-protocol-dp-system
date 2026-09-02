@@ -14,6 +14,63 @@ Operational DP Connection: NONE
 Autonomous Command: FALSE
 Human Authority: FINAL
 
+DP2 RESILIENCE SCENARIO
+
+Engine Overheat During Push-Up Operation
+
+Operational Scenario
+
+A DP2 offshore vessel is conducting a controlled push-up operation requiring sustained thrust against an external structure.
+
+During the operation, one propulsion/power unit develops an overheating condition and must reduce its available load.
+
+Sextant Protocol™ Response
+
+The system:
+
+OBSERVES the thermal degradation
+↓
+VERIFIES the condition
+↓
+ASSESSES remaining thrust, power margin and DP2 redundancy
+↓
+DECIDES whether safe load redistribution is possible
+↓
+ACTS by reallocating thrust within safe operating limits
+↓
+UPDATES the assessment continuously
+
+If the remaining propulsion system can safely compensate, the required push-up force may be maintained.
+
+If sufficient reserve or redundancy is no longer available, the system does not simply demand additional thrust.
+
+It escalates the condition for human decision and authorization.
+
+Executive Value
+
+This scenario demonstrates that Sextant Protocol™ is designed to address the difference between:
+
+"Can the vessel compensate?"
+
+and
+
+"Can the vessel compensate safely while maintaining DP2 resilience?"
+
+The system therefore supports:
+
+- Early detection of degradation
+- Controlled load redistribution
+- Protection against secondary overload
+- Continuous resilience assessment
+- Preservation of human decision authority
+- Auditable decision-making
+
+Core Principle
+
+«Compensation is permitted only while the vessel remains within its defined safe operating and redundancy envelope.»
+
+Once that envelope is threatened, the system transitions from automatic compensation to human-authorized safe-state management.
+
 CRANE, TOWING & ELECTRONIC EQUIPMENT RESILIENCE MATRIX
 
 1. 5,000-TONNE SEAWAY CRANE — SWL & WIRE-ROPE ARCHITECTURE
