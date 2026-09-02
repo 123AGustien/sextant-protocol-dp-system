@@ -4,6 +4,75 @@ MARIN DP / USV RESILIENCE V&V SCENARIO TEST MATRIX
 CRANE, TOWING & ELECTRONIC EQUIPMENT RESILIENCE MATRIX
 SEXTANT PROTOCOL™ — MARIN V&V ARCHITECTURE
 
+
+DP STATION-KEEPING — BIAS / NO-BIAS SCENARIO
+
+1. NO-BIAS — NORMAL STATION KEEPING
+
+The DP system maintains the vessel at the commanded position and heading using the minimum necessary thrust while continuously compensating for environmental forces.
+
+Control principle:
+
+ENVIRONMENTAL LOAD → DP SENSES ERROR → THRUST ALLOCATION → POSITION/HEADING MAINTAINED
+
+The system does not intentionally favour one propulsion unit unless required by the thrust-allocation solution.
+
+Objective:
+
+Maintain station with efficient and balanced use of available propulsion capacity while remaining within individual thruster and power limits.
+
+---
+
+2. BIAS — INTENTIONAL THRUST BIAS
+
+A controlled bias is introduced so that the DP system intentionally favours a selected thrust direction or propulsion unit/group.
+
+The purpose may be to:
+
+- Keep a preferred thruster operating point.
+- Maintain reserve capacity in a particular direction.
+- Compensate for a known environmental force.
+- Avoid excessive loading of a propulsion unit.
+- Maintain a preferred operational configuration.
+
+Control principle:
+
+BIAS APPLIED → THRUST ALLOCATION CHANGES → POSITION/HEADING ERROR MONITORED → LOADS VERIFIED
+
+The bias must not cause an individual propulsion unit to exceed its defined operating limit or unnecessarily compromise DP redundancy.
+
+---
+
+3. COMPARATIVE TEST
+
+NO-BIAS
+
+DP maintains station using the normal thrust-allocation solution.
+
+BIAS
+
+DP maintains the same station while applying the defined thrust bias.
+
+The comparison evaluates:
+
+Position error
+Heading error
+Thruster loading
+Power utilisation
+Available redundancy
+Response time
+Recovery capability
+
+PASS CRITERIA
+
+Both configurations pass when the vessel maintains the required station and heading within the defined limits, no propulsion unit exceeds its permitted operating envelope, and the system correctly records the resulting load distribution and DP response.
+
+HUMAN AUTHORITY
+
+The bias configuration remains subject to the operational authority of the DPO/Captain.
+
+«Bias changes how thrust is distributed; it must not compromise the vessel's ability to maintain safe station or preserve required propulsion redundancy.»
+
 BIAS / NO-BIAS V&V TEST MATRIX
 
 BIAS CONDITION
