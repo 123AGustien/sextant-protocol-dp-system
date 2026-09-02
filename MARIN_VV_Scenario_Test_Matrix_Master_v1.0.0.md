@@ -3,6 +3,77 @@ SEXTANT PROTOCOL™
 MARIN DP / USV RESILIENCE V&V SCENARIO TEST MATRIX
 CRANE, TOWING & ELECTRONIC EQUIPMENT RESILIENCE MATRIX
 
+SEXTANT PROTOCOL™ — MARIN V&V ARCHITECTURE
+
+Primary Objective
+
+The Sextant Protocol™ V&V programme is designed to enable an independent maritime engineering evaluation of a layered resilience and decision-support architecture for DP, autonomous vessels and USV operations.
+
+The architecture under evaluation consists of:
+
+PRIMARY AI
+↓
+SECONDARY AI / INDEPENDENT VERIFICATION
+↓
+STABILISER / SAFETY LAYER
+↓
+CAPTAIN AI LENA — DECISION SUPPORT & RESILIENCE ASSESSMENT
+↓
+HUMAN DECISION AUTHORITY / JOYSTICK CONTROL
+↓
+AUDIT, V&V & PERFORMANCE RECORD
+
+The architecture is intended to support three operational modes:
+
+MODE 1 — HUMAN CONTROL
+
+Human operator retains direct control through the vessel/DP/USV control interface or joystick.
+
+MODE 2 — AI DECISION SUPPORT
+
+Primary and Secondary AI assess the situation, the Stabiliser provides safety-state protection, and Captain AI Lena produces a recommended action.
+
+Human authority remains the final execution authority.
+
+MODE 3 — DEFINED AUTONOMOUS OPERATION
+
+Where predefined autonomy conditions and safety gates are satisfied, the architecture may support autonomous decision and execution.
+
+The V&V programme is intended to determine whether these autonomy conditions, decision gates and safety boundaries are sufficiently robust for the intended research application.
+
+MARIN V&V ROLE
+
+Sextant Protocol™ does not seek to replace MARIN's existing simulation, testing, verification, certification or engineering processes.
+
+Instead, the proposed V&V collaboration would allow MARIN to independently challenge the architecture through controlled maritime scenarios and determine:
+
+- whether decisions are repeatable and deterministic;
+- whether Primary and Secondary AI verification provides meaningful resilience;
+- whether the Stabiliser appropriately prevents unsafe transitions;
+- whether Captain AI Lena produces appropriate decision guidance;
+- whether human authority remains effective under degraded conditions;
+- whether autonomous operation can be bounded by explicit safety conditions;
+- whether decision latency and performance can be measured;
+- whether every decision can be independently reconstructed through an audit record.
+
+V&V PRINCIPLE
+
+OBSERVE → VERIFY → ASSESS → DECIDE → AUTHORIZE → ACT → UPDATE → AUDIT
+
+The fundamental research principle is:
+
+«AI may assess and recommend; defined authority must determine when and under what conditions an action may be executed.»
+
+The V&V matrix therefore maps each scenario against:
+
+SCENARIO → INPUT → SYSTEM STATE → AI ASSESSMENT → VERIFICATION → DECISION → HUMAN/AUTONOMOUS AUTHORITY → ACTION → KPI → RESULT → AUDIT
+
+The purpose of the programme is not to claim that the architecture is already certified or operationally approved.
+
+The purpose is to give MARIN the opportunity to challenge, test, measure and independently assess the architecture under realistic maritime conditions.
+
+
+
 1. 5,000-TONNE SEAWAY CRANE — SWL & WIRE-ROPE ARCHITECTURE
 
 «Engineering principle: Wire-rope diameter and construction shall not be selected from crane SWL alone. The design shall account for total suspended load, reeving arrangement, dynamic amplification, number of parts of line, rope efficiency, D/d ratio, sheave/drum geometry, fleet angle, termination efficiency and applicable class/flag requirements.»
