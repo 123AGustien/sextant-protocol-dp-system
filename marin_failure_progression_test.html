@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>SEXTANT PROTOCOL™ — MARIN Failure Progression V&V Test</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #111827;
+      color: #f3f4f6;
+    }
+
+    h1 {
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      margin-top: 28px;
+    }
+
+    .subtitle {
+      color: #9ca3af;
+      margin-bottom: 20px;
+    }
+
+    .warning {
+      border: 1px solid #f59e0b;
+      padding: 14px;
+      margin-bottom: 20px;
+      background: #1f2937;
+    }
+
+    button {
+      padding: 10px 14px;
+      margin: 4px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: 1px solid #6b7280;
+      background: #374151;
+      color: white;
+    }
+
+    button:hover {
+      background: #4b5563;
+    }
+
+    .test {
+      border: 1px solid #374151;
+      padding: 14px;
+      margin: 12px 0;
+      border-radius: 8px;
+      background: #1f2937;
+    }
+
+    .pass {
+      border-left: 5px solid #22c55e;
+    }
+
+    .fail {
+      border-left: 5px solid #ef4444;
+    }
+
+    .pending {
+      border-left: 5px solid #9ca3af;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #030712;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+
+    .stage {
+      font-weight: bold;
+    }
+
+    .summary {
+      font-size: 18px;
+      margin: 15px 0;
+      padding: 14px;
+      background: #1f2937;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>SEXTANT PROTOCOL™</h1>
+
+  <div class="subtitle">
+    MARIN Failure Progression V&V — Standalone Research Test
+  </div>
+
+  <div class="warning">
+    ⚠ V&V RESEARCH MODE — STANDALONE OBSERVER TEST<br><br>
+
+    No operational vessel connection.<br>
+    No autonomous command capability.<br>
+    No actuator interface.<br>
+    No DP controller command.<br>
+    No vessel-state modification.<br>
+    Human authority remains final.
+  </div>
+
+  <div>
+    <strong>Modules:</strong><br>
+    DP Simulation Engine:
+    <span id="engineStatus">CHECKING...</span><br>
+
+    Failure Progression Observer:
+    <span id="observerStatus">CHECKING...</span>
+  </div>
+
+  <div>
+    <h2>Test Controls</h2>
+
+    <button onclick="runAllTests()">
+      RUN ALL FIVE TESTS
+    </button>
+
+    <button onclick="clearResults()">
+      CLEAR
+    </button>
+  </div>
+
+  <div id="overallSummary" class="summary">
+    Tests not yet executed.
+  </div>
+
+  <div id="results"></div>
+
+
+  <!--
+    EXISTING DP ENGINE
+
+    This is loaded only for test input generation.
+    It is NOT modified by this test page.
+  -->
+  <script src="dp_simulation_engine.js"></script>
+
+  <!--
+    MARIN FAILURE PROGRESSION OBSERVER
+
+    Existing V1.0.1 standalone observer.
+    It is NOT modified by this test page.
+  -->
+  <script src="dp_failure_progression_vv.js"></script>
+
+
+  <script>
+
+    const TESTS = [
+      {
+        name: "TEST 1 — ENVIRONMENT ONLY",
+        scenario: "NONE",
+        description:
+          "Environmental stress must NOT automatically become a technical failure."
+      },
+
+      {
+        name: "TEST 2 — AUTOPILOT FAILURE",
+        scenario: "AUTOPILOT_FAILURE",
+        description:
+          "Explicit autopilot failure should produce failure and dependency assessment without automatic cascade."
+      },
+
+      {
+        name: "TEST 3 — THRUSTER DEGRADATION",
+        scenario: "THRUSTER_DEGRADATION",
+        description:
+          "Explicit thruster degradation should produce failure and dependency assessment."
+      },
+
+      {
+        name: "TEST 4 — COMPOUND FAILURE",
+        scenario: "COMPOUND_FAILURE",
+        description:
+          "Compound failure should exercise the failure → dependency → cascade → redundancy → human path."
+      },
+
+      {
+        name: "TEST 5 — DEAD SHIP",
+        scenario: "DEAD_SHIP",
+        description:
+          "Dead-ship must be explicitly declared and produce the dead-ship terminal state."
+      }
+    ];
+
+
+    function setModuleStatus() {
+
+      const engineOK =
+        typeof window.DPSimulationEngine === "object" ||
+        typeof window.DPSimulationEngine === "function";
+
+      const observerOK =
+        typeof window.DPFailureProgressionVV === "object" ||
+        typeof window.DPFailureProgressionVV === "function";
+
+      document.getElementById("engineStatus").textContent =
+        engineOK
+          ? "AVAILABLE"
+          : "NOT AVAILABLE";
+
+      document.getElementById("observerStatus").textContent =
+        observerOK
+          ? "AVAILABLE"
+          : "NOT AVAILABLE";
+    }
+
+
+    function createEngineResult(environment) {
+
+      if (!window.DPSimulationEngine) {
+        throw new Error(
+          "DPSimulationEngine is not available."
+        );
+      }
+
+      /*
+       * The existing engine is used only to create
+       * a deterministic assessment object.
+       *
+       * No simulated response is authorized here.
+       */
+
+      return window.DPSimulationEngine.run({
+        wind: environment.wind,
+        current: environment.current,
+        wave: environment.wave,
+        tidal: environment.tidal,
+
+        positioningMode: "NON_BIAS",
+        engineLoadMode: "NORMAL"
+      });
+    }
+
+
+    function getTestEnvironment(index) {
+
+      /*
+       * Deliberately use elevated environmental conditions
+       * for several tests.
+       *
+       * This proves that environmental stress itself does
+       * NOT create a failure event.
+       */
+
+      const environments = [
+
+        {
+          wind: 20,
+          current: 25,
+          wave: 20,
+          tidal: 15
+        },
+
+        {
+          wind: 35,
+          current: 40,
+          wave: 35,
+          tidal: 30
+        },
+
+        {
+          wind: 45,
+          current: 50,
+          wave: 45,
+          tidal: 40
+        },
+
+        {
+          wind: 70,
+          current: 75,
+          wave: 70,
+          tidal: 65
+        },
+
+        {
+          wind: 85,
+          current: 90,
+          wave: 85,
+          tidal: 80
+        }
+
+      ];
+
+      return environments[index];
+    }
+
+
+    function evaluateTest(test, index) {
+
+      if (!window.DPSimulationEngine) {
+        throw new Error(
+          "DPSimulationEngine is unavailable."
+        );
+      }
+
+      if (!window.DPFailureProgressionVV) {
+        throw new Error(
+          "DPFailureProgressionVV is unavailable."
+        );
+      }
+
+      const environment =
+        getTestEnvironment(index);
+
+      /*
+       * Generate a normal deterministic DP assessment.
+       */
+      const engineResult =
+        createEngineResult(environment);
+
+      /*
+       * Feed the result into the standalone
+       * failure-progression observer.
+       *
+       * IMPORTANT:
+       * The observer receives an explicit failure scenario.
+       * It does not infer failure from environmental stress.
+       */
+      const assessment =
+        window.DPFailureProgressionVV.evaluate(
+          engineResult,
+          test.scenario
+        );
+
+      return assessment;
+    }
+
+
+    function validateTest(test, assessment) {
+
+      const progression =
+        assessment.progression || {};
+
+      const environment =
+        progression.environment || {};
+
+      const failure =
+        progression.failure || {};
+
+      const dependency =
+        progression.dependency || {};
+
+      const cascade =
+        progression.cascade || {};
+
+      const redundancy =
+        progression.redundancy || {};
+
+      const human =
+        progression.humanIntervention || {};
+
+      const finalState =
+        progression.finalState || {};
+
+
+      /*
+       * TEST 1
+       *
+       * Environmental stress must not become failure.
+       */
+      if (test.scenario === "NONE") {
+
+        return (
+          failure.detected === false &&
+          failure.declared === false &&
+          cascade.detected === false &&
+          finalState.operationalCommand === false
+        );
+      }
+
+
+      /*
+       * TEST 2
+       *
+       * Autopilot failure:
+       * explicit failure required.
+       * Cascade should not automatically be inferred
+       * from a MEDIUM default severity.
+       */
+      if (test.scenario === "AUTOPILOT_FAILURE") {
+
+        return (
+          failure.detected === true &&
+          failure.declared === true &&
+          dependency.detected === true &&
+          human.required === true &&
+          finalState.operationalCommand === false
+        );
+      }
+
+
+      /*
+       * TEST 3
+       *
+       * Thruster degradation:
+       * explicit failure and dependency.
+       */
+      if (test.scenario === "THRUSTER_DEGRADATION") {
+
+        return (
+          failure.detected === true &&
+          failure.declared === true &&
+          dependency.detected === true &&
+          human.required === true &&
+          finalState.operationalCommand === false
+        );
+      }
+
+
+      /*
+       * TEST 4
+       *
+       * Compound failure:
+       * HIGH severity should exercise cascade,
+       * redundancy assessment and human intervention.
+       */
+      if (test.scenario === "COMPOUND_FAILURE") {
+
+        return (
+          failure.detected === true &&
+          failure.declared === true &&
+          dependency.detected === true &&
+          cascade.detected === true &&
+          redundancy.required === true &&
+          human.required === true &&
+          finalState.state === "DEGRADED" &&
+          finalState.operationalCommand === false
+        );
+      }
+
+
+      /*
+       * TEST 5
+       *
+       * Dead ship must be explicitly declared.
+       */
+      if (test.scenario === "DEAD_SHIP") {
+
+        return (
+          failure.detected === true &&
+          failure.declared === true &&
+          failure.scenario === "DEAD_SHIP" &&
+          failure.severity === "CRITICAL" &&
+          dependency.detected === true &&
+          cascade.detected === true &&
+          redundancy.required === true &&
+          human.required === true &&
+          finalState.state === "DEAD_SHIP" &&
+          finalState.humanAuthorityFinal === true &&
+          finalState.operationalCommand === false &&
+          finalState.realVesselConnection === false &&
+          finalState.simulatedOnly === true
+        );
+      }
+
+
+      return false;
+    }
+
+
+    function renderTest(test, index, assessment, passed) {
+
+      const results =
+        document.getElementById("results");
+
+      const container =
+        document.createElement("div");
+
+      container.className =
+        "test " +
+        (passed ? "pass" : "fail");
+
+      const progression =
+        assessment.progression || {};
+
+      const environment =
+        progression.environment || {};
+
+      const failure =
+        progression.failure || {};
+
+      const dependency =
+        progression.dependency || {};
+
+      const cascade =
+        progression.cascade || {};
+
+      const redundancy =
+        progression.redundancy || {};
+
+      const human =
+        progression.humanIntervention || {};
+
+      const finalState =
+        progression.finalState || {};
+
+
+      container.innerHTML = `
+
+        <h3>
+          ${passed ? "PASS" : "FAIL"}
+          — ${test.name}
+        </h3>
+
+        <p>
+          ${test.description}
+        </p>
+
+        <p>
+          <strong>Scenario:</strong>
+          ${test.scenario}
+        </p>
+
+        <p class="stage">
+          ENVIRONMENT:
+          ${environment.condition || "N/A"}
+        </p>
+
+        <p class="stage">
+          FAILURE:
+          ${failure.condition || "N/A"}
+        </p>
+
+        <p class="stage">
+          DEPENDENCY:
+          ${dependency.condition || "N/A"}
+        </p>
+
+        <p class="stage">
+          CASCADE:
+          ${cascade.condition || "N/A"}
+        </p>
+
+        <p class="stage">
+          REDUNDANCY:
+          ${redundancy.condition || "N/A"}
+        </p>
+
+        <p class="stage">
+          HUMAN:
+          ${human.condition || "N/A"}
+        </p>
+
+        <p class="stage">
+          FINAL STATE:
+          ${finalState.state || "N/A"}
+        </p>
+
+        <details>
+          <summary>View complete deterministic assessment</summary>
+          <pre>${escapeHtml(
+            JSON.stringify(assessment, null, 2)
+          )}</pre>
+        </details>
+      `;
+
+      results.appendChild(container);
+    }
+
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    function runAllTests() {
+
+      clearResults();
+
+      let passed = 0;
+      let failed = 0;
+
+      TESTS.forEach((test, index) => {
+
+        try {
+
+          const assessment =
+            evaluateTest(test, index);
+
+          const valid =
+            validateTest(
+              test,
+              assessment
+            );
+
+          renderTest(
+            test,
+            index,
+            assessment,
+            valid
+          );
+
+          if (valid) {
+            passed++;
+          } else {
+            failed++;
+          }
+
+        } catch (error) {
+
+          failed++;
+
+          const results =
+            document.getElementById("results");
+
+          const container =
+            document.createElement("div");
+
+          container.className =
+            "test fail";
+
+          container.innerHTML = `
+            <h3>
+              FAIL — ${test.name}
+            </h3>
+
+            <p>
+              Test execution error.
+            </p>
+
+            <pre>${escapeHtml(
+              error.stack || error.message || error
+            )}</pre>
+          `;
+
+          results.appendChild(container);
+        }
+
+      });
+
+
+      const summary =
+        document.getElementById("overallSummary");
+
+      if (failed === 0) {
+
+        summary.textContent =
+          `ALL TESTS PASSED — ${passed}/${TESTS.length}`;
+
+      } else {
+
+        summary.textContent =
+          `TEST RESULT — ${passed} PASSED / ${failed} FAILED`;
+      }
+    }
+
+
+    function clearResults() {
+
+      document.getElementById("results").innerHTML = "";
+
+      document.getElementById("overallSummary").textContent =
+        "Tests not yet executed.";
+    }
+
+
+    setModuleStatus();
+
+  </script>
+
+</body>
+</html>
